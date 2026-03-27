@@ -677,8 +677,8 @@ select.form-control{cursor:pointer;}
     </div>
 
     <div class="form-group" id="replaceGroup" style="display:none">
-      <label class="form-label">ชื่อเจ้าของสิทธิ์ / เลขช่อง</label>
-      <input class="form-control" id="fReplaceInfo" placeholder="เช่น คุณนุกูล ช่อง 02">
+      <label class="form-label">ชื่อผู้แจ้งจอดแทน</label>
+      <input class="form-control" id="fReplaceInfo" placeholder="ชื่อผู้ที่จะมาจอดแทน">
     </div>
 
     <div class="form-row">
@@ -707,8 +707,15 @@ select.form-control{cursor:pointer;}
     </div>
 
     <div class="form-group">
-      <label class="form-label">ชื่อผู้แจ้งจอง</label>
-      <input class="form-control" id="fName" placeholder="ชื่อ-นามสกุล">
+      <label class="form-label" id="nameLabel">ชื่อผู้แจ้งจอง</label>
+      <div id="nameInputWrap">
+        <input class="form-control" id="fName" placeholder="ชื่อ-นามสกุล">
+      </div>
+      <div id="nameSelectWrap" style="display:none">
+        <select class="form-control" id="fNameSelect" onchange="onRightsHolderChange()">
+          <option value="">— เลือกเจ้าของสิทธิ์ —</option>
+        </select>
+      </div>
     </div>
 
     <button class="btn-submit" onclick="submitForm()">✓ บันทึกการจอง</button>
@@ -769,9 +776,14 @@ async function postToSheet(payload){
   const s = document.getElementById('submitStatus');
   s.style.display='block'; s.textContent='กำลังบันทึก...';
   try {
-    await fetch(CFG.SCRIPT_URL,{method:'POST',body:JSON.stringify({...payload,submittedAt:new Date().toISOString()})});
+    await fetch(CFG.SCRIPT_URL,{
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({...payload,submittedAt:new Date().toISOString()})
+    });
     showToast('✓ บันทึกสำเร็จ','success');
-    fetchFromSheet();
+    setTimeout(()=>fetchFromSheet(), 1500);
   } catch { showToast('⚠ บันทึกไม่สำเร็จ','warn'); }
   s.style.display='none';
 }
@@ -1120,7 +1132,14 @@ function searchPlate(val){
   box.innerHTML=hits.map(p=>`<div class="plate-suggest-item" onclick="selectPlate('${p.plate}','${p.name}')"><span class="plate-suggest-plate">${p.plate}</span><span class="plate-suggest-name">${p.name}${p.dept?' ('+p.dept+')':''}</span></div>`).join('');
   box.style.display='block';
 }
-function selectPlate(plate,name){ document.getElementById('fPlate').value=plate; document.getElementById('fName').value=name; document.getElementById('plateSuggestions').style.display='none'; }
+function selectPlate(plate,name){
+  document.getElementById('fPlate').value=plate;
+  // Only auto-fill name for หมุนเวียน type
+  if(document.getElementById('fType').value !== 'จอดแทน'){
+    document.getElementById('fName').value=name;
+  }
+  document.getElementById('plateSuggestions').style.display='none';
+}
 document.addEventListener('click',e=>{ if(!e.target.closest('#fPlate')&&!e.target.closest('#plateSuggestions')) document.getElementById('plateSuggestions').style.display='none'; });
 
 // ════════════════════════════════════════
@@ -1158,17 +1177,55 @@ function closeSidebar(){ document.getElementById('sidebar').classList.remove('op
 //  MODAL
 // ════════════════════════════════════════
 function openModal(){ const t=new Date().toISOString().split('T')[0]; document.getElementById('fStart').value=t; document.getElementById('fEnd').value=t; document.getElementById('modalBg').classList.add('open'); }
-function closeModal(){ document.getElementById('modalBg').classList.remove('open'); stopVoice(); }
+function closeModal(){
+  document.getElementById('modalBg').classList.remove('open');
+  stopVoice();
+  // Reset type to default and toggle UI accordingly
+  document.getElementById('fType').value = 'หมุนเวียน';
+  toggleReplace();
+}
 function handleModalBgClick(e){ if(e.target===document.getElementById('modalBg'))closeModal(); }
-function toggleReplace(){ document.getElementById('replaceGroup').style.display=document.getElementById('fType').value==='จอดแทน'?'block':'none'; }
+function toggleReplace(){
+  const isReplace = document.getElementById('fType').value === 'จอดแทน';
+  document.getElementById('replaceGroup').style.display = isReplace ? 'block' : 'none';
+  document.getElementById('nameLabel').textContent = isReplace ? 'ชื่อเจ้าของสิทธิ์' : 'ชื่อผู้แจ้งจอง';
+  document.getElementById('nameInputWrap').style.display = isReplace ? 'none' : 'block';
+  document.getElementById('nameSelectWrap').style.display = isReplace ? 'block' : 'none';
+  if(isReplace) populateRightsHolderDropdown();
+}
+function populateRightsHolderDropdown(){
+  const sel = document.getElementById('fNameSelect');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— เลือกเจ้าของสิทธิ์ —</option>';
+  plateDB.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.name;
+    opt.dataset.plate = p.plate;
+    opt.dataset.slot = p.slot||'';
+    opt.textContent = `${p.name}${p.slot?' (ช่อง '+p.slot+')':''}`;
+    sel.appendChild(opt);
+  });
+  if(cur) sel.value = cur;
+}
+function onRightsHolderChange(){
+  const sel = document.getElementById('fNameSelect');
+  const opt = sel.options[sel.selectedIndex];
+  if(opt && opt.dataset.plate){
+    document.getElementById('fPlate').value = opt.dataset.plate;
+    document.getElementById('plateSuggestions').style.display = 'none';
+  }
+}
 
 // ════════════════════════════════════════
 //  SUBMIT
 // ════════════════════════════════════════
 function submitForm(){
-  const name=document.getElementById('fName').value.trim();
-  const plate=document.getElementById('fPlate').value.trim();
   const type=document.getElementById('fType').value;
+  const isReplace = type === 'จอดแทน';
+  const name = isReplace
+    ? document.getElementById('fNameSelect').value.trim()
+    : document.getElementById('fName').value.trim();
+  const plate=document.getElementById('fPlate').value.trim();
   const period=document.getElementById('fTime').value;
   const start=document.getElementById('fStart').value;
   const end=document.getElementById('fEnd').value;
@@ -1184,6 +1241,7 @@ function submitForm(){
     refreshAll();
   }
   document.getElementById('fName').value='';
+  document.getElementById('fNameSelect').value='';
   document.getElementById('fPlate').value='';
   document.getElementById('fReplaceInfo').value='';
 }
