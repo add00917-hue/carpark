@@ -915,7 +915,10 @@ function parseDate(s){
   const p = dateStr.split(/[\/\-]/);
   if(p.length<3) return null;
   if(p[0].length===4) return new Date(+p[0], +p[1]-1, +p[2]); // yyyy-mm-dd
-  return new Date(+p[2], +p[1]-1, +p[0]); // dd/mm/yyyy
+  // Google Sheets ส่งมาเป็น M/D/YYYY (เดือน/วัน/ปี) เช่น 3/27/2026
+  // ถ้า p[1] > 12 แสดงว่าเป็น M/D/YYYY ไม่ใช่ DD/MM/YYYY
+  if(+p[1] > 12) return new Date(+p[2], +p[0]-1, +p[1]); // M/D/YYYY
+  return new Date(+p[2], +p[1]-1, +p[0]); // DD/MM/YYYY
 }
 function dateOnly(d){ return d?new Date(d.getFullYear(),d.getMonth(),d.getDate()):null; }
 function dateInRange(s,e,check){
