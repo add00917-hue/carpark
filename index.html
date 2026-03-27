@@ -910,10 +910,12 @@ function fmtDate(d){ return `${String(d.getDate()).padStart(2,'0')}/${String(d.g
 function parseDate(s){
   if(!s) return null;
   if(s instanceof Date) return s;
-  const p=s.toString().split(/[\/\-]/);
+  // ตัด time part (HH:mm:ss) ออกก่อน เช่น '2026-03-27 00:00:00' → '2026-03-27'
+  const dateStr = s.toString().trim().split(' ')[0].split('T')[0];
+  const p = dateStr.split(/[\/\-]/);
   if(p.length<3) return null;
-  if(p[0].length===4) return new Date(+p[0],+p[1]-1,+p[2]);
-  return new Date(+p[2],+p[1]-1,+p[0]);
+  if(p[0].length===4) return new Date(+p[0], +p[1]-1, +p[2]); // yyyy-mm-dd
+  return new Date(+p[2], +p[1]-1, +p[0]); // dd/mm/yyyy
 }
 function dateOnly(d){ return d?new Date(d.getFullYear(),d.getMonth(),d.getDate()):null; }
 function dateInRange(s,e,check){
