@@ -18,10 +18,10 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;overflow:auto;}
 
-/* ═══ SHELL ═══ */
+/* SHELL */
 .shell{display:flex;min-height:100vh;}
 
-/* ═══ SIDEBAR (desktop only) ═══ */
+/* SIDEBAR */
 .sidebar{
   width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);
   display:flex;flex-direction:column;flex-shrink:0;
@@ -41,12 +41,12 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .quota-nums{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--accent);}
 .quota-nums span{font-size:12px;color:var(--muted);font-family:var(--font);}
 .quota-bar-bg{background:var(--bg4);border-radius:4px;height:5px;margin-top:7px;}
-.quota-bar-fill{background:linear-gradient(90deg,var(--accent),var(--accent2));height:5px;border-radius:4px;width:68%;}
+.quota-bar-fill{background:linear-gradient(90deg,var(--accent),var(--accent2));height:5px;border-radius:4px;}
 
-/* ═══ MAIN ═══ */
+/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;min-width:0;}
 
-/* ═══ TOPBAR ═══ */
+/* TOPBAR */
 .topbar{
   height:var(--topbar-h);background:var(--bg2);border-bottom:1px solid var(--border);
   display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;
@@ -65,10 +65,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .btn-add:hover{opacity:.85;}
 .btn-add:active{transform:scale(.97);}
 
-/* ═══ CONTENT AREA ═══ */
+/* CONTENT AREA */
 .content{flex:1;padding:20px 20px;}
 
-/* ═══ STATS ═══ */
+/* STATS */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
 .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
 .stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
@@ -83,16 +83,16 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .stat-val{font-family:var(--mono);font-size:24px;font-weight:500;}
 .stat-label{font-size:11px;color:var(--muted);margin-top:2px;}
 
-/* ═══ PANELS ═══ */
+/* PANELS */
 .panels{display:grid;grid-template-columns:1fr 300px;gap:16px;}
 .panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
 .panel-head{padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .panel-title{font-size:13.5px;font-weight:500;}
 .panel-meta{font-size:12px;color:var(--muted);}
 
-/* ═══ TABLE ═══ */
+/* TABLE */
 .tbl-wrap{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;min-width:520px;}
+table{width:100%;border-collapse:collapse;min-width:480px;}
 thead th{font-size:11px;color:var(--muted);padding:9px 14px;text-align:left;border-bottom:1px solid var(--border);font-weight:400;letter-spacing:.4px;}
 tbody tr{border-bottom:1px solid var(--border);transition:background .1s;}
 tbody tr:last-child{border-bottom:none;}
@@ -105,7 +105,7 @@ tbody td{padding:10px 14px;font-size:13px;}
 .badge.night{background:rgba(245,166,35,.15);color:var(--amber);}
 .badge.normal{background:rgba(62,207,142,.12);color:var(--green);}
 
-/* ═══ MINI CAL ═══ */
+/* MINI CAL */
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:12px;}
 .cal-day-name{font-size:10px;color:var(--muted);text-align:center;padding-bottom:3px;}
 .cal-cell{aspect-ratio:1;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;border:1px solid transparent;}
@@ -124,7 +124,7 @@ tbody td{padding:10px 14px;font-size:13px;}
 .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .cal-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
 
-/* ═══ MONTH VIEW ═══ */
+/* MONTH VIEW */
 .month-bar-row{display:flex;align-items:center;padding:7px 16px;gap:10px;border-bottom:1px solid var(--border);}
 .month-bar-row:last-child{border-bottom:none;}
 .month-day{font-family:var(--mono);font-size:12px;color:var(--muted);width:26px;flex-shrink:0;}
@@ -132,17 +132,17 @@ tbody td{padding:10px 14px;font-size:13px;}
 .month-bar-fill{height:7px;border-radius:4px;}
 .month-count{font-family:var(--mono);font-size:12px;color:var(--muted);width:20px;text-align:right;flex-shrink:0;}
 
-/* ═══ BIG CAL ═══ */
+/* BIG CAL */
 .big-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;padding:14px;}
 .big-cal-cell{border:1px solid var(--border);border-radius:8px;padding:8px;min-height:62px;cursor:pointer;transition:border .15s;}
 .big-cal-cell:hover{border-color:var(--accent);}
 .big-cal-cell.today{border-color:var(--accent);background:rgba(79,156,249,.08);}
 
-/* ═══ VIEW TOGGLE ═══ */
+/* VIEW TOGGLE */
 .view-section{display:none;}
 .view-section.active{display:block;}
 
-/* ═══ MOBILE BOTTOM NAV ═══ */
+/* MOBILE BOTTOM NAV */
 .bottom-nav{
   display:none;height:var(--bottom-nav-h);background:var(--bg2);
   border-top:1px solid var(--border);flex-shrink:0;
@@ -153,11 +153,11 @@ tbody td{padding:10px 14px;font-size:13px;}
 .bnav-item.active{color:var(--accent);}
 .bnav-item svg{width:20px;height:20px;}
 
-/* ═══ MOBILE OVERLAY SIDEBAR ═══ */
+/* MOBILE OVERLAY SIDEBAR */
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:40;}
 .sidebar-overlay.open{display:block;}
 
-/* ═══ MODAL / FORM ═══ */
+/* MODAL / FORM */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;align-items:flex-end;justify-content:center;}
 .modal-bg.open{display:flex;}
 .modal{background:var(--bg2);border-radius:20px 20px 0 0;padding:20px 20px 32px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;animation:slideUp .25s ease;}
@@ -170,8 +170,6 @@ tbody td{padding:10px 14px;font-size:13px;}
 .form-control:focus{border-color:var(--accent);}
 select.form-control{cursor:pointer;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.form-hint{font-size:11px;color:var(--muted);margin-top:5px;display:none;}
-.form-hint.show{display:block;}
 .voice-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px;}
 .voice-box{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-height:44px;font-size:13px;color:var(--muted);display:flex;align-items:center;}
 .voice-box.listening{border-color:var(--red);color:var(--text);}
@@ -189,47 +187,69 @@ select.form-control{cursor:pointer;}
 .voice-tip{background:rgba(79,156,249,.08);border:1px solid rgba(79,156,249,.2);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:var(--accent);line-height:1.6;}
 .voice-tip strong{color:var(--accent);}
 
-/* ═══ TOAST ═══ */
+/* PLATE SUGGEST */
+.plate-suggestions{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;margin-top:4px;overflow:hidden;display:none;}
+.plate-suggest-item{padding:9px 12px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+.plate-suggest-item:last-child{border-bottom:none;}
+.plate-suggest-item:hover{background:var(--bg4);}
+.plate-suggest-name{font-size:11px;color:var(--muted);}
+.plate-suggest-plate{font-family:var(--mono);font-size:12px;color:var(--accent);}
+
+/* GOOGLE SHEETS STATUS */
+.gs-status{display:flex;align-items:center;gap:6px;font-size:11px;padding:6px 12px;border-radius:6px;background:var(--bg3);border:1px solid var(--border);}
+.gs-dot{width:7px;height:7px;border-radius:50%;}
+.gs-dot.connected{background:var(--green);box-shadow:0 0 6px rgba(62,207,142,.5);}
+.gs-dot.disconnected{background:var(--red);}
+.gs-dot.loading{background:var(--amber);animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* MONTH SUMMARY SECTION */
+.month-filter-bar{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.month-filter-bar select{background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;font-size:13px;font-family:var(--font);outline:none;cursor:pointer;}
+.month-filter-bar select:focus{border-color:var(--accent);}
+.filter-label{font-size:12px;color:var(--muted);}
+.section-divider{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;padding:14px 16px 8px;border-top:1px solid var(--border);}
+.section-divider:first-child{border-top:none;}
+.summary-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;}
+.summary-badge.replace-type{background:rgba(124,106,247,.15);color:var(--accent2);}
+.summary-badge.rotate-type{background:rgba(79,156,249,.15);color:var(--accent);}
+.empty-row td{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
+
+/* TOAST */
 .toast{position:fixed;top:20px;right:20px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;z-index:99;display:none;animation:fadeIn .2s ease;}
 .toast.show{display:block;}
 .toast.success{border-color:rgba(62,207,142,.4);color:var(--green);}
+.toast.warn{border-color:rgba(245,166,35,.4);color:var(--amber);}
+.toast.error{border-color:rgba(240,96,96,.4);color:var(--red);}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
 
-/* ═══ RESPONSIVE BREAKPOINTS ═══ */
+/* RESPONSIVE */
 @media(max-width:1024px){
   .stats{grid-template-columns:repeat(2,1fr);}
   .panels{grid-template-columns:1fr;}
 }
-
 @media(max-width:768px){
-  /* hide sidebar, show mobile nav */
-  .sidebar{
-    position:fixed;left:0;top:0;bottom:0;z-index:45;
-    transform:translateX(-100%);width:260px;
-    overflow-y:auto;
-  }
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:45;transform:translateX(-100%);width:260px;overflow-y:auto;}
   .sidebar.open{transform:translateX(0);}
   .menu-btn{display:flex;}
   .bottom-nav{display:flex;}
   .content{padding:14px 12px 80px;}
-  /* hide desktop view tabs from topbar */
   .view-tabs,.date-nav,.btn-add{display:none;}
   .topbar-title{font-size:14px;}
   .stats{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px;}
   .stat-card{padding:12px;}
   .stat-val{font-size:20px;}
   .panels{grid-template-columns:1fr;}
-  /* show fab */
   .fab{display:flex;}
   .big-cal-cell{min-height:52px;padding:6px;}
+  .month-filter-bar{gap:8px;}
 }
-
 @media(max-width:480px){
   .stats{grid-template-columns:repeat(2,1fr);}
   .stat-label{font-size:10px;}
 }
 
-/* ═══ FAB (mobile add button) ═══ */
+/* FAB */
 .fab{
   display:none;position:fixed;bottom:calc(var(--bottom-nav-h) + 16px);right:18px;
   width:52px;height:52px;background:var(--accent);border:none;border-radius:50%;
@@ -243,7 +263,6 @@ select.form-control{cursor:pointer;}
 <body>
 
 <div class="shell">
-  <!-- Sidebar overlay (mobile) -->
   <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
 
   <!-- SIDEBAR -->
@@ -255,27 +274,29 @@ select.form-control{cursor:pointer;}
     </div>
     <div class="nav">
       <div class="nav-label">เมนูหลัก</div>
-      <div class="nav-item active">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
-        Dashboard
-      </div>
-      <div class="nav-item" onclick="switchView('day');closeSidebar()">
+      <div class="nav-item active" id="nav-day" onclick="switchView('day');setActiveNav('day');closeSidebar()">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h5"/></svg>
         รายการวันนี้
       </div>
-      <div class="nav-item" onclick="switchView('month');closeSidebar()">
+      <div class="nav-item" id="nav-month" onclick="switchView('month');setActiveNav('month');closeSidebar()">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><path d="M5 3V1M11 3V1M1 7h14"/></svg>
-        รายเดือน
+        สรุปรายการแจ้งจอดแทน
       </div>
-      <div class="nav-item" onclick="switchView('cal');closeSidebar()">
+      <div class="nav-item" id="nav-cal" onclick="switchView('cal');setActiveNav('cal');closeSidebar()">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><path d="M5 3V1M11 3V1M1 7h14M5 11h2M9 11h2"/></svg>
         ปฏิทิน
       </div>
     </div>
     <div class="quota-box">
       <div class="quota-label">โควตาวันนี้ (หมุนเวียน)</div>
-      <div class="quota-nums">19 <span>/ 28 ที่</span></div>
-      <div class="quota-bar-bg"><div class="quota-bar-fill"></div></div>
+      <div class="quota-nums" id="sidebarQuota">— <span>/ 18 ที่</span></div>
+      <div class="quota-bar-bg"><div class="quota-bar-fill" id="sidebarBar" style="width:0%"></div></div>
+    </div>
+    <div style="margin:0 10px 16px;">
+      <div class="gs-status" id="gsStatus">
+        <div class="gs-dot loading" id="gsDot"></div>
+        <span id="gsText">กำลังเชื่อมต่อ...</span>
+      </div>
     </div>
   </aside>
 
@@ -288,13 +309,13 @@ select.form-control{cursor:pointer;}
       </button>
       <div class="topbar-title">ที่จอดรถ NTL/BSCS</div>
       <div class="view-tabs">
-        <div class="tab active" onclick="switchView('day',this)">รายวัน</div>
-        <div class="tab" onclick="switchView('month',this)">รายเดือน</div>
-        <div class="tab" onclick="switchView('cal',this)">ปฏิทิน</div>
+        <div class="tab active" id="tab-day" onclick="switchView('day',this)">รายวัน</div>
+        <div class="tab" id="tab-month" onclick="switchView('month',this)">สรุปรายเดือน</div>
+        <div class="tab" id="tab-cal" onclick="switchView('cal',this)">ปฏิทิน</div>
       </div>
       <div class="date-nav">
         <button onclick="changeDate(-1)">‹</button>
-        <div class="date-label" id="dateLabel">จ.ที่ 23 มี.ค. 2026</div>
+        <div class="date-label" id="dateLabel"></div>
         <button onclick="changeDate(1)">›</button>
       </div>
       <button class="btn-add" onclick="openModal()">+ แจ้งจอง</button>
@@ -307,9 +328,9 @@ select.form-control{cursor:pointer;}
         <div class="stat-card">
           <div class="stat-top">
             <div class="stat-icon blue"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="1" y="1" width="14" height="14" rx="2"/><path d="M5 8h6M8 5v6"/></svg></div>
-            <span class="stat-badge up">+2</span>
+            <span class="stat-badge up" id="statBadge">—</span>
           </div>
-          <div class="stat-val">19</div>
+          <div class="stat-val" id="statTotal">—</div>
           <div class="stat-label">จองวันนี้</div>
         </div>
         <div class="stat-card">
@@ -317,24 +338,24 @@ select.form-control{cursor:pointer;}
             <div class="stat-icon green"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--green)" stroke-width="1.5"><path d="M13 4L6 11 3 8"/></svg></div>
             <span class="stat-badge up">ว่าง</span>
           </div>
-          <div class="stat-val">9</div>
-          <div class="stat-label">ที่จอดเหลือ</div>
+          <div class="stat-val" id="statRemain">—</div>
+          <div class="stat-label">ที่จอดเหลือ (หมุนเวียน)</div>
         </div>
         <div class="stat-card">
           <div class="stat-top">
             <div class="stat-icon amber"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--amber)" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2 2"/></svg></div>
             <span class="stat-badge warn">คืนนี้</span>
           </div>
-          <div class="stat-val">3</div>
+          <div class="stat-val" id="statNight">—</div>
           <div class="stat-label">ค้างคืน</div>
         </div>
         <div class="stat-card">
           <div class="stat-top">
             <div class="stat-icon red"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--red)" stroke-width="1.5"><path d="M8 2v7M8 13h.01"/></svg></div>
-            <span class="stat-badge up">ปกติ</span>
+            <span class="stat-badge up">แทน</span>
           </div>
-          <div class="stat-val">0</div>
-          <div class="stat-label">ผิดพลาด</div>
+          <div class="stat-val" id="statReplace">—</div>
+          <div class="stat-label">จอดแทน</div>
         </div>
       </div>
 
@@ -344,17 +365,17 @@ select.form-control{cursor:pointer;}
           <div class="panel">
             <div class="panel-head">
               <div class="panel-title">รายการจองวันนี้</div>
-              <div class="panel-meta" id="dayMeta">19 รายการ</div>
+              <div class="panel-meta" id="dayMeta">กำลังโหลด...</div>
             </div>
             <div class="tbl-wrap">
               <table>
                 <thead><tr><th>#</th><th>ชื่อ</th><th>ทะเบียน</th><th>ประเภท</th><th>เวลา</th><th>ถึงวันที่</th></tr></thead>
-                <tbody id="tableBody"></tbody>
+                <tbody id="tableBody"><tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted);">กำลังโหลดข้อมูล...</td></tr></tbody>
               </table>
             </div>
           </div>
           <div class="panel">
-            <div class="panel-head"><div class="panel-title">มีนาคม 2026</div><div class="panel-meta">ภาพรวมเดือน</div></div>
+            <div class="panel-head"><div class="panel-title" id="miniCalTitle">—</div><div class="panel-meta">ภาพรวมเดือน</div></div>
             <div class="cal-grid" id="miniCal"></div>
             <div class="cal-legend">
               <div class="cal-legend-item"><div class="dot" style="background:var(--red)"></div>เต็ม</div>
@@ -365,23 +386,48 @@ select.form-control{cursor:pointer;}
         </div>
       </div>
 
-      <!-- MONTH VIEW -->
+      <!-- MONTH VIEW — สรุปรายการ -->
       <div id="view-month" class="view-section">
-        <div class="panels">
-          <div class="panel">
-            <div class="panel-head"><div class="panel-title">มีนาคม 2026 — รายวัน</div></div>
-            <div id="monthBars"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-head"><div class="panel-title">สถิติเดือน</div></div>
-            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:12px;">
-              <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);font-size:13px;">จองทั้งหมด</span><span style="font-family:var(--mono);">342</span></div>
-              <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);font-size:13px;">เฉลี่ย/วัน</span><span style="font-family:var(--mono);">15.5</span></div>
-              <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);font-size:13px;">วันใช้มากสุด</span><span style="font-family:var(--mono);">10 มี.ค.</span></div>
-              <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);font-size:13px;">ค้างคืน</span><span style="font-family:var(--mono);">48</span></div>
-              <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);font-size:13px;">หมุนเวียน</span><span style="font-family:var(--mono);">241</span></div>
-              <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);font-size:13px;">จอดแทน</span><span style="font-family:var(--mono);">101</span></div>
+        <div class="panel" style="margin-bottom:16px;">
+          <!-- Filter Bar -->
+          <div class="month-filter-bar">
+            <span class="filter-label">เดือน</span>
+            <select id="filterMonth" onchange="renderMonthSummary()">
+              <option value="0">มกราคม</option><option value="1">กุมภาพันธ์</option>
+              <option value="2" selected>มีนาคม</option><option value="3">เมษายน</option>
+              <option value="4">พฤษภาคม</option><option value="5">มิถุนายน</option>
+              <option value="6">กรกฎาคม</option><option value="7">สิงหาคม</option>
+              <option value="8">กันยายน</option><option value="9">ตุลาคม</option>
+              <option value="10">พฤศจิกายน</option><option value="11">ธันวาคม</option>
+            </select>
+            <span class="filter-label" style="margin-left:6px;">วัน</span>
+            <select id="filterDay" onchange="renderMonthSummary()">
+              <option value="all">ทั้งเดือน</option>
+              <!-- days 1-31 populated by JS -->
+            </select>
+            <span style="flex:1"></span>
+            <div class="gs-status" id="gsStatusMonth">
+              <div class="gs-dot loading" id="gsDotMonth"></div>
+              <span id="gsTextMonth">กำลังโหลด...</span>
             </div>
+          </div>
+
+          <!-- Table 1: จอดแทน -->
+          <div class="section-divider">📋 รายการแจ้งจอดแทน</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>#</th><th>วันที่</th><th>ชื่อผู้แจ้ง</th><th>ทะเบียน</th><th>จอดแทนสิทธิ์</th><th>เวลา</th><th>สิ้นสุด</th></tr></thead>
+              <tbody id="tblReplace"></tbody>
+            </table>
+          </div>
+
+          <!-- Table 2: หมุนเวียน -->
+          <div class="section-divider" style="margin-top:8px;">🔄 รายการจอดหมุนเวียน</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>#</th><th>วันที่</th><th>ชื่อผู้แจ้ง</th><th>ทะเบียน</th><th>ประเภทเวลา</th><th>สิ้นสุด</th></tr></thead>
+              <tbody id="tblRotate"></tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -390,7 +436,7 @@ select.form-control{cursor:pointer;}
       <div id="view-cal" class="view-section">
         <div class="panel">
           <div class="panel-head">
-            <div class="panel-title">ปฏิทิน — มีนาคม 2026</div>
+            <div class="panel-title" id="bigCalTitle">ปฏิทิน</div>
             <div class="cal-legend" style="padding:0">
               <div class="cal-legend-item"><div class="dot" style="background:var(--red)"></div>เต็ม</div>
               <div class="cal-legend-item"><div class="dot" style="background:var(--amber)"></div>>80%</div>
@@ -411,7 +457,7 @@ select.form-control{cursor:pointer;}
         </div>
         <div class="bnav-item" id="bnav-month" onclick="switchView('month');setActiveNav('month')">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="16" height="13" rx="2"/><path d="M6 4V2M14 4V2M2 9h16"/></svg>
-          รายเดือน
+          สรุปเดือน
         </div>
         <div class="bnav-item" id="bnav-cal" onclick="switchView('cal');setActiveNav('cal')">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="16" height="13" rx="2"/><path d="M6 4V2M14 4V2M2 9h16M6 13h2M12 13h2"/></svg>
@@ -423,10 +469,10 @@ select.form-control{cursor:pointer;}
         </div>
       </div>
     </nav>
-  </div><!-- /main -->
-</div><!-- /shell -->
+  </div>
+</div>
 
-<!-- FAB (mobile) -->
+<!-- FAB -->
 <button class="fab" onclick="openModal()">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
 </button>
@@ -438,28 +484,25 @@ select.form-control{cursor:pointer;}
     <button class="close-btn" onclick="closeModal()">✕</button>
     <div class="modal-title">แจ้งจองที่จอดรถ</div>
 
-    <!-- Voice tip -->
     <div class="voice-tip">
       💬 พูดเพื่อกรอกข้อมูลอัตโนมัติ เช่น<br>
       <strong>"จองหมุนเวียน ทะเบียน กข 1234 ชื่อสมศักดิ์ วันที่ 25 มีนาคม จอดปกติ"</strong>
     </div>
 
-    <!-- Voice input -->
     <div class="voice-row">
       <div class="voice-box" id="voiceBox">กดไมค์แล้วพูด...</div>
       <button class="mic-btn" id="micBtn" onclick="toggleVoice()">
-        <svg id="micIcon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
           <rect x="7" y="1" width="6" height="10" rx="3"/>
           <path d="M4 10a6 6 0 0012 0M10 17v2M7 19h6"/>
         </svg>
       </button>
     </div>
 
-    <!-- Form -->
     <div class="form-group">
       <label class="form-label">ประเภทการจอด</label>
       <select class="form-control" id="fType" onchange="toggleReplace()">
-        <option value="หมุนเวียน">จอดหมุนเวียน (โควตา 28 ที่)</option>
+        <option value="หมุนเวียน">จอดหมุนเวียน (โควตา 18 ที่)</option>
         <option value="จอดแทน">จอดแทนพนักงานประจำ</option>
       </select>
     </div>
@@ -489,8 +532,9 @@ select.form-control{cursor:pointer;}
     </div>
 
     <div class="form-group">
-      <label class="form-label">ทะเบียนรถ</label>
-      <input class="form-control" id="fPlate" placeholder="เช่น 5ธฌ 7777">
+      <label class="form-label">ทะเบียนรถ <span style="color:var(--accent);font-size:11px;">(พิมพ์เพื่อค้นหาจากฐานข้อมูล)</span></label>
+      <input class="form-control" id="fPlate" placeholder="เช่น กข 1234" oninput="searchPlate(this.value)" autocomplete="off">
+      <div class="plate-suggestions" id="plateSuggestions"></div>
     </div>
 
     <div class="form-group">
@@ -499,6 +543,7 @@ select.form-control{cursor:pointer;}
     </div>
 
     <button class="btn-submit" onclick="submitForm()">บันทึกการจอง</button>
+    <div id="submitStatus" style="text-align:center;margin-top:10px;font-size:12px;color:var(--muted);display:none;"></div>
   </div>
 </div>
 
@@ -506,144 +551,536 @@ select.form-control{cursor:pointer;}
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── DATA ───
-const mockData = [
-  {name:'สมศักดิ์ วงษ์ใหญ่',plate:'กข 1234',type:'rotate',period:'normal',start:'23/03',end:'23/03'},
-  {name:'นุกูล ชัยมงคล',plate:'5ธฌ 7777',type:'replace',period:'normal',start:'23/03',end:'25/03'},
-  {name:'ปิยะ สมบูรณ์ดี',plate:'กง 5544',type:'rotate',period:'night',start:'23/03',end:'24/03'},
-  {name:'วารี แสนสุข',plate:'ขข 9900',type:'rotate',period:'normal',start:'23/03',end:'23/03'},
-  {name:'ธนกร ศิริวงศ์',plate:'3ผว 1122',type:'replace',period:'night',start:'23/03',end:'24/03'},
-  {name:'อรุณี พงษ์ศักดิ์',plate:'กต 3312',type:'rotate',period:'normal',start:'23/03',end:'23/03'},
-  {name:'มานพ เจริญสุข',plate:'ชง 4488',type:'rotate',period:'normal',start:'23/03',end:'23/03'},
-  {name:'สุภาพ รักดี',plate:'กค 7766',type:'replace',period:'normal',start:'23/03',end:'26/03'},
-];
-const dayVals=[0,0,0,0,12,18,22,15,8,0,0,25,19,28,17,14,11,0,0,20,16,23,18,9,0,0,15,19,28,21,17];
+// ════════════════════════════════════════════════════════
+//  CONFIGURATION — แก้ค่านี้ก่อนใช้งาน
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+  // Google Apps Script Web App URL
+  // 1. เปิด Google Sheet ที่ต้องการ
+  // 2. Extensions > Apps Script > วาง Code ด้านล่าง > Deploy > Web App
+  // 3. วาง URL ที่ได้ในบรรทัดนี้:
+  SCRIPT_URL: 'https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec',
 
-// ─── RENDER TABLE ───
-function renderTable(){
-  document.getElementById('tableBody').innerHTML=mockData.map((r,i)=>`
+  ROTATE_QUOTA: 18,   // จำนวนที่จอดหมุนเวียนสูงสุด
+};
+
+// ════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════
+let allData = [];           // ข้อมูลทั้งหมดจาก Sheet
+let plateDB = [];           // ทะเบียนอ้างอิง (Sheet2)
+let gsConnected = false;
+let cur = new Date();
+
+const thDays=['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+const thMonths=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const thMonthsShort=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+// ════════════════════════════════════════════════════════
+//  GOOGLE SHEETS API
+// ════════════════════════════════════════════════════════
+/*
+  ── Apps Script Code (วางใน script.gs ของ Google Sheet) ──
+
+  function doGet(e){
+    const action = e.parameter.action || 'getData';
+    if(action === 'getData'){
+      const ss = SpreadsheetApp.getActiveSpreadsheet();
+      const sheet = ss.getSheetByName('Parking') || ss.getSheets()[0];
+      const rows = sheet.getDataRange().getValues();
+      const headers = rows[0];
+      const data = rows.slice(1).map(r => {
+        let obj = {};
+        headers.forEach((h,i) => obj[h] = r[i]);
+        return obj;
+      });
+      const plateSheet = ss.getSheetByName('PlateDB');
+      let plates = [];
+      if(plateSheet){
+        const pr = plateSheet.getDataRange().getValues();
+        plates = pr.slice(1).map(r => ({plate: r[0], name: r[1], dept: r[2]||''}));
+      }
+      return ContentService.createTextOutput(JSON.stringify({ok:true, data, plates}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    return ContentService.createTextOutput(JSON.stringify({ok:false}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  function doPost(e){
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getSheetByName('Parking') || ss.getSheets()[0];
+    const payload = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      new Date(),
+      payload.name, payload.plate, payload.type,
+      payload.replaceInfo || '', payload.start, payload.end,
+      payload.period, payload.submittedAt
+    ]);
+    return ContentService.createTextOutput(JSON.stringify({ok:true}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+*/
+
+async function fetchFromSheet(){
+  setGsStatus('loading','กำลังโหลด...');
+  try{
+    const res = await fetch(CONFIG.SCRIPT_URL + '?action=getData');
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json = await res.json();
+    if(!json.ok) throw new Error('Script error');
+    allData = (json.data||[]).map(normalizeRow);
+    plateDB = json.plates||[];
+    gsConnected = true;
+    setGsStatus('connected','เชื่อมต่อแล้ว');
+    refreshAll();
+  } catch(err){
+    gsConnected = false;
+    setGsStatus('disconnected','ไม่ได้เชื่อมต่อ (ใช้ข้อมูลตัวอย่าง)');
+    // fallback to demo data
+    allData = getDemoData();
+    plateDB = getDemoPlatDB();
+    refreshAll();
+  }
+}
+
+async function postToSheet(payload){
+  const btn = document.getElementById('submitStatus');
+  btn.style.display='block';
+  btn.textContent='กำลังบันทึก...';
+  try{
+    await fetch(CONFIG.SCRIPT_URL, {
+      method:'POST',
+      body: JSON.stringify({...payload, submittedAt: new Date().toISOString()})
+    });
+    showToast('✓ บันทึกสำเร็จ','success');
+    fetchFromSheet();
+  } catch(e){
+    showToast('⚠ บันทึกไม่สำเร็จ (ตรวจสอบการเชื่อมต่อ)','warn');
+  }
+  btn.style.display='none';
+}
+
+function normalizeRow(r){
+  // รองรับ header ทั้งภาษาไทยและ EN
+  return {
+    timestamp: r['timestamp']||r['Timestamp']||r['วันเวลา']||'',
+    name:      r['name']||r['ชื่อ']||'',
+    plate:     r['plate']||r['ทะเบียน']||'',
+    type:      r['type']||r['ประเภท']||'หมุนเวียน',
+    replaceInfo: r['replaceInfo']||r['จอดแทน']||'',
+    start:     r['start']||r['วันเริ่ม']||'',
+    end:       r['end']||r['วันสิ้นสุด']||'',
+    period:    r['period']||r['เวลา']||'ปกติ',
+  };
+}
+
+// ════════════════════════════════════════════════════════
+//  DEMO DATA (fallback เมื่อยังไม่ได้ตั้งค่า Script URL)
+// ════════════════════════════════════════════════════════
+function getDemoData(){
+  const today = fmtDate(new Date());
+  return [
+    {name:'สมศักดิ์ วงษ์ใหญ่',plate:'กข 1234',type:'หมุนเวียน',period:'ปกติ',start:today,end:today,replaceInfo:''},
+    {name:'นุกูล ชัยมงคล',plate:'5ธฌ 7777',type:'จอดแทน',period:'ปกติ',start:today,end:'25/03/2026',replaceInfo:'คุณนุกูล ช่อง 02'},
+    {name:'ปิยะ สมบูรณ์ดี',plate:'กง 5544',type:'หมุนเวียน',period:'ค้างคืน',start:today,end:today,replaceInfo:''},
+    {name:'วารี แสนสุข',plate:'ขข 9900',type:'หมุนเวียน',period:'ปกติ',start:today,end:today,replaceInfo:''},
+    {name:'ธนกร ศิริวงศ์',plate:'3ผว 1122',type:'จอดแทน',period:'ค้างคืน',start:today,end:'24/03/2026',replaceInfo:'คุณวารี ช่อง 05'},
+    {name:'อรุณี พงษ์ศักดิ์',plate:'กต 3312',type:'หมุนเวียน',period:'ปกติ',start:today,end:today,replaceInfo:''},
+    {name:'มานพ เจริญสุข',plate:'ชง 4488',type:'หมุนเวียน',period:'ปกติ',start:today,end:today,replaceInfo:''},
+    {name:'สุภาพ รักดี',plate:'กค 7766',type:'จอดแทน',period:'ปกติ',start:'20/03/2026',end:'28/03/2026',replaceInfo:'คุณสมชาย ช่อง 08'},
+  ];
+}
+function getDemoPlatDB(){
+  return [
+    {plate:'กข 1234',name:'สมศักดิ์ วงษ์ใหญ่',dept:'IT'},
+    {plate:'5ธฌ 7777',name:'นุกูล ชัยมงคล',dept:'HR'},
+    {plate:'กง 5544',name:'ปิยะ สมบูรณ์ดี',dept:'Finance'},
+    {plate:'ขข 9900',name:'วารี แสนสุข',dept:'Admin'},
+    {plate:'3ผว 1122',name:'ธนกร ศิริวงศ์',dept:'Sales'},
+    {plate:'กต 3312',name:'อรุณี พงษ์ศักดิ์',dept:'IT'},
+    {plate:'ชง 4488',name:'มานพ เจริญสุข',dept:'Marketing'},
+    {plate:'กค 7766',name:'สุภาพ รักดี',dept:'Finance'},
+    {plate:'1กก 8888',name:'ชลิดา มีสุข',dept:'Admin'},
+    {plate:'ขจ 2233',name:'วิชัย พลายงาม',dept:'HR'},
+  ];
+}
+
+// ════════════════════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════════════════════
+function fmtDate(d){
+  return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+function dateInRange(startStr, endStr, checkDate){
+  const parse = s => {
+    if(!s) return null;
+    // รองรับ dd/mm/yyyy, yyyy-mm-dd, หรือ Date
+    if(s instanceof Date) return s;
+    const p = s.toString().split(/[\/\-]/);
+    if(p[0].length===4) return new Date(+p[0],+p[1]-1,+p[2]);
+    return new Date(+p[2],+p[1]-1,+p[0]);
+  };
+  const s = parse(startStr), e = parse(endStr);
+  if(!s||!e) return false;
+  const c = new Date(checkDate.getFullYear(),checkDate.getMonth(),checkDate.getDate());
+  return c >= new Date(s.getFullYear(),s.getMonth(),s.getDate()) &&
+         c <= new Date(e.getFullYear(),e.getMonth(),e.getDate());
+}
+function getDatePart(str){
+  if(!str) return null;
+  const p = str.toString().split(/[\/\-]/);
+  if(p[0].length===4) return new Date(+p[0],+p[1]-1,+p[2]);
+  return new Date(+p[2],+p[1]-1,+p[0]);
+}
+
+// ════════════════════════════════════════════════════════
+//  FILTER DATA FOR CURRENT DATE
+// ════════════════════════════════════════════════════════
+function getDataForDate(d){
+  return allData.filter(r => dateInRange(r.start||r.timestamp, r.end||r.start||r.timestamp, d));
+}
+
+// ════════════════════════════════════════════════════════
+//  REFRESH ALL VIEWS
+// ════════════════════════════════════════════════════════
+function refreshAll(){
+  const todayData = getDataForDate(cur);
+  const rotateData = todayData.filter(r=>r.type==='หมุนเวียน');
+  const replaceData = todayData.filter(r=>r.type==='จอดแทน');
+  const nightData = todayData.filter(r=>r.period==='ค้างคืน');
+
+  // Stats
+  document.getElementById('statTotal').textContent = todayData.length;
+  document.getElementById('statBadge').textContent = '+'+todayData.length;
+  document.getElementById('statRemain').textContent = Math.max(0, CONFIG.ROTATE_QUOTA - rotateData.length);
+  document.getElementById('statNight').textContent = nightData.length;
+  document.getElementById('statReplace').textContent = replaceData.length;
+
+  // Sidebar quota
+  const used = rotateData.length;
+  const pct = Math.min(100, Math.round(used/CONFIG.ROTATE_QUOTA*100));
+  document.getElementById('sidebarQuota').innerHTML = `${used} <span>/ ${CONFIG.ROTATE_QUOTA} ที่</span>`;
+  document.getElementById('sidebarBar').style.width = pct+'%';
+
+  renderDayTable(todayData);
+  renderMiniCal();
+  renderMonthSummary();
+  renderBigCal();
+  updateDateLabel();
+}
+
+// ════════════════════════════════════════════════════════
+//  DAY TABLE
+// ════════════════════════════════════════════════════════
+function renderDayTable(data){
+  document.getElementById('dayMeta').textContent = data.length+' รายการ';
+  if(!data.length){
+    document.getElementById('tableBody').innerHTML='<tr class="empty-row"><td colspan="6">ไม่มีรายการวันนี้</td></tr>';
+    return;
+  }
+  document.getElementById('tableBody').innerHTML = data.map((r,i)=>`
     <tr>
       <td style="color:var(--muted);font-family:var(--mono);font-size:11px;">${String(i+1).padStart(2,'0')}</td>
       <td>${r.name}</td>
       <td><span class="plate">${r.plate}</span></td>
-      <td><span class="badge ${r.type}">${r.type==='rotate'?'หมุนเวียน':'จอดแทน'}</span></td>
-      <td><span class="badge ${r.period}">${r.period==='normal'?'ปกติ':'ค้างคืน'}</span></td>
-      <td style="color:var(--muted);font-size:12px;">${r.end}</td>
+      <td><span class="badge ${r.type==='หมุนเวียน'?'rotate':'replace'}">${r.type}</span></td>
+      <td><span class="badge ${r.period==='ค้างคืน'?'night':'normal'}">${r.period}</span></td>
+      <td style="color:var(--muted);font-size:12px;">${r.end||'—'}</td>
     </tr>`).join('');
 }
 
-// ─── MINI CAL ───
+// ════════════════════════════════════════════════════════
+//  MINI CAL
+// ════════════════════════════════════════════════════════
 function renderMiniCal(){
   const days=['อา','จ','อ','พ','พฤ','ศ','ส'];
-  const st=[null,'free','free','busy','free','full','free','free','free','busy','full','free','free','busy','free','free','busy','free','free','full','free','busy','free','today','free','free','free','busy','free','free','full'];
-  let h=days.map(d=>`<div class="cal-day-name">${d}</div>`).join('');
-  for(let i=0;i<4;i++)h+='<div class="cal-cell empty"></div>';
-  for(let d=1;d<=31;d++){
-    const s=d===23?'today selected':st[d]||'free';
-    const dc=s.includes('full')?'var(--red)':s.includes('busy')?'var(--amber)':'var(--green)';
-    h+=`<div class="cal-cell ${s}"><span class="cal-date">${d}</span><div class="cal-dot" style="background:${s.includes('selected')?'rgba(255,255,255,.7)':dc}"></div></div>`;
+  const m = cur.getMonth(), y = cur.getFullYear();
+  const daysInMonth = new Date(y,m+1,0).getDate();
+  const firstDay = new Date(y,m,1).getDay();
+  const today = new Date();
+
+  document.getElementById('miniCalTitle').textContent = `${thMonths[m]} ${y}`;
+
+  let h = days.map(d=>`<div class="cal-day-name">${d}</div>`).join('');
+  for(let i=0;i<firstDay;i++) h+='<div class="cal-cell empty"></div>';
+
+  for(let d=1;d<=daysInMonth;d++){
+    const dd = new Date(y,m,d);
+    const dayData = getDataForDate(dd);
+    const rotCnt = dayData.filter(r=>r.type==='หมุนเวียน').length;
+    const pct = rotCnt/CONFIG.ROTATE_QUOTA;
+    const isToday = dd.toDateString()===today.toDateString();
+    const isCur = dd.toDateString()===cur.toDateString();
+    const cls = pct>=1?'full':pct>=.8?'busy':'free';
+    h+=`<div class="cal-cell ${cls}${isToday?' today':''}${isCur?' selected':''}" onclick="selectDate(${y},${m},${d})">
+      <span class="cal-date">${d}</span>
+      <div class="cal-dot"></div>
+    </div>`;
   }
   document.getElementById('miniCal').innerHTML=h;
 }
 
-// ─── MONTH BARS ───
-function renderMonthBars(){
-  document.getElementById('monthBars').innerHTML=dayVals.slice(0,23).map((v,i)=>{
-    if(!v)return'';
-    const p=Math.round(v/28*100);
-    const c=p>=100?'var(--red)':p>=80?'var(--amber)':'var(--accent)';
-    return`<div class="month-bar-row"><div class="month-day">${i+1}</div><div class="month-bar-bg"><div class="month-bar-fill" style="width:${p}%;background:${c}"></div></div><div class="month-count">${v}</div></div>`;
-  }).join('');
+function selectDate(y,m,d){
+  cur = new Date(y,m,d);
+  refreshAll();
 }
 
-// ─── BIG CAL ───
+// ════════════════════════════════════════════════════════
+//  MONTH SUMMARY (2 ตาราง)
+// ════════════════════════════════════════════════════════
+function populateDayFilter(){
+  const sel = document.getElementById('filterDay');
+  if(sel.options.length > 1) return;
+  for(let d=1;d<=31;d++){
+    const o = document.createElement('option');
+    o.value=d; o.textContent=d+' วัน';
+    sel.appendChild(o);
+  }
+}
+
+function renderMonthSummary(){
+  populateDayFilter();
+  const m = parseInt(document.getElementById('filterMonth').value);
+  const dayFilter = document.getElementById('filterDay').value;
+  const y = new Date().getFullYear();
+
+  let filtered = allData.filter(r=>{
+    const s = getDatePart(r.start||r.timestamp);
+    return s && s.getMonth()===m && s.getFullYear()===y;
+  });
+
+  if(dayFilter !== 'all'){
+    const dd = parseInt(dayFilter);
+    filtered = filtered.filter(r=>{
+      const s = getDatePart(r.start||r.timestamp);
+      return s && s.getDate()===dd;
+    });
+  }
+
+  const replaceRows = filtered.filter(r=>r.type==='จอดแทน');
+  const rotateRows  = filtered.filter(r=>r.type==='หมุนเวียน');
+
+  // Table Replace
+  document.getElementById('tblReplace').innerHTML = replaceRows.length
+    ? replaceRows.map((r,i)=>`
+      <tr>
+        <td style="color:var(--muted);font-family:var(--mono);font-size:11px;">${String(i+1).padStart(2,'0')}</td>
+        <td style="font-size:12px;color:var(--muted);">${fmtDateFromStr(r.start)}</td>
+        <td>${r.name}</td>
+        <td><span class="plate">${r.plate}</span></td>
+        <td style="font-size:12px;color:var(--accent2);">${r.replaceInfo||'—'}</td>
+        <td><span class="badge ${r.period==='ค้างคืน'?'night':'normal'}">${r.period}</span></td>
+        <td style="font-size:12px;color:var(--muted);">${fmtDateFromStr(r.end)}</td>
+      </tr>`).join('')
+    : '<tr class="empty-row"><td colspan="7">ไม่มีรายการแจ้งจอดแทนในช่วงนี้</td></tr>';
+
+  // Table Rotate
+  document.getElementById('tblRotate').innerHTML = rotateRows.length
+    ? rotateRows.map((r,i)=>`
+      <tr>
+        <td style="color:var(--muted);font-family:var(--mono);font-size:11px;">${String(i+1).padStart(2,'0')}</td>
+        <td style="font-size:12px;color:var(--muted);">${fmtDateFromStr(r.start)}</td>
+        <td>${r.name}</td>
+        <td><span class="plate">${r.plate}</span></td>
+        <td><span class="badge ${r.period==='ค้างคืน'?'night':'normal'}">${r.period}</span></td>
+        <td style="font-size:12px;color:var(--muted);">${fmtDateFromStr(r.end)}</td>
+      </tr>`).join('')
+    : '<tr class="empty-row"><td colspan="6">ไม่มีรายการจอดหมุนเวียนในช่วงนี้</td></tr>';
+}
+
+function fmtDateFromStr(s){
+  if(!s) return '—';
+  const d = getDatePart(s);
+  if(!d||isNaN(d)) return s;
+  return `${d.getDate()} ${thMonthsShort[d.getMonth()]}`;
+}
+
+// ════════════════════════════════════════════════════════
+//  BIG CAL
+// ════════════════════════════════════════════════════════
 function renderBigCal(){
   const days=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
-  let h=days.map(d=>`<div style="text-align:center;font-size:10px;color:var(--muted);padding-bottom:4px;">${d}</div>`).join('');
-  for(let i=0;i<4;i++)h+=`<div></div>`;
-  for(let d=1;d<=31;d++){
-    const v=dayVals[d-1]||0;const p=Math.round(v/28*100);
-    const dc=p>=100?'var(--red)':p>=80?'var(--amber)':'var(--green)';
-    const isTod=d===23;
-    h+=`<div class="big-cal-cell${isTod?' today':''}" onclick="">
+  const m = cur.getMonth(), y = cur.getFullYear();
+  const daysInMonth = new Date(y,m+1,0).getDate();
+  const firstDay = new Date(y,m,1).getDay();
+  const today = new Date();
+
+  document.getElementById('bigCalTitle').textContent = `ปฏิทิน — ${thMonths[m]} ${y}`;
+
+  let h = days.map(d=>`<div style="text-align:center;font-size:10px;color:var(--muted);padding-bottom:4px;">${d}</div>`).join('');
+  for(let i=0;i<firstDay;i++) h+=`<div></div>`;
+
+  for(let d=1;d<=daysInMonth;d++){
+    const dd = new Date(y,m,d);
+    const dayData = getDataForDate(dd);
+    const v = dayData.filter(r=>r.type==='หมุนเวียน').length;
+    const p = Math.round(v/CONFIG.ROTATE_QUOTA*100);
+    const dc = p>=100?'var(--red)':p>=80?'var(--amber)':'var(--green)';
+    const isTod = dd.toDateString()===today.toDateString();
+    h+=`<div class="big-cal-cell${isTod?' today':''}" onclick="selectDate(${y},${m},${d})">
       <div style="font-family:var(--mono);font-size:12px;color:${isTod?'var(--accent)':'var(--text)'};">${d}</div>
-      ${v>0?`<div style="margin-top:4px;"><div style="background:var(--bg4);border-radius:3px;height:3px;"><div style="width:${p}%;background:${dc};height:3px;border-radius:3px;"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">${v}/28</div></div>`:'<div style="font-size:10px;color:var(--border);margin-top:3px;">—</div>'}
+      ${v>0?`<div style="margin-top:4px;"><div style="background:var(--bg4);border-radius:3px;height:3px;"><div style="width:${p}%;background:${dc};height:3px;border-radius:3px;"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">${v}/${CONFIG.ROTATE_QUOTA}</div></div>`:'<div style="font-size:10px;color:var(--border);margin-top:3px;">—</div>'}
     </div>`;
   }
   document.getElementById('bigCal').innerHTML=h;
 }
 
-// ─── VIEW SWITCH ───
-let curView='day';
-function switchView(v,tabEl){
-  curView=v;
+// ════════════════════════════════════════════════════════
+//  DATE NAV
+// ════════════════════════════════════════════════════════
+function updateDateLabel(){
+  document.getElementById('dateLabel').textContent=
+    `${thDays[cur.getDay()]}ที่ ${cur.getDate()} ${thMonthsShort[cur.getMonth()]} ${cur.getFullYear()}`;
+}
+function changeDate(n){
+  cur.setDate(cur.getDate()+n);
+  refreshAll();
+}
+
+// ════════════════════════════════════════════════════════
+//  PLATE SEARCH (autocomplete จาก PlateDB)
+// ════════════════════════════════════════════════════════
+function searchPlate(val){
+  const box = document.getElementById('plateSuggestions');
+  if(!val||val.length<2){box.style.display='none';return;}
+  const q = val.toLowerCase().replace(/\s/g,'');
+  const hits = plateDB.filter(p=>
+    p.plate.toLowerCase().replace(/\s/g,'').includes(q)||
+    p.name.toLowerCase().includes(q)
+  ).slice(0,5);
+  if(!hits.length){box.style.display='none';return;}
+  box.innerHTML = hits.map(p=>`
+    <div class="plate-suggest-item" onclick="selectPlate('${p.plate}','${p.name}')">
+      <span class="plate-suggest-plate">${p.plate}</span>
+      <span class="plate-suggest-name">${p.name} ${p.dept?'('+p.dept+')':''}</span>
+    </div>`).join('');
+  box.style.display='block';
+}
+function selectPlate(plate,name){
+  document.getElementById('fPlate').value=plate;
+  document.getElementById('fName').value=name;
+  document.getElementById('plateSuggestions').style.display='none';
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#fPlate')&&!e.target.closest('#plateSuggestions'))
+    document.getElementById('plateSuggestions').style.display='none';
+});
+
+// ════════════════════════════════════════════════════════
+//  GS STATUS
+// ════════════════════════════════════════════════════════
+function setGsStatus(state, text){
+  ['gsDot','gsDotMonth'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.className='gs-dot '+state;}
+  });
+  ['gsText','gsTextMonth'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=text;
+  });
+}
+
+// ════════════════════════════════════════════════════════
+//  VIEW SWITCH
+// ════════════════════════════════════════════════════════
+function switchView(v, tabEl){
   document.querySelectorAll('.view-section').forEach(s=>s.classList.remove('active'));
   document.getElementById('view-'+v).classList.add('active');
-  if(tabEl){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));tabEl.classList.add('active');}
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(t=>t.classList.remove('active'));
+  if(tabEl) tabEl.classList.add('active');
+  const tid = document.getElementById('tab-'+v);
+  if(tid) tid.classList.add('active');
+  const nid = document.getElementById('nav-'+v);
+  if(nid) nid.classList.add('active');
 }
 function setActiveNav(v){
   document.querySelectorAll('.bnav-item').forEach(i=>i.classList.remove('active'));
   document.getElementById('bnav-'+v)?.classList.add('active');
 }
 
-// ─── DATE NAV ───
-const thDays=['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
-const thMonths=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-let cur=new Date(2026,2,23);
-function updateDateLabel(){
-  const d=cur;
-  document.getElementById('dateLabel').textContent=`${thDays[d.getDay()]}ที่ ${d.getDate()} ${thMonths[d.getMonth()]} ${d.getFullYear()}`;
-}
-function changeDate(n){cur.setDate(cur.getDate()+n);updateDateLabel();}
-
-// ─── SIDEBAR ───
+// ════════════════════════════════════════════════════════
+//  SIDEBAR
+// ════════════════════════════════════════════════════════
 function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('overlay').classList.add('open');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
 
-// ─── MODAL ───
+// ════════════════════════════════════════════════════════
+//  MODAL
+// ════════════════════════════════════════════════════════
 function openModal(){
-  const today=new Date().toISOString().split('T')[0];
-  document.getElementById('fStart').value='2026-03-23';
-  document.getElementById('fEnd').value='2026-03-23';
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('fStart').value=today;
+  document.getElementById('fEnd').value=today;
   document.getElementById('modalBg').classList.add('open');
 }
 function closeModal(){document.getElementById('modalBg').classList.remove('open');stopVoice();}
 function handleModalBgClick(e){if(e.target===document.getElementById('modalBg'))closeModal();}
-function toggleReplace(){document.getElementById('replaceGroup').style.display=document.getElementById('fType').value==='จอดแทน'?'block':'none';}
+function toggleReplace(){
+  document.getElementById('replaceGroup').style.display=
+    document.getElementById('fType').value==='จอดแทน'?'block':'none';
+}
 
-// ─── FORM SUBMIT ───
+// ════════════════════════════════════════════════════════
+//  FORM SUBMIT
+// ════════════════════════════════════════════════════════
 function submitForm(){
   const name=document.getElementById('fName').value.trim();
   const plate=document.getElementById('fPlate').value.trim();
+  const type=document.getElementById('fType').value;
+  const period=document.getElementById('fTime').value;
+  const start=document.getElementById('fStart').value;
+  const end=document.getElementById('fEnd').value;
+  const replaceInfo=document.getElementById('fReplaceInfo').value.trim();
+
   if(!name||!plate){showToast('กรุณากรอก ชื่อ และ ทะเบียน','warn');return;}
-  closeModal();
-  showToast('✓ บันทึกการจองสำเร็จ','success');
+
+  const payload={name,plate,type,period,start,end,replaceInfo};
+
+  if(gsConnected){
+    closeModal();
+    postToSheet(payload);
+  } else {
+    // local demo — push to allData
+    allData.push({
+      ...payload,
+      timestamp: new Date().toISOString(),
+      start: fmtDate(new Date(start)),
+      end: fmtDate(new Date(end)),
+    });
+    closeModal();
+    showToast('✓ บันทึกสำเร็จ (โหมดออฟไลน์)','success');
+    refreshAll();
+  }
+
   // reset
   document.getElementById('fName').value='';
   document.getElementById('fPlate').value='';
+  document.getElementById('fReplaceInfo').value='';
 }
 
-// ─── TOAST ───
+// ════════════════════════════════════════════════════════
+//  TOAST
+// ════════════════════════════════════════════════════════
 function showToast(msg,type='success'){
   const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast show '+(type==='success'?'success':'');
-  setTimeout(()=>t.classList.remove('show'),3000);
+  t.textContent=msg;
+  t.className='toast show '+(type==='success'?'success':type==='warn'?'warn':'error');
+  setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-// ─── VOICE INPUT ───
+// ════════════════════════════════════════════════════════
+//  VOICE INPUT
+// ════════════════════════════════════════════════════════
 let recognition=null,isRecording=false;
-
 function toggleVoice(){
   if(isRecording){stopVoice();return;}
   if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){
     showToast('เบราว์เซอร์นี้ไม่รองรับ กรุณาใช้ Chrome','warn');return;
   }
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  recognition=new SR();
-  recognition.lang='th-TH';
-  recognition.interimResults=true;
-  recognition.continuous=false;
-
+  recognition=new SR();recognition.lang='th-TH';recognition.interimResults=true;recognition.continuous=false;
   recognition.onstart=()=>{
     isRecording=true;
     document.getElementById('micBtn').classList.add('recording');
@@ -658,57 +1095,48 @@ function toggleVoice(){
       parseVoice(t);
     }
   };
-  recognition.onerror=()=>{stopVoice();showToast('ไม่ได้ยินเสียง ลองใหม่อีกครั้ง','warn');};
+  recognition.onerror=()=>{stopVoice();showToast('ไม่ได้ยินเสียง ลองใหม่','warn');};
   recognition.onend=()=>stopVoice();
   recognition.start();
 }
-
 function stopVoice(){
   isRecording=false;
   document.getElementById('micBtn').classList.remove('recording');
   if(recognition)try{recognition.stop();}catch(e){}
 }
-
 function parseVoice(text){
   const t=text.toLowerCase();
-
-  // ประเภท
-  if(t.includes('แทน')||t.includes('แทนพนักงาน')){
-    document.getElementById('fType').value='จอดแทน';toggleReplace();
-  } else {
-    document.getElementById('fType').value='หมุนเวียน';toggleReplace();
-  }
-
-  // ค้างคืน
-  if(t.includes('ค้างคืน')||t.includes('เกินสี่ทุ่ม')||t.includes('เกิน23')){
-    document.getElementById('fTime').value='ค้างคืน';
-  } else {
-    document.getElementById('fTime').value='ปกติ';
-  }
-
-  // ทะเบียน — จับหลัง "ทะเบียน"
+  if(t.includes('แทน')){document.getElementById('fType').value='จอดแทน';toggleReplace();}
+  else{document.getElementById('fType').value='หมุนเวียน';toggleReplace();}
+  if(t.includes('ค้างคืน')||t.includes('เกินสี่ทุ่ม')){document.getElementById('fTime').value='ค้างคืน';}
+  else{document.getElementById('fTime').value='ปกติ';}
   const plateMatch=text.match(/ทะเบียน\s*([ก-ฮa-zA-Z0-9\s]{2,12}?)(?:\s|$|ชื่อ|วันที่|จอด)/);
-  if(plateMatch){document.getElementById('fPlate').value=plateMatch[1].trim();}
-
-  // ชื่อ — จับหลัง "ชื่อ"
+  if(plateMatch){
+    const pl=plateMatch[1].trim();
+    document.getElementById('fPlate').value=pl;
+    // autofill name if in plateDB
+    const found=plateDB.find(p=>p.plate.replace(/\s/g,'')===pl.replace(/\s/g,''));
+    if(found) document.getElementById('fName').value=found.name;
+  }
   const nameMatch=text.match(/ชื่อ\s*([ก-ฮa-zA-Z\s]{2,20})(?:\s|$|วันที่|ทะเบียน|จอด)/);
-  if(nameMatch){document.getElementById('fName').value=nameMatch[1].trim();}
-
-  // วันที่ — จับเดือนไทย
+  if(nameMatch) document.getElementById('fName').value=nameMatch[1].trim();
   const months={มกราคม:1,กุมภาพันธ์:2,มีนาคม:3,เมษายน:4,พฤษภาคม:5,มิถุนายน:6,กรกฎาคม:7,สิงหาคม:8,กันยายน:9,ตุลาคม:10,พฤศจิกายน:11,ธันวาคม:12};
   const dateMatch=text.match(/(\d{1,2})\s*(มกราคม|กุมภาพันธ์|มีนาคม|เมษายน|พฤษภาคม|มิถุนายน|กรกฎาคม|สิงหาคม|กันยายน|ตุลาคม|พฤศจิกายน|ธันวาคม)/);
   if(dateMatch){
-    const m=String(months[dateMatch[2]]).padStart(2,'0');
-    const d=String(dateMatch[1]).padStart(2,'0');
-    document.getElementById('fStart').value=`2026-${m}-${d}`;
-    document.getElementById('fEnd').value=`2026-${m}-${d}`;
+    const mm=String(months[dateMatch[2]]).padStart(2,'0');
+    const dd=String(dateMatch[1]).padStart(2,'0');
+    const y=new Date().getFullYear();
+    document.getElementById('fStart').value=`${y}-${mm}-${dd}`;
+    document.getElementById('fEnd').value=`${y}-${mm}-${dd}`;
   }
-
-  showToast('✓ กรอกข้อมูลจากเสียงแล้ว ตรวจสอบอีกครั้งก่อนบันทึก');
+  showToast('✓ กรอกจากเสียงแล้ว ตรวจสอบก่อนบันทึก');
 }
 
-// ─── INIT ───
-renderTable();renderMiniCal();renderMonthBars();renderBigCal();updateDateLabel();
+// ════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════
+populateDayFilter();
+fetchFromSheet(); // โหลดข้อมูลจาก Google Sheet (หรือ fallback demo)
 </script>
 </body>
 </html>
