@@ -558,12 +558,11 @@ select.form-control{cursor:pointer;}
                     <button onclick="dayPickerChangeMonth(1)">›</button>
                   </div>
                 </div>
-                <div class="cal-grid-mini">
+                <div class="cal-grid-mini" id="dayPickerGrid">
                   <div class="cal-head-cell">อา</div><div class="cal-head-cell">จ</div>
                   <div class="cal-head-cell">อ</div><div class="cal-head-cell">พ</div>
                   <div class="cal-head-cell">พฤ</div><div class="cal-head-cell">ศ</div>
                   <div class="cal-head-cell">ส</div>
-                  <div id="dayPickerCells"></div>
                 </div>
               </div>
             </div>
@@ -1086,14 +1085,24 @@ function renderDayPicker(){
   const daysInMonth=new Date(dpYear,dpMonth+1,0).getDate();
   const firstDay=new Date(dpYear,dpMonth,1).getDay();
   const today=new Date();
-  let cells='';
-  for(let i=0;i<firstDay;i++) cells+=`<div class="cal-day-cell empty"></div>`;
+  const grid=document.getElementById('dayPickerGrid');
+  // Remove old day cells (keep first 7 header cells)
+  while(grid.children.length>7) grid.removeChild(grid.lastChild);
+  // Empty spacer cells
+  for(let i=0;i<firstDay;i++){
+    const el=document.createElement('div');
+    el.className='cal-day-cell empty';
+    grid.appendChild(el);
+  }
   for(let d=1;d<=daysInMonth;d++){
     const isToday=d===today.getDate()&&dpMonth===today.getMonth()&&dpYear===today.getFullYear();
     const isSel=d===dpSelectedDay;
-    cells+=`<div class="cal-day-cell${isToday?' today':''}${isSel?' selected':''}" onclick="selectDayFilter(${d})">${d}</div>`;
+    const el=document.createElement('div');
+    el.className='cal-day-cell'+(isToday?' today':'')+(isSel?' selected':'');
+    el.textContent=d;
+    el.onclick=(()=>{const day=d;return()=>selectDayFilter(day);})();
+    grid.appendChild(el);
   }
-  document.getElementById('dayPickerCells').innerHTML=cells;
 }
 function selectDayFilter(d){
   dpSelectedDay=d;
