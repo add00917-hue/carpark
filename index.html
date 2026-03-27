@@ -737,11 +737,6 @@ select.form-control{cursor:pointer;}
       </select>
     </div>
 
-    <div class="form-group" id="replaceGroup" style="display:none">
-      <label class="form-label">ชื่อผู้แจ้งจอดแทน</label>
-      <input class="form-control" id="fReplaceInfo" placeholder="ชื่อผู้ที่จะมาจอดแทน">
-    </div>
-
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">จากวันที่</label>
@@ -761,21 +756,33 @@ select.form-control{cursor:pointer;}
       </select>
     </div>
 
-    <div class="form-group">
-      <label class="form-label">ทะเบียนรถ <span style="color:var(--accent);font-weight:400;">(พิมพ์เพื่อค้นหาจากฐานข้อมูล)</span></label>
-      <input class="form-control" id="fPlate" placeholder="เช่น กข 1234" oninput="searchPlate(this.value)" autocomplete="off">
-      <div class="plate-suggestions" id="plateSuggestions"></div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label" id="nameLabel">ชื่อผู้แจ้งจอง</label>
-      <div id="nameInputWrap">
+    <!-- หมุนเวียน: กรอกทะเบียน + ชื่อเอง -->
+    <div id="rotateFields">
+      <div class="form-group">
+        <label class="form-label">ทะเบียนรถ <span style="color:var(--accent);font-weight:400;">(พิมพ์เพื่อค้นหาจากฐานข้อมูล)</span></label>
+        <input class="form-control" id="fPlate" placeholder="เช่น กข 1234" oninput="searchPlate(this.value)" autocomplete="off">
+        <div class="plate-suggestions" id="plateSuggestions"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ชื่อผู้แจ้งจอง</label>
         <input class="form-control" id="fName" placeholder="ชื่อ-นามสกุล">
       </div>
-      <div id="nameSelectWrap" style="display:none">
+    </div>
+
+    <!-- จอดแทน: เลือกจากทะเบียนรถประจำ + กรอกชื่อผู้มาจอดแทน -->
+    <div id="replaceFields" style="display:none">
+      <div class="form-group">
+        <label class="form-label">เจ้าของสิทธิ์ (ทะเบียนประจำ)</label>
         <select class="form-control" id="fNameSelect" onchange="onRightsHolderChange()">
           <option value="">— เลือกเจ้าของสิทธิ์ —</option>
         </select>
+        <div id="selectedSlotInfo" style="margin-top:6px;font-size:12px;color:var(--muted);display:none;">
+          🚗 ทะเบียน: <strong id="selectedPlateDisplay"></strong> &nbsp;|&nbsp; ช่อง: <strong id="selectedSlotDisplay"></strong>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ชื่อผู้มาจอดแทน</label>
+        <input class="form-control" id="fReplaceInfo" placeholder="ชื่อผู้ที่จะมาจอดแทน (ถ้ามี)">
       </div>
     </div>
 
@@ -910,15 +917,13 @@ function fmtDate(d){ return `${String(d.getDate()).padStart(2,'0')}/${String(d.g
 function parseDate(s){
   if(!s) return null;
   if(s instanceof Date) return s;
-  // ตัด time part (HH:mm:ss) ออกก่อน เช่น '2026-03-27 00:00:00' → '2026-03-27'
-  const dateStr = s.toString().trim().split(' ')[0].split('T')[0];
-  const p = dateStr.split(/[\/\-]/);
-  if(p.length<3) return null;
-  if(p[0].length===4) return new Date(+p[0], +p[1]-1, +p[2]); // yyyy-mm-dd
-  // Google Sheets ส่งมาเป็น M/D/YYYY (เดือน/วัน/ปี) เช่น 3/27/2026
-  // ถ้า p[1] > 12 แสดงว่าเป็น M/D/YYYY ไม่ใช่ DD/MM/YYYY
-  if(+p[1] > 12) return new Date(+p[2], +p[0]-1, +p[1]); // M/D/YYYY
-  return new Date(+p[2], +p[1]-1, +p[0]); // DD/MM/YYYY
+  // ตัด time part ออกก่อน — ใช้ local constructor เท่านั้น (ห้าม new Date(string) → UTC shift)
+  const dateStr = s.toString().trim().split('T')[0].split(' ')[0];
+  const p = dateStr.split(/[\/\-]/).map(Number);
+  if(p.length < 3) return null;
+  if(p[0] > 31) return new Date(p[0], p[1]-1, p[2]);  // yyyy-mm-dd
+  if(p[1] > 12) return new Date(p[2], p[0]-1, p[1]);  // M/D/YYYY (Google Sheets)
+  return new Date(p[2], p[1]-1, p[0]);                 // DD/MM/YYYY
 }
 function dateOnly(d){ return d?new Date(d.getFullYear(),d.getMonth(),d.getDate()):null; }
 function dateInRange(s,e,check){
@@ -1258,37 +1263,42 @@ function closeModal(){
   stopVoice();
   // Reset type to default and toggle UI accordingly
   document.getElementById('fType').value = 'หมุนเวียน';
+  document.getElementById('fReplaceInfo').value = '';
+  document.getElementById('fNameSelect').value = '';
+  document.getElementById('selectedSlotInfo').style.display = 'none';
   toggleReplace();
 }
 function handleModalBgClick(e){ if(e.target===document.getElementById('modalBg'))closeModal(); }
 function toggleReplace(){
   const isReplace = document.getElementById('fType').value === 'จอดแทน';
-  document.getElementById('replaceGroup').style.display = isReplace ? 'block' : 'none';
-  document.getElementById('nameLabel').textContent = isReplace ? 'ชื่อเจ้าของสิทธิ์' : 'ชื่อผู้แจ้งจอง';
-  document.getElementById('nameInputWrap').style.display = isReplace ? 'none' : 'block';
-  document.getElementById('nameSelectWrap').style.display = isReplace ? 'block' : 'none';
+  document.getElementById('rotateFields').style.display = isReplace ? 'none' : 'block';
+  document.getElementById('replaceFields').style.display = isReplace ? 'block' : 'none';
   if(isReplace) populateRightsHolderDropdown();
 }
 function populateRightsHolderDropdown(){
   const sel = document.getElementById('fNameSelect');
-  const cur = sel.value;
+  const prev = sel.value;
   sel.innerHTML = '<option value="">— เลือกเจ้าของสิทธิ์ —</option>';
   plateDB.forEach(p => {
     const opt = document.createElement('option');
     opt.value = p.name;
-    opt.dataset.plate = p.plate;
+    opt.dataset.plate = p.plate||'';
     opt.dataset.slot = p.slot||'';
-    opt.textContent = `${p.name}${p.slot?' (ช่อง '+p.slot+')':''}`;
+    opt.textContent = `${p.name} — ${p.plate||''}${p.slot?' (ช่อง '+p.slot+')':''}`;
     sel.appendChild(opt);
   });
-  if(cur) sel.value = cur;
+  if(prev) sel.value = prev;
 }
 function onRightsHolderChange(){
   const sel = document.getElementById('fNameSelect');
   const opt = sel.options[sel.selectedIndex];
+  const infoBox = document.getElementById('selectedSlotInfo');
   if(opt && opt.dataset.plate){
-    document.getElementById('fPlate').value = opt.dataset.plate;
-    document.getElementById('plateSuggestions').style.display = 'none';
+    document.getElementById('selectedPlateDisplay').textContent = opt.dataset.plate;
+    document.getElementById('selectedSlotDisplay').textContent = opt.dataset.slot || '—';
+    infoBox.style.display = 'block';
+  } else {
+    infoBox.style.display = 'none';
   }
 }
 
@@ -1301,12 +1311,15 @@ function submitForm(){
   const name = isReplace
     ? document.getElementById('fNameSelect').value.trim()
     : document.getElementById('fName').value.trim();
-  const plate=document.getElementById('fPlate').value.trim();
+  const plate = isReplace
+    ? document.getElementById('selectedPlateDisplay').textContent.trim()
+    : document.getElementById('fPlate').value.trim();
   const period=document.getElementById('fTime').value;
   const start=document.getElementById('fStart').value;
   const end=document.getElementById('fEnd').value;
-  const replaceInfo=document.getElementById('fReplaceInfo').value.trim();
-  if(!name||!plate){showToast('กรุณากรอก ชื่อ และ ทะเบียน','warn');return;}
+  const replaceInfo=isReplace ? document.getElementById('fReplaceInfo').value.trim() : '';
+  if(!name){showToast('กรุณาเลือก/กรอกชื่อ','warn');return;}
+  if(!plate){showToast('กรุณาเลือกเจ้าของสิทธิ์หรือกรอกทะเบียน','warn');return;}
   const payload={name,plate,type,period,start,end,replaceInfo};
   if(gsConnected){ closeModal(); postToSheet(payload); }
   else {
