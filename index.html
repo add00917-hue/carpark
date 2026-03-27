@@ -53,6 +53,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
   position:sticky;top:0;z-index:20;
 }
 .menu-btn{display:none;background:none;border:none;color:var(--muted);cursor:pointer;padding:6px;}
+.back-btn{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:8px;font-size:12.5px;font-family:var(--font);cursor:pointer;text-decoration:none;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+.back-btn:hover{border-color:var(--accent);color:var(--accent);}
+.back-btn svg{width:14px;height:14px;flex-shrink:0;}
 .topbar-title{font-size:15px;font-weight:500;flex:1;}
 .view-tabs{display:flex;background:var(--bg3);border-radius:8px;padding:3px;gap:2px;}
 .tab{padding:5px 12px;border-radius:6px;font-size:13px;cursor:pointer;color:var(--muted);transition:all .15s;white-space:nowrap;}
@@ -149,7 +152,7 @@ tbody td{padding:10px 14px;font-size:13px;}
   position:fixed;bottom:0;left:0;right:0;z-index:30;
 }
 .bottom-nav-inner{display:flex;height:100%;}
-.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--muted);transition:color .15s;font-size:10px;}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--muted);transition:color .15s;font-size:10px;text-decoration:none;}
 .bnav-item.active{color:var(--accent);}
 .bnav-item svg{width:20px;height:20px;}
 
@@ -268,6 +271,10 @@ select.form-control{cursor:pointer;}
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="logo">
+      <a href="https://add00917-hue.github.io/GNR3-Building-MS/#01" class="back-btn" style="margin-bottom:12px;width:100%;justify-content:flex-start;">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3L5 8l5 5"/></svg>
+        กลับเมนูหลัก
+      </a>
       <div class="logo-mark">NTL · BSCS</div>
       <div class="logo-title">ที่จอดรถ</div>
       <div class="logo-sub">ระบบจัดการ</div>
@@ -307,6 +314,10 @@ select.form-control{cursor:pointer;}
       <button class="menu-btn" onclick="openSidebar()">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
       </button>
+      <a href="https://add00917-hue.github.io/GNR3-Building-MS/#01" class="back-btn">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3L5 8l5 5"/></svg>
+        เมนูหลัก
+      </a>
       <div class="topbar-title">ที่จอดรถ NTL/BSCS</div>
       <div class="view-tabs">
         <div class="tab active" id="tab-day" onclick="switchView('day',this)">รายวัน</div>
@@ -451,6 +462,10 @@ select.form-control{cursor:pointer;}
     <!-- MOBILE BOTTOM NAV -->
     <nav class="bottom-nav">
       <div class="bottom-nav-inner">
+        <a class="bnav-item" href="https://add00917-hue.github.io/GNR3-Building-MS/#01">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 3L7 10l6 7"/></svg>
+          เมนูหลัก
+        </a>
         <div class="bnav-item active" id="bnav-day" onclick="switchView('day');setActiveNav('day')">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h14M3 10h8M3 15h5"/></svg>
           รายวัน
