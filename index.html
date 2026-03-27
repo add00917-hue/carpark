@@ -3,264 +3,326 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>NTL/BSCS Parking</title>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>ระบบจัดการลานจอดรถ GNR3</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root {
-  --bg: #0f1117; --bg2: #161820; --bg3: #1e2030; --bg4: #252840;
-  --accent: #4f9cf9; --accent2: #7c6af7; --green: #3ecf8e;
-  --amber: #f5a623; --red: #f06060;
-  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
-  --text: #e8eaf0; --muted: #7c8096;
-  --font: 'Sarabun', sans-serif; --mono: 'IBM Plex Mono', monospace;
-  --sidebar-w: 220px; --topbar-h: 56px; --bottom-nav-h: 64px;
+:root{
+  --bg:#f0f4ff;
+  --bg2:#ffffff;
+  --bg3:#f7f9ff;
+  --bg4:#eef1fb;
+  --surface:#ffffff;
+  --accent:#3b6ff5;
+  --accent2:#7c5af5;
+  --accent3:#06c893;
+  --amber:#f59e0b;
+  --red:#ef4444;
+  --red2:#fef2f2;
+  --green:#10b981;
+  --green2:#ecfdf5;
+  --blue2:#eff6ff;
+  --purple2:#f5f3ff;
+  --amber2:#fffbeb;
+  --border:#e2e8f0;
+  --border2:#c7d2fe;
+  --text:#0f172a;
+  --text2:#334155;
+  --muted:#64748b;
+  --muted2:#94a3b8;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(59,111,245,.06);
+  --shadow2:0 4px 24px rgba(59,111,245,.12);
+  --font:'Sarabun',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --sidebar-w:240px;
+  --topbar-h:60px;
+  --bottom-nav-h:64px;
+  --radius:14px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;overflow:auto;}
 
-/* SHELL */
+/* ══════ SHELL ══════ */
 .shell{display:flex;min-height:100vh;}
 
-/* SIDEBAR */
+/* ══════ SIDEBAR ══════ */
 .sidebar{
-  width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);
+  width:var(--sidebar-w);background:var(--accent);
   display:flex;flex-direction:column;flex-shrink:0;
-  transition:transform .25s ease;
+  transition:transform .28s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
 }
-.logo{padding:20px 18px 16px;border-bottom:1px solid var(--border);}
-.logo-mark{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:2px;}
-.logo-title{font-size:15px;font-weight:600;margin-top:3px;}
-.logo-sub{font-size:11px;color:var(--muted);margin-top:1px;}
-.nav{padding:12px 10px;flex:1;}
-.nav-label{font-size:10px;letter-spacing:1.5px;color:var(--muted);padding:0 8px;margin:8px 0 4px;text-transform:uppercase;}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;font-size:13.5px;color:var(--muted);transition:all .15s;margin-bottom:1px;}
-.nav-item:hover,.nav-item.active{background:rgba(79,156,249,.12);color:var(--accent);}
-.nav-item svg{width:15px;height:15px;flex-shrink:0;}
-.quota-box{margin:0 10px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px;}
-.quota-label{font-size:11px;color:var(--muted);margin-bottom:5px;}
-.quota-nums{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--accent);}
-.quota-nums span{font-size:12px;color:var(--muted);font-family:var(--font);}
-.quota-bar-bg{background:var(--bg4);border-radius:4px;height:5px;margin-top:7px;}
-.quota-bar-fill{background:linear-gradient(90deg,var(--accent),var(--accent2));height:5px;border-radius:4px;}
+.sidebar::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(124,90,245,.35) 0%,transparent 60%);
+  pointer-events:none;
+}
+.sidebar::after{
+  content:'P';position:absolute;right:-20px;bottom:-20px;
+  font-size:180px;font-weight:800;color:rgba(255,255,255,.05);
+  font-family:var(--mono);pointer-events:none;letter-spacing:-8px;
+}
+.logo{padding:22px 20px 18px;position:relative;}
+.back-link{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.7);font-size:12px;text-decoration:none;margin-bottom:16px;transition:color .15s;cursor:pointer;}
+.back-link:hover{color:#fff;}
+.back-link svg{width:14px;height:14px;}
+.logo-icon{width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;backdrop-filter:blur(8px);}
+.logo-icon svg{width:22px;height:22px;color:#fff;}
+.logo-title{font-size:15px;font-weight:700;color:#fff;line-height:1.3;}
+.logo-sub{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px;}
+.nav{padding:8px 12px;flex:1;position:relative;}
+.nav-label{font-size:9.5px;letter-spacing:1.8px;color:rgba(255,255,255,.5);padding:0 8px;margin:12px 0 4px;text-transform:uppercase;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;font-size:13.5px;color:rgba(255,255,255,.75);transition:all .18s;margin-bottom:2px;position:relative;}
+.nav-item:hover{background:rgba(255,255,255,.12);color:#fff;}
+.nav-item.active{background:rgba(255,255,255,.22);color:#fff;font-weight:600;}
+.nav-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;background:#fff;border-radius:0 4px 4px 0;}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-family:var(--mono);padding:1px 7px;border-radius:20px;}
+.nav-badge.warn{background:var(--amber);color:#fff;}
+.sidebar-footer{padding:14px 16px;border-top:1px solid rgba(255,255,255,.1);position:relative;}
+.quota-box{background:rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;backdrop-filter:blur(8px);}
+.quota-label{font-size:11px;color:rgba(255,255,255,.65);margin-bottom:6px;}
+.quota-row{display:flex;align-items:baseline;gap:5px;}
+.quota-nums{font-family:var(--mono);font-size:22px;font-weight:600;color:#fff;}
+.quota-of{font-size:12px;color:rgba(255,255,255,.55);}
+.quota-bar-bg{background:rgba(255,255,255,.15);border-radius:4px;height:5px;margin-top:8px;}
+.quota-bar-fill{height:5px;border-radius:4px;background:linear-gradient(90deg,#a5f3fc,#38bdf8);transition:width .5s ease;}
+.gs-pill{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:11px;color:rgba(255,255,255,.6);}
+.gs-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);}
+.gs-dot.ok{background:#4ade80;box-shadow:0 0 6px #4ade80;}
+.gs-dot.err{background:#f87171;}
+.gs-dot.loading{background:#fbbf24;animation:pulse2 1s infinite;}
+@keyframes pulse2{0%,100%{opacity:1;}50%{opacity:.3;}}
 
-/* MAIN */
-.main{flex:1;display:flex;flex-direction:column;min-width:0;}
+/* ══════ MAIN ══════ */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--bg);}
 
-/* TOPBAR */
+/* ══════ TOPBAR ══════ */
 .topbar{
-  height:var(--topbar-h);background:var(--bg2);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;
-  position:sticky;top:0;z-index:20;
+  height:var(--topbar-h);background:var(--surface);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0;
+  position:sticky;top:0;z-index:20;box-shadow:var(--shadow);
 }
-.menu-btn{display:none;background:none;border:none;color:var(--muted);cursor:pointer;padding:6px;}
-.back-btn{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:8px;font-size:12.5px;font-family:var(--font);cursor:pointer;text-decoration:none;transition:all .15s;white-space:nowrap;flex-shrink:0;}
-.back-btn:hover{border-color:var(--accent);color:var(--accent);}
-.back-btn svg{width:14px;height:14px;flex-shrink:0;}
-.topbar-title{font-size:15px;font-weight:500;flex:1;}
-.view-tabs{display:flex;background:var(--bg3);border-radius:8px;padding:3px;gap:2px;}
-.tab{padding:5px 12px;border-radius:6px;font-size:13px;cursor:pointer;color:var(--muted);transition:all .15s;white-space:nowrap;}
-.tab.active{background:var(--bg4);color:var(--text);}
-.date-nav{display:flex;align-items:center;gap:8px;}
-.date-nav button{background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.menu-btn{display:none;background:none;border:none;color:var(--muted);cursor:pointer;padding:6px;border-radius:8px;}
+.menu-btn:hover{background:var(--bg4);}
+.topbar-brand{display:flex;align-items:center;gap:10px;flex:1;}
+.topbar-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:9px;display:flex;align-items:center;justify-content:center;}
+.topbar-icon svg{width:18px;height:18px;color:#fff;}
+.topbar-title{font-size:15px;font-weight:700;color:var(--text);}
+.topbar-sub{font-size:11px;color:var(--muted);}
+.view-tabs{display:flex;background:var(--bg4);border-radius:10px;padding:3px;gap:2px;}
+.tab{padding:6px 14px;border-radius:8px;font-size:13px;cursor:pointer;color:var(--muted);transition:all .18s;white-space:nowrap;font-weight:500;}
+.tab.active{background:#fff;color:var(--accent);box-shadow:var(--shadow);}
+.date-nav{display:flex;align-items:center;gap:6px;}
+.date-nav button{background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .date-nav button:hover{border-color:var(--accent);color:var(--accent);}
-.date-label{font-family:var(--mono);font-size:12px;color:var(--text);min-width:130px;text-align:center;}
-.btn-add{background:var(--accent);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-family:var(--font);cursor:pointer;font-weight:500;white-space:nowrap;transition:opacity .15s;}
-.btn-add:hover{opacity:.85;}
+.date-label{font-family:var(--mono);font-size:12px;color:var(--text2);min-width:136px;text-align:center;font-weight:500;}
+.btn-add{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:8px 16px;border-radius:10px;font-size:13px;font-family:var(--font);cursor:pointer;font-weight:600;white-space:nowrap;transition:all .18s;box-shadow:0 2px 10px rgba(59,111,245,.3);}
+.btn-add:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(59,111,245,.4);}
 .btn-add:active{transform:scale(.97);}
 
-/* CONTENT AREA */
-.content{flex:1;padding:20px 20px;}
+/* ══════ CONTENT ══════ */
+.content{flex:1;padding:22px;}
 
-/* STATS */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
-.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
-.stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
-.stat-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
-.stat-icon.blue{background:rgba(79,156,249,.15);}
-.stat-icon.green{background:rgba(62,207,142,.15);}
-.stat-icon.amber{background:rgba(245,166,35,.15);}
-.stat-icon.red{background:rgba(240,96,96,.15);}
-.stat-badge{font-size:10px;padding:2px 7px;border-radius:20px;font-family:var(--mono);}
-.stat-badge.up{background:rgba(62,207,142,.15);color:var(--green);}
-.stat-badge.warn{background:rgba(245,166,35,.15);color:var(--amber);}
-.stat-val{font-family:var(--mono);font-size:24px;font-weight:500;}
-.stat-label{font-size:11px;color:var(--muted);margin-top:2px;}
+/* ══════ STAT CARDS ══════ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .18s,box-shadow .18s;
+}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow2);}
+.stat-card::after{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.08;}
+.stat-card.blue::after{background:var(--accent);}
+.stat-card.green::after{background:var(--green);}
+.stat-card.amber::after{background:var(--amber);}
+.stat-card.purple::after{background:var(--accent2);}
+.stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.stat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
+.stat-icon.blue{background:var(--blue2);}
+.stat-icon.green{background:var(--green2);}
+.stat-icon.amber{background:var(--amber2);}
+.stat-icon.purple{background:var(--purple2);}
+.stat-badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600;}
+.stat-badge.up{background:var(--green2);color:var(--green);}
+.stat-badge.warn{background:var(--amber2);color:var(--amber);}
+.stat-badge.info{background:var(--blue2);color:var(--accent);}
+.stat-val{font-family:var(--mono);font-size:28px;font-weight:600;color:var(--text);line-height:1;}
+.stat-label{font-size:12px;color:var(--muted);margin-top:4px;}
+.stat-trend{font-size:11px;color:var(--muted2);margin-top:6px;}
 
-/* PANELS */
+/* ══════ PANELS ══════ */
 .panels{display:grid;grid-template-columns:1fr 300px;gap:16px;}
-.panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
-.panel-head{padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.panel-title{font-size:13.5px;font-weight:500;}
+.panels.full{grid-template-columns:1fr;}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.panel-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.panel-title{font-size:14px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;}
+.panel-title-dot{width:8px;height:8px;border-radius:50%;}
 .panel-meta{font-size:12px;color:var(--muted);}
+.panel-actions{display:flex;align-items:center;gap:8px;}
 
-/* TABLE */
+/* ══════ MONTH PICKER (in panel) ══════ */
+.month-picker-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.month-chip{padding:4px 12px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--muted);transition:all .15s;font-weight:500;}
+.month-chip.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.mini-select{background:var(--bg3);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:5px 10px;font-size:12.5px;font-family:var(--font);outline:none;cursor:pointer;}
+.mini-select:focus{border-color:var(--accent);}
+
+/* ══════ TABLE ══════ */
 .tbl-wrap{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;min-width:480px;}
-thead th{font-size:11px;color:var(--muted);padding:9px 14px;text-align:left;border-bottom:1px solid var(--border);font-weight:400;letter-spacing:.4px;}
+table{width:100%;border-collapse:collapse;}
+thead th{font-size:11px;color:var(--muted);padding:10px 16px;text-align:left;border-bottom:1px solid var(--border);font-weight:600;letter-spacing:.5px;background:var(--bg3);}
 tbody tr{border-bottom:1px solid var(--border);transition:background .1s;}
 tbody tr:last-child{border-bottom:none;}
 tbody tr:hover{background:var(--bg3);}
-tbody td{padding:10px 14px;font-size:13px;}
-.plate{font-family:var(--mono);font-size:12px;background:var(--bg3);padding:2px 7px;border-radius:4px;border:1px solid var(--border);letter-spacing:1px;}
-.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;}
-.badge.rotate{background:rgba(79,156,249,.15);color:var(--accent);}
-.badge.replace{background:rgba(124,106,247,.15);color:var(--accent2);}
-.badge.night{background:rgba(245,166,35,.15);color:var(--amber);}
-.badge.normal{background:rgba(62,207,142,.12);color:var(--green);}
+tbody td{padding:11px 16px;font-size:13px;color:var(--text2);}
+.plate{font-family:var(--mono);font-size:12px;background:var(--bg4);padding:3px 8px;border-radius:6px;border:1px solid var(--border);color:var(--text);letter-spacing:1px;font-weight:600;}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;padding:3px 9px;border-radius:20px;font-weight:600;}
+.badge.rotate{background:var(--blue2);color:var(--accent);}
+.badge.replace{background:var(--purple2);color:var(--accent2);}
+.badge.night{background:var(--amber2);color:var(--amber);}
+.badge.normal{background:var(--green2);color:var(--green);}
+.badge.dot::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;}
+.rank-num{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--accent);}
+.rank-bar-wrap{flex:1;background:var(--bg4);border-radius:4px;height:6px;overflow:hidden;}
+.rank-bar{height:6px;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+.empty-row td{text-align:center;padding:32px;color:var(--muted2);font-size:13px;}
 
-/* MINI CAL */
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:12px;}
-.cal-day-name{font-size:10px;color:var(--muted);text-align:center;padding-bottom:3px;}
-.cal-cell{aspect-ratio:1;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;border:1px solid transparent;}
-.cal-cell:hover{border-color:var(--accent);}
-.cal-cell.empty{opacity:0;pointer-events:none;}
-.cal-cell.today{border-color:var(--accent);background:rgba(79,156,249,.08);}
-.cal-cell.selected{background:var(--accent);}
-.cal-date{font-size:11px;font-family:var(--mono);}
-.cal-dot{width:4px;height:4px;border-radius:50%;margin-top:1px;}
-.cal-cell.full .cal-dot{background:var(--red);}
-.cal-cell.busy .cal-dot{background:var(--amber);}
-.cal-cell.free .cal-dot{background:var(--green);}
-.cal-cell.selected .cal-date{color:#fff;}
-.cal-cell.selected .cal-dot{background:rgba(255,255,255,.7);}
-.cal-legend{display:flex;gap:10px;padding:0 12px 12px;}
-.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.cal-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
+/* ══════ CHART AREA ══════ */
+.chart-wrap{padding:16px 18px;position:relative;}
+canvas{max-height:240px;}
 
-/* MONTH VIEW */
-.month-bar-row{display:flex;align-items:center;padding:7px 16px;gap:10px;border-bottom:1px solid var(--border);}
-.month-bar-row:last-child{border-bottom:none;}
-.month-day{font-family:var(--mono);font-size:12px;color:var(--muted);width:26px;flex-shrink:0;}
-.month-bar-bg{flex:1;background:var(--bg3);border-radius:4px;height:7px;}
-.month-bar-fill{height:7px;border-radius:4px;}
-.month-count{font-family:var(--mono);font-size:12px;color:var(--muted);width:20px;text-align:right;flex-shrink:0;}
+/* ══════ CALENDAR PICKER ══════ */
+.cal-filter-bar{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.cal-filter-bar label{font-size:12px;color:var(--muted);font-weight:600;}
+.cal-picker-wrap{position:relative;display:inline-block;}
+.cal-picker-input{background:var(--bg3);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:6px 12px;font-size:13px;font-family:var(--font);outline:none;cursor:pointer;min-width:110px;transition:border .15s;}
+.cal-picker-input:focus,.cal-picker-input.open{border-color:var(--accent);}
+.cal-dropdown{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow2);z-index:50;padding:12px;min-width:260px;}
+.cal-dropdown.open{display:block;}
+.cal-drop-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.cal-drop-title{font-size:13px;font-weight:700;color:var(--text);}
+.cal-drop-nav{display:flex;gap:4px;}
+.cal-drop-nav button{background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:26px;height:26px;border-radius:7px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.cal-drop-nav button:hover{border-color:var(--accent);color:var(--accent);}
+.cal-grid-mini{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-head-cell{font-size:9.5px;color:var(--muted2);text-align:center;padding:3px 0;font-weight:600;}
+.cal-day-cell{aspect-ratio:1;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;font-family:var(--mono);transition:all .15s;border:1px solid transparent;color:var(--text2);}
+.cal-day-cell:hover{background:var(--bg4);border-color:var(--accent);}
+.cal-day-cell.today{border-color:var(--accent);color:var(--accent);font-weight:700;}
+.cal-day-cell.selected{background:var(--accent);color:#fff;font-weight:700;}
+.cal-day-cell.empty{opacity:0;pointer-events:none;}
+.cal-day-cell.has-data::after{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent2);position:absolute;bottom:2px;}
+.cal-day-cell{position:relative;}
+.btn-clear{background:none;border:none;font-size:11px;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s;}
+.btn-clear:hover{background:var(--red2);color:var(--red);}
 
-/* BIG CAL */
-.big-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;padding:14px;}
-.big-cal-cell{border:1px solid var(--border);border-radius:8px;padding:8px;min-height:62px;cursor:pointer;transition:border .15s;}
-.big-cal-cell:hover{border-color:var(--accent);}
-.big-cal-cell.today{border-color:var(--accent);background:rgba(79,156,249,.08);}
+/* ══════ BIG CALENDAR VIEW ══════ */
+.big-cal-nav{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border);}
+.big-cal-nav select{background:var(--bg3);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:7px 12px;font-size:13px;font-family:var(--font);outline:none;cursor:pointer;}
+.big-cal-nav select:focus{border-color:var(--accent);}
+.big-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;padding:14px;}
+.big-cal-head{font-size:10px;color:var(--muted);text-align:center;font-weight:600;padding-bottom:4px;}
+.big-cal-cell{border:1px solid var(--border);border-radius:10px;padding:8px 9px;min-height:90px;cursor:pointer;transition:all .18s;background:#fff;}
+.big-cal-cell:hover{border-color:var(--accent);box-shadow:0 2px 12px rgba(59,111,245,.1);}
+.big-cal-cell.today{border-color:var(--accent);background:var(--blue2);}
+.big-cal-cell.selected{border-color:var(--accent2);background:var(--purple2);}
+.big-cal-cell.empty-cell{background:var(--bg3);border-color:transparent;cursor:default;}
+.bcc-date{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text);}
+.bcc-date.today-num{color:var(--accent);}
+.bcc-pill{font-size:9.5px;padding:2px 6px;border-radius:6px;margin-top:3px;font-weight:600;white-space:nowrap;}
+.bcc-pill.replace{background:var(--purple2);color:var(--accent2);}
+.bcc-pill.rotate{background:var(--blue2);color:var(--accent);}
+.bcc-pill.night{background:var(--amber2);color:var(--amber);}
+.bcc-pill.free{background:var(--green2);color:var(--green);}
 
-/* VIEW TOGGLE */
+/* ══════ PLATE REGISTRY ══════ */
+.registry-search{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border);}
+.registry-search input{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 12px;font-size:13px;font-family:var(--font);outline:none;transition:border .15s;}
+.registry-search input:focus{border-color:var(--accent);}
+.used-bar-wrap{width:80px;background:var(--bg4);border-radius:4px;height:5px;display:inline-block;vertical-align:middle;}
+.used-bar{height:5px;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+.floor-badge{font-size:11px;padding:2px 8px;border-radius:6px;background:var(--bg4);border:1px solid var(--border);color:var(--text2);font-weight:600;}
+
+/* ══════ SECTION DIVIDER ══════ */
+.section-divider{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:14px 18px 8px;display:flex;align-items:center;gap:8px;}
+.section-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ══════ VIEW SECTION ══════ */
 .view-section{display:none;}
 .view-section.active{display:block;}
 
-/* MOBILE BOTTOM NAV */
-.bottom-nav{
-  display:none;height:var(--bottom-nav-h);background:var(--bg2);
-  border-top:1px solid var(--border);flex-shrink:0;
-  position:fixed;bottom:0;left:0;right:0;z-index:30;
-}
+/* ══════ MOBILE ══════ */
+.bottom-nav{display:none;height:var(--bottom-nav-h);background:var(--surface);border-top:1px solid var(--border);position:fixed;bottom:0;left:0;right:0;z-index:30;}
 .bottom-nav-inner{display:flex;height:100%;}
-.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--muted);transition:color .15s;font-size:10px;text-decoration:none;}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--muted);transition:color .15s;font-size:10px;text-decoration:none;border:none;background:none;font-family:var(--font);}
 .bnav-item.active{color:var(--accent);}
 .bnav-item svg{width:20px;height:20px;}
-
-/* MOBILE OVERLAY SIDEBAR */
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:40;}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:40;}
 .sidebar-overlay.open{display:block;}
+.fab{display:none;position:fixed;bottom:calc(var(--bottom-nav-h)+16px);right:18px;width:54px;height:54px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50%;cursor:pointer;align-items:center;justify-content:center;z-index:30;box-shadow:0 4px 20px rgba(59,111,245,.4);}
+.fab svg{width:22px;height:22px;color:#fff;}
 
-/* MODAL / FORM */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;align-items:flex-end;justify-content:center;}
+/* ══════ MODAL ══════ */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:50;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
 .modal-bg.open{display:flex;}
-.modal{background:var(--bg2);border-radius:20px 20px 0 0;padding:20px 20px 32px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;animation:slideUp .25s ease;}
-@keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-.modal-handle{width:40px;height:4px;background:var(--border2);border-radius:4px;margin:0 auto 18px;}
-.modal-title{font-size:16px;font-weight:500;margin-bottom:18px;}
+.modal{background:#fff;border-radius:22px 22px 0 0;padding:20px 22px 36px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;animation:slideUp .28s cubic-bezier(.4,0,.2,1);}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:4px;margin:0 auto 18px;}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:18px;color:var(--text);display:flex;align-items:center;gap:10px;}
+.modal-title-icon{width:36px;height:36px;background:var(--blue2);border-radius:10px;display:flex;align-items:center;justify-content:center;}
 .form-group{margin-bottom:14px;}
-.form-label{font-size:12px;color:var(--muted);margin-bottom:5px;display:block;}
-.form-control{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px 12px;font-size:14px;font-family:var(--font);transition:border .15s;outline:none;}
-.form-control:focus{border-color:var(--accent);}
+.form-label{font-size:12px;color:var(--muted);margin-bottom:6px;display:block;font-weight:600;letter-spacing:.3px;}
+.form-control{width:100%;background:var(--bg3);border:1.5px solid var(--border);color:var(--text);border-radius:10px;padding:10px 14px;font-size:14px;font-family:var(--font);transition:border .15s;outline:none;}
+.form-control:focus{border-color:var(--accent);background:#fff;}
 select.form-control{cursor:pointer;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.voice-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px;}
-.voice-box{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-height:44px;font-size:13px;color:var(--muted);display:flex;align-items:center;}
+.voice-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:16px;}
+.voice-box{flex:1;background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;min-height:46px;font-size:13px;color:var(--muted2);display:flex;align-items:center;}
 .voice-box.listening{border-color:var(--red);color:var(--text);}
-.voice-box.heard{border-color:var(--accent);color:var(--text);}
-.mic-btn{width:44px;height:44px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+.voice-box.heard{border-color:var(--green);color:var(--text);}
+.mic-btn{width:46px;height:46px;border-radius:50%;background:var(--bg4);border:1.5px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0;}
 .mic-btn:hover{border-color:var(--accent);}
-.mic-btn.recording{background:var(--red);border-color:var(--red);animation:pulse 1s infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(240,96,96,.4);}50%{box-shadow:0 0 0 8px rgba(240,96,96,0);}}
+.mic-btn.recording{background:var(--red);border-color:var(--red);animation:pulseRed 1s infinite;}
+@keyframes pulseRed{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4);}50%{box-shadow:0 0 0 10px rgba(239,68,68,0);}}
 .mic-btn svg{width:18px;height:18px;}
-.btn-submit{width:100%;background:var(--accent);color:#fff;border:none;padding:13px;border-radius:10px;font-size:15px;font-family:var(--font);font-weight:500;cursor:pointer;transition:opacity .15s;margin-top:4px;}
-.btn-submit:hover{opacity:.85;}
-.btn-submit:active{transform:scale(.98);}
-.close-btn{position:absolute;top:20px;right:20px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:30px;height:30px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.voice-tip{background:linear-gradient(135deg,var(--blue2),#f0fdf4);border:1px solid var(--border2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--accent);line-height:1.7;}
+.btn-submit{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-family:var(--font);font-weight:700;cursor:pointer;transition:all .18s;margin-top:6px;box-shadow:0 4px 16px rgba(59,111,245,.3);}
+.btn-submit:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(59,111,245,.4);}
+.close-btn{position:absolute;top:18px;right:18px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s;}
+.close-btn:hover{background:var(--red2);color:var(--red);}
 .modal{position:relative;}
-.voice-tip{background:rgba(79,156,249,.08);border:1px solid rgba(79,156,249,.2);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:var(--accent);line-height:1.6;}
-.voice-tip strong{color:var(--accent);}
-
-/* PLATE SUGGEST */
-.plate-suggestions{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;margin-top:4px;overflow:hidden;display:none;}
-.plate-suggest-item{padding:9px 12px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+.plate-suggestions{background:#fff;border:1px solid var(--border);box-shadow:var(--shadow2);border-radius:10px;margin-top:4px;overflow:hidden;display:none;z-index:60;position:relative;}
+.plate-suggest-item{padding:10px 14px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);transition:background .12s;}
 .plate-suggest-item:last-child{border-bottom:none;}
-.plate-suggest-item:hover{background:var(--bg4);}
+.plate-suggest-item:hover{background:var(--bg3);}
 .plate-suggest-name{font-size:11px;color:var(--muted);}
-.plate-suggest-plate{font-family:var(--mono);font-size:12px;color:var(--accent);}
+.plate-suggest-plate{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:700;}
 
-/* GOOGLE SHEETS STATUS */
-.gs-status{display:flex;align-items:center;gap:6px;font-size:11px;padding:6px 12px;border-radius:6px;background:var(--bg3);border:1px solid var(--border);}
-.gs-dot{width:7px;height:7px;border-radius:50%;}
-.gs-dot.connected{background:var(--green);box-shadow:0 0 6px rgba(62,207,142,.5);}
-.gs-dot.disconnected{background:var(--red);}
-.gs-dot.loading{background:var(--amber);animation:blink 1s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+/* ══════ TOAST ══════ */
+.toast{position:fixed;top:22px;right:22px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 18px;font-size:13.5px;z-index:99;display:none;animation:fadeInDown .22s ease;box-shadow:var(--shadow2);max-width:300px;font-weight:500;}
+.toast.show{display:flex;align-items:center;gap:10px;}
+.toast.success{border-color:#86efac;color:var(--green);}
+.toast.warn{border-color:#fcd34d;color:var(--amber);}
+.toast.error{border-color:#fca5a5;color:var(--red);}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
 
-/* MONTH SUMMARY SECTION */
-.month-filter-bar{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
-.month-filter-bar select{background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;font-size:13px;font-family:var(--font);outline:none;cursor:pointer;}
-.month-filter-bar select:focus{border-color:var(--accent);}
-.filter-label{font-size:12px;color:var(--muted);}
-.section-divider{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;padding:14px 16px 8px;border-top:1px solid var(--border);}
-.section-divider:first-child{border-top:none;}
-.summary-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;}
-.summary-badge.replace-type{background:rgba(124,106,247,.15);color:var(--accent2);}
-.summary-badge.rotate-type{background:rgba(79,156,249,.15);color:var(--accent);}
-.empty-row td{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
-
-/* TOAST */
-.toast{position:fixed;top:20px;right:20px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;z-index:99;display:none;animation:fadeIn .2s ease;}
-.toast.show{display:block;}
-.toast.success{border-color:rgba(62,207,142,.4);color:var(--green);}
-.toast.warn{border-color:rgba(245,166,35,.4);color:var(--amber);}
-.toast.error{border-color:rgba(240,96,96,.4);color:var(--red);}
-@keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
-
-/* RESPONSIVE */
-@media(max-width:1024px){
-  .stats{grid-template-columns:repeat(2,1fr);}
-  .panels{grid-template-columns:1fr;}
-}
+/* ══════ RESPONSIVE ══════ */
+@media(max-width:1100px){.stats{grid-template-columns:repeat(2,1fr);}.panels{grid-template-columns:1fr;}}
 @media(max-width:768px){
-  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:45;transform:translateX(-100%);width:260px;overflow-y:auto;}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:45;transform:translateX(-100%);width:264px;overflow-y:auto;}
   .sidebar.open{transform:translateX(0);}
   .menu-btn{display:flex;}
   .bottom-nav{display:flex;}
-  .content{padding:14px 12px 80px;}
-  .view-tabs,.date-nav,.btn-add{display:none;}
-  .topbar-title{font-size:14px;}
-  .stats{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px;}
-  .stat-card{padding:12px;}
-  .stat-val{font-size:20px;}
-  .panels{grid-template-columns:1fr;}
+  .content{padding:14px 14px 80px;}
+  .view-tabs,.date-nav{display:none;}
+  .btn-add{display:none;}
   .fab{display:flex;}
-  .big-cal-cell{min-height:52px;padding:6px;}
-  .month-filter-bar{gap:8px;}
+  .stats{grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+  .big-cal-cell{min-height:70px;}
 }
-@media(max-width:480px){
-  .stats{grid-template-columns:repeat(2,1fr);}
-  .stat-label{font-size:10px;}
-}
-
-/* FAB */
-.fab{
-  display:none;position:fixed;bottom:calc(var(--bottom-nav-h) + 16px);right:18px;
-  width:52px;height:52px;background:var(--accent);border:none;border-radius:50%;
-  cursor:pointer;align-items:center;justify-content:center;z-index:30;
-  box-shadow:0 4px 16px rgba(79,156,249,.4);transition:transform .15s;
-}
-.fab:active{transform:scale(.93);}
-.fab svg{width:22px;height:22px;color:#fff;}
+@media(max-width:480px){.stats{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
@@ -268,61 +330,78 @@ select.form-control{cursor:pointer;}
 <div class="shell">
   <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
 
-  <!-- SIDEBAR -->
+  <!-- ════ SIDEBAR ════ -->
   <aside class="sidebar" id="sidebar">
     <div class="logo">
-      <a href="https://add00917-hue.github.io/GNR3-Building-MS/#01" class="back-btn" style="margin-bottom:12px;width:100%;justify-content:flex-start;">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3L5 8l5 5"/></svg>
+      <a href="https://add00917-hue.github.io/GNR3-Building-MS/#01" class="back-link">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
         กลับเมนูหลัก
       </a>
-      <div class="logo-mark">NTL · BSCS</div>
-      <div class="logo-title">ที่จอดรถ</div>
-      <div class="logo-sub">ระบบจัดการ</div>
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M6 10h12M6 13h6"/></svg>
+      </div>
+      <div class="logo-title">ระบบจัดการ<br>ลานจอดรถ GNR3</div>
+      <div class="logo-sub">NTL · BSCS Building</div>
     </div>
+
     <div class="nav">
       <div class="nav-label">เมนูหลัก</div>
-      <div class="nav-item active" id="nav-day" onclick="switchView('day');setActiveNav('day');closeSidebar()">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h5"/></svg>
-        รายการวันนี้
+      <div class="nav-item active" id="nav-dash" onclick="switchView('dash');closeSidebar()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+        Dashboard
+        <span class="nav-badge" id="navBadgeToday">—</span>
       </div>
-      <div class="nav-item" id="nav-month" onclick="switchView('month');setActiveNav('month');closeSidebar()">
+      <div class="nav-item" id="nav-month" onclick="switchView('month');closeSidebar()">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><path d="M5 3V1M11 3V1M1 7h14"/></svg>
-        สรุปรายการแจ้งจอดแทน
+        สรุปรายการแจ้งจอด
       </div>
-      <div class="nav-item" id="nav-cal" onclick="switchView('cal');setActiveNav('cal');closeSidebar()">
+      <div class="nav-item" id="nav-cal" onclick="switchView('cal');closeSidebar()">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1.5"/><path d="M5 3V1M11 3V1M1 7h14M5 11h2M9 11h2"/></svg>
         ปฏิทิน
       </div>
+      <div class="nav-item" id="nav-plates" onclick="switchView('plates');closeSidebar()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="9" rx="1.5"/><circle cx="4" cy="8.5" r="1"/><circle cx="12" cy="8.5" r="1"/><path d="M6 8.5h4"/></svg>
+        ทะเบียนรถประจำ
+      </div>
     </div>
-    <div class="quota-box">
-      <div class="quota-label">โควตาวันนี้ (หมุนเวียน)</div>
-      <div class="quota-nums" id="sidebarQuota">— <span>/ 18 ที่</span></div>
-      <div class="quota-bar-bg"><div class="quota-bar-fill" id="sidebarBar" style="width:0%"></div></div>
-    </div>
-    <div style="margin:0 10px 16px;">
-      <div class="gs-status" id="gsStatus">
+
+    <div class="sidebar-footer">
+      <div class="quota-box">
+        <div class="quota-label">หมุนเวียนวันนี้</div>
+        <div class="quota-row">
+          <span class="quota-nums" id="sbQuotaUsed">—</span>
+          <span class="quota-of">/ 18 ที่</span>
+        </div>
+        <div class="quota-bar-bg"><div class="quota-bar-fill" id="sbBar" style="width:0%"></div></div>
+      </div>
+      <div class="gs-pill">
         <div class="gs-dot loading" id="gsDot"></div>
         <span id="gsText">กำลังเชื่อมต่อ...</span>
       </div>
     </div>
   </aside>
 
-  <!-- MAIN -->
+  <!-- ════ MAIN ════ -->
   <div class="main">
     <!-- TOPBAR -->
     <div class="topbar">
       <button class="menu-btn" onclick="openSidebar()">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
       </button>
-      <a href="https://add00917-hue.github.io/GNR3-Building-MS/#01" class="back-btn">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3L5 8l5 5"/></svg>
-        เมนูหลัก
-      </a>
-      <div class="topbar-title">ที่จอดรถ NTL/BSCS</div>
+      <div class="topbar-brand">
+        <div class="topbar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l4 4v3"/><circle cx="15.5" cy="17.5" r="2.5"/><circle cx="5.5" cy="17.5" r="2.5"/><path d="M8 17h5"/></svg>
+        </div>
+        <div>
+          <div class="topbar-title">ระบบจัดการลานจอดรถ GNR3</div>
+          <div class="topbar-sub">NTL · BSCS Building Management</div>
+        </div>
+      </div>
       <div class="view-tabs">
-        <div class="tab active" id="tab-day" onclick="switchView('day',this)">รายวัน</div>
-        <div class="tab" id="tab-month" onclick="switchView('month',this)">สรุปรายเดือน</div>
+        <div class="tab active" id="tab-dash" onclick="switchView('dash',this)">Dashboard</div>
+        <div class="tab" id="tab-month" onclick="switchView('month',this)">สรุปรายการ</div>
         <div class="tab" id="tab-cal" onclick="switchView('cal',this)">ปฏิทิน</div>
+        <div class="tab" id="tab-plates" onclick="switchView('plates',this)">ทะเบียนประจำ</div>
       </div>
       <div class="date-nav">
         <button onclick="changeDate(-1)">‹</button>
@@ -334,129 +413,202 @@ select.form-control{cursor:pointer;}
 
     <!-- CONTENT -->
     <div class="content">
-      <!-- STATS -->
+
+      <!-- STATS (always visible) -->
       <div class="stats">
-        <div class="stat-card">
+        <div class="stat-card blue">
           <div class="stat-top">
-            <div class="stat-icon blue"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="1" y="1" width="14" height="14" rx="2"/><path d="M5 8h6M8 5v6"/></svg></div>
-            <span class="stat-badge up" id="statBadge">—</span>
+            <div class="stat-icon blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l4 4v3"/><circle cx="15.5" cy="17.5" r="2.5"/><circle cx="5.5" cy="17.5" r="2.5"/><path d="M8 17h5"/></svg></div>
+            <span class="stat-badge up" id="statTotalBadge">วันนี้</span>
           </div>
           <div class="stat-val" id="statTotal">—</div>
-          <div class="stat-label">จองวันนี้</div>
+          <div class="stat-label">รายการจอดทั้งหมด</div>
+          <div class="stat-trend" id="statTotalSub">กำลังโหลด...</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card green">
           <div class="stat-top">
-            <div class="stat-icon green"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--green)" stroke-width="1.5"><path d="M13 4L6 11 3 8"/></svg></div>
+            <div class="stat-icon green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
             <span class="stat-badge up">ว่าง</span>
           </div>
           <div class="stat-val" id="statRemain">—</div>
-          <div class="stat-label">ที่จอดเหลือ (หมุนเวียน)</div>
+          <div class="stat-label">ที่หมุนเวียนว่างอยู่</div>
+          <div class="stat-trend">จาก 18 ที่</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card amber">
           <div class="stat-top">
-            <div class="stat-icon amber"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--amber)" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2 2"/></svg></div>
-            <span class="stat-badge warn">คืนนี้</span>
+            <div class="stat-icon amber"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+            <span class="stat-badge warn">ค้างคืน</span>
           </div>
           <div class="stat-val" id="statNight">—</div>
-          <div class="stat-label">ค้างคืน</div>
+          <div class="stat-label">จอดค้างคืนวันนี้</div>
+          <div class="stat-trend" id="statNightSub">—</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card purple">
           <div class="stat-top">
-            <div class="stat-icon red"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="var(--red)" stroke-width="1.5"><path d="M8 2v7M8 13h.01"/></svg></div>
-            <span class="stat-badge up">แทน</span>
+            <div class="stat-icon purple"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <span class="stat-badge info">แทน</span>
           </div>
           <div class="stat-val" id="statReplace">—</div>
-          <div class="stat-label">จอดแทน</div>
+          <div class="stat-label">จอดแทนวันนี้</div>
+          <div class="stat-trend" id="statReplaceSub">—</div>
         </div>
       </div>
 
-      <!-- DAY VIEW -->
-      <div id="view-day" class="view-section active">
+      <!-- ── DASHBOARD ── -->
+      <div id="view-dash" class="view-section active">
         <div class="panels">
           <div class="panel">
             <div class="panel-head">
-              <div class="panel-title">รายการจองวันนี้</div>
-              <div class="panel-meta" id="dayMeta">กำลังโหลด...</div>
+              <div class="panel-title">
+                <div class="panel-title-dot" style="background:var(--accent)"></div>
+                กราฟข้อมูลการจอดรถ
+              </div>
+              <div class="panel-actions">
+                <select class="mini-select" id="chartMonthSel" onchange="renderChart()">
+                  <option value="0">ม.ค.</option><option value="1">ก.พ.</option>
+                  <option value="2">มี.ค.</option><option value="3">เม.ย.</option>
+                  <option value="4">พ.ค.</option><option value="5">มิ.ย.</option>
+                  <option value="6">ก.ค.</option><option value="7">ส.ค.</option>
+                  <option value="8">ก.ย.</option><option value="9">ต.ค.</option>
+                  <option value="10">พ.ย.</option><option value="11">ธ.ค.</option>
+                </select>
+              </div>
+            </div>
+            <div class="chart-wrap"><canvas id="parkingChart"></canvas></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title">
+                <div class="panel-title-dot" style="background:var(--accent2)"></div>
+                Top 5 จอดแทนมากสุด
+              </div>
+              <div class="panel-actions">
+                <select class="mini-select" id="rankMonthSel" onchange="renderTopRank()">
+                  <option value="0">ม.ค.</option><option value="1">ก.พ.</option>
+                  <option value="2">มี.ค.</option><option value="3">เม.ย.</option>
+                  <option value="4">พ.ค.</option><option value="5">มิ.ย.</option>
+                  <option value="6">ก.ค.</option><option value="7">ส.ค.</option>
+                  <option value="8">ก.ย.</option><option value="9">ต.ค.</option>
+                  <option value="10">พ.ย.</option><option value="11">ธ.ค.</option>
+                </select>
+              </div>
             </div>
             <div class="tbl-wrap">
               <table>
-                <thead><tr><th>#</th><th>ชื่อ</th><th>ทะเบียน</th><th>ประเภท</th><th>เวลา</th><th>ถึงวันที่</th></tr></thead>
-                <tbody id="tableBody"><tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted);">กำลังโหลดข้อมูล...</td></tr></tbody>
+                <thead><tr><th>#</th><th>ทะเบียน</th><th>ชื่อ</th><th>ครั้ง</th><th>สัดส่วน</th></tr></thead>
+                <tbody id="tblRank"></tbody>
               </table>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="panel-head"><div class="panel-title" id="miniCalTitle">—</div><div class="panel-meta">ภาพรวมเดือน</div></div>
-            <div class="cal-grid" id="miniCal"></div>
-            <div class="cal-legend">
-              <div class="cal-legend-item"><div class="dot" style="background:var(--red)"></div>เต็ม</div>
-              <div class="cal-legend-item"><div class="dot" style="background:var(--amber)"></div>>80%</div>
-              <div class="cal-legend-item"><div class="dot" style="background:var(--green)"></div>ว่าง</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- MONTH VIEW — สรุปรายการ -->
+      <!-- ── MONTH SUMMARY ── -->
       <div id="view-month" class="view-section">
-        <div class="panel" style="margin-bottom:16px;">
-          <!-- Filter Bar -->
-          <div class="month-filter-bar">
-            <span class="filter-label">เดือน</span>
-            <select id="filterMonth" onchange="renderMonthSummary()">
+        <div class="panel">
+          <div class="cal-filter-bar">
+            <label>เดือน</label>
+            <select class="mini-select" id="mFilterMonth" onchange="onMonthFilterChange()">
               <option value="0">มกราคม</option><option value="1">กุมภาพันธ์</option>
-              <option value="2" selected>มีนาคม</option><option value="3">เมษายน</option>
+              <option value="2">มีนาคม</option><option value="3">เมษายน</option>
               <option value="4">พฤษภาคม</option><option value="5">มิถุนายน</option>
               <option value="6">กรกฎาคม</option><option value="7">สิงหาคม</option>
               <option value="8">กันยายน</option><option value="9">ตุลาคม</option>
               <option value="10">พฤศจิกายน</option><option value="11">ธันวาคม</option>
             </select>
-            <span class="filter-label" style="margin-left:6px;">วัน</span>
-            <select id="filterDay" onchange="renderMonthSummary()">
-              <option value="all">ทั้งเดือน</option>
-              <!-- days 1-31 populated by JS -->
-            </select>
-            <span style="flex:1"></span>
-            <div class="gs-status" id="gsStatusMonth">
-              <div class="gs-dot loading" id="gsDotMonth"></div>
-              <span id="gsTextMonth">กำลังโหลด...</span>
+            <label>วันที่</label>
+            <div class="cal-picker-wrap">
+              <div class="cal-picker-input" id="dayPickerDisplay" onclick="toggleDayPicker()">ทั้งเดือน ▾</div>
+              <div class="cal-dropdown" id="dayPickerDropdown">
+                <div class="cal-drop-head">
+                  <div class="cal-drop-title" id="dayPickerTitle"></div>
+                  <div class="cal-drop-nav">
+                    <button onclick="dayPickerChangeMonth(-1)">‹</button>
+                    <button onclick="dayPickerChangeMonth(1)">›</button>
+                  </div>
+                </div>
+                <div class="cal-grid-mini">
+                  <div class="cal-head-cell">อา</div><div class="cal-head-cell">จ</div>
+                  <div class="cal-head-cell">อ</div><div class="cal-head-cell">พ</div>
+                  <div class="cal-head-cell">พฤ</div><div class="cal-head-cell">ศ</div>
+                  <div class="cal-head-cell">ส</div>
+                  <div id="dayPickerCells"></div>
+                </div>
+              </div>
             </div>
+            <button class="btn-clear" onclick="clearDayFilter()">ล้าง</button>
+            <span style="flex:1"></span>
+            <span id="monthSummaryCount" style="font-size:12px;color:var(--muted);"></span>
           </div>
 
-          <!-- Table 1: จอดแทน -->
           <div class="section-divider">📋 รายการแจ้งจอดแทน</div>
           <div class="tbl-wrap">
             <table>
-              <thead><tr><th>#</th><th>วันที่</th><th>ชื่อผู้แจ้ง</th><th>ทะเบียน</th><th>จอดแทนสิทธิ์</th><th>เวลา</th><th>สิ้นสุด</th></tr></thead>
+              <thead><tr><th>#</th><th>วันที่</th><th>ชื่อผู้แจ้ง</th><th>ทะเบียน</th><th>จอดแทนสิทธิ์</th><th>เวลา</th><th>ถึงวันที่</th></tr></thead>
               <tbody id="tblReplace"></tbody>
             </table>
           </div>
 
-          <!-- Table 2: หมุนเวียน -->
-          <div class="section-divider" style="margin-top:8px;">🔄 รายการจอดหมุนเวียน</div>
+          <div class="section-divider" style="margin-top:4px;">🔄 รายการจอดหมุนเวียน</div>
           <div class="tbl-wrap">
             <table>
-              <thead><tr><th>#</th><th>วันที่</th><th>ชื่อผู้แจ้ง</th><th>ทะเบียน</th><th>ประเภทเวลา</th><th>สิ้นสุด</th></tr></thead>
+              <thead><tr><th>#</th><th>วันที่</th><th>ชื่อผู้แจ้ง</th><th>ทะเบียน</th><th>ช่วงเวลา</th><th>ถึงวันที่</th></tr></thead>
               <tbody id="tblRotate"></tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- CAL VIEW -->
+      <!-- ── CALENDAR ── -->
       <div id="view-cal" class="view-section">
         <div class="panel">
-          <div class="panel-head">
-            <div class="panel-title" id="bigCalTitle">ปฏิทิน</div>
-            <div class="cal-legend" style="padding:0">
-              <div class="cal-legend-item"><div class="dot" style="background:var(--red)"></div>เต็ม</div>
-              <div class="cal-legend-item"><div class="dot" style="background:var(--amber)"></div>>80%</div>
-              <div class="cal-legend-item"><div class="dot" style="background:var(--green)"></div>ว่าง</div>
+          <div class="big-cal-nav">
+            <select class="mini-select" id="calYearSel" onchange="renderBigCal()"></select>
+            <select class="mini-select" id="calMonthSel" onchange="renderBigCal()">
+              <option value="0">มกราคม</option><option value="1">กุมภาพันธ์</option>
+              <option value="2">มีนาคม</option><option value="3">เมษายน</option>
+              <option value="4">พฤษภาคม</option><option value="5">มิถุนายน</option>
+              <option value="6">กรกฎาคม</option><option value="7">สิงหาคม</option>
+              <option value="8">กันยายน</option><option value="9">ตุลาคม</option>
+              <option value="10">พฤศจิกายน</option><option value="11">ธันวาคม</option>
+            </select>
+            <div style="flex:1"></div>
+            <div style="display:flex;gap:14px;font-size:11px;color:var(--muted);">
+              <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent2);margin-right:4px;"></span>จอดแทน</span>
+              <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:4px;"></span>หมุนเวียน</span>
+              <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);margin-right:4px;"></span>ค้างคืน</span>
+              <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:4px;"></span>ว่าง</span>
             </div>
           </div>
+          <div class="big-cal-grid" id="bigCalHead" style="padding-bottom:0;gap:4px;"></div>
           <div class="big-cal-grid" id="bigCal"></div>
         </div>
       </div>
+
+      <!-- ── PLATE REGISTRY ── -->
+      <div id="view-plates" class="view-section">
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-title">
+              <div class="panel-title-dot" style="background:var(--accent2)"></div>
+              ทะเบียนรถประจำ (PlateDB)
+            </div>
+            <div class="panel-meta" id="plateDBCount">—</div>
+          </div>
+          <div class="registry-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" placeholder="ค้นหา ชื่อ, ทะเบียน, ชั้น..." oninput="filterRegistry(this.value)" id="registrySearch">
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>#</th><th>ทะเบียน</th><th>ชื่อ</th><th>แผนก</th><th>ชั้น/ช่อง</th><th>แจ้งจอดแทน</th><th>ประวัติ</th></tr></thead>
+              <tbody id="tblRegistry"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /content -->
 
     <!-- MOBILE BOTTOM NAV -->
@@ -464,24 +616,24 @@ select.form-control{cursor:pointer;}
       <div class="bottom-nav-inner">
         <a class="bnav-item" href="https://add00917-hue.github.io/GNR3-Building-MS/#01">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 3L7 10l6 7"/></svg>
-          เมนูหลัก
+          หลัก
         </a>
-        <div class="bnav-item active" id="bnav-day" onclick="switchView('day');setActiveNav('day')">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h14M3 10h8M3 15h5"/></svg>
-          รายวัน
-        </div>
-        <div class="bnav-item" id="bnav-month" onclick="switchView('month');setActiveNav('month')">
+        <button class="bnav-item active" id="bnav-dash" onclick="switchView('dash');setActiveNav('dash')">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="7" height="7" rx="1"/><rect x="11" y="2" width="7" height="7" rx="1"/><rect x="2" y="11" width="7" height="7" rx="1"/><rect x="11" y="11" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button class="bnav-item" id="bnav-month" onclick="switchView('month');setActiveNav('month')">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="16" height="13" rx="2"/><path d="M6 4V2M14 4V2M2 9h16"/></svg>
-          สรุปเดือน
-        </div>
-        <div class="bnav-item" id="bnav-cal" onclick="switchView('cal');setActiveNav('cal')">
+          สรุป
+        </button>
+        <button class="bnav-item" id="bnav-cal" onclick="switchView('cal');setActiveNav('cal')">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="16" height="13" rx="2"/><path d="M6 4V2M14 4V2M2 9h16M6 13h2M12 13h2"/></svg>
           ปฏิทิน
-        </div>
-        <div class="bnav-item" id="bnav-add" onclick="openModal()">
+        </button>
+        <button class="bnav-item" id="bnav-add" onclick="openModal()">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M7 10h6M10 7v6"/></svg>
           แจ้งจอง
-        </div>
+        </button>
       </div>
     </nav>
   </div>
@@ -489,7 +641,7 @@ select.form-control{cursor:pointer;}
 
 <!-- FAB -->
 <button class="fab" onclick="openModal()">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
 </button>
 
 <!-- BOOKING MODAL -->
@@ -497,28 +649,30 @@ select.form-control{cursor:pointer;}
   <div class="modal" id="modal">
     <div class="modal-handle"></div>
     <button class="close-btn" onclick="closeModal()">✕</button>
-    <div class="modal-title">แจ้งจองที่จอดรถ</div>
+    <div class="modal-title">
+      <div class="modal-title-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11l4 4v3"/><circle cx="15.5" cy="17.5" r="2.5"/><circle cx="5.5" cy="17.5" r="2.5"/><path d="M8 17h5"/></svg>
+      </div>
+      แจ้งจองที่จอดรถ
+    </div>
 
     <div class="voice-tip">
-      💬 พูดเพื่อกรอกข้อมูลอัตโนมัติ เช่น<br>
+      💬 พูดเพื่อกรอกอัตโนมัติ เช่น<br>
       <strong>"จองหมุนเวียน ทะเบียน กข 1234 ชื่อสมศักดิ์ วันที่ 25 มีนาคม จอดปกติ"</strong>
     </div>
 
     <div class="voice-row">
       <div class="voice-box" id="voiceBox">กดไมค์แล้วพูด...</div>
       <button class="mic-btn" id="micBtn" onclick="toggleVoice()">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="7" y="1" width="6" height="10" rx="3"/>
-          <path d="M4 10a6 6 0 0012 0M10 17v2M7 19h6"/>
-        </svg>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="7" y="1" width="6" height="10" rx="3"/><path d="M4 10a6 6 0 0012 0M10 17v2M7 19h6"/></svg>
       </button>
     </div>
 
     <div class="form-group">
       <label class="form-label">ประเภทการจอด</label>
       <select class="form-control" id="fType" onchange="toggleReplace()">
-        <option value="หมุนเวียน">จอดหมุนเวียน (โควตา 18 ที่)</option>
-        <option value="จอดแทน">จอดแทนพนักงานประจำ</option>
+        <option value="หมุนเวียน">🔄 จอดหมุนเวียน (โควตา 18 ที่)</option>
+        <option value="จอดแทน">🔁 จอดแทนพนักงานประจำ</option>
       </select>
     </div>
 
@@ -541,13 +695,13 @@ select.form-control{cursor:pointer;}
     <div class="form-group">
       <label class="form-label">ช่วงเวลา</label>
       <select class="form-control" id="fTime">
-        <option value="ปกติ">จอดปกติ (08.00 – 23.00 น.)</option>
-        <option value="ค้างคืน">จอดค้างคืน (เกิน 23.00 น.)</option>
+        <option value="ปกติ">🌤 จอดปกติ (08.00 – 23.00 น.)</option>
+        <option value="ค้างคืน">🌙 จอดค้างคืน (เกิน 23.00 น.)</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label class="form-label">ทะเบียนรถ <span style="color:var(--accent);font-size:11px;">(พิมพ์เพื่อค้นหาจากฐานข้อมูล)</span></label>
+      <label class="form-label">ทะเบียนรถ <span style="color:var(--accent);font-weight:400;">(พิมพ์เพื่อค้นหาจากฐานข้อมูล)</span></label>
       <input class="form-control" id="fPlate" placeholder="เช่น กข 1234" oninput="searchPlate(this.value)" autocomplete="off">
       <div class="plate-suggestions" id="plateSuggestions"></div>
     </div>
@@ -557,7 +711,7 @@ select.form-control{cursor:pointer;}
       <input class="form-control" id="fName" placeholder="ชื่อ-นามสกุล">
     </div>
 
-    <button class="btn-submit" onclick="submitForm()">บันทึกการจอง</button>
+    <button class="btn-submit" onclick="submitForm()">✓ บันทึกการจอง</button>
     <div id="submitStatus" style="text-align:center;margin-top:10px;font-size:12px;color:var(--muted);display:none;"></div>
   </div>
 </div>
@@ -566,480 +720,451 @@ select.form-control{cursor:pointer;}
 <div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════════════════════════
-//  CONFIGURATION — แก้ค่านี้ก่อนใช้งาน
-// ════════════════════════════════════════════════════════
-const CONFIG = {
-  // Google Apps Script Web App URL
-  // 1. เปิด Google Sheet ที่ต้องการ
-  // 2. Extensions > Apps Script > วาง Code ด้านล่าง > Deploy > Web App
-  // 3. วาง URL ที่ได้ในบรรทัดนี้:
+// ════════════════════════════════════════
+//  CONFIG
+// ════════════════════════════════════════
+const CFG = {
   SCRIPT_URL: 'https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec',
-
-  ROTATE_QUOTA: 18,   // จำนวนที่จอดหมุนเวียนสูงสุด
+  ROTATE_QUOTA: 18,
 };
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 //  STATE
-// ════════════════════════════════════════════════════════
-let allData = [];           // ข้อมูลทั้งหมดจาก Sheet
-let plateDB = [];           // ทะเบียนอ้างอิง (Sheet2)
-let gsConnected = false;
+// ════════════════════════════════════════
+let allData = [], plateDB = [], gsConnected = false;
 let cur = new Date();
+let chartInstance = null;
+// Day picker state
+let dpYear = cur.getFullYear(), dpMonth = cur.getMonth(), dpSelectedDay = null;
 
-const thDays=['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
-const thMonths=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-const thMonthsShort=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const TH_DAYS = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+const TH_DAYS_SHORT = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+const TH_MONTHS = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const TH_MONTHS_SHORT = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 
-// ════════════════════════════════════════════════════════
-//  GOOGLE SHEETS API
-// ════════════════════════════════════════════════════════
-/*
-  ── Apps Script Code (วางใน script.gs ของ Google Sheet) ──
-
-  function doGet(e){
-    const action = e.parameter.action || 'getData';
-    if(action === 'getData'){
-      const ss = SpreadsheetApp.getActiveSpreadsheet();
-      const sheet = ss.getSheetByName('Parking') || ss.getSheets()[0];
-      const rows = sheet.getDataRange().getValues();
-      const headers = rows[0];
-      const data = rows.slice(1).map(r => {
-        let obj = {};
-        headers.forEach((h,i) => obj[h] = r[i]);
-        return obj;
-      });
-      const plateSheet = ss.getSheetByName('PlateDB');
-      let plates = [];
-      if(plateSheet){
-        const pr = plateSheet.getDataRange().getValues();
-        plates = pr.slice(1).map(r => ({plate: r[0], name: r[1], dept: r[2]||''}));
-      }
-      return ContentService.createTextOutput(JSON.stringify({ok:true, data, plates}))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
-    return ContentService.createTextOutput(JSON.stringify({ok:false}))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-
-  function doPost(e){
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const sheet = ss.getSheetByName('Parking') || ss.getSheets()[0];
-    const payload = JSON.parse(e.postData.contents);
-    sheet.appendRow([
-      new Date(),
-      payload.name, payload.plate, payload.type,
-      payload.replaceInfo || '', payload.start, payload.end,
-      payload.period, payload.submittedAt
-    ]);
-    return ContentService.createTextOutput(JSON.stringify({ok:true}))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-*/
-
+// ════════════════════════════════════════
+//  FETCH / POST GOOGLE SHEETS
+// ════════════════════════════════════════
 async function fetchFromSheet(){
-  setGsStatus('loading','กำลังโหลด...');
-  try{
-    const res = await fetch(CONFIG.SCRIPT_URL + '?action=getData');
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const json = await res.json();
-    if(!json.ok) throw new Error('Script error');
-    allData = (json.data||[]).map(normalizeRow);
-    plateDB = json.plates||[];
+  setGsStatus('loading','กำลังเชื่อมต่อ...');
+  try {
+    const r = await fetch(CFG.SCRIPT_URL+'?action=getData');
+    if(!r.ok) throw new Error();
+    const j = await r.json();
+    if(!j.ok) throw new Error();
+    allData = (j.data||[]).map(normalizeRow);
+    plateDB = j.plates||[];
     gsConnected = true;
-    setGsStatus('connected','เชื่อมต่อแล้ว');
-    refreshAll();
-  } catch(err){
+    setGsStatus('ok','เชื่อมต่อแล้ว');
+  } catch {
     gsConnected = false;
-    setGsStatus('disconnected','ไม่ได้เชื่อมต่อ (ใช้ข้อมูลตัวอย่าง)');
-    // fallback to demo data
+    setGsStatus('err','ไม่ได้เชื่อมต่อ (Demo)');
     allData = getDemoData();
-    plateDB = getDemoPlatDB();
-    refreshAll();
+    plateDB = getDemoDB();
   }
+  refreshAll();
 }
 
 async function postToSheet(payload){
-  const btn = document.getElementById('submitStatus');
-  btn.style.display='block';
-  btn.textContent='กำลังบันทึก...';
-  try{
-    await fetch(CONFIG.SCRIPT_URL, {
-      method:'POST',
-      body: JSON.stringify({...payload, submittedAt: new Date().toISOString()})
-    });
+  const s = document.getElementById('submitStatus');
+  s.style.display='block'; s.textContent='กำลังบันทึก...';
+  try {
+    await fetch(CFG.SCRIPT_URL,{method:'POST',body:JSON.stringify({...payload,submittedAt:new Date().toISOString()})});
     showToast('✓ บันทึกสำเร็จ','success');
     fetchFromSheet();
-  } catch(e){
-    showToast('⚠ บันทึกไม่สำเร็จ (ตรวจสอบการเชื่อมต่อ)','warn');
-  }
-  btn.style.display='none';
+  } catch { showToast('⚠ บันทึกไม่สำเร็จ','warn'); }
+  s.style.display='none';
 }
 
-function normalizeRow(r){
-  // รองรับ header ทั้งภาษาไทยและ EN
-  return {
-    timestamp: r['timestamp']||r['Timestamp']||r['วันเวลา']||'',
-    name:      r['name']||r['ชื่อ']||'',
-    plate:     r['plate']||r['ทะเบียน']||'',
-    type:      r['type']||r['ประเภท']||'หมุนเวียน',
-    replaceInfo: r['replaceInfo']||r['จอดแทน']||'',
-    start:     r['start']||r['วันเริ่ม']||'',
-    end:       r['end']||r['วันสิ้นสุด']||'',
-    period:    r['period']||r['เวลา']||'ปกติ',
-  };
+function setGsStatus(state,txt){
+  document.getElementById('gsDot').className='gs-dot '+state;
+  document.getElementById('gsText').textContent=txt;
 }
 
-// ════════════════════════════════════════════════════════
-//  DEMO DATA (fallback เมื่อยังไม่ได้ตั้งค่า Script URL)
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
+//  DEMO DATA
+// ════════════════════════════════════════
 function getDemoData(){
   const today = fmtDate(new Date());
+  const y = new Date().getFullYear();
+  const m = String(new Date().getMonth()+1).padStart(2,'0');
   return [
-    {name:'สมศักดิ์ วงษ์ใหญ่',plate:'กข 1234',type:'หมุนเวียน',period:'ปกติ',start:today,end:today,replaceInfo:''},
-    {name:'นุกูล ชัยมงคล',plate:'5ธฌ 7777',type:'จอดแทน',period:'ปกติ',start:today,end:'25/03/2026',replaceInfo:'คุณนุกูล ช่อง 02'},
-    {name:'ปิยะ สมบูรณ์ดี',plate:'กง 5544',type:'หมุนเวียน',period:'ค้างคืน',start:today,end:today,replaceInfo:''},
-    {name:'วารี แสนสุข',plate:'ขข 9900',type:'หมุนเวียน',period:'ปกติ',start:today,end:today,replaceInfo:''},
-    {name:'ธนกร ศิริวงศ์',plate:'3ผว 1122',type:'จอดแทน',period:'ค้างคืน',start:today,end:'24/03/2026',replaceInfo:'คุณวารี ช่อง 05'},
-    {name:'อรุณี พงษ์ศักดิ์',plate:'กต 3312',type:'หมุนเวียน',period:'ปกติ',start:today,end:today,replaceInfo:''},
-    {name:'มานพ เจริญสุข',plate:'ชง 4488',type:'หมุนเวียน',period:'ปกติ',start:today,end:today,replaceInfo:''},
-    {name:'สุภาพ รักดี',plate:'กค 7766',type:'จอดแทน',period:'ปกติ',start:'20/03/2026',end:'28/03/2026',replaceInfo:'คุณสมชาย ช่อง 08'},
+    ...Array.from({length:8},(_,i)=>({name:['สมศักดิ์ วงษ์ใหญ่','นุกูล ชัยมงคล','ปิยะ สมบูรณ์ดี','วารี แสนสุข','ธนกร ศิริวงศ์','อรุณี พงษ์ศักดิ์','มานพ เจริญสุข','ชลิดา มีสุข'][i],plate:['กข 1234','5ธฌ 7777','กง 5544','ขข 9900','3ผว 1122','กต 3312','ชง 4488','1กก 8888'][i],type:i%3===1?'จอดแทน':'หมุนเวียน',period:i%4===2?'ค้างคืน':'ปกติ',start:today,end:today,replaceInfo:i%3===1?['คุณนุกูล ช่อง 02','คุณวารี ช่อง 05'][Math.floor(i/3)]||'ช่อง 0'+(i+1):''})),
+    // extra days for chart
+    ...Array.from({length:25},(_,i)=>({name:'ทดสอบ '+i,plate:'ทส '+(1000+i),type:i%4===0?'จอดแทน':'หมุนเวียน',period:i%5===0?'ค้างคืน':'ปกติ',start:`${String(i+1).padStart(2,'0')}/${m}/${y}`,end:`${String(i+1).padStart(2,'0')}/${m}/${y}`,replaceInfo:i%4===0?'ช่อง 0'+(i%10+1):''})),
+    {name:'นุกูล ชัยมงคล',plate:'5ธฌ 7777',type:'จอดแทน',period:'ปกติ',start:`05/${m}/${y}`,end:`05/${m}/${y}`,replaceInfo:'ช่อง 02'},
+    {name:'นุกูล ชัยมงคล',plate:'5ธฌ 7777',type:'จอดแทน',period:'ปกติ',start:`12/${m}/${y}`,end:`12/${m}/${y}`,replaceInfo:'ช่อง 02'},
+    {name:'สุภาพ รักดี',plate:'กค 7766',type:'จอดแทน',period:'ปกติ',start:`03/${m}/${y}`,end:`03/${m}/${y}`,replaceInfo:'ช่อง 08'},
+    {name:'สุภาพ รักดี',plate:'กค 7766',type:'จอดแทน',period:'ปกติ',start:`10/${m}/${y}`,end:`10/${m}/${y}`,replaceInfo:'ช่อง 08'},
+    {name:'ธนกร ศิริวงศ์',plate:'3ผว 1122',type:'จอดแทน',period:'ค้างคืน',start:`07/${m}/${y}`,end:`07/${m}/${y}`,replaceInfo:'ช่อง 05'},
   ];
 }
-function getDemoPlatDB(){
+function getDemoDB(){
   return [
-    {plate:'กข 1234',name:'สมศักดิ์ วงษ์ใหญ่',dept:'IT'},
-    {plate:'5ธฌ 7777',name:'นุกูล ชัยมงคล',dept:'HR'},
-    {plate:'กง 5544',name:'ปิยะ สมบูรณ์ดี',dept:'Finance'},
-    {plate:'ขข 9900',name:'วารี แสนสุข',dept:'Admin'},
-    {plate:'3ผว 1122',name:'ธนกร ศิริวงศ์',dept:'Sales'},
-    {plate:'กต 3312',name:'อรุณี พงษ์ศักดิ์',dept:'IT'},
-    {plate:'ชง 4488',name:'มานพ เจริญสุข',dept:'Marketing'},
-    {plate:'กค 7766',name:'สุภาพ รักดี',dept:'Finance'},
-    {plate:'1กก 8888',name:'ชลิดา มีสุข',dept:'Admin'},
-    {plate:'ขจ 2233',name:'วิชัย พลายงาม',dept:'HR'},
+    {plate:'กข 1234',name:'สมศักดิ์ วงษ์ใหญ่',dept:'IT',floor:'B1',slot:'01'},
+    {plate:'5ธฌ 7777',name:'นุกูล ชัยมงคล',dept:'HR',floor:'B1',slot:'02'},
+    {plate:'กง 5544',name:'ปิยะ สมบูรณ์ดี',dept:'Finance',floor:'B2',slot:'03'},
+    {plate:'ขข 9900',name:'วารี แสนสุข',dept:'Admin',floor:'B1',slot:'04'},
+    {plate:'3ผว 1122',name:'ธนกร ศิริวงศ์',dept:'Sales',floor:'B2',slot:'05'},
+    {plate:'กต 3312',name:'อรุณี พงษ์ศักดิ์',dept:'IT',floor:'B1',slot:'06'},
+    {plate:'ชง 4488',name:'มานพ เจริญสุข',dept:'Marketing',floor:'B2',slot:'07'},
+    {plate:'กค 7766',name:'สุภาพ รักดี',dept:'Finance',floor:'B1',slot:'08'},
+    {plate:'1กก 8888',name:'ชลิดา มีสุข',dept:'Admin',floor:'B2',slot:'09'},
+    {plate:'ขจ 2233',name:'วิชัย พลายงาม',dept:'HR',floor:'B1',slot:'10'},
   ];
 }
 
-// ════════════════════════════════════════════════════════
-//  HELPERS
-// ════════════════════════════════════════════════════════
-function fmtDate(d){
-  return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
-}
-function dateInRange(startStr, endStr, checkDate){
-  const parse = s => {
-    if(!s) return null;
-    // รองรับ dd/mm/yyyy, yyyy-mm-dd, หรือ Date
-    if(s instanceof Date) return s;
-    const p = s.toString().split(/[\/\-]/);
-    if(p[0].length===4) return new Date(+p[0],+p[1]-1,+p[2]);
-    return new Date(+p[2],+p[1]-1,+p[0]);
+// ════════════════════════════════════════
+//  NORMALIZE ROW
+// ════════════════════════════════════════
+function normalizeRow(r){
+  return {
+    timestamp:r['timestamp']||r['Timestamp']||r['วันเวลา']||'',
+    name:r['name']||r['ชื่อ']||'',
+    plate:r['plate']||r['ทะเบียน']||'',
+    type:r['type']||r['ประเภท']||'หมุนเวียน',
+    replaceInfo:r['replaceInfo']||r['จอดแทน']||'',
+    start:r['start']||r['วันเริ่ม']||'',
+    end:r['end']||r['วันสิ้นสุด']||'',
+    period:r['period']||r['เวลา']||'ปกติ',
   };
-  const s = parse(startStr), e = parse(endStr);
-  if(!s||!e) return false;
-  const c = new Date(checkDate.getFullYear(),checkDate.getMonth(),checkDate.getDate());
-  return c >= new Date(s.getFullYear(),s.getMonth(),s.getDate()) &&
-         c <= new Date(e.getFullYear(),e.getMonth(),e.getDate());
 }
-function getDatePart(str){
-  if(!str) return null;
-  const p = str.toString().split(/[\/\-]/);
+
+// ════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════
+function fmtDate(d){ return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`; }
+function parseDate(s){
+  if(!s) return null;
+  if(s instanceof Date) return s;
+  const p=s.toString().split(/[\/\-]/);
+  if(p.length<3) return null;
   if(p[0].length===4) return new Date(+p[0],+p[1]-1,+p[2]);
   return new Date(+p[2],+p[1]-1,+p[0]);
 }
-
-// ════════════════════════════════════════════════════════
-//  FILTER DATA FOR CURRENT DATE
-// ════════════════════════════════════════════════════════
-function getDataForDate(d){
-  return allData.filter(r => dateInRange(r.start||r.timestamp, r.end||r.start||r.timestamp, d));
+function dateOnly(d){ return d?new Date(d.getFullYear(),d.getMonth(),d.getDate()):null; }
+function dateInRange(s,e,check){
+  const sd=dateOnly(parseDate(s)),ed=dateOnly(parseDate(e)),cd=dateOnly(check);
+  if(!sd||!ed||!cd) return false;
+  return cd>=sd&&cd<=ed;
 }
+function getDataForDate(d){ return allData.filter(r=>dateInRange(r.start||r.timestamp,r.end||r.start||r.timestamp,d)); }
+function getDataForMonth(m,y){ return allData.filter(r=>{ const d=parseDate(r.start||r.timestamp); return d&&d.getMonth()===m&&d.getFullYear()===y; }); }
+function fmtShort(s){ const d=parseDate(s); if(!d||isNaN(d)) return s||'—'; return `${d.getDate()} ${TH_MONTHS_SHORT[d.getMonth()]}`; }
 
-// ════════════════════════════════════════════════════════
-//  REFRESH ALL VIEWS
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
+//  REFRESH ALL
+// ════════════════════════════════════════
 function refreshAll(){
-  const todayData = getDataForDate(cur);
-  const rotateData = todayData.filter(r=>r.type==='หมุนเวียน');
-  const replaceData = todayData.filter(r=>r.type==='จอดแทน');
-  const nightData = todayData.filter(r=>r.period==='ค้างคืน');
+  const td = getDataForDate(cur);
+  const rot = td.filter(r=>r.type==='หมุนเวียน');
+  const rep = td.filter(r=>r.type==='จอดแทน');
+  const night = td.filter(r=>r.period==='ค้างคืน');
 
-  // Stats
-  document.getElementById('statTotal').textContent = todayData.length;
-  document.getElementById('statBadge').textContent = '+'+todayData.length;
-  document.getElementById('statRemain').textContent = Math.max(0, CONFIG.ROTATE_QUOTA - rotateData.length);
-  document.getElementById('statNight').textContent = nightData.length;
-  document.getElementById('statReplace').textContent = replaceData.length;
+  setText('statTotal', td.length);
+  setText('statRemain', Math.max(0, CFG.ROTATE_QUOTA - rot.length));
+  setText('statNight', night.length);
+  setText('statReplace', rep.length);
+  setText('statNightSub', `ปกติ ${td.length-night.length} คัน`);
+  setText('statReplaceSub', `หมุนเวียน ${rot.length} คัน`);
+  setText('navBadgeToday', td.length);
 
-  // Sidebar quota
-  const used = rotateData.length;
-  const pct = Math.min(100, Math.round(used/CONFIG.ROTATE_QUOTA*100));
-  document.getElementById('sidebarQuota').innerHTML = `${used} <span>/ ${CONFIG.ROTATE_QUOTA} ที่</span>`;
-  document.getElementById('sidebarBar').style.width = pct+'%';
+  const pct = Math.min(100, Math.round(rot.length/CFG.ROTATE_QUOTA*100));
+  setText('sbQuotaUsed', rot.length);
+  document.getElementById('sbBar').style.width=pct+'%';
 
-  renderDayTable(todayData);
-  renderMiniCal();
+  updateDateLabel();
+  renderChart();
+  renderTopRank();
   renderMonthSummary();
   renderBigCal();
-  updateDateLabel();
+  renderRegistry();
 }
+function setText(id,v){ const el=document.getElementById(id); if(el) el.textContent=v; }
 
-// ════════════════════════════════════════════════════════
-//  DAY TABLE
-// ════════════════════════════════════════════════════════
-function renderDayTable(data){
-  document.getElementById('dayMeta').textContent = data.length+' รายการ';
-  if(!data.length){
-    document.getElementById('tableBody').innerHTML='<tr class="empty-row"><td colspan="6">ไม่มีรายการวันนี้</td></tr>';
-    return;
+// ════════════════════════════════════════
+//  CHART
+// ════════════════════════════════════════
+function renderChart(){
+  const m = parseInt(document.getElementById('chartMonthSel').value);
+  const y = cur.getFullYear();
+  const days = new Date(y,m+1,0).getDate();
+  const labels=[], rotData=[], repData=[], nightData=[];
+
+  for(let d=1;d<=days;d++){
+    const dd=new Date(y,m,d);
+    const data=getDataForDate(dd);
+    labels.push(d);
+    rotData.push(data.filter(r=>r.type==='หมุนเวียน').length);
+    repData.push(data.filter(r=>r.type==='จอดแทน').length);
+    nightData.push(data.filter(r=>r.period==='ค้างคืน').length);
   }
-  document.getElementById('tableBody').innerHTML = data.map((r,i)=>`
-    <tr>
-      <td style="color:var(--muted);font-family:var(--mono);font-size:11px;">${String(i+1).padStart(2,'0')}</td>
-      <td>${r.name}</td>
-      <td><span class="plate">${r.plate}</span></td>
-      <td><span class="badge ${r.type==='หมุนเวียน'?'rotate':'replace'}">${r.type}</span></td>
-      <td><span class="badge ${r.period==='ค้างคืน'?'night':'normal'}">${r.period}</span></td>
-      <td style="color:var(--muted);font-size:12px;">${r.end||'—'}</td>
-    </tr>`).join('');
+
+  const ctx = document.getElementById('parkingChart').getContext('2d');
+  if(chartInstance) chartInstance.destroy();
+  chartInstance = new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'หมุนเวียน',data:rotData,backgroundColor:'rgba(59,111,245,.7)',borderRadius:4,borderSkipped:false},
+        {label:'จอดแทน',data:repData,backgroundColor:'rgba(124,90,245,.7)',borderRadius:4,borderSkipped:false},
+        {label:'ค้างคืน',data:nightData,backgroundColor:'rgba(245,158,11,.6)',borderRadius:4,borderSkipped:false,type:'line',fill:false,tension:.3,borderColor:'rgba(245,158,11,.8)',pointRadius:3,pointBackgroundColor:'rgba(245,158,11,1)'},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{position:'top',labels:{font:{family:"'Sarabun',sans-serif",size:12},boxWidth:12,usePointStyle:true}},tooltip:{mode:'index',intersect:false}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:11},color:'#94a3b8'}},
+        y:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:11},color:'#94a3b8'},beginAtZero:true}
+      }
+    }
+  });
 }
 
-// ════════════════════════════════════════════════════════
-//  MINI CAL
-// ════════════════════════════════════════════════════════
-function renderMiniCal(){
-  const days=['อา','จ','อ','พ','พฤ','ศ','ส'];
-  const m = cur.getMonth(), y = cur.getFullYear();
-  const daysInMonth = new Date(y,m+1,0).getDate();
-  const firstDay = new Date(y,m,1).getDay();
-  const today = new Date();
-
-  document.getElementById('miniCalTitle').textContent = `${thMonths[m]} ${y}`;
-
-  let h = days.map(d=>`<div class="cal-day-name">${d}</div>`).join('');
-  for(let i=0;i<firstDay;i++) h+='<div class="cal-cell empty"></div>';
-
-  for(let d=1;d<=daysInMonth;d++){
-    const dd = new Date(y,m,d);
-    const dayData = getDataForDate(dd);
-    const rotCnt = dayData.filter(r=>r.type==='หมุนเวียน').length;
-    const pct = rotCnt/CONFIG.ROTATE_QUOTA;
-    const isToday = dd.toDateString()===today.toDateString();
-    const isCur = dd.toDateString()===cur.toDateString();
-    const cls = pct>=1?'full':pct>=.8?'busy':'free';
-    h+=`<div class="cal-cell ${cls}${isToday?' today':''}${isCur?' selected':''}" onclick="selectDate(${y},${m},${d})">
-      <span class="cal-date">${d}</span>
-      <div class="cal-dot"></div>
-    </div>`;
-  }
-  document.getElementById('miniCal').innerHTML=h;
+// ════════════════════════════════════════
+//  TOP 5 RANK
+// ════════════════════════════════════════
+function renderTopRank(){
+  const m = parseInt(document.getElementById('rankMonthSel').value);
+  const y = cur.getFullYear();
+  const data = getDataForMonth(m,y).filter(r=>r.type==='จอดแทน');
+  const map = {};
+  data.forEach(r=>{
+    const k = r.plate||'?';
+    if(!map[k]) map[k]={plate:k,name:r.name,count:0};
+    map[k].count++;
+  });
+  const sorted = Object.values(map).sort((a,b)=>b.count-a.count).slice(0,5);
+  const max = sorted[0]?.count||1;
+  const colors=['var(--accent)','var(--accent2)','var(--amber)','var(--green)','var(--red)'];
+  document.getElementById('tblRank').innerHTML = sorted.length
+    ? sorted.map((r,i)=>`
+      <tr>
+        <td><span class="rank-num">${i+1}</span></td>
+        <td><span class="plate">${r.plate}</span></td>
+        <td style="color:var(--text2);">${r.name}</td>
+        <td style="font-family:var(--mono);font-weight:700;color:${colors[i]};">${r.count}</td>
+        <td style="width:80px;"><div class="rank-bar-wrap"><div class="rank-bar" style="width:${Math.round(r.count/max*100)}%;background:${colors[i]};"></div></div></td>
+      </tr>`).join('')
+    : '<tr class="empty-row"><td colspan="5">ไม่มีข้อมูลเดือนนี้</td></tr>';
 }
 
-function selectDate(y,m,d){
-  cur = new Date(y,m,d);
-  refreshAll();
-}
-
-// ════════════════════════════════════════════════════════
-//  MONTH SUMMARY (2 ตาราง)
-// ════════════════════════════════════════════════════════
-function populateDayFilter(){
-  const sel = document.getElementById('filterDay');
-  if(sel.options.length > 1) return;
-  for(let d=1;d<=31;d++){
-    const o = document.createElement('option');
-    o.value=d; o.textContent=d+' วัน';
-    sel.appendChild(o);
-  }
+// ════════════════════════════════════════
+//  MONTH SUMMARY
+// ════════════════════════════════════════
+function onMonthFilterChange(){
+  const m = parseInt(document.getElementById('mFilterMonth').value);
+  dpMonth = m; dpSelectedDay = null;
+  document.getElementById('dayPickerDisplay').textContent='ทั้งเดือน ▾';
+  renderMonthSummary();
 }
 
 function renderMonthSummary(){
-  populateDayFilter();
-  const m = parseInt(document.getElementById('filterMonth').value);
-  const dayFilter = document.getElementById('filterDay').value;
-  const y = new Date().getFullYear();
+  const m = parseInt(document.getElementById('mFilterMonth').value);
+  const y = cur.getFullYear();
+  let data = getDataForMonth(m,y);
+  if(dpSelectedDay!==null) data = data.filter(r=>{ const d=parseDate(r.start||r.timestamp); return d&&d.getDate()===dpSelectedDay; });
+  const rep = data.filter(r=>r.type==='จอดแทน');
+  const rot = data.filter(r=>r.type==='หมุนเวียน');
+  setText('monthSummaryCount', `รวม ${rep.length} แจ้งแทน / ${rot.length} หมุนเวียน`);
 
-  let filtered = allData.filter(r=>{
-    const s = getDatePart(r.start||r.timestamp);
-    return s && s.getMonth()===m && s.getFullYear()===y;
-  });
-
-  if(dayFilter !== 'all'){
-    const dd = parseInt(dayFilter);
-    filtered = filtered.filter(r=>{
-      const s = getDatePart(r.start||r.timestamp);
-      return s && s.getDate()===dd;
-    });
-  }
-
-  const replaceRows = filtered.filter(r=>r.type==='จอดแทน');
-  const rotateRows  = filtered.filter(r=>r.type==='หมุนเวียน');
-
-  // Table Replace
-  document.getElementById('tblReplace').innerHTML = replaceRows.length
-    ? replaceRows.map((r,i)=>`
-      <tr>
-        <td style="color:var(--muted);font-family:var(--mono);font-size:11px;">${String(i+1).padStart(2,'0')}</td>
-        <td style="font-size:12px;color:var(--muted);">${fmtDateFromStr(r.start)}</td>
-        <td>${r.name}</td>
+  document.getElementById('tblReplace').innerHTML = rep.length
+    ? rep.map((r,i)=>`<tr>
+        <td style="color:var(--muted2);font-family:var(--mono);font-size:11px;">${String(i+1).padStart(2,'0')}</td>
+        <td>${fmtShort(r.start)}</td><td>${r.name}</td>
         <td><span class="plate">${r.plate}</span></td>
         <td style="font-size:12px;color:var(--accent2);">${r.replaceInfo||'—'}</td>
-        <td><span class="badge ${r.period==='ค้างคืน'?'night':'normal'}">${r.period}</span></td>
-        <td style="font-size:12px;color:var(--muted);">${fmtDateFromStr(r.end)}</td>
+        <td><span class="badge ${r.period==='ค้างคืน'?'night':'normal'} dot">${r.period}</span></td>
+        <td>${fmtShort(r.end)}</td>
       </tr>`).join('')
-    : '<tr class="empty-row"><td colspan="7">ไม่มีรายการแจ้งจอดแทนในช่วงนี้</td></tr>';
+    : '<tr class="empty-row"><td colspan="7">ไม่มีรายการแจ้งจอดแทน</td></tr>';
 
-  // Table Rotate
-  document.getElementById('tblRotate').innerHTML = rotateRows.length
-    ? rotateRows.map((r,i)=>`
-      <tr>
-        <td style="color:var(--muted);font-family:var(--mono);font-size:11px;">${String(i+1).padStart(2,'0')}</td>
-        <td style="font-size:12px;color:var(--muted);">${fmtDateFromStr(r.start)}</td>
-        <td>${r.name}</td>
+  document.getElementById('tblRotate').innerHTML = rot.length
+    ? rot.map((r,i)=>`<tr>
+        <td style="color:var(--muted2);font-family:var(--mono);font-size:11px;">${String(i+1).padStart(2,'0')}</td>
+        <td>${fmtShort(r.start)}</td><td>${r.name}</td>
         <td><span class="plate">${r.plate}</span></td>
-        <td><span class="badge ${r.period==='ค้างคืน'?'night':'normal'}">${r.period}</span></td>
-        <td style="font-size:12px;color:var(--muted);">${fmtDateFromStr(r.end)}</td>
+        <td><span class="badge ${r.period==='ค้างคืน'?'night':'normal'} dot">${r.period}</span></td>
+        <td>${fmtShort(r.end)}</td>
       </tr>`).join('')
-    : '<tr class="empty-row"><td colspan="6">ไม่มีรายการจอดหมุนเวียนในช่วงนี้</td></tr>';
+    : '<tr class="empty-row"><td colspan="6">ไม่มีรายการจอดหมุนเวียน</td></tr>';
 }
 
-function fmtDateFromStr(s){
-  if(!s) return '—';
-  const d = getDatePart(s);
-  if(!d||isNaN(d)) return s;
-  return `${d.getDate()} ${thMonthsShort[d.getMonth()]}`;
+// ════════════════════════════════════════
+//  DAY PICKER (calendar dropdown)
+// ════════════════════════════════════════
+function toggleDayPicker(){
+  const dd = document.getElementById('dayPickerDropdown');
+  const inp = document.getElementById('dayPickerDisplay');
+  const isOpen = dd.classList.contains('open');
+  document.querySelectorAll('.cal-dropdown.open').forEach(el=>el.classList.remove('open'));
+  document.querySelectorAll('.cal-picker-input.open').forEach(el=>el.classList.remove('open'));
+  if(!isOpen){ dd.classList.add('open'); inp.classList.add('open'); renderDayPicker(); }
 }
+document.addEventListener('click',e=>{ if(!e.target.closest('.cal-picker-wrap')){ document.querySelectorAll('.cal-dropdown').forEach(el=>el.classList.remove('open')); document.querySelectorAll('.cal-picker-input').forEach(el=>el.classList.remove('open')); } });
 
-// ════════════════════════════════════════════════════════
-//  BIG CAL
-// ════════════════════════════════════════════════════════
-function renderBigCal(){
-  const days=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
-  const m = cur.getMonth(), y = cur.getFullYear();
-  const daysInMonth = new Date(y,m+1,0).getDate();
-  const firstDay = new Date(y,m,1).getDay();
-  const today = new Date();
-
-  document.getElementById('bigCalTitle').textContent = `ปฏิทิน — ${thMonths[m]} ${y}`;
-
-  let h = days.map(d=>`<div style="text-align:center;font-size:10px;color:var(--muted);padding-bottom:4px;">${d}</div>`).join('');
-  for(let i=0;i<firstDay;i++) h+=`<div></div>`;
-
+function renderDayPicker(){
+  const m=parseInt(document.getElementById('mFilterMonth').value);
+  dpMonth=m;
+  document.getElementById('dayPickerTitle').textContent=`${TH_MONTHS[dpMonth]} ${dpYear}`;
+  const daysInMonth=new Date(dpYear,dpMonth+1,0).getDate();
+  const firstDay=new Date(dpYear,dpMonth,1).getDay();
+  const today=new Date();
+  let cells='';
+  for(let i=0;i<firstDay;i++) cells+=`<div class="cal-day-cell empty"></div>`;
   for(let d=1;d<=daysInMonth;d++){
-    const dd = new Date(y,m,d);
-    const dayData = getDataForDate(dd);
-    const v = dayData.filter(r=>r.type==='หมุนเวียน').length;
-    const p = Math.round(v/CONFIG.ROTATE_QUOTA*100);
-    const dc = p>=100?'var(--red)':p>=80?'var(--amber)':'var(--green)';
-    const isTod = dd.toDateString()===today.toDateString();
-    h+=`<div class="big-cal-cell${isTod?' today':''}" onclick="selectDate(${y},${m},${d})">
-      <div style="font-family:var(--mono);font-size:12px;color:${isTod?'var(--accent)':'var(--text)'};">${d}</div>
-      ${v>0?`<div style="margin-top:4px;"><div style="background:var(--bg4);border-radius:3px;height:3px;"><div style="width:${p}%;background:${dc};height:3px;border-radius:3px;"></div></div><div style="font-size:10px;color:var(--muted);margin-top:3px;">${v}/${CONFIG.ROTATE_QUOTA}</div></div>`:'<div style="font-size:10px;color:var(--border);margin-top:3px;">—</div>'}
+    const isToday=d===today.getDate()&&dpMonth===today.getMonth()&&dpYear===today.getFullYear();
+    const isSel=d===dpSelectedDay;
+    cells+=`<div class="cal-day-cell${isToday?' today':''}${isSel?' selected':''}" onclick="selectDayFilter(${d})">${d}</div>`;
+  }
+  document.getElementById('dayPickerCells').innerHTML=cells;
+}
+function selectDayFilter(d){
+  dpSelectedDay=d;
+  const m=parseInt(document.getElementById('mFilterMonth').value);
+  document.getElementById('dayPickerDisplay').textContent=`${d} ${TH_MONTHS_SHORT[m]} ▾`;
+  document.getElementById('dayPickerDropdown').classList.remove('open');
+  document.getElementById('dayPickerDisplay').classList.remove('open');
+  renderMonthSummary();
+}
+function clearDayFilter(){ dpSelectedDay=null; document.getElementById('dayPickerDisplay').textContent='ทั้งเดือน ▾'; renderMonthSummary(); }
+function dayPickerChangeMonth(n){ dpMonth=(dpMonth+n+12)%12; renderDayPicker(); }
+
+// ════════════════════════════════════════
+//  BIG CALENDAR
+// ════════════════════════════════════════
+function initCalSelectors(){
+  const ySel=document.getElementById('calYearSel');
+  const y=cur.getFullYear();
+  for(let i=y-2;i<=y+2;i++){ const o=document.createElement('option'); o.value=i; o.textContent=i+(543); if(i===y)o.selected=true; ySel.appendChild(o); }
+  document.getElementById('calMonthSel').value=cur.getMonth();
+}
+
+function renderBigCal(){
+  const m=parseInt(document.getElementById('calMonthSel').value);
+  const y=parseInt(document.getElementById('calYearSel').value);
+  const today=new Date();
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const firstDay=new Date(y,m,1).getDay();
+
+  // Header
+  const days=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
+  document.getElementById('bigCalHead').innerHTML=days.map(d=>`<div class="big-cal-head">${d}</div>`).join('');
+
+  let cells='';
+  for(let i=0;i<firstDay;i++) cells+=`<div class="big-cal-cell empty-cell"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const dd=new Date(y,m,d);
+    const data=getDataForDate(dd);
+    const rot=data.filter(r=>r.type==='หมุนเวียน').length;
+    const rep=data.filter(r=>r.type==='จอดแทน').length;
+    const night=data.filter(r=>r.period==='ค้างคืน').length;
+    const free=Math.max(0,CFG.ROTATE_QUOTA-rot);
+    const isToday=dd.toDateString()===today.toDateString();
+    const isCur=dd.toDateString()===cur.toDateString();
+    cells+=`<div class="big-cal-cell${isToday?' today':''}${isCur?' selected':''}" onclick="selectDate(${y},${m},${d})">
+      <div class="bcc-date${isToday?' today-num':''}">${d}</div>
+      ${rep>0?`<div class="bcc-pill replace">แทน ${rep}</div>`:''}
+      ${rot>0?`<div class="bcc-pill rotate">หมุนเวียน ${rot}</div>`:''}
+      ${night>0?`<div class="bcc-pill night">ค้างคืน ${night}</div>`:''}
+      ${data.length===0?`<div class="bcc-pill free">ว่าง</div>`:''}
+      ${free>0&&rot>0?`<div style="font-size:9px;color:var(--green);margin-top:2px;">ว่าง ${free}</div>`:''}
     </div>`;
   }
-  document.getElementById('bigCal').innerHTML=h;
+  document.getElementById('bigCal').innerHTML=cells;
 }
 
-// ════════════════════════════════════════════════════════
-//  DATE NAV
-// ════════════════════════════════════════════════════════
-function updateDateLabel(){
-  document.getElementById('dateLabel').textContent=
-    `${thDays[cur.getDay()]}ที่ ${cur.getDate()} ${thMonthsShort[cur.getMonth()]} ${cur.getFullYear()}`;
-}
-function changeDate(n){
-  cur.setDate(cur.getDate()+n);
-  refreshAll();
-}
+function selectDate(y,m,d){ cur=new Date(y,m,d); refreshAll(); }
 
-// ════════════════════════════════════════════════════════
-//  PLATE SEARCH (autocomplete จาก PlateDB)
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
+//  PLATE REGISTRY
+// ════════════════════════════════════════
+let registryFilter='';
+function renderRegistry(){
+  const data = plateDB.filter(p=>
+    !registryFilter ||
+    p.plate.toLowerCase().includes(registryFilter)||
+    p.name.toLowerCase().includes(registryFilter)||
+    (p.floor||'').toLowerCase().includes(registryFilter)
+  );
+  setText('plateDBCount', `${data.length} รายการ`);
+  document.getElementById('tblRegistry').innerHTML = data.length
+    ? data.map((p,i)=>{
+        const repCount = allData.filter(r=>r.type==='จอดแทน'&&r.plate===p.plate).length;
+        const pct = Math.min(100,repCount*10);
+        return `<tr>
+          <td style="color:var(--muted2);font-family:var(--mono);font-size:11px;">${String(i+1).padStart(2,'0')}</td>
+          <td><span class="plate">${p.plate}</span></td>
+          <td>${p.name}</td>
+          <td style="color:var(--muted);">${p.dept||'—'}</td>
+          <td><span class="floor-badge">ชั้น ${p.floor||'—'} / ช่อง ${p.slot||'—'}</span></td>
+          <td style="font-family:var(--mono);font-weight:700;color:${repCount>2?'var(--accent2)':'var(--text2)'};">${repCount} ครั้ง</td>
+          <td><div style="display:flex;align-items:center;gap:6px;"><div class="used-bar-wrap"><div class="used-bar" style="width:${pct}%"></div></div><span style="font-size:11px;color:var(--muted2);">${repCount}</span></div></td>
+        </tr>`;
+      }).join('')
+    : '<tr class="empty-row"><td colspan="7">ไม่พบข้อมูล</td></tr>';
+}
+function filterRegistry(v){ registryFilter=v.toLowerCase().trim(); renderRegistry(); }
+
+// ════════════════════════════════════════
+//  PLATE SEARCH (modal autocomplete)
+// ════════════════════════════════════════
 function searchPlate(val){
-  const box = document.getElementById('plateSuggestions');
+  const box=document.getElementById('plateSuggestions');
   if(!val||val.length<2){box.style.display='none';return;}
-  const q = val.toLowerCase().replace(/\s/g,'');
-  const hits = plateDB.filter(p=>
-    p.plate.toLowerCase().replace(/\s/g,'').includes(q)||
-    p.name.toLowerCase().includes(q)
-  ).slice(0,5);
+  const q=val.toLowerCase().replace(/\s/g,'');
+  const hits=plateDB.filter(p=>p.plate.toLowerCase().replace(/\s/g,'').includes(q)||p.name.toLowerCase().includes(q)).slice(0,5);
   if(!hits.length){box.style.display='none';return;}
-  box.innerHTML = hits.map(p=>`
-    <div class="plate-suggest-item" onclick="selectPlate('${p.plate}','${p.name}')">
-      <span class="plate-suggest-plate">${p.plate}</span>
-      <span class="plate-suggest-name">${p.name} ${p.dept?'('+p.dept+')':''}</span>
-    </div>`).join('');
+  box.innerHTML=hits.map(p=>`<div class="plate-suggest-item" onclick="selectPlate('${p.plate}','${p.name}')"><span class="plate-suggest-plate">${p.plate}</span><span class="plate-suggest-name">${p.name}${p.dept?' ('+p.dept+')':''}</span></div>`).join('');
   box.style.display='block';
 }
-function selectPlate(plate,name){
-  document.getElementById('fPlate').value=plate;
-  document.getElementById('fName').value=name;
-  document.getElementById('plateSuggestions').style.display='none';
-}
-document.addEventListener('click',e=>{
-  if(!e.target.closest('#fPlate')&&!e.target.closest('#plateSuggestions'))
-    document.getElementById('plateSuggestions').style.display='none';
-});
+function selectPlate(plate,name){ document.getElementById('fPlate').value=plate; document.getElementById('fName').value=name; document.getElementById('plateSuggestions').style.display='none'; }
+document.addEventListener('click',e=>{ if(!e.target.closest('#fPlate')&&!e.target.closest('#plateSuggestions')) document.getElementById('plateSuggestions').style.display='none'; });
 
-// ════════════════════════════════════════════════════════
-//  GS STATUS
-// ════════════════════════════════════════════════════════
-function setGsStatus(state, text){
-  ['gsDot','gsDotMonth'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el){el.className='gs-dot '+state;}
-  });
-  ['gsText','gsTextMonth'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.textContent=text;
-  });
+// ════════════════════════════════════════
+//  DATE NAV
+// ════════════════════════════════════════
+function updateDateLabel(){
+  document.getElementById('dateLabel').textContent=`${TH_DAYS_SHORT[cur.getDay()]}ที่ ${cur.getDate()} ${TH_MONTHS_SHORT[cur.getMonth()]} ${cur.getFullYear()}`;
 }
+function changeDate(n){ cur.setDate(cur.getDate()+n); refreshAll(); }
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 //  VIEW SWITCH
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 function switchView(v, tabEl){
   document.querySelectorAll('.view-section').forEach(s=>s.classList.remove('active'));
   document.getElementById('view-'+v).classList.add('active');
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(t=>t.classList.remove('active'));
-  if(tabEl) tabEl.classList.add('active');
-  const tid = document.getElementById('tab-'+v);
-  if(tid) tid.classList.add('active');
-  const nid = document.getElementById('nav-'+v);
-  if(nid) nid.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const tid=document.getElementById('tab-'+v); if(tid)tid.classList.add('active');
+  const nid=document.getElementById('nav-'+v); if(nid)nid.classList.add('active');
+  if(tabEl)tabEl.classList.add('active');
 }
 function setActiveNav(v){
   document.querySelectorAll('.bnav-item').forEach(i=>i.classList.remove('active'));
   document.getElementById('bnav-'+v)?.classList.add('active');
 }
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 //  SIDEBAR
-// ════════════════════════════════════════════════════════
-function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('overlay').classList.add('open');}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
+// ════════════════════════════════════════
+function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
+function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 //  MODAL
-// ════════════════════════════════════════════════════════
-function openModal(){
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('fStart').value=today;
-  document.getElementById('fEnd').value=today;
-  document.getElementById('modalBg').classList.add('open');
-}
-function closeModal(){document.getElementById('modalBg').classList.remove('open');stopVoice();}
-function handleModalBgClick(e){if(e.target===document.getElementById('modalBg'))closeModal();}
-function toggleReplace(){
-  document.getElementById('replaceGroup').style.display=
-    document.getElementById('fType').value==='จอดแทน'?'block':'none';
-}
+// ════════════════════════════════════════
+function openModal(){ const t=new Date().toISOString().split('T')[0]; document.getElementById('fStart').value=t; document.getElementById('fEnd').value=t; document.getElementById('modalBg').classList.add('open'); }
+function closeModal(){ document.getElementById('modalBg').classList.remove('open'); stopVoice(); }
+function handleModalBgClick(e){ if(e.target===document.getElementById('modalBg'))closeModal(); }
+function toggleReplace(){ document.getElementById('replaceGroup').style.display=document.getElementById('fType').value==='จอดแทน'?'block':'none'; }
 
-// ════════════════════════════════════════════════════════
-//  FORM SUBMIT
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
+//  SUBMIT
+// ════════════════════════════════════════
 function submitForm(){
   const name=document.getElementById('fName').value.trim();
   const plate=document.getElementById('fPlate').value.trim();
@@ -1048,110 +1173,76 @@ function submitForm(){
   const start=document.getElementById('fStart').value;
   const end=document.getElementById('fEnd').value;
   const replaceInfo=document.getElementById('fReplaceInfo').value.trim();
-
   if(!name||!plate){showToast('กรุณากรอก ชื่อ และ ทะเบียน','warn');return;}
-
   const payload={name,plate,type,period,start,end,replaceInfo};
-
-  if(gsConnected){
+  if(gsConnected){ closeModal(); postToSheet(payload); }
+  else {
+    const s=parseDate(start), e2=parseDate(end);
+    allData.push({...payload,timestamp:new Date().toISOString(),start:fmtDate(s||new Date()),end:fmtDate(e2||new Date())});
     closeModal();
-    postToSheet(payload);
-  } else {
-    // local demo — push to allData
-    allData.push({
-      ...payload,
-      timestamp: new Date().toISOString(),
-      start: fmtDate(new Date(start)),
-      end: fmtDate(new Date(end)),
-    });
-    closeModal();
-    showToast('✓ บันทึกสำเร็จ (โหมดออฟไลน์)','success');
+    showToast('✓ บันทึกแล้ว (โหมดออฟไลน์)','success');
     refreshAll();
   }
-
-  // reset
   document.getElementById('fName').value='';
   document.getElementById('fPlate').value='';
   document.getElementById('fReplaceInfo').value='';
 }
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 //  TOAST
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 function showToast(msg,type='success'){
   const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.className='toast show '+(type==='success'?'success':type==='warn'?'warn':'error');
+  const icons={success:'✓',warn:'⚠',error:'✕'};
+  t.innerHTML=`<span>${icons[type]||'✓'}</span><span>${msg}</span>`;
+  t.className='toast show '+(type);
   setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 //  VOICE INPUT
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 let recognition=null,isRecording=false;
 function toggleVoice(){
   if(isRecording){stopVoice();return;}
-  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){
-    showToast('เบราว์เซอร์นี้ไม่รองรับ กรุณาใช้ Chrome','warn');return;
-  }
+  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){showToast('เบราว์เซอร์นี้ไม่รองรับ กรุณาใช้ Chrome','warn');return;}
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  recognition=new SR();recognition.lang='th-TH';recognition.interimResults=true;recognition.continuous=false;
-  recognition.onstart=()=>{
-    isRecording=true;
-    document.getElementById('micBtn').classList.add('recording');
-    document.getElementById('voiceBox').className='voice-box listening';
-    document.getElementById('voiceBox').textContent='กำลังฟัง... พูดได้เลยครับ';
-  };
-  recognition.onresult=e=>{
-    const t=Array.from(e.results).map(r=>r[0].transcript).join('');
-    document.getElementById('voiceBox').textContent=t;
-    if(e.results[e.results.length-1].isFinal){
-      document.getElementById('voiceBox').className='voice-box heard';
-      parseVoice(t);
-    }
-  };
-  recognition.onerror=()=>{stopVoice();showToast('ไม่ได้ยินเสียง ลองใหม่','warn');};
+  recognition=new SR(); recognition.lang='th-TH'; recognition.interimResults=true; recognition.continuous=false;
+  recognition.onstart=()=>{isRecording=true;document.getElementById('micBtn').classList.add('recording');document.getElementById('voiceBox').className='voice-box listening';document.getElementById('voiceBox').textContent='กำลังฟัง...';};
+  recognition.onresult=e=>{const t=Array.from(e.results).map(r=>r[0].transcript).join('');document.getElementById('voiceBox').textContent=t;if(e.results[e.results.length-1].isFinal){document.getElementById('voiceBox').className='voice-box heard';parseVoice(t);}};
+  recognition.onerror=()=>{stopVoice();showToast('ไม่ได้ยิน ลองใหม่','warn');};
   recognition.onend=()=>stopVoice();
   recognition.start();
 }
-function stopVoice(){
-  isRecording=false;
-  document.getElementById('micBtn').classList.remove('recording');
-  if(recognition)try{recognition.stop();}catch(e){}
-}
+function stopVoice(){ isRecording=false; document.getElementById('micBtn').classList.remove('recording'); if(recognition)try{recognition.stop();}catch(e){} }
 function parseVoice(text){
   const t=text.toLowerCase();
   if(t.includes('แทน')){document.getElementById('fType').value='จอดแทน';toggleReplace();}
   else{document.getElementById('fType').value='หมุนเวียน';toggleReplace();}
-  if(t.includes('ค้างคืน')||t.includes('เกินสี่ทุ่ม')){document.getElementById('fTime').value='ค้างคืน';}
-  else{document.getElementById('fTime').value='ปกติ';}
-  const plateMatch=text.match(/ทะเบียน\s*([ก-ฮa-zA-Z0-9\s]{2,12}?)(?:\s|$|ชื่อ|วันที่|จอด)/);
-  if(plateMatch){
-    const pl=plateMatch[1].trim();
-    document.getElementById('fPlate').value=pl;
-    // autofill name if in plateDB
-    const found=plateDB.find(p=>p.plate.replace(/\s/g,'')===pl.replace(/\s/g,''));
-    if(found) document.getElementById('fName').value=found.name;
-  }
-  const nameMatch=text.match(/ชื่อ\s*([ก-ฮa-zA-Z\s]{2,20})(?:\s|$|วันที่|ทะเบียน|จอด)/);
-  if(nameMatch) document.getElementById('fName').value=nameMatch[1].trim();
+  document.getElementById('fTime').value=t.includes('ค้างคืน')||t.includes('เกินสี่ทุ่ม')?'ค้างคืน':'ปกติ';
+  const pm=text.match(/ทะเบียน\s*([ก-ฮa-zA-Z0-9\s]{2,12}?)(?:\s|$|ชื่อ|วันที่|จอด)/);
+  if(pm){const pl=pm[1].trim();document.getElementById('fPlate').value=pl;const f=plateDB.find(p=>p.plate.replace(/\s/g,'')===pl.replace(/\s/g,''));if(f)document.getElementById('fName').value=f.name;}
+  const nm=text.match(/ชื่อ\s*([ก-ฮa-zA-Z\s]{2,20})(?:\s|$|วันที่|ทะเบียน|จอด)/);
+  if(nm)document.getElementById('fName').value=nm[1].trim();
   const months={มกราคม:1,กุมภาพันธ์:2,มีนาคม:3,เมษายน:4,พฤษภาคม:5,มิถุนายน:6,กรกฎาคม:7,สิงหาคม:8,กันยายน:9,ตุลาคม:10,พฤศจิกายน:11,ธันวาคม:12};
-  const dateMatch=text.match(/(\d{1,2})\s*(มกราคม|กุมภาพันธ์|มีนาคม|เมษายน|พฤษภาคม|มิถุนายน|กรกฎาคม|สิงหาคม|กันยายน|ตุลาคม|พฤศจิกายน|ธันวาคม)/);
-  if(dateMatch){
-    const mm=String(months[dateMatch[2]]).padStart(2,'0');
-    const dd=String(dateMatch[1]).padStart(2,'0');
-    const y=new Date().getFullYear();
-    document.getElementById('fStart').value=`${y}-${mm}-${dd}`;
-    document.getElementById('fEnd').value=`${y}-${mm}-${dd}`;
-  }
-  showToast('✓ กรอกจากเสียงแล้ว ตรวจสอบก่อนบันทึก');
+  const dm=text.match(/(\d{1,2})\s*(มกราคม|กุมภาพันธ์|มีนาคม|เมษายน|พฤษภาคม|มิถุนายน|กรกฎาคม|สิงหาคม|กันยายน|ตุลาคม|พฤศจิกายน|ธันวาคม)/);
+  if(dm){const mm=String(months[dm[2]]).padStart(2,'0');const dd=String(dm[1]).padStart(2,'0');document.getElementById('fStart').value=`${new Date().getFullYear()}-${mm}-${dd}`;document.getElementById('fEnd').value=`${new Date().getFullYear()}-${mm}-${dd}`;}
+  showToast('✓ กรอกจากเสียงแล้ว ตรวจสอบอีกครั้ง');
 }
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 //  INIT
-// ════════════════════════════════════════════════════════
-populateDayFilter();
-fetchFromSheet(); // โหลดข้อมูลจาก Google Sheet (หรือ fallback demo)
+// ════════════════════════════════════════
+(function(){
+  // Set default month selectors to current month
+  const cm = cur.getMonth();
+  document.getElementById('chartMonthSel').value=cm;
+  document.getElementById('rankMonthSel').value=cm;
+  document.getElementById('mFilterMonth').value=cm;
+  initCalSelectors();
+  fetchFromSheet();
+  // Close day picker on outside click handled above
+})();
 </script>
 </body>
 </html>
