@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Parking Management System</title>
+<title>ระบบจัดการลานจอด — Parking Management System</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -55,8 +55,10 @@
     border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    padding: 20px 14px;
+    padding: 20px 14px 8px;
     gap: 4px;
+    height: 100vh;
+    overflow-y: auto;
   }
 
   .logo {
@@ -931,7 +933,7 @@
 
   <!-- ─── SIDEBAR ─── -->
   <aside class="sidebar">
-    <div class="logo">Parking<span>Management System</span></div>
+    <div class="logo" style="font-size:13px;line-height:1.3;">ระบบจัดการลานจอด<br><span style="font-size:10px;font-weight:400;color:var(--text-muted);letter-spacing:0.3px;">Parking Management System</span></div>
 
     <div class="nav-section-label">ภาพรวม</div>
     <button class="nav-item active" onclick="setNav(this);switchView('all')">
@@ -967,6 +969,17 @@
     <button class="nav-item" onclick="setNav(this);switchView('settings')">
       <span class="nav-icon">⚙️</span> ตั้งค่า
     </button>
+
+    <!-- กลับหน้าหลัก -->
+    <div style="margin-top:auto;padding:12px 8px 8px;border-top:1px solid var(--border);">
+      <a href="https://add00917-hue.github.io/GNR3-Building-MS/" target="_blank"
+        style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--text-muted);font-size:13px;font-weight:500;transition:background 0.15s;"
+        onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='transparent'">
+        <span style="font-size:16px;">🏠</span>
+        <span>กลับหน้าหลัก</span>
+        <span style="margin-left:auto;font-size:10px;opacity:0.5;">↗</span>
+      </a>
+    </div>
 
     <div class="sidebar-footer">
       <div class="user-chip">
@@ -1365,7 +1378,7 @@
                     <option value="suv">🚙 รถ SUV</option>
                     <option value="ev">⚡ รถไฟฟ้า</option>
                     <option value="van">🚐 รถตู้</option>
-                    <option value="truck">🛻 รถกระบะ</option>
+                    <option value="truck">🚚 รถกระบะ</option>
                     <option value="bus">🚌 รถบัส BUS (จอดหน้าอาคาร)</option>
                     <option value="ambulance">🚑 รถพยาบาล (จอดหน้าอาคาร)</option>
                   </select>
@@ -1476,64 +1489,12 @@
       <!-- Filter tabs -->
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button id="qtab-all" class="floor-tab active" onclick="filterQueue('all')">ทั้งหมด <span class="fl-cnt" id="qcnt-all">–</span></button>
-        <button id="qtab-ari" class="floor-tab" onclick="filterQueue('ari')" style="color:#1A1A1A;">🏢 Ari Hills <span class="fl-cnt" id="qcnt-ari">–</span></button>
-        <button id="qtab-bts" class="floor-tab" onclick="filterQueue('bts')" style="color:#1A1A1A;">🚇 BTS <span class="fl-cnt" id="qcnt-bts">–</span></button>
-        <button id="qtab-ksl" class="floor-tab" onclick="filterQueue('ksl')" style="color:#1A1A1A;">🏬 KSL <span class="fl-cnt" id="qcnt-ksl">–</span></button>
+        <button id="qtab-ari" class="floor-tab" onclick="filterQueue('ari')">🏢 Ari Hills <span class="fl-cnt" id="qcnt-ari">–</span></button>
+        <button id="qtab-bts" class="floor-tab" onclick="filterQueue('bts')">🚇 BTS <span class="fl-cnt" id="qcnt-bts">–</span></button>
+        <button id="qtab-ksl" class="floor-tab" onclick="filterQueue('ksl')">🏬 KSL <span class="fl-cnt" id="qcnt-ksl">–</span></button>
       </div>
 
-      <!-- TABLE 1: รถยนต์ -->
-      <div class="card" style="padding:0;overflow:hidden;">
-        <div style="padding:12px 16px;background:#F5F5F2;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
-          <span style="font-size:15px;">🚗</span>
-          <span style="font-size:13px;font-weight:700;">รถยนต์</span>
-          <span id="qcount-car" style="font-size:10px;background:#DBEAFE;color:#1D4ED8;padding:1px 8px;border-radius:100px;font-weight:700;"></span>
-        </div>
-        <div style="overflow-x:auto;">
-          <table style="width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap;">
-            <thead><tr style="background:#FAFAF8;">
-              <th class="tbl-th" style="width:36px;text-align:center;">ลำดับ</th>
-              <th class="tbl-th">ชื่อผู้ขอ</th>
-              <th class="tbl-th" style="width:100px;">ฝ่าย/แผนก</th>
-              <th class="tbl-th" style="width:84px;">อาคาร</th>
-              <th class="tbl-th" style="width:86px;">ทะเบียนที่ 1</th>
-              <th class="tbl-th" style="width:76px;">ประเภท</th>
-              <th class="tbl-th" style="width:86px;">ทะเบียนที่ 2</th>
-              <th class="tbl-th" style="width:76px;">ประเภท</th>
-              <th class="tbl-th" style="width:86px;">ทะเบียนที่ 3</th>
-              <th class="tbl-th" style="width:76px;">ประเภท</th>
-              <th class="tbl-th" style="width:86px;">วันที่จอง</th>
-              <th class="tbl-th" style="width:64px;text-align:center;">สถานะ</th>
-            </tr></thead>
-            <tbody id="queue-car-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- TABLE 2: มอเตอร์ไซค์ -->
-      <div class="card" style="padding:0;overflow:hidden;">
-        <div style="padding:12px 16px;background:#F5F5F2;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
-          <span style="font-size:15px;">🏍️</span>
-          <span style="font-size:13px;font-weight:700;">มอเตอร์ไซค์</span>
-          <span id="qcount-moto" style="font-size:10px;background:#EDE9FE;color:#7C3AED;padding:1px 8px;border-radius:100px;font-weight:700;"></span>
-        </div>
-        <div style="overflow-x:auto;">
-          <table style="width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap;">
-            <thead><tr style="background:#FAFAF8;">
-              <th class="tbl-th" style="width:36px;text-align:center;">ลำดับ</th>
-              <th class="tbl-th">ชื่อผู้ขอ</th>
-              <th class="tbl-th" style="width:100px;">ฝ่าย/แผนก</th>
-              <th class="tbl-th" style="width:84px;">อาคาร</th>
-              <th class="tbl-th" style="width:86px;">ทะเบียนที่ 1</th>
-              <th class="tbl-th" style="width:86px;">ประเภท</th>
-              <th class="tbl-th" style="width:86px;">ทะเบียนที่ 2</th>
-              <th class="tbl-th" style="width:86px;">ประเภท</th>
-              <th class="tbl-th" style="width:86px;">วันที่จอง</th>
-              <th class="tbl-th" style="width:64px;text-align:center;">สถานะ</th>
-            </tr></thead>
-            <tbody id="queue-moto-tbody"></tbody>
-          </table>
-        </div>
-      </div>
+      <div id="queue-sections"></div>
 
       <!-- Add queue modal -->
       <div id="queue-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:500;align-items:center;justify-content:center;">
@@ -1572,19 +1533,19 @@
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
                   <div class="form-field"><label class="form-label">ทะเบียนที่ 1 *</label><input class="form-input" id="q-p1" placeholder="เช่น กข 1234"></div>
                   <div class="form-field"><label class="form-label">ประเภท</label>
-                    <select class="form-select" id="q-t1"><option>🚗 รถเก๋ง</option><option>🚙 SUV</option><option>⚡ รถไฟฟ้า</option><option>🚐 รถตู้</option><option>🛻 กระบะ</option></select>
+                    <select class="form-select" id="q-t1"><option>🚗 รถเก๋ง</option><option>🚙 SUV</option><option>⚡ รถไฟฟ้า</option><option>🚐 รถตู้</option><option>🚚 กระบะ</option></select>
                   </div>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
                   <div class="form-field"><label class="form-label">ทะเบียนที่ 2</label><input class="form-input" id="q-p2" placeholder="(ถ้ามี)"></div>
                   <div class="form-field"><label class="form-label">ประเภท</label>
-                    <select class="form-select" id="q-t2"><option>🚗 รถเก๋ง</option><option>🚙 SUV</option><option>⚡ รถไฟฟ้า</option><option>🚐 รถตู้</option><option>🛻 กระบะ</option></select>
+                    <select class="form-select" id="q-t2"><option>🚗 รถเก๋ง</option><option>🚙 SUV</option><option>⚡ รถไฟฟ้า</option><option>🚐 รถตู้</option><option>🚚 กระบะ</option></select>
                   </div>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
                   <div class="form-field"><label class="form-label">ทะเบียนที่ 3</label><input class="form-input" id="q-p3" placeholder="(ถ้ามี)"></div>
                   <div class="form-field"><label class="form-label">ประเภท</label>
-                    <select class="form-select" id="q-t3"><option>🚗 รถเก๋ง</option><option>🚙 SUV</option><option>⚡ รถไฟฟ้า</option><option>🚐 รถตู้</option><option>🛻 กระบะ</option></select>
+                    <select class="form-select" id="q-t3"><option>🚗 รถเก๋ง</option><option>🚙 SUV</option><option>⚡ รถไฟฟ้า</option><option>🚐 รถตู้</option><option>🚚 กระบะ</option></select>
                   </div>
                 </div>
               </div>
@@ -1621,99 +1582,84 @@
 
     <!-- ════════════════ VIEW: ตั้งค่า ════════════════ -->
     <div id="view-settings" class="building-view">
-      <div style="font-size:18px;font-weight:700;margin-bottom:4px;">⚙️ ตั้งค่าระบบ</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:0;">จัดการข้อมูลช่องจอด สิทธิ์พนักงาน และกฎการใช้งาน</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div>
+          <div style="font-size:18px;font-weight:700;">⚙️ ตั้งค่าระบบ</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">จัดการช่องจอด ทะเบียน และสิทธิ์ผู้ใช้งานแต่ละอาคาร</div>
+        </div>
+      </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <!-- Settings tabs -->
+      <div style="display:flex;gap:4px;background:var(--surface);padding:4px;border-radius:12px;width:fit-content;border:1px solid var(--border);">
+        <button id="stab-rules"  class="ari-mode-btn active" onclick="switchSettingsTab('rules')">📋 กฎระบบ</button>
+        <button id="stab-slots"  class="ari-mode-btn" onclick="switchSettingsTab('slots')">🅿️ จัดการช่องจอด</button>
+        <button id="stab-plates" class="ari-mode-btn" onclick="switchSettingsTab('plates')">🔑 ทะเบียนผู้มีสิทธิ์</button>
+      </div>
 
-        <!-- สิทธิ์การจอด -->
-        <div class="card">
-          <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> กฎสิทธิ์การจอดรถพนักงาน</div>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:#F5F5F2;border-radius:10px;padding:14px;">
+      <!-- TAB: กฎระบบ -->
+      <div id="spane-rules">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> กฎสิทธิ์การจอดรถพนักงาน</div>
+            <div style="background:#F5F5F2;border-radius:10px;padding:14px;margin-bottom:12px;">
               <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">📋 กฎปัจจุบัน</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.8;">
+              <div style="font-size:12px;color:var(--text-muted);line-height:1.9;">
                 • พนักงาน 1 คน ได้สิทธิ์ <strong style="color:var(--text);">1 อาคาร</strong> เท่านั้น<br>
                 • แจ้งทะเบียนได้สูงสุด <strong style="color:var(--text);">3 ทะเบียน</strong> ต่อคน<br>
                 • จอดได้ <strong style="color:var(--text);">1 ช่อง</strong> ต่อครั้ง (ทีละ 1 คัน)<br>
                 • ต้องแจ้งก่อนเข้าจอดทุกครั้ง
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-              <div class="form-field"><label class="form-label">จำนวนทะเบียนสูงสุด/คน</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+              <div class="form-field"><label class="form-label">ทะเบียนสูงสุด/คน</label>
                 <select class="form-select" id="setting-max-plates">
                   <option value="1">1 ทะเบียน</option>
                   <option value="2">2 ทะเบียน</option>
                   <option selected value="3">3 ทะเบียน</option>
                 </select>
               </div>
-              <div class="form-field"><label class="form-label">ช่องจอดสูงสุด/คน/ครั้ง</label>
+              <div class="form-field"><label class="form-label">ช่องจอดสูงสุด/ครั้ง</label>
                 <select class="form-select" id="setting-max-slots">
                   <option selected value="1">1 ช่อง</option>
                   <option value="2">2 ช่อง</option>
                 </select>
               </div>
             </div>
-            <div class="form-field"><label class="form-label">อนุญาตจองข้ามอาคาร</label>
+            <div class="form-field" style="margin-bottom:12px;"><label class="form-label">อนุญาตจองข้ามอาคาร</label>
               <select class="form-select" id="setting-cross-bld">
                 <option selected value="no">❌ ไม่อนุญาต (1 คน 1 อาคาร)</option>
                 <option value="yes">✅ อนุญาต</option>
               </select>
             </div>
-            <button onclick="saveSettings()" style="width:100%;padding:10px;border-radius:10px;border:none;background:var(--gold);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">บันทึกการตั้งค่า</button>
+            <button onclick="saveSettings()" style="width:100%;padding:10px;border-radius:10px;border:none;background:var(--gold);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">✓ บันทึกกฎระบบ</button>
+          </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> สรุปสถิติช่องจอด</div>
+            <div id="settings-stats"></div>
           </div>
         </div>
-
-        <!-- ข้อมูลช่องจอดแต่ละอาคาร -->
-        <div class="card">
-          <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> ข้อมูลช่องจอดแต่ละอาคาร</div>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-
-            <div style="border:1.5px solid var(--border);border-radius:10px;overflow:hidden;">
-              <div style="background:#F5F5F2;padding:10px 14px;font-size:12px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;">
-                🏢 Ari Hills
-              </div>
-              <div style="padding:12px 14px;display:flex;flex-direction:column;gap:8px;">
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-                  <div class="form-field"><label class="form-label" style="font-size:9px;">ประจำ (ช่อง)</label><input class="form-input" id="s-ari-fixed" value="65" style="font-size:12px;"></div>
-                  <div class="form-field"><label class="form-label" style="font-size:9px;">ส่วนกลาง (ช่อง)</label><input class="form-input" id="s-ari-common" value="18" style="font-size:12px;"></div>
-                  <div class="form-field"><label class="form-label" style="font-size:9px;">ไม่กำหนด (ช่อง)</label><input class="form-input" id="s-ari-free" value="89" style="font-size:12px;"></div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                  <div class="form-field"><label class="form-label" style="font-size:9px;">มอเตอร์ไซค์ (ช่อง)</label><input class="form-input" id="s-ari-moto" value="50" style="font-size:12px;"></div>
-                  <div class="form-field"><label class="form-label" style="font-size:9px;">ช่อง S/W (66–83)</label><input class="form-input" id="s-ari-sw" value="66–83" style="font-size:12px;"></div>
-                </div>
-              </div>
-            </div>
-
-            <div style="border:1.5px solid var(--border);border-radius:10px;overflow:hidden;">
-              <div style="background:#F5F5F2;padding:10px 14px;font-size:12px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;">
-                🚇 BTS Building
-              </div>
-              <div style="padding:12px 14px;display:flex;flex-direction:column;gap:8px;">
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-                  <div class="form-field"><label class="form-label" style="font-size:9px;">รถยนต์ทั่วไป</label><input class="form-input" id="s-bts-gen" value="220" style="font-size:12px;"></div>
-                  <div class="form-field"><label class="form-label" style="font-size:9px;">มอเตอร์ไซค์</label><input class="form-input" id="s-bts-moto" value="35" style="font-size:12px;"></div>
-                  <div class="form-field"><label class="form-label" style="font-size:9px;">รถตู้ (≤2.1m)</label><input class="form-input" id="s-bts-van" value="5" style="font-size:12px;"></div>
-                </div>
-                <div class="form-field"><label class="form-label" style="font-size:9px;">ค้างคืน (รถยนต์/รถตู้)</label><input class="form-input" id="s-bts-night" value="20/2" style="font-size:12px;"></div>
-              </div>
-            </div>
-
-            <div style="border:1.5px solid var(--border);border-radius:10px;overflow:hidden;">
-              <div style="background:#F5F5F2;padding:10px 14px;font-size:12px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;">
-                🏬 KSL Building
-              </div>
-              <div style="padding:12px 14px;">
-                <div class="form-field"><label class="form-label" style="font-size:9px;">จำนวนช่องจอดทั้งหมด</label><input class="form-input" id="s-ksl-total" value="31" style="font-size:12px;"></div>
-              </div>
-            </div>
-
-            <button onclick="saveSettings()" style="width:100%;padding:10px;border-radius:10px;border:none;background:var(--text);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">บันทึกข้อมูลอาคาร</button>
-          </div>
-        </div>
-
       </div>
+
+      <!-- TAB: จัดการช่องจอด -->
+      <div id="spane-slots" style="display:none;">
+        <div style="display:flex;gap:8px;margin-bottom:4px;">
+          <button id="sbld-ari" class="floor-tab active" onclick="switchSettingsBld('ari')">🏢 Ari Hills</button>
+          <button id="sbld-bts" class="floor-tab" onclick="switchSettingsBld('bts')">🚇 BTS</button>
+          <button id="sbld-ksl" class="floor-tab" onclick="switchSettingsBld('ksl')">🏬 KSL</button>
+        </div>
+        <div id="settings-slots-content"></div>
+      </div>
+
+      <!-- TAB: ทะเบียนผู้มีสิทธิ์ -->
+      <div id="spane-plates" style="display:none;">
+        <div style="display:flex;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
+          <button id="spbld-ari" class="floor-tab active" onclick="switchSettingsPlatesBld('ari')">🏢 Ari Hills</button>
+          <button id="spbld-bts" class="floor-tab" onclick="switchSettingsPlatesBld('bts')">🚇 BTS</button>
+          <button id="spbld-ksl" class="floor-tab" onclick="switchSettingsPlatesBld('ksl')">🏬 KSL</button>
+        </div>
+        <div id="settings-plates-content"></div>
+      </div>
+
     </div>
 
     <!-- ════════════════ VIEW: รายงาน (hidden, redirect) ════════════════ -->
@@ -2645,6 +2591,7 @@ function switchView(view) {
   if (view === 'ari') { renderAriGrid(); buildAriFloorSummary(); }
   if (view === 'reservation') renderQueue();
   if (view === 'settings' && !adminLoggedIn) { showLoginWall('settings'); return; }
+  if (view === 'settings' && adminLoggedIn) { renderSettingsStats(); }
 }
 
 function switchBuilding(bld) {
@@ -3106,15 +3053,15 @@ const ARI_COMMON_BOOKINGS = [
 
 // ─── Mock data: จอดแทน ───
 const ARI_SUB_BOOKINGS = [
-  { slot:'ช่อง 12', floor:'P4',  name:'คุณสมชาย', plateReq:'4กค 3322', carTypeReq:'🚗 รถเก๋ง', plateOwner:'กข 1111', timeType:'ปกติ',    status:'อนุมัติ',    statusCls:'tag-green'  },
-  { slot:'ช่อง 31', floor:'P4',  name:'คุณวิภา',  plateReq:'2ขก 1199', carTypeReq:'🚙 SUV',    plateOwner:'กค 2222', timeType:'ค้างคืน', status:'รออนุมัติ',  statusCls:'tag-orange' },
-  { slot:'ช่อง 55', floor:'P5A', name:'คุณนิรัน', plateReq:'9กว 8800', carTypeReq:'🚗 รถเก๋ง', plateOwner:'กง 3333', timeType:'ปกติ',    status:'อนุมัติ',    statusCls:'tag-green'  },
+  { slot:'ช่อง 12', floor:'P4',  name:'คุณสมชาย / ห้อง 502', plateReq:'4กค 3322', carTypeReq:'🚗 รถเก๋ง', plateOwner:'กข 1111', timeType:'ปกติ',    status:'อนุมัติ',    statusCls:'tag-green'  },
+  { slot:'ช่อง 31', floor:'P4',  name:'คุณวิภา / ห้อง 301',  plateReq:'2ขก 1199', carTypeReq:'🚙 SUV',    plateOwner:'กค 2222', timeType:'ค้างคืน', status:'รออนุมัติ',  statusCls:'tag-orange' },
+  { slot:'ช่อง 55', floor:'P5A', name:'คุณนิรัน / ห้อง 411', plateReq:'9กว 8800', carTypeReq:'🚗 รถเก๋ง', plateOwner:'กง 3333', timeType:'ปกติ',    status:'อนุมัติ',    statusCls:'tag-green'  },
 ];
 
 // ─── Mock data: รถอื่นๆ ───
 const ARI_OTHER_BOOKINGS = [
-  { location:'หน้าอาคาร', name:'คุณประสิทธิ์', plate:'30-1234', carType:'🚌 รถบัส',      timeType:'ปกติ',    status:'อนุมัติ',   statusCls:'tag-green',  note:'รถบัสรับส่งพนักงาน' },
-  { location:'หน้าอาคาร',   name:'โรงพยาบาลกรุงเทพ',        plate:'กธ 8888', carType:'🚑 รถพยาบาล', timeType:'ค้างคืน', status:'รออนุมัติ', statusCls:'tag-orange', note:'รถพยาบาลสแตนด์บาย' },
+  { location:'หน้าอาคาร A', name:'คุณประสิทธิ์ / ห้อง 201', plate:'30-1234', carType:'🚌 รถบัส',      timeType:'ปกติ',    status:'อนุมัติ',   statusCls:'tag-green',  note:'รถบัสรับส่งพนักงาน' },
+  { location:'ทางเข้า B',   name:'โรงพยาบาลกรุงเทพ',        plate:'กธ 8888', carType:'🚑 รถพยาบาล', timeType:'ค้างคืน', status:'รออนุมัติ', statusCls:'tag-orange', note:'รถพยาบาลสแตนด์บาย' },
 ];
 
 const TAG_STYLES = {
@@ -3161,7 +3108,7 @@ function printAriReport() {
     @media print{body{margin:12px;}}
   </style></head><body>
   <h1>รายงานการจอดรถ — Ari Hills</h1>
-  <div class="sub">พิมพ์เมื่อ: ${dateStr} &nbsp;|&nbsp; จัดทำโดย: Parkzone Admin</div>
+  <div class="sub">พิมพ์เมื่อ: ${dateStr} &nbsp;|&nbsp; จัดทำโดย: ระบบจัดการลานจอด</div>
   <h2>จองช่องจอดส่วนกลาง (ช่อง 66–83)</h2>
   <table><thead><tr><th>ช่องจอด</th><th>ชื่อผู้ขอ</th><th>ทะเบียน</th><th>ประเภทรถ</th><th>เวลา</th><th>สถานะ</th><th>หมายเหตุ</th></tr></thead>
   <tbody>${commonRows}</tbody></table>
@@ -3171,7 +3118,7 @@ function printAriReport() {
   <h2>รถอื่นๆ (รถบัส / รถพยาบาล ฯลฯ)</h2>
   <table><thead><tr><th>จอดหน้าอาคาร</th><th>ชื่อผู้ขอ</th><th>ทะเบียน</th><th>ประเภทรถ</th><th>เวลา</th><th>สถานะ</th><th>หมายเหตุ</th></tr></thead>
   <tbody>${otherRows}</tbody></table>
-  <div class="footer">เอกสารนี้ออกจากระบบ Parkzone โดยอัตโนมัติ — ไม่ต้องลงนาม</div>
+  <div class="footer">เอกสารนี้ออกจากระบบจัดการลานจอดโดยอัตโนมัติ — ไม่ต้องลงนาม</div>
   <!-- ════ ADMIN LOGIN MODAL ════ -->
 <div id="admin-login-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:600;align-items:center;justify-content:center;">
   <div style="background:var(--card);border-radius:16px;width:340px;box-shadow:0 24px 64px rgba(0,0,0,0.25);overflow:hidden;">
@@ -3246,40 +3193,50 @@ let adminLoggedIn = false;
 let pendingAdminView = null;
 
 function showLoginWall(targetView) {
-  // Show all views to activate the target
   ALL_VIEWS.forEach(v => {
     const el = document.getElementById('view-'+v);
     if (el) el.classList.toggle('active', v === targetView);
   });
-  // Inject login wall into the target view
+  pendingAdminView = targetView;
+
+  // Remove existing overlay if any
+  const existing = document.getElementById('login-wall-overlay');
+  if (existing) existing.remove();
+
   const viewEl = document.getElementById('view-'+targetView);
   if (!viewEl) return;
-  pendingAdminView = targetView;
-  viewEl.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:center;min-height:50vh;">
-      <div style="background:var(--card);border-radius:16px;width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.1);overflow:hidden;">
-        <div style="background:#1A1A1A;padding:24px;text-align:center;">
-          <div style="font-size:32px;margin-bottom:8px;">🔐</div>
-          <div style="font-size:15px;font-weight:700;color:#fff;">Admin Login</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;">ต้องเข้าสู่ระบบก่อนใช้งาน</div>
+
+  // Create overlay on top of view content
+  const overlay = document.createElement('div');
+  overlay.id = 'login-wall-overlay';
+  overlay.style.cssText = 'position:absolute;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(238,238,235,0.85);backdrop-filter:blur(4px);';
+  overlay.innerHTML = `
+    <div style="background:var(--card);border-radius:16px;width:340px;box-shadow:0 12px 40px rgba(0,0,0,0.15);overflow:hidden;">
+      <div style="background:#1A1A1A;padding:24px;text-align:center;">
+        <div style="font-size:32px;margin-bottom:8px;">🔐</div>
+        <div style="font-size:15px;font-weight:700;color:#fff;">Admin Login</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;">ต้องเข้าสู่ระบบก่อนใช้งาน</div>
+      </div>
+      <div style="padding:20px;display:flex;flex-direction:column;gap:12px;">
+        <div class="form-field"><label class="form-label">ชื่อผู้ใช้</label>
+          <input class="form-input" id="wall-user" placeholder="username" autocomplete="off">
         </div>
-        <div style="padding:20px;display:flex;flex-direction:column;gap:12px;">
-          <div class="form-field"><label class="form-label">ชื่อผู้ใช้</label>
-            <input class="form-input" id="wall-user" placeholder="username" autocomplete="off">
-          </div>
-          <div class="form-field"><label class="form-label">รหัสผ่าน</label>
-            <input class="form-input" id="wall-pass" type="password" placeholder="password"
-              onkeydown="if(event.key==='Enter')doWallLogin()">
-          </div>
-          <div id="wall-error" style="display:none;font-size:11px;color:#DC2626;background:#FEF2F2;padding:7px 10px;border-radius:8px;">
-            ❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
-          </div>
-          <button onclick="doWallLogin()" style="width:100%;padding:12px;border-radius:10px;border:none;background:#1A1A1A;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;">
-            เข้าสู่ระบบ
-          </button>
+        <div class="form-field"><label class="form-label">รหัสผ่าน</label>
+          <input class="form-input" id="wall-pass" type="password" placeholder="password"
+            onkeydown="if(event.key==='Enter')doWallLogin()">
         </div>
+        <div id="wall-error" style="display:none;font-size:11px;color:#DC2626;background:#FEF2F2;padding:7px 10px;border-radius:8px;">
+          ❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
+        </div>
+        <button onclick="doWallLogin()" style="width:100%;padding:12px;border-radius:10px;border:none;background:#1A1A1A;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;">
+          เข้าสู่ระบบ
+        </button>
       </div>
     </div>`;
+
+  // view-settings needs position:relative for overlay
+  viewEl.style.position = 'relative';
+  viewEl.appendChild(overlay);
   setTimeout(() => { const el = document.getElementById('wall-user'); if(el) el.focus(); }, 100);
 }
 
@@ -3289,12 +3246,15 @@ function doWallLogin() {
   if (u === 'admin' && p === 'admin123') {
     adminLoggedIn = true;
     updateAdminBadge();
+    // Remove overlay
+    const overlay = document.getElementById('login-wall-overlay');
+    if (overlay) overlay.remove();
     const target = pendingAdminView;
     pendingAdminView = null;
     switchView(target);
   } else {
     const err = document.getElementById('wall-error');
-    if (err) { err.style.display = 'block'; }
+    if (err) err.style.display = 'block';
     const passEl = document.getElementById('wall-pass');
     if (passEl) passEl.value = '';
   }
@@ -3308,7 +3268,7 @@ function showInlineLogin(target) {
 function doInlineLogin(target) {
   const u = document.getElementById('il-user-'+target)?.value.trim();
   const p = document.getElementById('il-pass-'+target)?.value;
-  if (u === 'admin' && p === 'gnr3admin') {
+  if (u === 'admin' && p === 'admin123') {
     adminLoggedIn = true;
     updateAdminBadge();
     if (target === 'booking') initBookMode();
@@ -3339,7 +3299,7 @@ function closeAdminLogin() {
 function doAdminLogin() {
   const u = document.getElementById('admin-user').value.trim();
   const p = document.getElementById('admin-pass').value;
-  if (u === 'admin' && p === 'admin123') {
+  if (u === 'admin' && p === 'gnr3admin') {
     adminLoggedIn = true;
     document.getElementById('admin-login-overlay').style.display = 'none';
     updateAdminBadge();
@@ -3368,14 +3328,20 @@ const QUEUE_DATA = [
   // รถยนต์
   { id:1, name:'คุณสมชาย ใจดี',   dept:'ฝ่ายบัญชี',    building:'ari', vClass:'car',  p1:'กข 1234', t1:'🚗 รถเก๋ง',  p2:'กค 5678', t2:'🚙 SUV',     p3:'',        t3:'',         date:'2025-05-03', status:'active'   },
   { id:2, name:'คุณวิภา รักดี',    dept:'ฝ่ายบุคคล',    building:'bts', vClass:'car',  p1:'กง 2233', t1:'🚗 รถเก๋ง',  p2:'',        t2:'',          p3:'',        t3:'',         date:'2025-05-03', status:'active'   },
-  { id:3, name:'คุณนิรัน สุขใจ',   dept:'ฝ่ายการตลาด', building:'ari', vClass:'car',  p1:'กน 8800', t1:'⚡ รถไฟฟ้า', p2:'กว 4455', t2:'🚗 รถเก๋ง', p3:'กป 9900', t3:'🛻 กระบะ', date:'2025-05-01', status:'active'   },
+  { id:3, name:'คุณนิรัน สุขใจ',   dept:'ฝ่ายการตลาด', building:'ari', vClass:'car',  p1:'กน 8800', t1:'⚡ รถไฟฟ้า', p2:'กว 4455', t2:'🚗 รถเก๋ง', p3:'กป 9900', t3:'🚚 กระบะ', date:'2025-05-01', status:'active'   },
   { id:4, name:'คุณมานี มีสุข',    dept:'ฝ่ายไอที',     building:'ksl', vClass:'car',  p1:'กท 1199', t1:'🚐 รถตู้',   p2:'',        t2:'',          p3:'',        t3:'',         date:'2025-04-28', status:'inactive' },
   // มอเตอร์ไซค์
-  { id:5, name:'คุณประสิทธิ์ ดี',  dept:'ฝ่ายบริการ',   building:'ari', vClass:'moto', p1:'ขข 1111', t1:'🏍️ สกู๊ตเตอร์', p2:'ขค 2222', t2:'🏍️ บิ๊กไบค์', p3:'',    t3:'',         date:'2025-05-03', status:'active'   },
+  { id:5, name:'คุณประสิทธิ์ ดี',  dept:'ฝ่ายรักษา',   building:'ari', vClass:'moto', p1:'ขข 1111', t1:'🏍️ สกู๊ตเตอร์', p2:'ขค 2222', t2:'🏍️ บิ๊กไบค์', p3:'',    t3:'',         date:'2025-05-03', status:'active'   },
   { id:6, name:'คุณชาญ บุญมา',     dept:'ฝ่ายขนส่ง',    building:'bts', vClass:'moto', p1:'ขง 3333', t1:'🏍️ สกู๊ตเตอร์', p2:'',        t2:'',          p3:'',        t3:'',         date:'2025-05-02', status:'active'   },
 ];
 
 let queueFilter = 'all';
+
+const BUILDINGS = [
+  { id:'ari', label:'🏢 Ari Hills',  prefix:'ARI', color:'#1A1A1A', bg:'#F3F4F6' },
+  { id:'bts', label:'🚇 BTS Building', prefix:'BTS', color:'#2563EB', bg:'#DBEAFE' },
+  { id:'ksl', label:'🏬 KSL Building', prefix:'KSL', color:'#15803D', bg:'#DCFCE7' },
+];
 
 function filterQueue(bld) {
   queueFilter = bld;
@@ -3385,57 +3351,116 @@ function filterQueue(bld) {
   renderQueue();
 }
 
-function renderQueue() {
-  const bldName = {ari:'🏢 Ari Hills', bts:'🚇 BTS', ksl:'🏬 KSL'};
+function queueNumBadge(prefix, num, color, bg) {
+  return `<span style="font-size:10px;font-weight:700;font-family:'DM Mono',monospace;padding:2px 8px;border-radius:100px;background:${bg};color:${color};border:1px solid ${color}22;">${prefix}-${String(num).padStart(3,'0')}</span>`;
+}
+
+function buildTable(rows, vClass, prefix, color, bg) {
   const stCls = {active:'tag-green', inactive:'tag-gray'};
   const stLbl = {active:'มีสิทธิ์', inactive:'ยกเลิก'};
-  const filtered = queueFilter === 'all' ? QUEUE_DATA : QUEUE_DATA.filter(r => r.building === queueFilter);
+  const isCar = vClass === 'car';
 
-  const cars  = filtered.filter(r => r.vClass === 'car');
-  const motos = filtered.filter(r => r.vClass === 'moto');
+  if (!rows.length) {
+    return `<div style="text-align:center;color:var(--text-light);padding:20px;font-size:12px;">ไม่มีรายการ</div>`;
+  }
 
-  // Update counts
+  const head = isCar
+    ? `<th class="tbl-th" style="width:100px;">เลขคิว</th>
+       <th class="tbl-th">ชื่อผู้ขอ</th>
+       <th class="tbl-th" style="width:96px;">ฝ่าย/แผนก</th>
+       <th class="tbl-th" style="width:84px;">ทะเบียนที่ 1</th><th class="tbl-th" style="width:74px;">ประเภท</th>
+       <th class="tbl-th" style="width:84px;">ทะเบียนที่ 2</th><th class="tbl-th" style="width:74px;">ประเภท</th>
+       <th class="tbl-th" style="width:84px;">ทะเบียนที่ 3</th><th class="tbl-th" style="width:74px;">ประเภท</th>
+       <th class="tbl-th" style="width:84px;">วันที่จอง</th>
+       <th class="tbl-th" style="width:64px;text-align:center;">สถานะ</th>`
+    : `<th class="tbl-th" style="width:100px;">เลขคิว</th>
+       <th class="tbl-th">ชื่อผู้ขอ</th>
+       <th class="tbl-th" style="width:96px;">ฝ่าย/แผนก</th>
+       <th class="tbl-th" style="width:84px;">ทะเบียนที่ 1</th><th class="tbl-th" style="width:84px;">ประเภท</th>
+       <th class="tbl-th" style="width:84px;">ทะเบียนที่ 2</th><th class="tbl-th" style="width:84px;">ประเภท</th>
+       <th class="tbl-th" style="width:84px;">วันที่จอง</th>
+       <th class="tbl-th" style="width:64px;text-align:center;">สถานะ</th>`;
+
+  const bodyRows = rows.map((r, i) => {
+    const cells = isCar
+      ? `<td class="tbl-td">${queueNumBadge(prefix, i+1, color, bg)}</td>
+         <td class="tbl-td" style="font-weight:600;">${r.name}</td>
+         <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.dept}</td>
+         <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.p1||'–'}</td>
+         <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.t1||'–'}</td>
+         <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.p2||'–'}</td>
+         <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.t2||'–'}</td>
+         <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.p3||'–'}</td>
+         <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.t3||'–'}</td>
+         <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.date}</td>
+         <td class="tbl-td" style="text-align:center;"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;${TAG_STYLES[stCls[r.status]]}">${stLbl[r.status]}</span></td>`
+      : `<td class="tbl-td">${queueNumBadge(prefix, i+1, color, bg)}</td>
+         <td class="tbl-td" style="font-weight:600;">${r.name}</td>
+         <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.dept}</td>
+         <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.p1||'–'}</td>
+         <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.t1||'–'}</td>
+         <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.p2||'–'}</td>
+         <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.t2||'–'}</td>
+         <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.date}</td>
+         <td class="tbl-td" style="text-align:center;"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;${TAG_STYLES[stCls[r.status]]}">${stLbl[r.status]}</span></td>`;
+    return `<tr style="background:${i%2?'#FAFAF8':'transparent'};border-bottom:0.5px solid var(--border);">${cells}</tr>`;
+  }).join('');
+
+  return `<div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap;">
+      <thead><tr style="background:#FAFAF8;">${head}</tr></thead>
+      <tbody>${bodyRows}</tbody>
+    </table>
+  </div>`;
+}
+
+function renderQueue() {
+  // Update all counts
   ['all','ari','bts','ksl'].forEach(bld => {
     const el = document.getElementById('qcnt-'+bld);
     if (el) el.textContent = bld === 'all' ? QUEUE_DATA.length : QUEUE_DATA.filter(r=>r.building===bld).length;
   });
-  const cc = document.getElementById('qcount-car');  if (cc) cc.textContent = cars.length + ' ราย';
-  const mc = document.getElementById('qcount-moto'); if (mc) mc.textContent = motos.length + ' ราย';
 
-  const carRow = (r, i) => `<tr style="background:${i%2?'#FAFAF8':'transparent'};border-bottom:0.5px solid var(--border);">
-    <td class="tbl-td" style="text-align:center;font-weight:700;color:var(--text-muted);">${r.id}</td>
-    <td class="tbl-td" style="font-weight:600;">${r.name}</td>
-    <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.dept}</td>
-    <td class="tbl-td" style="font-size:11px;">${bldName[r.building]||r.building}</td>
-    <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.p1||'–'}</td>
-    <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.t1||'–'}</td>
-    <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.p2||'–'}</td>
-    <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.t2||'–'}</td>
-    <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.p3||'–'}</td>
-    <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.t3||'–'}</td>
-    <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.date}</td>
-    <td class="tbl-td" style="text-align:center;"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;${TAG_STYLES[stCls[r.status]]}">${stLbl[r.status]}</span></td>
-  </tr>`;
+  const bldFilter = queueFilter === 'all' ? BUILDINGS : BUILDINGS.filter(b => b.id === queueFilter);
+  const container = document.getElementById('queue-sections');
+  if (!container) return;
 
-  const motoRow = (r, i) => `<tr style="background:${i%2?'#FAFAF8':'transparent'};border-bottom:0.5px solid var(--border);">
-    <td class="tbl-td" style="text-align:center;font-weight:700;color:var(--text-muted);">${r.id}</td>
-    <td class="tbl-td" style="font-weight:600;">${r.name}</td>
-    <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.dept}</td>
-    <td class="tbl-td" style="font-size:11px;">${bldName[r.building]||r.building}</td>
-    <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.p1||'–'}</td>
-    <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.t1||'–'}</td>
-    <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.p2||'–'}</td>
-    <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.t2||'–'}</td>
-    <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${r.date}</td>
-    <td class="tbl-td" style="text-align:center;"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;${TAG_STYLES[stCls[r.status]]}">${stLbl[r.status]}</span></td>
-  </tr>`;
+  container.innerHTML = bldFilter.map(bld => {
+    const bldData = QUEUE_DATA.filter(r => r.building === bld.id);
+    const cars    = bldData.filter(r => r.vClass === 'car');
+    const motos   = bldData.filter(r => r.vClass === 'moto');
 
-  const empty = (cols) => `<tr><td colspan="${cols}" class="tbl-td" style="text-align:center;color:var(--text-light);padding:20px;">ไม่มีรายการ</td></tr>`;
+    return `<div class="card" style="padding:0;overflow:hidden;">
+      <!-- Building header -->
+      <div style="padding:12px 18px;background:${bld.bg};border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:16px;font-weight:700;">${bld.label}</span>
+          <span style="font-size:11px;font-weight:700;padding:2px 10px;border-radius:100px;background:${bld.bg};color:${bld.color};border:1.5px solid ${bld.color}33;">${cars.length + motos.length} ราย</span>
+        </div>
+        <div style="font-size:10px;color:var(--text-muted);">รหัสคิว: ${bld.prefix}-XXX</div>
+      </div>
 
-  const carTbody  = document.getElementById('queue-car-tbody');
-  const motoTbody = document.getElementById('queue-moto-tbody');
-  if (carTbody)  carTbody.innerHTML  = cars.length  ? cars.map(carRow).join('')   : empty(12);
-  if (motoTbody) motoTbody.innerHTML = motos.length ? motos.map(motoRow).join('') : empty(10);
+      <!-- รถยนต์ sub-section -->
+      <div style="padding:10px 14px 6px;background:var(--card);border-bottom:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+          <span style="font-size:13px;">🚗</span>
+          <span style="font-size:12px;font-weight:700;">รถยนต์</span>
+          <span style="font-size:10px;background:#DBEAFE;color:#1D4ED8;padding:1px 7px;border-radius:100px;font-weight:700;">${cars.length} ราย</span>
+        </div>
+        ${buildTable(cars, 'car', bld.prefix, bld.color, bld.bg)}
+      </div>
+
+      <!-- มอเตอร์ไซค์ sub-section -->
+      <div style="padding:10px 14px 12px;background:var(--card);">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+          <span style="font-size:13px;">🏍️</span>
+          <span style="font-size:12px;font-weight:700;">มอเตอร์ไซค์</span>
+          <span style="font-size:10px;background:#EDE9FE;color:#7C3AED;padding:1px 7px;border-radius:100px;font-weight:700;">${motos.length} ราย</span>
+        </div>
+        ${buildTable(motos, 'moto', bld.prefix+'M', '#7C3AED', '#EDE9FE')}
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function toggleQueueVehicleType() {
@@ -3482,6 +3507,188 @@ function submitQueue() {
   }
   closeQueueModal();
   renderQueue();
+}
+
+// ═══════════════════════════════════════════════
+//  SETTINGS
+// ═══════════════════════════════════════════════
+
+// mock slot-user DB: { 'ari-12': { owner:'คุณมานะ', plates:['กข 1111','กค 2222'] } }
+const SLOT_OWNERS = {
+  'ari-1':  { owner:'คุณสมชาย ใจดี',   dept:'ฝ่ายบัญชี',    plates:['กข 1234','กค 5678'] },
+  'ari-4':  { owner:'คุณวิภา รักดี',   dept:'ฝ่ายบุคคล',    plates:['กง 2233'] },
+  'ari-7':  { owner:'คุณนิรัน สุขใจ',  dept:'ฝ่ายการตลาด',  plates:['กน 8800','กว 4455','กป 9900'] },
+  'ari-9':  { owner:'คุณมานี มีสุข',   dept:'ฝ่ายไอที',     plates:['กท 1199'] },
+  'ari-12': { owner:'คุณประสิทธิ์ ดี', dept:'ฝ่ายรักษา',    plates:['กข 1111'] },
+  'bts-2':  { owner:'คุณชาญ บุญมา',   dept:'ฝ่ายขนส่ง',    plates:['ขง 3333'] },
+  'bts-5':  { owner:'คุณอารีย์ สุข',  dept:'ฝ่ายบริการ',   plates:['กล 4444','กว 5555'] },
+  'ksl-1':  { owner:'คุณวิรัต ดี',    dept:'ฝ่ายจัดการ',   plates:['กม 6666'] },
+};
+
+let settingsTab    = 'rules';
+let settingsBld    = 'ari';
+let settingsPlBld  = 'ari';
+
+function switchSettingsTab(tab) {
+  settingsTab = tab;
+  ['rules','slots','plates'].forEach(t => {
+    document.getElementById('stab-'+t).classList.toggle('active', t === tab);
+    document.getElementById('spane-'+t).style.display = t === tab ? '' : 'none';
+  });
+  if (tab === 'slots')  renderSettingsSlots(settingsBld);
+  if (tab === 'plates') renderSettingsPlates(settingsPlBld);
+  if (tab === 'rules')  renderSettingsStats();
+}
+
+function switchSettingsBld(bld) {
+  settingsBld = bld;
+  ['ari','bts','ksl'].forEach(b => {
+    document.getElementById('sbld-'+b).classList.toggle('active', b === bld);
+  });
+  renderSettingsSlots(bld);
+}
+
+function switchSettingsPlatesBld(bld) {
+  settingsPlBld = bld;
+  ['ari','bts','ksl'].forEach(b => {
+    document.getElementById('spbld-'+b).classList.toggle('active', b === bld);
+  });
+  renderSettingsPlates(bld);
+}
+
+function renderSettingsStats() {
+  const el = document.getElementById('settings-stats');
+  if (!el) return;
+  let ariFixed=0, ariCommon=0, ariFree=0;
+  Object.values(ARI_FLOORS).forEach(f => { ariFixed+=f.fixed.length; ariCommon+=f.common.length; ariFree+=f.free.length; });
+  const rows = [
+    ['🏢 Ari Hills', ariFixed+ariCommon+ariFree, 50, ariFixed, ariCommon, ariFree],
+    ['🚇 BTS',       220, 35, 0, 0, 220],
+    ['🏬 KSL',       31,  0,  31, 0, 0],
+  ];
+  el.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+    <thead><tr style="background:#F5F5F2;">
+      <th class="tbl-th">อาคาร</th>
+      <th class="tbl-th" style="text-align:right;">รถยนต์</th>
+      <th class="tbl-th" style="text-align:right;">มอไซค์</th>
+      <th class="tbl-th" style="text-align:right;">ประจำ</th>
+      <th class="tbl-th" style="text-align:right;">ส่วนกลาง</th>
+      <th class="tbl-th" style="text-align:right;">ไม่กำหนด</th>
+    </tr></thead>
+    <tbody>${rows.map((r,i) => `<tr style="background:${i%2?'#FAFAF8':'transparent'}">
+      ${r.map((v,j) => `<td class="tbl-td" style="${j>0?'text-align:right;font-family:\'DM Mono\',monospace;':'font-weight:600;'}">${v}</td>`).join('')}
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
+
+function renderSettingsSlots(bld) {
+  const el = document.getElementById('settings-slots-content');
+  if (!el) return;
+
+  const bldConfig = {
+    ari: { label:'🏢 Ari Hills', sections:[
+      { key:'fixed',  label:'ประจำ (กำหนดทะเบียน)', color:'#1A1A1A', slots: Object.entries(ARI_FLOORS).flatMap(([fl,d]) => d.fixed.map(n => ({fl, n}))) },
+      { key:'common', label:'ส่วนกลาง (จองได้)',    color:'#2563EB', slots: Object.entries(ARI_FLOORS).flatMap(([fl,d]) => d.common.map(n => ({fl, n}))) },
+      { key:'free',   label:'ไม่กำหนดช่อง',          color:'#16A34A', slots: Object.entries(ARI_FLOORS).flatMap(([fl,d]) => d.free.map(n => ({fl, n}))) },
+    ]},
+    bts: { label:'🚇 BTS Building', sections:[
+      { key:'general', label:'รถยนต์ทั่วไป',   color:'#16A34A', slots: Array.from({length:10},(_,i)=>({fl:'–',n:i+1})) },
+      { key:'van',     label:'รถตู้ (≤2.1m)', color:'#2563EB', slots: ['VN1','VN2','VN3','VN4','VN5'].map(n=>({fl:'–',n})) },
+      { key:'visitor', label:'ผู้มาติดต่อ',   color:'#B45309', slots: ['V1','V2','V3'].map(n=>({fl:'–',n})) },
+    ]},
+    ksl: { label:'🏬 KSL Building', sections:[
+      { key:'fixed', label:'ประจำ', color:'#1A1A1A', slots: Object.entries(KSL_FLOORS).flatMap(([fl,d]) => d.slots.map(n=>({fl,n}))) },
+    ]},
+  };
+
+  const cfg = bldConfig[bld];
+  el.innerHTML = cfg.sections.map(sec => `
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div style="padding:10px 16px;background:#F5F5F2;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="width:8px;height:8px;border-radius:50%;background:${sec.color};display:inline-block;"></span>
+          <span style="font-size:13px;font-weight:700;">${sec.label}</span>
+          <span style="font-size:10px;color:var(--text-muted);">${sec.slots.length} ช่อง</span>
+        </div>
+        <button onclick="openAddSlotModal('${bld}','${sec.key}')" style="font-size:11px;padding:4px 12px;border-radius:7px;border:1.5px solid ${sec.color};background:transparent;color:${sec.color};cursor:pointer;font-weight:600;">+ เพิ่มช่อง</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="background:#FAFAF8;">
+            <th class="tbl-th" style="width:70px;">ช่องจอด</th>
+            <th class="tbl-th" style="width:60px;">ชั้น</th>
+            <th class="tbl-th">ผู้มีสิทธิ์</th>
+            <th class="tbl-th" style="width:160px;">ทะเบียน</th>
+            <th class="tbl-th" style="width:70px;text-align:center;">จัดการ</th>
+          </tr></thead>
+          <tbody>${sec.slots.slice(0,8).map((s,i) => {
+            const key = bld+'-'+s.n;
+            const info = SLOT_OWNERS[key];
+            return `<tr style="background:${i%2?'#FAFAF8':'transparent'};border-bottom:0.5px solid var(--border);">
+              <td class="tbl-td" style="font-weight:700;font-family:'DM Mono',monospace;color:${sec.color};">ช่อง ${s.n}</td>
+              <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${s.fl}</td>
+              <td class="tbl-td" style="font-size:12px;">${info ? info.owner : '<span style="color:var(--text-light);">ว่าง</span>'}</td>
+              <td class="tbl-td" style="font-size:11px;font-family:\'DM Mono\',monospace;">${info ? info.plates.join(', ') : '–'}</td>
+              <td class="tbl-td" style="text-align:center;">
+                <button onclick="editSlot('${key}')" style="font-size:10px;padding:3px 8px;border-radius:6px;border:1px solid var(--border);background:var(--surface);cursor:pointer;">✏️ แก้ไข</button>
+              </td>
+            </tr>`;
+          }).join('')}
+          ${sec.slots.length > 8 ? `<tr><td colspan="5" class="tbl-td" style="text-align:center;color:var(--text-muted);font-size:11px;">... และอีก ${sec.slots.length-8} ช่อง</td></tr>` : ''}
+          </tbody>
+        </table>
+      </div>
+    </div>`).join('');
+}
+
+function renderSettingsPlates(bld) {
+  const el = document.getElementById('settings-plates-content');
+  if (!el) return;
+  const bldSlots = Object.entries(SLOT_OWNERS).filter(([k]) => k.startsWith(bld+'-'));
+
+  el.innerHTML = `<div class="card" style="padding:0;overflow:hidden;">
+    <div style="padding:10px 16px;background:#F5F5F2;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+      <span style="font-size:13px;font-weight:700;">ทะเบียนผู้มีสิทธิ์จอด</span>
+      <button onclick="openAddPlateModal('${bld}')" style="font-size:11px;padding:4px 12px;border-radius:7px;border:1.5px solid var(--gold);background:transparent;color:var(--gold-dark);cursor:pointer;font-weight:600;">+ เพิ่มทะเบียน</button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead><tr style="background:#FAFAF8;">
+          <th class="tbl-th" style="width:70px;">ช่องจอด</th>
+          <th class="tbl-th">ชื่อผู้มีสิทธิ์</th>
+          <th class="tbl-th" style="width:100px;">ฝ่าย/แผนก</th>
+          <th class="tbl-th">ทะเบียนที่ 1</th>
+          <th class="tbl-th">ทะเบียนที่ 2</th>
+          <th class="tbl-th">ทะเบียนที่ 3</th>
+          <th class="tbl-th" style="width:70px;text-align:center;">จัดการ</th>
+        </tr></thead>
+        <tbody>${bldSlots.length ? bldSlots.map(([key,info],i) => {
+          const slot = key.split('-').slice(1).join('-');
+          return `<tr style="background:${i%2?'#FAFAF8':'transparent'};border-bottom:0.5px solid var(--border);">
+            <td class="tbl-td" style="font-weight:700;font-family:'DM Mono',monospace;">ช่อง ${slot}</td>
+            <td class="tbl-td" style="font-weight:600;">${info.owner}</td>
+            <td class="tbl-td" style="font-size:11px;color:var(--text-muted);">${info.dept}</td>
+            ${[0,1,2].map(j => `<td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${info.plates[j]||'<span style="color:var(--text-light)">–</span>'}</td>`).join('')}
+            <td class="tbl-td" style="text-align:center;">
+              <button onclick="editSlot('${key}')" style="font-size:10px;padding:3px 8px;border-radius:6px;border:1px solid var(--border);background:var(--surface);cursor:pointer;">✏️</button>
+            </td>
+          </tr>`;
+        }).join('') : '<tr><td colspan="7" class="tbl-td" style="text-align:center;color:var(--text-light);padding:20px;">ไม่มีข้อมูล</td></tr>'}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function openAddSlotModal(bld, type) {
+  alert(`เพิ่มช่องจอด — ${bld.toUpperCase()} (${type})\n(ฟีเจอร์กำลังพัฒนา)`);
+}
+function openAddPlateModal(bld) {
+  alert(`เพิ่มทะเบียนผู้มีสิทธิ์ — ${bld.toUpperCase()}\n(ฟีเจอร์กำลังพัฒนา)`);
+}
+function editSlot(key) {
+  const info = SLOT_OWNERS[key];
+  if (info) alert(`แก้ไขช่อง: ${key}\nผู้มีสิทธิ์: ${info.owner}\nทะเบียน: ${info.plates.join(', ')}\n(ฟีเจอร์กำลังพัฒนา)`);
+  else alert(`ช่อง ${key} ยังไม่มีผู้มีสิทธิ์\n(ฟีเจอร์กำลังพัฒนา)`);
 }
 
 function saveSettings() {
