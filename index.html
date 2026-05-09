@@ -935,9 +935,26 @@
   <aside class="sidebar">
     <div class="logo" style="font-size:13px;line-height:1.3;">ระบบจัดการลานจอด<br><span style="font-size:10px;font-weight:400;color:var(--text-muted);letter-spacing:0.3px;">Parking Management System</span></div>
 
+    <!-- กลับหน้าหลัก (บนสุด) -->
+    <a href="https://add00917-hue.github.io/GNR3-Building-MS/"
+      style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;text-decoration:none;color:#fff;font-size:13px;font-weight:700;background:linear-gradient(135deg,#2A2A2A,#1A1A1A);border:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 10px rgba(0,0,0,0.25),0 1px 0 rgba(255,255,255,0.07) inset;transition:all 0.15s;letter-spacing:0.1px;"
+      onmouseover="this.style.boxShadow='0 6px 16px rgba(0,0,0,0.35),0 1px 0 rgba(255,255,255,0.07) inset';this.style.transform='translateY(-1px)'"
+      onmouseout="this.style.boxShadow='0 4px 10px rgba(0,0,0,0.25),0 1px 0 rgba(255,255,255,0.07) inset';this.style.transform='translateY(0)'">
+      <span style="font-size:18px;line-height:1;">🏠</span>
+      <div style="display:flex;flex-direction:column;gap:1px;">
+        <span style="font-size:13px;font-weight:700;color:#fff;">หน้าหลัก OMS GNR3</span>
+        <span style="font-size:10px;font-weight:400;color:rgba(255,255,255,0.45);letter-spacing:0.2px;">Office Management System</span>
+      </div>
+      <span style="margin-left:auto;font-size:11px;opacity:0.4;">›</span>
+    </a>
+
     <div class="nav-section-label">ภาพรวม</div>
     <button class="nav-item active" onclick="setNav(this);switchView('all')">
-      <span class="nav-icon">🏠</span> Dashboard
+      <span class="nav-icon">📊</span> Dashboard
+    </button>
+    <button class="nav-item" onclick="setNav(this);switchView('booking')">
+      <span class="nav-icon">📅</span> การแจ้งจอด
+      <span class="nav-badge" id="booking-nav-badge">7</span>
     </button>
 
     <div class="nav-section-label">อาคาร</div>
@@ -957,28 +974,6 @@
         style="font-size:9px;padding:1px 7px;border-radius:4px;cursor:pointer;background:#F3F4F6;color:#9CA3AF;font-weight:600;border:1px solid #E5E7EB;">
         🔐 Admin
       </span>
-    </div>
-    <button class="nav-item" onclick="setNav(this);switchView('booking')">
-      <span class="nav-icon">📅</span> การแจ้งจอด
-      <span class="nav-badge" id="booking-nav-badge">7</span>
-    </button>
-    <button class="nav-item" onclick="setNav(this);switchView('reservation')">
-      <span class="nav-icon">🏢</span> จองคิวที่จอดรถ
-      <span class="nav-badge">3</span>
-    </button>
-    <button class="nav-item" onclick="setNav(this);switchView('settings')">
-      <span class="nav-icon">⚙️</span> ตั้งค่า
-    </button>
-
-    <!-- กลับหน้าหลัก -->
-    <div style="margin-top:auto;padding:12px 8px 8px;border-top:1px solid var(--border);">
-      <a href="https://add00917-hue.github.io/GNR3-Building-MS/" target="_blank"
-        style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--text-muted);font-size:13px;font-weight:500;transition:background 0.15s;"
-        onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='transparent'">
-        <span style="font-size:16px;">🏠</span>
-        <span>กลับหน้าหลัก</span>
-        <span style="margin-left:auto;font-size:10px;opacity:0.5;">↗</span>
-      </a>
     </div>
 
     <div class="sidebar-footer">
@@ -1240,17 +1235,17 @@
           <div style="margin-bottom:14px;">
             <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;display:flex;align-items:center;gap:6px;">
               <span style="width:7px;height:7px;border-radius:50%;background:#2563EB;display:inline-block;flex-shrink:0;"></span>
-              จองช่องจอดส่วนกลาง (66–83)
+              แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ
               <span id="common-count" style="font-size:10px;background:#DBEAFE;color:#1D4ED8;padding:1px 7px;border-radius:100px;font-weight:700;"></span>
             </div>
             <table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;">
               <thead><tr style="background:#F5F5F2;">
-                <th class="tbl-th" style="width:74px;">ช่องจอด</th>
+                <th class="tbl-th" style="width:38px;">ลำดับ</th>
                 <th class="tbl-th">ชื่อผู้ขอ</th>
                 <th class="tbl-th" style="width:86px;">ทะเบียน</th>
                 <th class="tbl-th" style="width:80px;">ประเภทรถ</th>
-                <th class="tbl-th" style="width:86px;text-align:center;">เวลา</th>
-                <th class="tbl-th" style="width:52px;text-align:center;">สถานะ</th>
+                <th class="tbl-th" style="width:110px;">ประเภทการจอด</th>
+                <th class="tbl-th" style="width:110px;text-align:center;">ชั้น (จอด ชั้น 5 ส่วนกลางขวามือ)</th>
                 <th class="tbl-th" style="width:96px;">หมายเหตุ</th>
               </tr></thead>
               <tbody id="ari-common-tbody"></tbody>
@@ -1265,14 +1260,14 @@
             </div>
             <table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;">
               <thead><tr style="background:#F5F5F2;">
-                <th class="tbl-th" style="width:74px;">ช่องจอด</th>
-                <th class="tbl-th" style="width:50px;">ชั้น</th>
+                <th class="tbl-th" style="width:38px;">ลำดับ</th>
                 <th class="tbl-th">ชื่อผู้ขอ</th>
                 <th class="tbl-th" style="width:84px;">ทะเบียนผู้ขอ</th>
                 <th class="tbl-th" style="width:76px;">ประเภทรถ</th>
-                <th class="tbl-th" style="width:84px;">ทะเบียนเจ้าของ</th>
-                <th class="tbl-th" style="width:86px;text-align:center;">เวลา</th>
-                <th class="tbl-th" style="width:72px;text-align:center;">สถานะ</th>
+                <th class="tbl-th" style="width:96px;">ทะเบียนสิทธิ์จอดแทน</th>
+                <th class="tbl-th" style="width:100px;text-align:center;">ประเภทการจอด</th>
+                <th class="tbl-th" style="width:60px;text-align:center;">ชั้น</th>
+                <th class="tbl-th" style="width:90px;">หมายเหตุ</th>
               </tr></thead>
               <tbody id="ari-sub-tbody"></tbody>
             </table>
@@ -1284,17 +1279,17 @@
           <div>
             <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;display:flex;align-items:center;gap:6px;">
               <span style="width:7px;height:7px;border-radius:50%;background:#7C3AED;display:inline-block;flex-shrink:0;"></span>
-              รถอื่นๆ (รถบัส / รถพยาบาล ฯลฯ)
+              แจ้งจอดรถอื่นๆ (รถตู้ / รถส่งของ / รถ Vendor / รถบัส / รถพยาบาล)
               <span id="other-count" style="font-size:10px;background:#EDE9FE;color:#7C3AED;padding:1px 7px;border-radius:100px;font-weight:700;"></span>
             </div>
             <table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;">
               <thead><tr style="background:#F5F5F2;">
-                <th class="tbl-th" style="width:110px;">จอดหน้าอาคาร</th>
+                <th class="tbl-th" style="width:38px;">ลำดับ</th>
                 <th class="tbl-th">ชื่อผู้ขอ</th>
-                <th class="tbl-th" style="width:86px;">ทะเบียน</th>
-                <th class="tbl-th" style="width:84px;">ประเภทรถ</th>
-                <th class="tbl-th" style="width:86px;text-align:center;">เวลา</th>
-                <th class="tbl-th" style="width:72px;text-align:center;">สถานะ</th>
+                <th class="tbl-th" style="width:86px;">ทะเบียนผู้ขอ</th>
+                <th class="tbl-th" style="width:90px;">ประเภทรถ</th>
+                <th class="tbl-th" style="width:100px;text-align:center;">ประเภทการจอด</th>
+                <th class="tbl-th" style="width:110px;text-align:center;">ชั้น (จอดหน้าอาคาร)</th>
                 <th class="tbl-th" style="width:96px;">หมายเหตุ</th>
               </tr></thead>
               <tbody id="ari-other-tbody"></tbody>
@@ -1364,10 +1359,60 @@
                 <div class="form-field">
                   <label class="form-label">1. ประเภทการจอด</label>
                   <select class="form-select" id="book-type" onchange="onBookTypeChange()">
-                    <option value="common">🅿️ จอดส่วนกลาง (ช่อง 66–83)</option>
+                    <option value="common">🅿️ แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ</option>
                     <option value="sub">🔄 จอดแทน</option>
                     <option value="other">🚌 จอดรถอื่นๆ (หน้าอาคาร)</option>
                   </select>
+                </div>
+
+                <!-- 1.1 รูปแบบการจอด (รายวัน/จอดยาว) — แสดงทุก type แต่ซ่อน long สำหรับ sub/other -->
+                <div class="form-field" id="book-park-mode-row">
+                  <label class="form-label" id="park-mode-label">1.1 รูปแบบการจอด</label>
+                  <div id="park-mode-toggle-btns" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+                    <button type="button" id="parkmode-daily" onclick="setParkMode('daily')"
+                      style="padding:10px 8px;border-radius:10px;border:1.5px solid var(--gold);background:#FFFBEB;font-size:12px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                      <span style="font-size:16px;">📅</span>
+                      <span>รายวัน</span>
+                      <span style="font-size:9px;color:var(--text-muted);font-weight:400;">เลือกหลายวันได้</span>
+                    </button>
+                    <button type="button" id="parkmode-long" onclick="setParkMode('long')"
+                      style="padding:10px 8px;border-radius:10px;border:1.5px solid var(--border);background:transparent;font-size:12px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--text-muted);">
+                      <span style="font-size:16px;">📆</span>
+                      <span>จอดยาว</span>
+                      <span style="font-size:9px;font-weight:400;">เลือกช่วงวัน</span>
+                    </button>
+                  </div>
+
+                  <!-- ปฏิทินรายวัน (เลือกหลายวัน) -->
+                  <div id="park-daily-cal" style="border:1.5px solid var(--border);border-radius:10px;padding:10px;background:var(--surface);">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                      <button onclick="multiCalNav(-1)" style="border:none;background:none;cursor:pointer;font-size:15px;padding:2px 6px;">‹</button>
+                      <span id="multi-cal-label" style="font-size:11px;font-weight:700;"></span>
+                      <button onclick="multiCalNav(1)" style="border:none;background:none;cursor:pointer;font-size:15px;padding:2px 6px;">›</button>
+                    </div>
+                    <div id="multi-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:10px;"></div>
+                    <div id="multi-cal-selected" style="margin-top:8px;font-size:10px;color:var(--gold-dark);font-weight:600;min-height:16px;"></div>
+                  </div>
+
+                  <!-- ปฏิทินจอดยาว (เลือกช่วง) -->
+                  <div id="park-long-cal" style="display:none;border:1.5px solid var(--border);border-radius:10px;padding:10px;background:var(--surface);">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                      <button onclick="rangeCalNav(-1)" style="border:none;background:none;cursor:pointer;font-size:15px;padding:2px 6px;">‹</button>
+                      <span id="range-cal-label" style="font-size:11px;font-weight:700;"></span>
+                      <button onclick="rangeCalNav(1)" style="border:none;background:none;cursor:pointer;font-size:15px;padding:2px 6px;">›</button>
+                    </div>
+                    <div id="range-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:10px;"></div>
+                    <div id="range-cal-selected" style="margin-top:8px;font-size:10px;color:#7C3AED;font-weight:600;min-height:16px;"></div>
+                  </div>
+
+                  <!-- ค้างคืน (สำหรับ common เท่านั้น) -->
+                  <div id="common-overnight-div" style="margin-top:8px;display:flex;align-items:center;gap:8px;padding:8px 10px;background:#F5F5F2;border-radius:8px;border:1px solid var(--border);">
+                    <label style="font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex:1;">
+                      <input type="checkbox" id="book-overnight" style="width:15px;height:15px;accent-color:#E8B84B;cursor:pointer;">
+                      🌙 ค้างคืน (23:00 – 08:00)
+                    </label>
+                    <span style="font-size:10px;color:var(--text-muted);">ไม่ติ๊ก = ไม่ค้างคืน</span>
+                  </div>
                 </div>
 
                 <!-- 2. ประเภทรถ -->
@@ -1377,77 +1422,56 @@
                     <option value="sedan">🚗 รถเก๋ง</option>
                     <option value="suv">🚙 รถ SUV</option>
                     <option value="ev">⚡ รถไฟฟ้า</option>
-                    <option value="van">🚐 รถตู้</option>
+                    <option value="van">🚐 รถตู้ (จอดหน้าอาคาร)</option>
                     <option value="truck">🚚 รถกระบะ</option>
-                    <option value="bus">🚌 รถบัส BUS (จอดหน้าอาคาร)</option>
+                    <option value="delivery">📦 รถส่งของ (จอดหน้าอาคาร)</option>
+                    <option value="vendor">🏪 รถ Vendor (จอดหน้าอาคาร)</option>
+                    <option value="bus">🚌 รถบัส (จอดหน้าอาคาร)</option>
                     <option value="ambulance">🚑 รถพยาบาล (จอดหน้าอาคาร)</option>
                   </select>
                   <div id="book-special-note" style="display:none;font-size:10px;color:#B45309;margin-top:3px;padding:5px 8px;background:#FEF3C7;border-radius:6px;">
-                    ⚠️ รถประเภทนี้จะบันทึกในตาราง <strong>จอดรถอื่นๆ</strong> โดยอัตโนมัติ
+                    ⚠️ รถประเภทนี้จะบันทึกในตาราง <strong>แจ้งจอดรถอื่นๆ</strong> (จอดหน้าอาคาร) โดยอัตโนมัติ
                   </div>
                 </div>
 
-                <!-- 3. วันที่ (Thai mini calendar) -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
-                  <div class="form-field">
-                    <label class="form-label">3. จากวันที่</label>
-                    <div style="position:relative;">
-                      <input type="text" class="form-input" id="book-date-from-display" placeholder="เลือกวันที่" readonly onclick="openMiniCal('from')" style="cursor:pointer;padding-right:28px;">
-                      <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;">📅</span>
-                      <input type="hidden" id="book-date-from">
-                    </div>
-                  </div>
-                  <div class="form-field">
-                    <label class="form-label">ถึงวันที่</label>
-                    <div style="position:relative;">
-                      <input type="text" class="form-input" id="book-date-to-display" placeholder="เลือกวันที่" readonly onclick="openMiniCal('to')" style="cursor:pointer;padding-right:28px;">
-                      <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;">📅</span>
-                      <input type="hidden" id="book-date-to">
-                    </div>
-                  </div>
-                </div>
-                <!-- Mini calendar popup -->
-                <div id="mini-cal-popup" style="display:none;position:absolute;z-index:999;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);min-width:220px;">
-                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                    <button onclick="miniCalNav(-1)" style="border:none;background:none;cursor:pointer;font-size:16px;padding:2px 6px;">‹</button>
-                    <span id="mini-cal-label" style="font-size:12px;font-weight:700;"></span>
-                    <button onclick="miniCalNav(1)" style="border:none;background:none;cursor:pointer;font-size:16px;padding:2px 6px;">›</button>
-                  </div>
-                  <div id="mini-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:11px;"></div>
-                </div>
+                <!-- 3. วันที่ (hidden fields for compatibility) -->
+                <input type="hidden" id="book-date-from">
+                <input type="hidden" id="book-date-to">
+                <input type="hidden" id="book-date-from-display">
+                <input type="hidden" id="book-date-to-display">
 
-                <!-- 4. ช่วงเวลา -->
+                <!-- 3. ชื่อผู้แจ้งจอง -->
                 <div class="form-field">
-                  <label class="form-label">4. ช่วงเวลา</label>
-                  <select class="form-select" id="book-time">
-                    <option value="normal">🌅 ปกติ (08:00 – 23:00)</option>
-                    <option value="overnight">🌙 ค้างคืน (23:00 – 08:00)</option>
-                  </select>
-                </div>
-
-                <!-- 5. ชื่อผู้แจ้งจอง -->
-                <div class="form-field">
-                  <label class="form-label">5. ชื่อผู้แจ้งจอง</label>
+                  <label class="form-label">3. ชื่อผู้แจ้งจอง</label>
                   <input type="text" class="form-input" id="book-name" placeholder="ชื่อ-นามสกุล">
                 </div>
 
-                <!-- 6. ทะเบียนรถ (dynamic) -->
+                <!-- 4. ทะเบียนรถ -->
                 <div class="form-field">
-                  <label class="form-label">6. ทะเบียนผู้แจ้ง</label>
+                  <label class="form-label">4. ทะเบียนผู้แจ้ง</label>
                   <input type="text" class="form-input" id="book-plate" placeholder="เช่น กข 1234">
                 </div>
 
                 <!-- ทะเบียนเจ้าของ + ผลตรวจสอบ (จอดแทนเท่านั้น) -->
                 <div id="book-owner-row" class="form-field" style="display:none;">
-                  <label class="form-label">ทะเบียนเจ้าของสิทธิ์</label>
+                  <label class="form-label">ทะเบียนสิทธิ์จอดแทน (เจ้าของช่อง)</label>
                   <input type="text" class="form-input" id="book-plate-owner" placeholder="เช่น กข 5678" oninput="checkOwnerPlate()">
                   <div id="book-owner-result" style="display:none;margin-top:4px;font-size:11px;padding:6px 10px;border-radius:8px;"></div>
                 </div>
 
-                <!-- 7. หมายเหตุ (common + other เท่านั้น) -->
+                <!-- 5. หมายเหตุ (common + other เท่านั้น) -->
                 <div class="form-field" id="book-note-row">
-                  <label class="form-label">7. หมายเหตุ</label>
+                  <label class="form-label">5. หมายเหตุ</label>
                   <input type="text" class="form-input" id="book-note" placeholder="(ถ้ามี)">
+                </div>
+
+                <!-- ค้างคืน สำหรับ จอดแทน / รถอื่นๆ -->
+                <div id="book-overnight-row" style="display:none;align-items:center;gap:8px;padding:8px 10px;background:#F5F5F2;border-radius:8px;border:1px solid var(--border);">
+                  <label style="font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex:1;">
+                    <input type="checkbox" id="book-sub-overnight" style="width:15px;height:15px;accent-color:#E8B84B;cursor:pointer;">
+                    🌙 ค้างคืน
+                  </label>
+                  <span style="font-size:10px;color:var(--text-muted);">ไม่ติ๊ก = ไม่ค้างคืน</span>
                 </div>
 
                 <button onclick="submitBooking()" style="width:100%;padding:11px;border-radius:10px;border:none;background:var(--gold);color:#fff;font-size:13px;font-weight:700;cursor:pointer;margin-top:2px;">
@@ -1822,27 +1846,15 @@
 
 <!-- ─── MODAL ─── -->
 <!-- ─── BOTTOM NAV (mobile) ─── -->
-<div class="bn-overlay" id="bn-overlay" onclick="closeBnMore()"></div>
-
-<div class="bn-more-drawer" id="bn-more-drawer">
-  <div class="bn-more-title">เมนูเพิ่มเติม</div>
-  <div class="bn-more-grid">
-    <button class="bn-more-item" onclick="requireAdmin(null,'booking');closeBnMore()">
-      <span class="bmi-icon">📅</span>การแจ้งจอด
-    </button>
-    <button class="bn-more-item" onclick="requireAdmin(null,'reservation');closeBnMore()">
-      <span class="bmi-icon">🏢</span>จองคิวที่จอด
-    </button>
-    <button class="bn-more-item" onclick="requireAdmin(null,'settings');closeBnMore()">
-      <span class="bmi-icon">⚙️</span>ตั้งค่า
-    </button>
-  </div>
-</div>
 
 <nav class="bottom-nav" id="bottom-nav">
   <button class="bn-item active" id="bn-all" onclick="bnNav('all')">
-    <span class="bn-icon">🏠</span>
-    <span class="bn-label">หน้าหลัก</span>
+    <span class="bn-icon">📊</span>
+    <span class="bn-label">Dashboard</span>
+  </button>
+  <button class="bn-item" id="bn-booking" onclick="bnNav('booking')">
+    <span class="bn-icon">📅</span>
+    <span class="bn-label">แจ้งจอด</span>
   </button>
   <button class="bn-item" id="bn-ari" onclick="bnNav('ari')">
     <span class="bn-icon">🏢</span>
@@ -1855,10 +1867,6 @@
   <button class="bn-item" id="bn-ksl" onclick="bnNav('ksl')">
     <span class="bn-icon">🏬</span>
     <span class="bn-label">KSL</span>
-  </button>
-  <button class="bn-item" id="bn-more" onclick="toggleBnMore()">
-    <span class="bn-icon">☰</span>
-    <span class="bn-label">เพิ่มเติม</span>
   </button>
 </nav>
 
@@ -2544,7 +2552,7 @@ const MODALS = {
     `
   },
   'book-common': {
-    title: '📅 จองช่องจอดส่วนกลาง (66-83)',
+    title: '📅 แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ',
     body: `
       <div class="modal-field"><label>เลือกช่องจอด</label><select>${Array.from({length:18},(_,i)=>`<option>ช่อง ${66+i}</option>`).join('')}</select></div>
       <div class="modal-field"><label>วันที่จอง</label><input type="date"></div>
@@ -2567,7 +2575,7 @@ function closeModal() {
 // ═══════════════════════════════════════════════
 //  NAVIGATION — VIEW SWITCHER
 // ═══════════════════════════════════════════════
-const ALL_VIEWS = ['all','ari','bts','ksl','booking','reservation','report','settings'];
+const ALL_VIEWS = ['all','ari','bts','ksl','booking','report'];
 
 function switchView(view) {
   ALL_VIEWS.forEach(v => {
@@ -2580,18 +2588,13 @@ function switchView(view) {
     bts: 'BTS Building <span>/ แผนผังช่องจอด</span>',
     ksl: 'KSL Building <span>/ แผนผังช่องจอด</span>',
     booking: 'การแจ้งจอด <span>/ Ari Hills</span>',
-    reservation: 'Reservation <span>/ รายการจอง</span>',
     report: 'รายงาน <span>/ สรุปการใช้งาน</span>',
-    settings: 'ตั้งค่า <span>/ ระบบ</span>',
   };
   document.querySelector('.topbar-title').innerHTML = titles[view] || titles['all'];
   if (view === 'booking') initBookMode();
   if (view === 'bts') renderBtsGrid();
   if (view === 'ksl') { buildKslFloorTabs(); renderKslGrid(); buildKslFloorSummary(); }
   if (view === 'ari') { renderAriGrid(); buildAriFloorSummary(); }
-  if (view === 'reservation') renderQueue();
-  if (view === 'settings' && !adminLoggedIn) { showLoginWall('settings'); return; }
-  if (view === 'settings' && adminLoggedIn) { renderSettingsStats(); }
 }
 
 function switchBuilding(bld) {
@@ -2619,13 +2622,11 @@ function initBookMode() {
     ariCalMonth = now.getMonth();
     ariSelectedDate = now.toISOString().slice(0,10);
   }
-  const today = now.toISOString().slice(0,10);
-  const thMonths2 = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-  const thDisplay = `${now.getDate()} ${thMonths2[now.getMonth()]} ${now.getFullYear()+543}`;
-  const dfEl = document.getElementById('book-date-from'); if(dfEl) dfEl.value = today;
-  const dtEl = document.getElementById('book-date-to');   if(dtEl) dtEl.value = today;
-  const dfdEl = document.getElementById('book-date-from-display'); if(dfdEl) dfdEl.value = thDisplay;
-  const dtdEl = document.getElementById('book-date-to-display');   if(dtdEl) dtdEl.value = thDisplay;
+
+  // init park mode calendars
+  initMultiCal();
+  initRangeCal();
+  setParkMode('daily');
 
   // show/hide booking form based on login
   const formCard = document.getElementById('booking-form-card');
@@ -2742,41 +2743,58 @@ function renderBookingTable(dateStr) {
 
   const cTbody = document.getElementById('ari-common-tbody');
   cTbody.innerHTML = rows.map((r, i) => {
-    const timeTag = r.timeType === '–'
-      ? `<span style="color:var(--text-light)">–</span>`
-      : r.timeType === 'ค้างคืน'
-        ? `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;">🌙 ค้างคืน</span>`
-        : `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">🌅 ปกติ</span>`;
     const isEmpty = r.status === 'ว่าง';
+    const seq = isEmpty ? `<span style="color:var(--text-light)">–</span>` : `<span style="font-weight:700;color:var(--text-muted);">${i+1}</span>`;
+
+    // ประเภทการจอด tag
+    let parkTypeTag = `<span style="color:var(--text-light)">–</span>`;
+    if (!isEmpty && r.parkType) {
+      if (r.parkType === 'daily') {
+        parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">📅 รายวัน</span>`;
+      } else if (r.parkType === 'long') {
+        parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#F3E8FF;color:#7C3AED;white-space:nowrap;">📆 จอดยาว</span>`;
+      }
+    }
+    // ค้างคืน badge
+    if (!isEmpty && r.overnight) {
+      const overnightBadge = `<span style="font-size:9px;font-weight:600;padding:1px 5px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;margin-left:3px;">🌙</span>`;
+      parkTypeTag = parkTypeTag.replace('</span>', '') + overnightBadge + (parkTypeTag.includes('–') ? '' : '</span>');
+    }
+
+    const floorCell = isEmpty
+      ? `<span style="color:var(--text-light)">–</span>`
+      : `<span style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;background:#F0F9FF;color:#0369A1;padding:2px 8px;border-radius:6px;">ชั้น 5 ขวามือ</span>`;
+
     return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
-      <td class="tbl-td" style="font-weight:700;font-family:'DM Mono',monospace;font-size:11px;color:${isEmpty?'var(--text-muted)':'var(--slot-common)'};">${r.slot}</td>
+      <td class="tbl-td" style="text-align:center;">${seq}</td>
       <td class="tbl-td" style="font-size:12px;color:${isEmpty?'var(--text-muted)':''};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
       <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;color:${isEmpty?'var(--text-light)':''};">${r.plate}</td>
       <td class="tbl-td" style="font-size:11px;color:${isEmpty?'var(--text-light)':'var(--text-muted)'};white-space:nowrap;">${r.carType}</td>
-      <td class="tbl-td" style="text-align:center;">${timeTag}</td>
-      <td class="tbl-td" style="text-align:center;"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;${TAG_STYLES[r.statusCls]}">${r.status}</span></td>
-      <td class="tbl-td" style="font-size:11px;color:${r.note==='–'?'var(--text-light)':'var(--text-muted)'};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note}</td>
+      <td class="tbl-td">${parkTypeTag}</td>
+      <td class="tbl-td" style="text-align:center;">${floorCell}</td>
+      <td class="tbl-td" style="font-size:11px;color:${(r.note==='–'||!r.note)?'var(--text-light)':'var(--text-muted)'};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note||'–'}</td>
     </tr>`;
   }).join('');
 
   const sTbody = document.getElementById('ari-sub-tbody');
   sTbody.innerHTML = subs.length
     ? subs.map((r,i) => {
-        const timeTag = r.timeType === 'ค้างคืน'
+        const parkTypeTag = r.timeType === 'ค้างคืน'
           ? `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;">🌙 ค้างคืน</span>`
-          : `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">🌅 ปกติ</span>`;
+          : `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">🌅 ไม่ค้างคืน</span>`;
+        const floorBadge = `<span style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;background:#F5F5F2;color:var(--text-muted);padding:2px 8px;border-radius:6px;">${r.floor}</span>`;
         return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
-          <td class="tbl-td" style="font-weight:700;font-family:'DM Mono',monospace;font-size:11px;">${r.slot}</td>
-          <td class="tbl-td" style="font-size:11px;font-weight:600;color:var(--text-muted);font-family:'DM Mono',monospace;">${r.floor}</td>
+          <td class="tbl-td" style="text-align:center;font-weight:700;color:var(--text-muted);">${i+1}</td>
           <td class="tbl-td" style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
           <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.plateReq}</td>
           <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.carTypeReq}</td>
           <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${r.plateOwner}</td>
-          <td class="tbl-td" style="text-align:center;">${timeTag}</td>
-          <td class="tbl-td" style="text-align:center;"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;${TAG_STYLES[r.statusCls]}">${r.status}</span></td>
+          <td class="tbl-td" style="text-align:center;">${parkTypeTag}</td>
+          <td class="tbl-td" style="text-align:center;">${floorBadge}</td>
+          <td class="tbl-td" style="font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note||'–'}</td>
         </tr>`;
       }).join('')
-    : `<tr><td colspan="6" class="tbl-td" style="text-align:center;color:var(--text-light);padding:16px;">ไม่มีรายการ</td></tr>`;
+    : `<tr><td colspan="8" class="tbl-td" style="text-align:center;color:var(--text-light);padding:16px;">ไม่มีรายการ</td></tr>`;
 
   const cCount = rows.filter(r=>r.status!=='ว่าง').length;
   const ccEl = document.getElementById('common-count');
@@ -2790,20 +2808,21 @@ function renderBookingTable(dateStr) {
   if (oTbody) {
     oTbody.innerHTML = others.length
       ? others.map((r,i) => {
-          const timeTag = r.timeType === 'ค้างคืน'
+          const parkTypeTag = r.timeType === 'ค้างคืน'
             ? `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;">🌙 ค้างคืน</span>`
-            : `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">🌅 ปกติ</span>`;
+            : `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">🌅 ไม่ค้างคืน</span>`;
+          const floorBadge = `<span style="font-size:11px;font-weight:700;background:#EDE9FE;color:#7C3AED;padding:2px 8px;border-radius:6px;white-space:nowrap;">หน้าอาคาร</span>`;
           return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
-            <td class="tbl-td" style="font-weight:600;font-size:11px;color:#7C3AED;">${r.location}</td>
+            <td class="tbl-td" style="text-align:center;font-weight:700;color:var(--text-muted);">${i+1}</td>
             <td class="tbl-td" style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
             <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.plate}</td>
             <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.carType}</td>
-            <td class="tbl-td" style="text-align:center;">${timeTag}</td>
-            <td class="tbl-td" style="text-align:center;"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;${TAG_STYLES[r.statusCls]}">${r.status}</span></td>
+            <td class="tbl-td" style="text-align:center;">${parkTypeTag}</td>
+            <td class="tbl-td" style="text-align:center;">${floorBadge}</td>
             <td class="tbl-td" style="font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note}</td>
           </tr>`;
         }).join('')
-      : `<tr><td colspan="6" class="tbl-td" style="text-align:center;color:var(--text-light);padding:14px;">ไม่มีรายการ</td></tr>`;
+      : `<tr><td colspan="7" class="tbl-td" style="text-align:center;color:var(--text-light);padding:14px;">ไม่มีรายการ</td></tr>`;
     const otherEl = document.getElementById('other-count');
     if (otherEl) otherEl.textContent = others.length + ' รายการ';
   }
@@ -2860,20 +2879,39 @@ const PLATE_DB = {
   'กน 4444': { floor:'P5',  slot:'ช่อง 42', name:'คุณวิรัต / ห้อง 605' },
 };
 
-const SPECIAL_CAR = ['bus','ambulance'];
+const SPECIAL_CAR = ['bus','ambulance','van','delivery','vendor'];
 
 function onBookTypeChange() {
   const type = document.getElementById('book-type').value;
-  const ownerRow  = document.getElementById('book-owner-row');
-  const noteRow   = document.getElementById('book-note-row');
-  const ownerRes  = document.getElementById('book-owner-result');
+  const ownerRow      = document.getElementById('book-owner-row');
+  const noteRow       = document.getElementById('book-note-row');
+  const parkModeRow   = document.getElementById('book-park-mode-row');
+  const ownerRes      = document.getElementById('book-owner-result');
+  const overnightRow  = document.getElementById('book-overnight-row');
+  const parkmodeLong  = document.getElementById('parkmode-long');
+  const commonOvernight = document.getElementById('book-park-mode-row')?.querySelector('[style*="ค้างคืน"]')?.closest('div[style*="margin-top:8px"]');
 
-  ownerRow.style.display  = type === 'sub' ? '' : 'none';
-  noteRow.style.display   = type === 'sub' ? 'none' : '';
-  if (ownerRes) { ownerRes.style.display = 'none'; ownerRes.textContent = ''; }
+  // owner plate field — only for sub
+  ownerRow.style.display    = type === 'sub' ? '' : 'none';
+  // note — always visible
+  noteRow.style.display     = '';
+  // calendar/park-mode — always visible for all types
+  parkModeRow.style.display = '';
+  // long-park button — only for common
+  if (parkmodeLong) parkmodeLong.style.display = type === 'common' ? '' : 'none';
+  // overnight under calendar (common) — only for common
+  const commonOvernightDiv = document.getElementById('common-overnight-div');
+  if (commonOvernightDiv) commonOvernightDiv.style.display = type === 'common' ? '' : 'none';
+  // overnight for sub/other
+  if (overnightRow) overnightRow.style.display = (type === 'sub' || type === 'other') ? 'flex' : 'none';
+  // update calendar section label
+  const parkModeLabel = document.getElementById('park-mode-label');
+  const toggleBtnsDiv = document.getElementById('park-mode-toggle-btns');
+  if (parkModeLabel) parkModeLabel.textContent = type === 'common' ? '1.1 รูปแบบการจอด' : '1.1 เลือกวันที่';
+  if (toggleBtnsDiv) toggleBtnsDiv.style.gridTemplateColumns = type === 'common' ? '1fr 1fr' : '1fr';
 
-  const plateLabel = document.querySelector('label[for=""], .form-label');
-  const pl = document.querySelector('#book-plate').previousElementSibling;
+  // if switching away from common & long mode is active, reset to daily
+  if (type !== 'common' && currentParkMode === 'long') setParkMode('daily');
 }
 
 function onCarTypeChange() {
@@ -2998,64 +3036,279 @@ function selectMiniCalDate2(target, ds, d) {
   document.getElementById(`book-date-${target}-display`).value = display;
 }
 
+// ═══════════════════════════════════════════════
+//  PARK MODE — รายวัน / จอดยาว
+// ═══════════════════════════════════════════════
+let currentParkMode = 'daily';
+let multiCalYear, multiCalMonth;
+let selectedDays = new Set();  // for daily mode (Set of "YYYY-MM-DD")
+let rangeCalYear, rangeCalMonth;
+let rangeStart = null, rangeEnd = null; // for long mode
+
+function setParkMode(mode) {
+  currentParkMode = mode;
+  const btnDaily = document.getElementById('parkmode-daily');
+  const btnLong  = document.getElementById('parkmode-long');
+  const dailyCal = document.getElementById('park-daily-cal');
+  const longCal  = document.getElementById('park-long-cal');
+  if (mode === 'daily') {
+    btnDaily.style.border = '1.5px solid var(--gold)';
+    btnDaily.style.background = '#FFFBEB';
+    btnDaily.style.color = 'var(--text)';
+    btnLong.style.border = '1.5px solid var(--border)';
+    btnLong.style.background = 'transparent';
+    btnLong.style.color = 'var(--text-muted)';
+    dailyCal.style.display = '';
+    longCal.style.display = 'none';
+  } else {
+    btnLong.style.border = '1.5px solid #7C3AED';
+    btnLong.style.background = '#F3E8FF';
+    btnLong.style.color = 'var(--text)';
+    btnDaily.style.border = '1.5px solid var(--border)';
+    btnDaily.style.background = 'transparent';
+    btnDaily.style.color = 'var(--text-muted)';
+    dailyCal.style.display = 'none';
+    longCal.style.display = '';
+    renderRangeCal();
+  }
+}
+
+function initMultiCal() {
+  const now = new Date();
+  multiCalYear  = now.getFullYear();
+  multiCalMonth = now.getMonth();
+  selectedDays  = new Set();
+  renderMultiCal();
+}
+
+function multiCalNav(dir) {
+  multiCalMonth += dir;
+  if (multiCalMonth > 11) { multiCalMonth = 0; multiCalYear++; }
+  if (multiCalMonth < 0)  { multiCalMonth = 11; multiCalYear--; }
+  renderMultiCal();
+}
+
+function renderMultiCal() {
+  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const thDays   = ['จ','อ','พ','พฤ','ศ','ส','อา'];
+  document.getElementById('multi-cal-label').textContent = `${thMonths[multiCalMonth]} ${multiCalYear+543}`;
+
+  const grid = document.getElementById('multi-cal-grid');
+  const today = new Date().toISOString().slice(0,10);
+  let html = thDays.map(d=>`<div style="text-align:center;font-weight:700;color:var(--text-muted);padding:2px 0;">${d}</div>`).join('');
+
+  const firstDow = new Date(multiCalYear, multiCalMonth, 1).getDay();
+  const startDow = firstDow === 0 ? 6 : firstDow - 1;
+  const daysInMonth = new Date(multiCalYear, multiCalMonth+1, 0).getDate();
+  const prevDays    = new Date(multiCalYear, multiCalMonth, 0).getDate();
+
+  for (let i = startDow-1; i >= 0; i--)
+    html += `<div style="text-align:center;color:var(--text-light);padding:3px 0;">${prevDays-i}</div>`;
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${multiCalYear}-${String(multiCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday = ds === today;
+    const isSel   = selectedDays.has(ds);
+    const bg  = isSel ? '#1A1A1A' : isToday ? 'var(--surface)' : 'transparent';
+    const col = isSel ? '#fff' : isToday ? 'var(--gold-dark)' : 'var(--text)';
+    const fw  = (isToday || isSel) ? '700' : '400';
+    html += `<div onclick="toggleDay('${ds}')" style="text-align:center;font-size:11px;font-weight:${fw};
+      padding:3px 1px;border-radius:6px;cursor:pointer;background:${bg};color:${col};transition:all 0.1s;">${d}</div>`;
+  }
+  grid.innerHTML = html;
+  updateMultiCalSummary();
+}
+
+function toggleDay(ds) {
+  if (selectedDays.has(ds)) selectedDays.delete(ds);
+  else selectedDays.add(ds);
+  renderMultiCal();
+}
+
+function updateMultiCalSummary() {
+  const el = document.getElementById('multi-cal-selected');
+  if (!el) return;
+  const sorted = [...selectedDays].sort();
+  if (sorted.length === 0) {
+    el.textContent = 'ยังไม่ได้เลือกวัน';
+    el.style.color = 'var(--text-muted)';
+  } else {
+    const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+    const labels = sorted.map(ds => {
+      const [y,m,d] = ds.split('-').map(Number);
+      return `${d} ${thMonths[m-1]}`;
+    });
+    el.textContent = `เลือก ${sorted.length} วัน: ${labels.join(', ')}`;
+    el.style.color = 'var(--gold-dark)';
+  }
+}
+
+// ── Range Cal (จอดยาว) ──
+function initRangeCal() {
+  const now = new Date();
+  rangeCalYear  = now.getFullYear();
+  rangeCalMonth = now.getMonth();
+  rangeStart = null; rangeEnd = null;
+  renderRangeCal();
+}
+
+function rangeCalNav(dir) {
+  rangeCalMonth += dir;
+  if (rangeCalMonth > 11) { rangeCalMonth = 0; rangeCalYear++; }
+  if (rangeCalMonth < 0)  { rangeCalMonth = 11; rangeCalYear--; }
+  renderRangeCal();
+}
+
+function renderRangeCal() {
+  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const thDays   = ['จ','อ','พ','พฤ','ศ','ส','อา'];
+  document.getElementById('range-cal-label').textContent = `${thMonths[rangeCalMonth]} ${rangeCalYear+543}`;
+
+  const grid = document.getElementById('range-cal-grid');
+  const today = new Date().toISOString().slice(0,10);
+  let html = thDays.map(d=>`<div style="text-align:center;font-weight:700;color:var(--text-muted);padding:2px 0;">${d}</div>`).join('');
+
+  const firstDow = new Date(rangeCalYear, rangeCalMonth, 1).getDay();
+  const startDow = firstDow === 0 ? 6 : firstDow - 1;
+  const daysInMonth = new Date(rangeCalYear, rangeCalMonth+1, 0).getDate();
+  const prevDays    = new Date(rangeCalYear, rangeCalMonth, 0).getDate();
+
+  for (let i = startDow-1; i >= 0; i--)
+    html += `<div style="text-align:center;color:var(--text-light);padding:3px 0;">${prevDays-i}</div>`;
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${rangeCalYear}-${String(rangeCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isStart  = ds === rangeStart;
+    const isEnd    = ds === rangeEnd;
+    const inRange  = rangeStart && rangeEnd && ds > rangeStart && ds < rangeEnd;
+    const isToday  = ds === today;
+    let bg = 'transparent', col = 'var(--text)', fw = '400';
+    let extraStyle = '';
+    if (isStart || isEnd) { bg = '#7C3AED'; col = '#fff'; fw = '700'; }
+    else if (inRange) { bg = '#EDE9FE'; col = '#6D28D9'; }
+    else if (isToday) { bg = 'var(--surface)'; col = 'var(--gold-dark)'; fw = '700'; }
+    html += `<div onclick="selectRangeDay('${ds}')" style="text-align:center;font-size:11px;font-weight:${fw};
+      padding:3px 1px;border-radius:6px;cursor:pointer;background:${bg};color:${col};transition:all 0.1s;">${d}</div>`;
+  }
+  grid.innerHTML = html;
+  updateRangeCalSummary();
+}
+
+function selectRangeDay(ds) {
+  if (!rangeStart || (rangeStart && rangeEnd) || ds < rangeStart) {
+    rangeStart = ds; rangeEnd = null;
+  } else {
+    rangeEnd = ds;
+  }
+  renderRangeCal();
+}
+
+function updateRangeCalSummary() {
+  const el = document.getElementById('range-cal-selected');
+  if (!el) return;
+  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const fmt = ds => { const [y,m,d]=ds.split('-').map(Number); return `${d} ${thMonths[m-1]} ${y+543}`; };
+  if (!rangeStart) {
+    el.textContent = 'เลือกวันเริ่มต้น';
+    el.style.color = 'var(--text-muted)';
+  } else if (!rangeEnd) {
+    el.textContent = `เริ่ม: ${fmt(rangeStart)} → เลือกวันสิ้นสุด`;
+    el.style.color = '#7C3AED';
+  } else {
+    const start = new Date(rangeStart), end = new Date(rangeEnd);
+    const days  = Math.round((end - start) / 86400000) + 1;
+    el.textContent = `${fmt(rangeStart)} – ${fmt(rangeEnd)} (${days} วัน)`;
+    el.style.color = '#7C3AED';
+  }
+}
+
 // ─── Submit ───
 function submitBooking() {
   const type  = document.getElementById('book-type').value;
   const plate = document.getElementById('book-plate').value.trim();
   const name  = document.getElementById('book-name').value.trim();
-  const dateF = document.getElementById('book-date-from-display').value;
-  const dateT = document.getElementById('book-date-to-display').value;
 
   if (!plate || !name) {
     alert('กรุณากรอกทะเบียนรถและชื่อผู้แจ้งจองให้ครบถ้วน'); return;
   }
-  if (!dateF) {
-    alert('กรุณาเลือกวันที่'); return;
+
+  let dateInfo = '';
+  if (type === 'common') {
+    const overnight = document.getElementById('book-overnight').checked;
+    const overnightLabel = overnight ? ' (ค้างคืน 🌙)' : ' (ไม่ค้างคืน)';
+    if (currentParkMode === 'daily') {
+      if (selectedDays.size === 0) { alert('กรุณาเลือกวันที่ต้องการจอด'); return; }
+      const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+      const labels = [...selectedDays].sort().map(ds => { const [y,m,d]=ds.split('-').map(Number); return `${d} ${thMonths[m-1]}`; });
+      dateInfo = `รายวัน: ${labels.join(', ')}${overnightLabel}`;
+    } else {
+      if (!rangeStart || !rangeEnd) { alert('กรุณาเลือกช่วงวันเริ่มต้นและสิ้นสุด'); return; }
+      const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+      const fmt = ds => { const [y,m,d]=ds.split('-').map(Number); return `${d} ${thMonths[m-1]}`; };
+      const days = Math.round((new Date(rangeEnd)-new Date(rangeStart))/86400000)+1;
+      dateInfo = `จอดยาว: ${fmt(rangeStart)} – ${fmt(rangeEnd)} (${days} วัน)${overnightLabel}`;
+    }
   }
+
   if (type === 'sub') {
+    if (selectedDays.size === 0) { alert('กรุณาเลือกวันที่ต้องการจอดแทน'); return; }
     const owner = document.getElementById('book-plate-owner').value.trim();
-    if (!owner) { alert('กรุณากรอกทะเบียนเจ้าของสิทธิ์'); return; }
+    if (!owner) { alert('กรุณากรอกทะเบียนสิทธิ์จอดแทน'); return; }
     const found = PLATE_DB[owner];
     if (!found) { alert(`ไม่พบทะเบียน "${owner}" ในระบบ`); return; }
+    const overnight = document.getElementById('book-sub-overnight')?.checked;
+    const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+    const labels = [...selectedDays].sort().map(ds => { const [y,m,d]=ds.split('-').map(Number); return `${d} ${thMonths[m-1]}`; });
+    dateInfo = `วัน: ${labels.join(', ')}\nประเภทการจอด: ${overnight ? 'ค้างคืน 🌙' : 'ไม่ค้างคืน 🌅'}`;
   }
-  const typeLabel = {common:'จอดส่วนกลาง', sub:'จอดแทน', other:'จอดรถอื่นๆ'}[type];
-  alert(`✅ บันทึกการจองสำเร็จ!\nประเภท: ${typeLabel}\nผู้แจ้ง: ${name}\nทะเบียน: ${plate}\nวันที่: ${dateF}${dateF!==dateT?' – '+dateT:''}`);
+
+  if (type === 'other') {
+    if (selectedDays.size === 0) { alert('กรุณาเลือกวันที่'); return; }
+    const overnight = document.getElementById('book-sub-overnight')?.checked;
+    const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+    const labels = [...selectedDays].sort().map(ds => { const [y,m,d]=ds.split('-').map(Number); return `${d} ${thMonths[m-1]}`; });
+    dateInfo = `วัน: ${labels.join(', ')}\nประเภทการจอด: ${overnight ? 'ค้างคืน 🌙' : 'ไม่ค้างคืน 🌅'} (จอดหน้าอาคาร)`;
+  }
+
+  const typeLabel = {common:'จอดส่วนกลาง ชั้น 5 ขวามือ', sub:'จอดแทน', other:'แจ้งจอดรถอื่นๆ (หน้าอาคาร)'}[type];
+  alert(`✅ บันทึกการจองสำเร็จ!\nประเภท: ${typeLabel}\nผู้แจ้ง: ${name}\nทะเบียน: ${plate}${dateInfo?'\n'+dateInfo:''}`);
   ['book-plate','book-name','book-note','book-plate-owner'].forEach(id => {
     const el = document.getElementById(id); if(el) el.value = '';
   });
-  ['book-date-from','book-date-to','book-date-from-display','book-date-to-display'].forEach(id => {
-    const el = document.getElementById(id); if(el) el.value = '';
-  });
+  const subOvEl = document.getElementById('book-sub-overnight');
+  if (subOvEl) subOvEl.checked = false;
   document.getElementById('book-owner-result').style.display = 'none';
+  if (type === 'common') { selectedDays.clear(); rangeStart=null; rangeEnd=null; renderMultiCal(); renderRangeCal(); }
+  if (type === 'sub' || type === 'other') { selectedDays.clear(); renderMultiCal(); }
 }
 
 // ─── Mock data: จองส่วนกลาง ───
 const ARI_COMMON_BOOKINGS = [
-  { slot:'ช่อง 66', name:'คุณสมชาย ใจดี',   plate:'5กน 1234', carType:'🚗 รถเก๋ง',  timeType:'ปกติ',    status:'จอง',  statusCls:'tag-blue', note:'–' },
-  { slot:'ช่อง 67', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 68', name:'คุณวิภา รักดี',    plate:'3ขข 5678', carType:'🚙 SUV',     timeType:'ค้างคืน', status:'จอง',  statusCls:'tag-blue', note:'ขอจอดถึง 06:00' },
-  { slot:'ช่อง 69', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 70', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 71', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 72', name:'คุณนิรัน สุขใจ',   plate:'1กก 9999', carType:'🚗 รถเก๋ง',  timeType:'ปกติ',    status:'จอง',  statusCls:'tag-blue', note:'–' },
-  { slot:'ช่อง 73', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 74', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 75', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 76', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 77', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 78', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 79', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 80', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 81', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 82', name:'คุณมานี มีสุข',    plate:'2กท 4455', carType:'🚐 รถตู้',   timeType:'ปกติ',    status:'จอง',  statusCls:'tag-blue', note:'–' },
-  { slot:'ช่อง 83', name:'–',                plate:'–',        carType:'–',           timeType:'–',        status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 66', name:'คุณสมชาย ใจดี',   plate:'5กน 1234', carType:'🚗 รถเก๋ง',  parkType:'daily', overnight:false, status:'จอง',  statusCls:'tag-blue', note:'–' },
+  { slot:'ช่อง 67', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 68', name:'คุณวิภา รักดี',    plate:'3ขข 5678', carType:'🚙 SUV',     parkType:'daily', overnight:true,  status:'จอง',  statusCls:'tag-blue', note:'ขอจอดถึง 06:00' },
+  { slot:'ช่อง 69', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 70', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 71', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 72', name:'คุณนิรัน สุขใจ',   plate:'1กก 9999', carType:'🚗 รถเก๋ง',  parkType:'long',  overnight:false, status:'จอง',  statusCls:'tag-blue', note:'–' },
+  { slot:'ช่อง 73', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 74', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 75', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 76', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 77', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 78', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 79', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 80', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 81', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
+  { slot:'ช่อง 82', name:'คุณมานี มีสุข',    plate:'2กท 4455', carType:'🚐 รถตู้',   parkType:'long',  overnight:true,  status:'จอง',  statusCls:'tag-blue', note:'–' },
+  { slot:'ช่อง 83', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
 ];
 
 // ─── Mock data: จอดแทน ───
 const ARI_SUB_BOOKINGS = [
-  { slot:'ช่อง 12', floor:'P4',  name:'คุณสมชาย / ห้อง 502', plateReq:'4กค 3322', carTypeReq:'🚗 รถเก๋ง', plateOwner:'กข 1111', timeType:'ปกติ',    status:'อนุมัติ',    statusCls:'tag-green'  },
-  { slot:'ช่อง 31', floor:'P4',  name:'คุณวิภา / ห้อง 301',  plateReq:'2ขก 1199', carTypeReq:'🚙 SUV',    plateOwner:'กค 2222', timeType:'ค้างคืน', status:'รออนุมัติ',  statusCls:'tag-orange' },
-  { slot:'ช่อง 55', floor:'P5A', name:'คุณนิรัน / ห้อง 411', plateReq:'9กว 8800', carTypeReq:'🚗 รถเก๋ง', plateOwner:'กง 3333', timeType:'ปกติ',    status:'อนุมัติ',    statusCls:'tag-green'  },
+  { slot:'ช่อง 12', floor:'P4',  name:'คุณสมชาย / ห้อง 502', plateReq:'4กค 3322', carTypeReq:'🚗 รถเก๋ง', plateOwner:'กข 1111', timeType:'ปกติ',    status:'อนุมัติ',    statusCls:'tag-green',  note:'–' },
+  { slot:'ช่อง 31', floor:'P4',  name:'คุณวิภา / ห้อง 301',  plateReq:'2ขก 1199', carTypeReq:'🚙 SUV',    plateOwner:'กค 2222', timeType:'ค้างคืน', status:'รออนุมัติ',  statusCls:'tag-orange', note:'ค้างคืน 1 คืน' },
+  { slot:'ช่อง 55', floor:'P5A', name:'คุณนิรัน / ห้อง 411', plateReq:'9กว 8800', carTypeReq:'🚗 รถเก๋ง', plateOwner:'กง 3333', timeType:'ปกติ',    status:'อนุมัติ',    statusCls:'tag-green',  note:'–' },
 ];
 
 // ─── Mock data: รถอื่นๆ ───
@@ -3091,9 +3344,9 @@ function printAriReport() {
   const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()+543}  ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} น.`;
 
   const stripEmoji = s => (s||'').replace(/\p{Emoji}/gu, '').trim();
-  const commonRows = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').map(r=>`<tr><td>${r.slot}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.timeType}</td><td>${r.status}</td><td>${r.note}</td></tr>`).join('');
-  const subRows = ARI_SUB_BOOKINGS.map(r=>`<tr><td>${r.slot}</td><td>${r.floor}</td><td>${r.name}</td><td>${r.plateReq}</td><td>${r.carTypeReq.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.plateOwner}</td><td>${r.timeType}</td><td>${r.status}</td></tr>`).join('');
-  const otherRows = ARI_OTHER_BOOKINGS.map(r=>`<tr><td>${r.location}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.timeType}</td><td>${r.status}</td><td>${r.note}</td></tr>`).join('');
+  const commonRows = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.parkType==='long'?'จอดยาว':'รายวัน'}${r.overnight?' (ค้างคืน)':''}</td><td>ชั้น 5 ส่วนกลางขวามือ</td><td>${r.note||'–'}</td></tr>`).join('');
+  const subRows = ARI_SUB_BOOKINGS.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plateReq}</td><td>${r.carTypeReq.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.plateOwner}</td><td>${r.timeType}</td><td>${r.floor}</td><td>${r.note||'–'}</td></tr>`).join('');
+  const otherRows = ARI_OTHER_BOOKINGS.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.timeType}</td><td>หน้าอาคาร</td><td>${r.note}</td></tr>`).join('');
 
   const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
   <title>รายงานจอดรถ Ari Hills — ${dateStr}</title>
@@ -3109,14 +3362,14 @@ function printAriReport() {
   </style></head><body>
   <h1>รายงานการจอดรถ — Ari Hills</h1>
   <div class="sub">พิมพ์เมื่อ: ${dateStr} &nbsp;|&nbsp; จัดทำโดย: ระบบจัดการลานจอด</div>
-  <h2>จองช่องจอดส่วนกลาง (ช่อง 66–83)</h2>
-  <table><thead><tr><th>ช่องจอด</th><th>ชื่อผู้ขอ</th><th>ทะเบียน</th><th>ประเภทรถ</th><th>เวลา</th><th>สถานะ</th><th>หมายเหตุ</th></tr></thead>
+  <h2>แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ</h2>
+  <table><thead><tr><th>ลำดับ</th><th>ชื่อผู้ขอ</th><th>ทะเบียน</th><th>ประเภทรถ</th><th>ประเภทการจอด</th><th>ชั้น (จอด)</th><th>หมายเหตุ</th></tr></thead>
   <tbody>${commonRows}</tbody></table>
   <h2>แจ้งจอดแทน</h2>
-  <table><thead><tr><th>ช่องจอด</th><th>ชั้น</th><th>ชื่อผู้ขอ</th><th>ทะเบียนผู้ขอ</th><th>ประเภทรถ</th><th>ทะเบียนเจ้าของ</th><th>เวลา</th><th>สถานะ</th></tr></thead>
+  <table><thead><tr><th>ลำดับ</th><th>ชื่อผู้ขอ</th><th>ทะเบียนผู้ขอ</th><th>ประเภทรถ</th><th>ทะเบียนสิทธิ์จอดแทน</th><th>ประเภทการจอด</th><th>ชั้น</th><th>หมายเหตุ</th></tr></thead>
   <tbody>${subRows}</tbody></table>
-  <h2>รถอื่นๆ (รถบัส / รถพยาบาล ฯลฯ)</h2>
-  <table><thead><tr><th>จอดหน้าอาคาร</th><th>ชื่อผู้ขอ</th><th>ทะเบียน</th><th>ประเภทรถ</th><th>เวลา</th><th>สถานะ</th><th>หมายเหตุ</th></tr></thead>
+  <h2>แจ้งจอดรถอื่นๆ (รถตู้ / รถส่งของ / รถ Vendor / รถบัส / รถพยาบาล)</h2>
+  <table><thead><tr><th>ลำดับ</th><th>ชื่อผู้ขอ</th><th>ทะเบียนผู้ขอ</th><th>ประเภทรถ</th><th>ประเภทการจอด</th><th>ชั้น (จอดหน้าอาคาร)</th><th>หมายเหตุ</th></tr></thead>
   <tbody>${otherRows}</tbody></table>
   <div class="footer">เอกสารนี้ออกจากระบบจัดการลานจอดโดยอัตโนมัติ — ไม่ต้องลงนาม</div>
   <!-- ════ ADMIN LOGIN MODAL ════ -->
@@ -3150,7 +3403,7 @@ function printAriReport() {
 // ═══════════════════════════════════════════════
 //  BOTTOM NAV (mobile)
 // ═══════════════════════════════════════════════
-const BN_MAIN_ITEMS = ['all','ari','bts','ksl'];
+const BN_MAIN_ITEMS = ['all','booking','ari','bts','ksl'];
 
 function bnNav(view) {
   // update bottom nav active state
@@ -3158,33 +3411,17 @@ function bnNav(view) {
     const btn = document.getElementById('bn-'+v);
     if (btn) btn.classList.toggle('active', v === view);
   });
-  const moreBtn = document.getElementById('bn-more');
-  if (moreBtn) {
-    const isMore = !BN_MAIN_ITEMS.includes(view);
-    moreBtn.classList.toggle('active', isMore);
-  }
   // navigate
-  if (BN_MAIN_ITEMS.includes(view)) {
+  if (['ari','bts','ksl'].includes(view)) {
     switchBuilding(view);
   } else {
     switchView(view);
-    // also sync desktop nav
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   }
 }
 
-function toggleBnMore() {
-  const drawer = document.getElementById('bn-more-drawer');
-  const overlay = document.getElementById('bn-overlay');
-  const isOpen = drawer.classList.contains('open');
-  drawer.classList.toggle('open', !isOpen);
-  overlay.classList.toggle('open', !isOpen);
-}
-
-function closeBnMore() {
-  document.getElementById('bn-more-drawer').classList.remove('open');
-  document.getElementById('bn-overlay').classList.remove('open');
-}
+function toggleBnMore() {}
+function closeBnMore() {}
 
 // ═══════════════════════════════════════════════
 //  ADMIN AUTH
@@ -3299,7 +3536,7 @@ function closeAdminLogin() {
 function doAdminLogin() {
   const u = document.getElementById('admin-user').value.trim();
   const p = document.getElementById('admin-pass').value;
-  if (u === 'admin' && p === 'gnr3admin') {
+  if (u === 'admin' && p === 'admin123') {
     adminLoggedIn = true;
     document.getElementById('admin-login-overlay').style.display = 'none';
     updateAdminBadge();
