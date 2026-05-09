@@ -993,9 +993,15 @@
     <!-- TOP BAR -->
     <div class="topbar">
       <div>
-        <div class="topbar-title">Dashboard <span>/ ภาพรวมที่จอดรถ</span></div>
+        <div class="topbar-title" id="topbar-title-text">Dashboard <span>/ ภาพรวมที่จอดรถ</span></div>
       </div>
       <div class="topbar-right">
+        <!-- Google Sheets status -->
+        <div id="gs-topbar-status" onclick="gsStatusClick()" title="คลิกเพื่อ sync / ตรวจสอบการเชื่อมต่อ"
+          style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:100px;background:#F5F5F2;border:1px solid var(--border);cursor:pointer;transition:all 0.15s;font-size:12px;font-weight:600;color:var(--text-muted);">
+          <span id="gs-status-dot" style="width:7px;height:7px;border-radius:50%;background:#ccc;flex-shrink:0;"></span>
+          <span id="gs-status-label">Google Sheets</span>
+        </div>
         <div id="liveClock" style="font-size:13px;font-weight:600;color:var(--text-muted);font-family:'DM Mono',monospace;"></div>
         <button class="icon-btn">🔔</button>
         <button class="icon-btn">⚙️</button>
@@ -1313,16 +1319,16 @@
                 <div id="ari-calendar"></div>
               </div>
               <div class="card" style="min-width:0;">
-                <div class="card-title" style="margin-bottom:10px;"><span class="dot"></span> สรุปสัปดาห์นี้</div>
+                <div class="card-title" style="margin-bottom:10px;"><span class="dot"></span> สรุปรายวัน — <span id="daily-summary-label" style="color:var(--gold-dark);font-weight:700;">วันนี้</span></div>
                 <table style="width:100%;border-collapse:collapse;font-size:11px;">
                   <thead><tr style="background:#F5F5F2;">
-                    <th class="tbl-th" style="font-size:10px;">วัน</th>
-                    <th class="tbl-th" style="text-align:center;font-size:10px;">🔵</th>
-                    <th class="tbl-th" style="text-align:center;font-size:10px;">🟢</th>
-                    <th class="tbl-th" style="text-align:center;font-size:10px;">🌙</th>
+                    <th class="tbl-th" style="font-size:10px;">ประเภท</th>
+                    <th class="tbl-th" style="text-align:center;font-size:10px;"><span style="color:#22C55E;">●</span> ส่วนกลาง</th>
+                    <th class="tbl-th" style="text-align:center;font-size:10px;"><span style="color:#E8B84B;">●</span> จอดแทน</th>
+                    <th class="tbl-th" style="text-align:center;font-size:10px;"><span style="color:#EF4444;">●</span> รถอื่นๆ</th>
                     <th class="tbl-th" style="text-align:center;font-size:10px;">รวม</th>
                   </tr></thead>
-                  <tbody id="ari-weekly-tbody"></tbody>
+                  <tbody id="ari-daily-tbody"></tbody>
                 </table>
               </div>
             </div>
@@ -1422,12 +1428,13 @@
                     <option value="sedan">🚗 รถเก๋ง</option>
                     <option value="suv">🚙 รถ SUV</option>
                     <option value="ev">⚡ รถไฟฟ้า</option>
-                    <option value="van">🚐 รถตู้ (จอดหน้าอาคาร)</option>
                     <option value="truck">🚚 รถกระบะ</option>
-                    <option value="delivery">📦 รถส่งของ (จอดหน้าอาคาร)</option>
-                    <option value="vendor">🏪 รถ Vendor (จอดหน้าอาคาร)</option>
-                    <option value="bus">🚌 รถบัส (จอดหน้าอาคาร)</option>
-                    <option value="ambulance">🚑 รถพยาบาล (จอดหน้าอาคาร)</option>
+                    <!-- ตัวเลือกด้านล่างจะแสดงเฉพาะประเภท จอดรถอื่นๆ -->
+                    <option value="van" class="opt-other" style="display:none;">🚐 รถตู้</option>
+                    <option value="delivery" class="opt-other" style="display:none;">📦 รถส่งของ</option>
+                    <option value="vendor" class="opt-other" style="display:none;">🏪 รถ Vendor</option>
+                    <option value="bus" class="opt-other" style="display:none;">🚌 รถบัส</option>
+                    <option value="ambulance" class="opt-other" style="display:none;">🚑 รถพยาบาล</option>
                   </select>
                   <div id="book-special-note" style="display:none;font-size:10px;color:#B45309;margin-top:3px;padding:5px 8px;background:#FEF3C7;border-radius:6px;">
                     ⚠️ รถประเภทนี้จะบันทึกในตาราง <strong>แจ้งจอดรถอื่นๆ</strong> (จอดหน้าอาคาร) โดยอัตโนมัติ
@@ -1457,6 +1464,20 @@
                   <label class="form-label">ทะเบียนสิทธิ์จอดแทน (เจ้าของช่อง)</label>
                   <input type="text" class="form-input" id="book-plate-owner" placeholder="เช่น กข 5678" oninput="checkOwnerPlate()">
                   <div id="book-owner-result" style="display:none;margin-top:4px;font-size:11px;padding:6px 10px;border-radius:8px;"></div>
+                </div>
+
+                <!-- ชั้นที่จอดแทน (จอดแทนเท่านั้น) -->
+                <div id="book-sub-floor-row" class="form-field" style="display:none;">
+                  <label class="form-label">ชั้นที่จอดแทน</label>
+                  <select class="form-select" id="book-sub-floor">
+                    <option value="visitor">🅿️ ไม่กำหนด (จอดช่อง Visitor)</option>
+                    <option value="P3A">ชั้น P3A — ช่องจอดประจำ</option>
+                    <option value="P4">ชั้น P4 — ช่องจอดประจำ</option>
+                    <option value="P4A">ชั้น P4A — ช่องจอดประจำ</option>
+                    <option value="P5">ชั้น P5 — ช่องจอดประจำ</option>
+                    <option value="P5A">ชั้น P5A — ช่องจอดประจำ</option>
+                    <option value="P6">ชั้น P6 — ช่องจอดประจำ</option>
+                  </select>
                 </div>
 
                 <!-- 5. หมายเหตุ (common + other เท่านั้น) -->
@@ -2640,7 +2661,7 @@ function initBookMode() {
   renderAriCalendar();
   renderBookingTable(ariSelectedDate);
   renderAriReportDate();
-  renderWeeklySummary();
+  renderDailySummary(ariSelectedDate || new Date().toISOString().slice(0,10));
   // update booking overview cards
   const commonUsed = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').length;
   const subPending = ARI_SUB_BOOKINGS.filter(r=>r.status==='รออนุมัติ').length;
@@ -2660,6 +2681,7 @@ function initBookMode() {
 // ─── Calendar ───
 function renderAriCalendar() {
   const label = document.getElementById('ari-cal-label');
+  if (!label) return; // ยังไม่ได้เปิดหน้า booking
   const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   label.textContent = `${thMonths[ariCalMonth]} ${ariCalYear + 543}`;
 
@@ -2669,31 +2691,45 @@ function renderAriCalendar() {
   dayNames.forEach(d => html += `<div class="cal-day-label">${d}</div>`);
 
   const firstDay = new Date(ariCalYear, ariCalMonth, 1);
-  let startDow = firstDay.getDay(); // 0=Sun
-  startDow = startDow === 0 ? 6 : startDow - 1; // shift to Mon=0
+  let startDow = firstDay.getDay();
+  startDow = startDow === 0 ? 6 : startDow - 1;
 
   const daysInMonth = new Date(ariCalYear, ariCalMonth+1, 0).getDate();
   const prevDays    = new Date(ariCalYear, ariCalMonth, 0).getDate();
   const today       = new Date();
   const todayStr    = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
 
-  // Dates that have bookings (mock)
-  const bookedDates = new Set(getBookedDates(ariCalYear, ariCalMonth));
+  // จุดสีตามประเภท: common=เขียว, sub=เหลือง, other=แดง
+  const { common: commonSet, sub: subSet, other: otherSet } = getBookedDatesByType(ariCalYear, ariCalMonth);
 
   let cells = startDow;
   for (let i = startDow - 1; i >= 0; i--) {
     html += `<div class="cal-day other-month">${prevDays - i}</div>`;
   }
   for (let d = 1; d <= daysInMonth; d++) {
-    const dateStr = `${ariCalYear}-${String(ariCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dateStr  = `${ariCalYear}-${String(ariCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const isToday   = dateStr === todayStr;
     const isSelected= dateStr === ariSelectedDate;
-    const hasBook   = bookedDates.has(d);
+    const hasCommon = commonSet.has(d);
+    const hasSub    = subSet.has(d);
+    const hasOther  = otherSet.has(d);
+    const hasAny    = hasCommon || hasSub || hasOther;
+
     let cls = 'cal-day';
     if (isToday)    cls += ' today';
     if (isSelected) cls += ' selected';
-    if (hasBook)    cls += ' has-booking';
-    html += `<div class="${cls}" onclick="selectCalDate('${dateStr}',${d})">${d}</div>`;
+
+    // dots row
+    let dotsHtml = '';
+    if (hasAny) {
+      dotsHtml = `<div style="display:flex;gap:2px;position:absolute;bottom:3px;left:50%;transform:translateX(-50%);">`;
+      if (hasCommon) dotsHtml += `<div style="width:5px;height:5px;border-radius:50%;background:#22C55E;flex-shrink:0;"></div>`;
+      if (hasSub)    dotsHtml += `<div style="width:5px;height:5px;border-radius:50%;background:#E8B84B;flex-shrink:0;"></div>`;
+      if (hasOther)  dotsHtml += `<div style="width:5px;height:5px;border-radius:50%;background:#EF4444;flex-shrink:0;"></div>`;
+      dotsHtml += `</div>`;
+    }
+
+    html += `<div class="${cls}" onclick="selectCalDate('${dateStr}',${d})" style="position:relative;">${d}${dotsHtml}</div>`;
     cells++;
   }
   const remaining = (7 - (cells % 7)) % 7;
@@ -2702,13 +2738,29 @@ function renderAriCalendar() {
   container.innerHTML = html;
 }
 
+function getBookedDatesByType(year, month) {
+  // คืน object { common: Set<day>, sub: Set<day>, other: Set<day> }
+  const prefix  = `${year}-${String(month+1).padStart(2,'0')}-`;
+  const common  = new Set();
+  const sub     = new Set();
+  const other   = new Set();
+
+  ARI_COMMON_BOOKINGS.forEach(r => {
+    if (r.status === 'ว่าง') return;
+    (r.dates||[]).forEach(ds => { if (ds.startsWith(prefix)) common.add(Number(ds.slice(8))); });
+  });
+  ARI_SUB_BOOKINGS.forEach(r => {
+    (r.dates||[]).forEach(ds => { if (ds.startsWith(prefix)) sub.add(Number(ds.slice(8))); });
+  });
+  ARI_OTHER_BOOKINGS.forEach(r => {
+    (r.dates||[]).forEach(ds => { if (ds.startsWith(prefix)) other.add(Number(ds.slice(8))); });
+  });
+  return { common, sub, other };
+}
+
 function getBookedDates(year, month) {
-  // mock: return days that have bookings
-  const now = new Date();
-  if (year === now.getFullYear() && month === now.getMonth()) {
-    return [now.getDate(), now.getDate()-1, now.getDate()+2, now.getDate()+3].filter(d=>d>0);
-  }
-  return [];
+  const { common, sub, other } = getBookedDatesByType(year, month);
+  return [...new Set([...common, ...sub, ...other])];
 }
 
 function ariCalPrev() {
@@ -2726,6 +2778,7 @@ function selectCalDate(dateStr, day) {
   ariSelectedDate = dateStr;
   renderAriCalendar();
   renderBookingTable(dateStr);
+  renderDailySummary(dateStr);
   // update label
   const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   document.getElementById('ari-selected-date-label').textContent =
@@ -2738,43 +2791,64 @@ function selectCalDate(dateStr, day) {
 // ─── Booking Table ───
 function renderBookingTable(dateStr) {
   const today = new Date().toISOString().slice(0,10);
-  const rows = ARI_COMMON_BOOKINGS;
-  const subs = dateStr === today ? ARI_SUB_BOOKINGS : [];
+
+  // ── ส่วนกลาง: กรองเฉพาะรายการที่จองวันนี้ (dateStr) ──
+  // entry ที่มี dates[] = local submit หรือ Sheet ใหม่ → กรองได้
+  // entry ที่ dates ว่าง + status ไม่ใช่ว่าง = ข้อมูล Sheet เก่า (fallback: แสดงเฉพาะวันนี้)
+  const bookedRows = ARI_COMMON_BOOKINGS.filter(r => {
+    if (r.status === 'ว่าง') return false;
+    if (r.dates && r.dates.length > 0) return r.dates.includes(dateStr);
+    return dateStr === today; // fallback ข้อมูล Sheet เก่า
+  });
+
+  const emptySlots = 18 - bookedRows.length;
 
   const cTbody = document.getElementById('ari-common-tbody');
-  cTbody.innerHTML = rows.map((r, i) => {
-    const isEmpty = r.status === 'ว่าง';
-    const seq = isEmpty ? `<span style="color:var(--text-light)">–</span>` : `<span style="font-weight:700;color:var(--text-muted);">${i+1}</span>`;
 
+  // แสดง booked rows ก่อน ตามด้วย empty rows ให้ครบ 18 ช่อง
+  const bookedHtml = bookedRows.map((r, i) => {
     // ประเภทการจอด tag
     let parkTypeTag = `<span style="color:var(--text-light)">–</span>`;
-    if (!isEmpty && r.parkType) {
-      if (r.parkType === 'daily') {
-        parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">📅 รายวัน</span>`;
-      } else if (r.parkType === 'long') {
-        parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#F3E8FF;color:#7C3AED;white-space:nowrap;">📆 จอดยาว</span>`;
-      }
+    if (r.parkType === 'daily') {
+      parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">📅 รายวัน</span>`;
+    } else if (r.parkType === 'long') {
+      parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#F3E8FF;color:#7C3AED;white-space:nowrap;">📆 จอดยาว</span>`;
     }
-    // ค้างคืน badge
-    if (!isEmpty && r.overnight) {
-      const overnightBadge = `<span style="font-size:9px;font-weight:600;padding:1px 5px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;margin-left:3px;">🌙</span>`;
-      parkTypeTag = parkTypeTag.replace('</span>', '') + overnightBadge + (parkTypeTag.includes('–') ? '' : '</span>');
+    if (r.overnight) {
+      parkTypeTag += `<span style="font-size:9px;font-weight:600;padding:1px 5px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;margin-left:3px;">🌙</span>`;
     }
-
-    const floorCell = isEmpty
-      ? `<span style="color:var(--text-light)">–</span>`
-      : `<span style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;background:#F0F9FF;color:#0369A1;padding:2px 8px;border-radius:6px;">ชั้น 5 ขวามือ</span>`;
-
+    const floorCell = `<span style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;background:#F0F9FF;color:#0369A1;padding:2px 8px;border-radius:6px;">ชั้น 5 ขวามือ</span>`;
     return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
-      <td class="tbl-td" style="text-align:center;">${seq}</td>
-      <td class="tbl-td" style="font-size:12px;color:${isEmpty?'var(--text-muted)':''};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
-      <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;color:${isEmpty?'var(--text-light)':''};">${r.plate}</td>
-      <td class="tbl-td" style="font-size:11px;color:${isEmpty?'var(--text-light)':'var(--text-muted)'};white-space:nowrap;">${r.carType}</td>
+      <td class="tbl-td" style="text-align:center;"><span style="font-weight:700;color:var(--text-muted);">${i+1}</span></td>
+      <td class="tbl-td" style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
+      <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.plate}</td>
+      <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.carType}</td>
       <td class="tbl-td">${parkTypeTag}</td>
       <td class="tbl-td" style="text-align:center;">${floorCell}</td>
       <td class="tbl-td" style="font-size:11px;color:${(r.note==='–'||!r.note)?'var(--text-light)':'var(--text-muted)'};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note||'–'}</td>
     </tr>`;
   }).join('');
+
+  const emptyHtml = Array.from({length: emptySlots}, (_, i) => {
+    const rowIdx = bookedRows.length + i;
+    return `<tr style="background:${rowIdx%2===0?'transparent':'#FAFAF8'}">
+      <td class="tbl-td" style="text-align:center;"><span style="color:var(--text-light)">–</span></td>
+      <td class="tbl-td" style="color:var(--text-muted);">–</td>
+      <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-light);">–</td>
+      <td class="tbl-td" style="font-size:11px;color:var(--text-light);">–</td>
+      <td class="tbl-td"><span style="color:var(--text-light)">–</span></td>
+      <td class="tbl-td" style="text-align:center;"><span style="color:var(--text-light)">–</span></td>
+      <td class="tbl-td" style="font-size:11px;color:var(--text-light);">–</td>
+    </tr>`;
+  }).join('');
+
+  cTbody.innerHTML = bookedHtml + emptyHtml;
+
+  // ── จอดแทน: กรองเฉพาะวันที่เลือก ──
+  const subs = ARI_SUB_BOOKINGS.filter(r => {
+    if (r.dates && r.dates.length > 0) return r.dates.includes(dateStr);
+    return dateStr === today;
+  });
 
   const sTbody = document.getElementById('ari-sub-tbody');
   sTbody.innerHTML = subs.length
@@ -2796,14 +2870,11 @@ function renderBookingTable(dateStr) {
       }).join('')
     : `<tr><td colspan="8" class="tbl-td" style="text-align:center;color:var(--text-light);padding:16px;">ไม่มีรายการ</td></tr>`;
 
-  const cCount = rows.filter(r=>r.status!=='ว่าง').length;
-  const ccEl = document.getElementById('common-count');
-  if (ccEl) ccEl.textContent = `${cCount} จาก ${rows.length} ช่อง`;
-  const scEl = document.getElementById('sub-count');
-  if (scEl) scEl.textContent = subs.length + ' รายการ';
-
-  // ─── ตารางที่ 3: รถอื่นๆ ───
-  const others = dateStr === today ? ARI_OTHER_BOOKINGS : [];
+  // ── รถอื่นๆ: กรองเฉพาะวันที่เลือก ──
+  const others = ARI_OTHER_BOOKINGS.filter(r => {
+    if (r.dates && r.dates.length > 0) return r.dates.includes(dateStr);
+    return dateStr === today;
+  });
   const oTbody = document.getElementById('ari-other-tbody');
   if (oTbody) {
     oTbody.innerHTML = others.length
@@ -2826,49 +2897,73 @@ function renderBookingTable(dateStr) {
     const otherEl = document.getElementById('other-count');
     if (otherEl) otherEl.textContent = others.length + ' รายการ';
   }
+
+  // ── อัพเดต badge count ──
+  const ccEl = document.getElementById('common-count');
+  if (ccEl) ccEl.textContent = `${bookedRows.length} จาก 18 ช่อง`;
+  const scEl = document.getElementById('sub-count');
+  if (scEl) scEl.textContent = subs.length + ' รายการ';
 }
 
 // ─── Form: slot options by type ───
-function renderWeeklySummary() {
-  const tbody = document.getElementById('ari-weekly-tbody');
+function renderDailySummary(dateStr) {
+  const tbody = document.getElementById('ari-daily-tbody');
   if (!tbody) return;
-  const now = new Date();
-  // หาวันจันทร์ของสัปดาห์นี้
-  const day = now.getDay();
-  const mon = new Date(now);
-  mon.setDate(now.getDate() - (day === 0 ? 6 : day - 1));
 
-  const thDays = ['จ','อ','พ','พฤ','ศ','ส','อา'];
   const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const today   = new Date().toISOString().slice(0,10);
+  const ds      = dateStr || today;
 
-  // mock weekly data
-  const weekData = [
-    [4,1,0],[2,0,1],[3,2,0],[4,1,1],[3,0,2],[1,1,0],[0,0,0]
-  ];
-  // วันนี้ใช้ข้อมูลจริง
-  const todayIdx = (day === 0 ? 6 : day - 1);
-  const todayCommon = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').length;
-  const todaySub    = ARI_SUB_BOOKINGS.length;
-  weekData[todayIdx] = [todayCommon, todaySub, 0];
+  // นับจาก local arrays
+  const commonCount = ARI_COMMON_BOOKINGS.filter(r => {
+    if (r.status === 'ว่าง') return false;
+    if (r.dates && r.dates.length > 0) return r.dates.includes(ds);
+    return ds === today;
+  }).length;
 
-  let html = '';
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(mon);
-    d.setDate(mon.getDate() + i);
-    const isToday = d.toDateString() === now.toDateString();
-    const [common, sub, over] = weekData[i];
-    const total = common + sub + over;
-    const bg = isToday ? 'background:#FFFBEB;' : (i%2===0?'':'background:#FAFAF8;');
-    const fw = isToday ? 'font-weight:700;' : '';
-    html += `<tr style="${bg}${fw}">
-      <td class="tbl-td" style="font-size:11px;${isToday?'color:var(--gold-dark);font-weight:700;':''}">${thDays[i]} ${d.getDate()} ${thMonths[d.getMonth()]}</td>
-      <td class="tbl-td" style="text-align:center;font-family:'DM Mono',monospace;font-size:12px;color:${common>0?'#1D4ED8':'var(--text-light)'};">${common>0?common:'–'}</td>
-      <td class="tbl-td" style="text-align:center;font-family:'DM Mono',monospace;font-size:12px;color:${sub>0?'#15803D':'var(--text-light)'};">${sub>0?sub:'–'}</td>
-      <td class="tbl-td" style="text-align:center;font-family:'DM Mono',monospace;font-size:12px;color:${over>0?'#B45309':'var(--text-light)'};">${over>0?over:'–'}</td>
-      <td class="tbl-td" style="text-align:center;font-family:'DM Mono',monospace;font-size:12px;font-weight:${total>0?700:400};color:${total>0?'var(--text)':'var(--text-light)'};">${total>0?total:'–'}</td>
-    </tr>`;
+  const subCount = ARI_SUB_BOOKINGS.filter(r => {
+    if (r.dates && r.dates.length > 0) return r.dates.includes(ds);
+    return ds === today;
+  }).length;
+
+  const otherCount = ARI_OTHER_BOOKINGS.filter(r => {
+    if (r.dates && r.dates.length > 0) return r.dates.includes(ds);
+    return ds === today;
+  }).length;
+
+  const total = commonCount + subCount + otherCount;
+
+  // อัพเดต label
+  const labelEl = document.getElementById('daily-summary-label');
+  if (labelEl) {
+    if (ds === today) {
+      labelEl.textContent = 'วันนี้';
+    } else {
+      const [y,m,d] = ds.split('-').map(Number);
+      labelEl.textContent = `${d} ${thMonths[m-1]} ${y+543}`;
+    }
   }
-  tbody.innerHTML = html;
+
+  const cell = (val, color) =>
+    `<td class="tbl-td" style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;font-weight:${val>0?700:400};color:${val>0?color:'var(--text-light)'};">${val>0?val:'–'}</td>`;
+
+  tbody.innerHTML = `
+    <tr>
+      <td class="tbl-td" style="font-size:11px;font-weight:600;">จำนวนการแจ้ง</td>
+      ${cell(commonCount,'#16A34A')}
+      ${cell(subCount,'#C9980A')}
+      ${cell(otherCount,'#DC2626')}
+      <td class="tbl-td" style="text-align:center;font-family:'DM Mono',monospace;font-size:13px;font-weight:${total>0?700:400};color:${total>0?'var(--text)':'var(--text-light)'};">${total>0?total:'–'}</td>
+    </tr>
+    <tr style="background:#F9F9F7;">
+      <td class="tbl-td" style="font-size:10px;color:var(--text-muted);">ส่วนกลาง ชั้น 5</td>
+      <td class="tbl-td" style="text-align:center;font-size:10px;color:var(--text-muted);" colspan="4">${commonCount} / 18 ช่อง</td>
+    </tr>`;
+}
+
+// wrapper เก่าให้ยังเรียกได้
+function renderWeeklySummary() {
+  renderDailySummary(ariSelectedDate);
 }
 
 // ── mock plate-to-floor DB ──
@@ -2886,13 +2981,14 @@ function onBookTypeChange() {
   const ownerRow      = document.getElementById('book-owner-row');
   const noteRow       = document.getElementById('book-note-row');
   const parkModeRow   = document.getElementById('book-park-mode-row');
-  const ownerRes      = document.getElementById('book-owner-result');
   const overnightRow  = document.getElementById('book-overnight-row');
   const parkmodeLong  = document.getElementById('parkmode-long');
-  const commonOvernight = document.getElementById('book-park-mode-row')?.querySelector('[style*="ค้างคืน"]')?.closest('div[style*="margin-top:8px"]');
 
   // owner plate field — only for sub
   ownerRow.style.display    = type === 'sub' ? '' : 'none';
+  // sub floor dropdown — only for sub
+  const subFloorRow = document.getElementById('book-sub-floor-row');
+  if (subFloorRow) subFloorRow.style.display = type === 'sub' ? '' : 'none';
   // note — always visible
   noteRow.style.display     = '';
   // calendar/park-mode — always visible for all types
@@ -2910,22 +3006,33 @@ function onBookTypeChange() {
   if (parkModeLabel) parkModeLabel.textContent = type === 'common' ? '1.1 รูปแบบการจอด' : '1.1 เลือกวันที่';
   if (toggleBtnsDiv) toggleBtnsDiv.style.gridTemplateColumns = type === 'common' ? '1fr 1fr' : '1fr';
 
+  // ── ประเภทรถ: แสดง opt-other เฉพาะเมื่อเลือก "จอดรถอื่นๆ" ──
+  const carSel = document.getElementById('book-car-type');
+  if (carSel) {
+    const isOther = type === 'other';
+    carSel.querySelectorAll('.opt-other').forEach(opt => {
+      opt.style.display = isOther ? '' : 'none';
+    });
+    // ถ้าตอนนี้ value เป็น special car แต่ไม่ได้เลือก other → reset
+    if (!isOther && SPECIAL_CAR.includes(carSel.value)) {
+      carSel.value = 'sedan';
+    }
+    // ถ้าเพิ่งเปลี่ยนมา other และ value ยังไม่ใช่ special car → เลือก van ให้ทันที
+    if (isOther && !SPECIAL_CAR.includes(carSel.value)) {
+      carSel.value = 'van';
+    }
+  }
+
   // if switching away from common & long mode is active, reset to daily
   if (type !== 'common' && currentParkMode === 'long') setParkMode('daily');
 }
 
 function onCarTypeChange() {
-  const carType = document.getElementById('book-car-type').value;
+  // ไม่ต้อง auto-switch booking type อีกต่อไป
+  // เพราะ dropdown แยก options ตาม type อยู่แล้ว
+  const carType     = document.getElementById('book-car-type').value;
   const specialNote = document.getElementById('book-special-note');
-  const bookType    = document.getElementById('book-type');
-
-  if (SPECIAL_CAR.includes(carType)) {
-    specialNote.style.display = '';
-    bookType.value = 'other';
-    onBookTypeChange();
-  } else {
-    specialNote.style.display = 'none';
-  }
+  if (specialNote) specialNote.style.display = SPECIAL_CAR.includes(carType) ? '' : 'none';
 }
 
 function checkOwnerPlate() {
@@ -2939,8 +3046,8 @@ function checkOwnerPlate() {
     res.style.cssText = 'display:block;margin-top:4px;font-size:11px;padding:6px 10px;border-radius:8px;background:#DCFCE7;color:#15803D;';
     res.innerHTML = `✅ พบทะเบียน — <strong>${found.slot}</strong> ชั้น <strong>${found.floor}</strong> · ${found.name}`;
   } else {
-    res.style.cssText = 'display:block;margin-top:4px;font-size:11px;padding:6px 10px;border-radius:8px;background:#FEE2E2;color:#DC2626;';
-    res.innerHTML = `❌ ไม่พบทะเบียน "${val}" ในระบบ`;
+    res.style.cssText = 'display:block;margin-top:4px;font-size:11px;padding:6px 10px;border-radius:8px;background:#F3F4F6;color:#6B7280;';
+    res.innerHTML = `🔖 ทะเบียน "${val}"`;
   }
 }
 
@@ -3232,90 +3339,144 @@ function submitBooking() {
     alert('กรุณากรอกทะเบียนรถและชื่อผู้แจ้งจองให้ครบถ้วน'); return;
   }
 
+  // ── อ่านค่า form ทั้งหมดก่อน (ป้องกัน reset/blur ก่อนนำไปใช้) ──
+  const carLabel      = document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
+  const noteVal       = document.getElementById('book-note')?.value.trim() || '–';
+  const subOwner      = document.getElementById('book-plate-owner')?.value.trim() || '';
+  const subOvernight  = !!(document.getElementById('book-sub-overnight')?.checked);
+  const subFloorSel   = document.getElementById('book-sub-floor')?.value || 'visitor';
+  const subFloorLabel = subFloorSel === 'visitor' ? 'Visitor' : subFloorSel;
+  const comOvernight  = !!(document.getElementById('book-overnight')?.checked);
+
+  // ── Validation ──
+  if (type === 'sub') {
+    if (selectedDays.size === 0) { alert('กรุณาเลือกวันที่ต้องการจอดแทน'); return; }
+    if (!subOwner) { alert('กรุณากรอกทะเบียนสิทธิ์จอดแทน'); return; }
+  }
+  if (type === 'other') {
+    if (selectedDays.size === 0) { alert('กรุณาเลือกวันที่'); return; }
+  }
+  if (type === 'common') {
+    if (currentParkMode === 'daily' && selectedDays.size === 0) { alert('กรุณาเลือกวันที่ต้องการจอด'); return; }
+    if (currentParkMode === 'long' && (!rangeStart || !rangeEnd)) { alert('กรุณาเลือกช่วงวันเริ่มต้นและสิ้นสุด'); return; }
+  }
+
+  // ── รวบรวมวันที่จอดทั้งหมด ──
+  let bookedDates = [];
+  if (type === 'common' && currentParkMode === 'daily') {
+    bookedDates = [...selectedDays].sort();
+  } else if (type === 'common' && currentParkMode === 'long' && rangeStart && rangeEnd) {
+    const cur = new Date(rangeStart);
+    const end = new Date(rangeEnd);
+    while (cur <= end) {
+      bookedDates.push(cur.toISOString().slice(0,10));
+      cur.setDate(cur.getDate()+1);
+    }
+  } else if ((type === 'sub' || type === 'other') && selectedDays.size > 0) {
+    bookedDates = [...selectedDays].sort();
+  }
+
+  // ── สร้าง dateInfo สำหรับ alert ──
+  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const fmt = ds => { const [y,m,d]=ds.split('-').map(Number); return `${d} ${thMonths[m-1]}`; };
   let dateInfo = '';
   if (type === 'common') {
-    const overnight = document.getElementById('book-overnight').checked;
-    const overnightLabel = overnight ? ' (ค้างคืน 🌙)' : ' (ไม่ค้างคืน)';
+    const overnightLabel = comOvernight ? ' (ค้างคืน 🌙)' : ' (ไม่ค้างคืน)';
     if (currentParkMode === 'daily') {
-      if (selectedDays.size === 0) { alert('กรุณาเลือกวันที่ต้องการจอด'); return; }
-      const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-      const labels = [...selectedDays].sort().map(ds => { const [y,m,d]=ds.split('-').map(Number); return `${d} ${thMonths[m-1]}`; });
+      const labels = bookedDates.map(fmt);
       dateInfo = `รายวัน: ${labels.join(', ')}${overnightLabel}`;
     } else {
-      if (!rangeStart || !rangeEnd) { alert('กรุณาเลือกช่วงวันเริ่มต้นและสิ้นสุด'); return; }
-      const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-      const fmt = ds => { const [y,m,d]=ds.split('-').map(Number); return `${d} ${thMonths[m-1]}`; };
       const days = Math.round((new Date(rangeEnd)-new Date(rangeStart))/86400000)+1;
       dateInfo = `จอดยาว: ${fmt(rangeStart)} – ${fmt(rangeEnd)} (${days} วัน)${overnightLabel}`;
     }
-  }
-
-  if (type === 'sub') {
-    if (selectedDays.size === 0) { alert('กรุณาเลือกวันที่ต้องการจอดแทน'); return; }
-    const owner = document.getElementById('book-plate-owner').value.trim();
-    if (!owner) { alert('กรุณากรอกทะเบียนสิทธิ์จอดแทน'); return; }
-    const found = PLATE_DB[owner];
-    if (!found) { alert(`ไม่พบทะเบียน "${owner}" ในระบบ`); return; }
-    const overnight = document.getElementById('book-sub-overnight')?.checked;
-    const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-    const labels = [...selectedDays].sort().map(ds => { const [y,m,d]=ds.split('-').map(Number); return `${d} ${thMonths[m-1]}`; });
-    dateInfo = `วัน: ${labels.join(', ')}\nประเภทการจอด: ${overnight ? 'ค้างคืน 🌙' : 'ไม่ค้างคืน 🌅'}`;
-  }
-
-  if (type === 'other') {
-    if (selectedDays.size === 0) { alert('กรุณาเลือกวันที่'); return; }
-    const overnight = document.getElementById('book-sub-overnight')?.checked;
-    const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-    const labels = [...selectedDays].sort().map(ds => { const [y,m,d]=ds.split('-').map(Number); return `${d} ${thMonths[m-1]}`; });
-    dateInfo = `วัน: ${labels.join(', ')}\nประเภทการจอด: ${overnight ? 'ค้างคืน 🌙' : 'ไม่ค้างคืน 🌅'} (จอดหน้าอาคาร)`;
+  } else if (type === 'sub') {
+    const labels = bookedDates.map(fmt);
+    dateInfo = `วัน: ${labels.join(', ')}\nประเภทการจอด: ${subOvernight ? 'ค้างคืน 🌙' : 'ไม่ค้างคืน 🌅'}`;
+  } else if (type === 'other') {
+    const labels = bookedDates.map(fmt);
+    dateInfo = `วัน: ${labels.join(', ')}\nประเภทการจอด: ${subOvernight ? 'ค้างคืน 🌙' : 'ไม่ค้างคืน 🌅'} (จอดหน้าอาคาร)`;
   }
 
   const typeLabel = {common:'จอดส่วนกลาง ชั้น 5 ขวามือ', sub:'จอดแทน', other:'แจ้งจอดรถอื่นๆ (หน้าอาคาร)'}[type];
-  alert(`✅ บันทึกการจองสำเร็จ!\nประเภท: ${typeLabel}\nผู้แจ้ง: ${name}\nทะเบียน: ${plate}${dateInfo?'\n'+dateInfo:''}`);
+  const dayCount = bookedDates.length;
+  alert(`✅ บันทึกการจองสำเร็จ!\nประเภท: ${typeLabel}\nผู้แจ้ง: ${name}\nทะเบียน: ${plate}${dateInfo?'\n'+dateInfo:''}\n(${dayCount} วัน → ส่ง Sheet ${dayCount} แถว)`);
+
+  // ── อัพเดต local array (ใช้ค่าที่อ่านไว้แล้วก่อน alert ทั้งหมด) ──
+  if (type === 'common') {
+    const freeIdx = ARI_COMMON_BOOKINGS.findIndex(r => r.status === 'ว่าง');
+    const entry = {
+      slot: freeIdx >= 0 ? ARI_COMMON_BOOKINGS[freeIdx].slot : 'ส่วนกลาง',
+      name, plate, carType: carLabel,
+      parkType: currentParkMode,
+      overnight: comOvernight,
+      status: 'จอง', statusCls: 'tag-blue', note: noteVal,
+      dates: bookedDates
+    };
+    if (freeIdx >= 0) ARI_COMMON_BOOKINGS[freeIdx] = entry;
+    else ARI_COMMON_BOOKINGS.push(entry);
+  } else if (type === 'sub') {
+    const found = PLATE_DB[subOwner] || {};
+    ARI_SUB_BOOKINGS.push({
+      slot: found.slot||'–', floor: subFloorLabel, name, plateReq: plate,
+      carTypeReq: carLabel, plateOwner: subOwner,
+      timeType: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
+      status: 'รออนุมัติ', statusCls: 'tag-orange', note: noteVal,
+      dates: bookedDates
+    });
+  } else if (type === 'other') {
+    const cleanCarLabel = carLabel.replace(/\s*\(จอดหน้าอาคาร\)/g,'').trim();
+    ARI_OTHER_BOOKINGS.push({
+      location: 'หน้าอาคาร', name, plate, carType: cleanCarLabel,
+      timeType: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
+      status: 'รออนุมัติ', statusCls: 'tag-orange', note: noteVal,
+      dates: bookedDates
+    });
+  }
+
+  // re-render ตารางและปฏิทิน (dot) ทันที
+  const currentDate = ariSelectedDate || new Date().toISOString().slice(0,10);
+  renderBookingTable(currentDate);
+  renderAriCalendar();
+
+  // ── ส่งไป Google Sheets (ส่งค่าที่อ่านไว้แล้วผ่าน extraOpts ไม่อ่าน DOM อีก) ──
+  const sheetOpts = { parkMode: currentParkMode === 'long' ? 'จอดยาว' : 'รายวัน',
+                      overnight: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
+                      floor: subFloorLabel,
+                      carLabel: carLabel.replace(/\s*\(จอดหน้าอาคาร\)/g,'').trim() };
+  if (bookedDates.length > 0) {
+    bookedDates.forEach((ds, idx) => {
+      setTimeout(() => sendToSheet(type, name, plate, ds, sheetOpts), idx * 300);
+    });
+  } else {
+    sendToSheet(type, name, plate, null, sheetOpts);
+  }
+
+  // ── Reset form ──
   ['book-plate','book-name','book-note','book-plate-owner'].forEach(id => {
     const el = document.getElementById(id); if(el) el.value = '';
   });
   const subOvEl = document.getElementById('book-sub-overnight');
   if (subOvEl) subOvEl.checked = false;
+  const subFloorEl = document.getElementById('book-sub-floor');
+  if (subFloorEl) subFloorEl.value = 'visitor';
   document.getElementById('book-owner-result').style.display = 'none';
   if (type === 'common') { selectedDays.clear(); rangeStart=null; rangeEnd=null; renderMultiCal(); renderRangeCal(); }
   if (type === 'sub' || type === 'other') { selectedDays.clear(); renderMultiCal(); }
 }
 
-// ─── Mock data: จองส่วนกลาง ───
-const ARI_COMMON_BOOKINGS = [
-  { slot:'ช่อง 66', name:'คุณสมชาย ใจดี',   plate:'5กน 1234', carType:'🚗 รถเก๋ง',  parkType:'daily', overnight:false, status:'จอง',  statusCls:'tag-blue', note:'–' },
-  { slot:'ช่อง 67', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 68', name:'คุณวิภา รักดี',    plate:'3ขข 5678', carType:'🚙 SUV',     parkType:'daily', overnight:true,  status:'จอง',  statusCls:'tag-blue', note:'ขอจอดถึง 06:00' },
-  { slot:'ช่อง 69', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 70', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 71', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 72', name:'คุณนิรัน สุขใจ',   plate:'1กก 9999', carType:'🚗 รถเก๋ง',  parkType:'long',  overnight:false, status:'จอง',  statusCls:'tag-blue', note:'–' },
-  { slot:'ช่อง 73', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 74', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 75', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 76', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 77', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 78', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 79', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 80', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 81', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-  { slot:'ช่อง 82', name:'คุณมานี มีสุข',    plate:'2กท 4455', carType:'🚐 รถตู้',   parkType:'long',  overnight:true,  status:'จอง',  statusCls:'tag-blue', note:'–' },
-  { slot:'ช่อง 83', name:'–',                plate:'–',        carType:'–',           parkType:'',      overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–' },
-];
+// ─── ข้อมูลจาก Google Sheets (โหลดตอนเปิดแอป) ───
+// ไม่มี mock data — ข้อมูลทั้งหมดมาจาก Sheet ผ่าน gsRefreshFromSheet()
+// แต่ละ entry ใน COMMON/SUB/OTHER จะมี field `dates` เป็น array ของ 'YYYY-MM-DD' ที่จอง
+const ARI_COMMON_BOOKINGS = (function() {
+  const arr = [];
+  for (let i = 66; i <= 83; i++) {
+    arr.push({ slot:'ช่อง '+i, name:'–', plate:'–', carType:'–', parkType:'', overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–', dates:[] });
+  }
+  return arr;
+})();
 
-// ─── Mock data: จอดแทน ───
-const ARI_SUB_BOOKINGS = [
-  { slot:'ช่อง 12', floor:'P4',  name:'คุณสมชาย / ห้อง 502', plateReq:'4กค 3322', carTypeReq:'🚗 รถเก๋ง', plateOwner:'กข 1111', timeType:'ปกติ',    status:'อนุมัติ',    statusCls:'tag-green',  note:'–' },
-  { slot:'ช่อง 31', floor:'P4',  name:'คุณวิภา / ห้อง 301',  plateReq:'2ขก 1199', carTypeReq:'🚙 SUV',    plateOwner:'กค 2222', timeType:'ค้างคืน', status:'รออนุมัติ',  statusCls:'tag-orange', note:'ค้างคืน 1 คืน' },
-  { slot:'ช่อง 55', floor:'P5A', name:'คุณนิรัน / ห้อง 411', plateReq:'9กว 8800', carTypeReq:'🚗 รถเก๋ง', plateOwner:'กง 3333', timeType:'ปกติ',    status:'อนุมัติ',    statusCls:'tag-green',  note:'–' },
-];
-
-// ─── Mock data: รถอื่นๆ ───
-const ARI_OTHER_BOOKINGS = [
-  { location:'หน้าอาคาร A', name:'คุณประสิทธิ์ / ห้อง 201', plate:'30-1234', carType:'🚌 รถบัส',      timeType:'ปกติ',    status:'อนุมัติ',   statusCls:'tag-green',  note:'รถบัสรับส่งพนักงาน' },
-  { location:'ทางเข้า B',   name:'โรงพยาบาลกรุงเทพ',        plate:'กธ 8888', carType:'🚑 รถพยาบาล', timeType:'ค้างคืน', status:'รออนุมัติ', statusCls:'tag-orange', note:'รถพยาบาลสแตนด์บาย' },
-];
+const ARI_SUB_BOOKINGS   = [];
+const ARI_OTHER_BOOKINGS = [];
 
 const TAG_STYLES = {
   'tag-green':  'background:#DCFCE7;color:#15803D',
@@ -3961,6 +4122,317 @@ renderBtsGrid();
 buildAllSummary();
 updateClock();
 setInterval(updateClock, 1000);
+
+// ═══════════════════════════════════════════════
+//  GOOGLE SHEETS INTEGRATION
+// ═══════════════════════════════════════════════
+const GS_URL = 'https://script.google.com/macros/s/AKfycbygcWG2vixbaLa83aFve03NRw_iV-TvJ54ssJ9thraVH-I4-PK_hoHY3VonPCcbN9Uz0A/exec';
+
+// ── ทดสอบการเชื่อมต่อ ──
+async function gsTestConnection() {
+  const dot   = document.getElementById('gs-status-dot');
+  const label = document.getElementById('gs-status-label');
+  if (!dot) return;
+  dot.style.background = '#E8B84B'; label.textContent = '⏳ กำลังทดสอบ…';
+  try {
+    const res = await fetch(GS_URL + '?action=ping', { mode: 'cors', redirect: 'follow' });
+    const txt = await res.text();
+    const obj = JSON.parse(txt);
+    if (obj.ok) {
+      gsSetStatus('ok');
+      alert('✅ เชื่อมต่อ Google Sheets สำเร็จ!\n' + obj.msg);
+    } else {
+      throw new Error(obj.msg);
+    }
+  } catch(e) {
+    gsSetStatus('err');
+    alert('❌ เชื่อมต่อไม่ได้\n\nสาเหตุ: ' + e.message + '\n\nวิธีแก้:\n1. เปิด Apps Script → Deploy → Manage Deployments\n2. เลือก Deployment → Edit → New version → Deploy\n3. ตรวจสอบว่า Who has access = Anyone');
+  }
+}
+
+// ── Status UI ──
+function gsSetStatus(state) {
+  // state: 'idle' | 'loading' | 'ok' | 'err'
+  const dot   = document.getElementById('gs-status-dot');
+  const label = document.getElementById('gs-status-label');
+  const wrap  = document.getElementById('gs-topbar-status');
+  if (!dot) return;
+  const map = {
+    idle:    { color:'#ccc',     text:'Google Sheets',   bg:'#F5F5F2' },
+    loading: { color:'#E8B84B',  text:'⏳ กำลังโหลด…',  bg:'#FFFBEB' },
+    ok:      { color:'#34A853',  text:'✅ ซิงค์แล้ว',    bg:'#F0FDF4' },
+    err:     { color:'#EF4444',  text:'❌ เชื่อมต่อล้มเหลว (คลิกเพื่อแก้ไข)', bg:'#FEF2F2' },
+  };
+  const s = map[state] || map.idle;
+  dot.style.background   = s.color;
+  label.textContent      = s.text;
+  wrap.style.background  = s.bg;
+  wrap.style.borderColor = s.color + '55';
+}
+
+// ── โหลดข้อมูลจาก Sheet มาแสดงในตาราง ──
+async function gsRefreshFromSheet() {
+  gsSetStatus('loading');
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000); // timeout 10s
+    const res  = await fetch(GS_URL + '?action=readAll', {
+      redirect: 'follow',
+      mode: 'cors',
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.msg || 'unknown error');
+
+    // ── helper: แปลงวันที่ไทย → ISO (ใช้ร่วมกันทั้ง 3 sheet) ──
+    const thMonthMap = {'ม.ค.':1,'ก.พ.':2,'มี.ค.':3,'เม.ย.':4,'พ.ค.':5,'มิ.ย.':6,'ก.ค.':7,'ส.ค.':8,'ก.ย.':9,'ต.ค.':10,'พ.ย.':11,'ธ.ค.':12};
+    function parseThaiDate(raw) {
+      if (!raw) return '';
+      const mThai = raw.trim().match(/^(\d{1,2})\s+([\u0E00-\u0E7F.]+)\s+(\d{4})$/);
+      if (mThai) {
+        const d = mThai[1].padStart(2,'0');
+        const mon = thMonthMap[mThai[2]] || 0;
+        const y = parseInt(mThai[3]) > 2500 ? parseInt(mThai[3]) - 543 : parseInt(mThai[3]);
+        if (mon) return `${y}-${String(mon).padStart(2,'0')}-${d}`;
+      }
+      const mSlash = raw.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+      if (mSlash) {
+        const y = parseInt(mSlash[3]) > 2500 ? parseInt(mSlash[3]) - 543 : parseInt(mSlash[3]);
+        return `${y}-${mSlash[2].padStart(2,'0')}-${mSlash[1].padStart(2,'0')}`;
+      }
+      return '';
+    }
+
+    // ── แปลงข้อมูล Bookings → format ใหม่ (1 row ต่อ 1 วัน) ──
+    // คอลัมน์ Bookings: ลำดับ/ชื่อผู้ขอ/ทะเบียน/ประเภทรถ/วันที่จอด/ประเภทการจอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
+    ARI_COMMON_BOOKINGS.length = 0;
+    for (let i = 66; i <= 83; i++) {
+      ARI_COMMON_BOOKINGS.push({ slot:'ช่อง '+i, name:'–', plate:'–', carType:'–', parkType:'', overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–', dates:[] });
+    }
+    if (data.common && data.common.length) {
+      // group ตาม name+plate เพื่อรวม dates หลายวัน
+      const grouped = {};
+      data.common.forEach(r => {
+        const key = (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียน']||'');
+        const parkTypeStr = r['ประเภทการจอด'] || r['ประเภทการจอด'] || '';
+        const overnightStr = r['ค้างคืน'] || r['ประเภทการจอด'] || '';
+        const isOvernight = overnightStr.includes('ค้างคืน');
+        const isParkLong  = parkTypeStr.includes('จอดยาว');
+        // อ่าน วันที่จอด จากคอลัมน์ใหม่ก่อน fallback ไปที่ วันที่บันทึก
+        const dateRaw = r['วันที่จอด'] || r['วันที่บันทึก'] || '';
+        const dateISO = parseThaiDate(dateRaw);
+        if (!grouped[key]) {
+          grouped[key] = {
+            name:      r['ชื่อผู้ขอ']   || '–',
+            plate:     r['ทะเบียน']      || '–',
+            carType:   r['ประเภทรถ']     || '–',
+            parkType:  isParkLong ? 'long' : 'daily',
+            overnight: isOvernight,
+            status:    'จอง',
+            statusCls: 'tag-blue',
+            note:      r['หมายเหตุ']     || '–',
+            dates:     dateISO ? [dateISO] : [],
+          };
+        } else {
+          if (dateISO && !grouped[key].dates.includes(dateISO)) grouped[key].dates.push(dateISO);
+        }
+      });
+      let slotIdx = 0;
+      Object.values(grouped).forEach(entry => {
+        if (slotIdx >= 18) return;
+        ARI_COMMON_BOOKINGS[slotIdx] = { slot: 'ช่อง ' + (66 + slotIdx), ...entry };
+        slotIdx++;
+      });
+    }
+
+    // ── แปลง SubPark ──
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
+    if (data.sub && data.sub.length) {
+      ARI_SUB_BOOKINGS.length = 0;
+      const subGrouped = {};
+      data.sub.forEach(r => {
+        const key = (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียนผู้ขอ']||'');
+        const timeType = r['ประเภทการจอด'] || 'ไม่ค้างคืน';
+        const dateRaw = r['วันที่จอด'] || r['วันที่บันทึก'] || '';
+        const dateISO = parseThaiDate(dateRaw);
+        if (!subGrouped[key]) {
+          subGrouped[key] = {
+            slot:       r['ช่อง']              || '–',
+            floor:      r['ชั้น']              || '–',
+            name:       r['ชื่อผู้ขอ']         || '–',
+            plateReq:   r['ทะเบียนผู้ขอ']     || '–',
+            carTypeReq: r['ประเภทรถ']          || '–',
+            plateOwner: r['ทะเบียนสิทธิ์']    || r['ทะเบียนสิทธิ์จอดแทน'] || '–',
+            timeType,
+            status:     'รออนุมัติ',
+            statusCls:  'tag-orange',
+            note:       r['หมายเหตุ']          || '–',
+            dates:      dateISO ? [dateISO] : [],
+          };
+        } else {
+          if (dateISO && !subGrouped[key].dates.includes(dateISO)) subGrouped[key].dates.push(dateISO);
+        }
+      });
+      Object.values(subGrouped).forEach(entry => ARI_SUB_BOOKINGS.push(entry));
+    }
+
+    // ── แปลง OtherCars ──
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ประเภทรถ/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
+    if (data.other && data.other.length) {
+      ARI_OTHER_BOOKINGS.length = 0;
+      const otherGrouped = {};
+      data.other.forEach(r => {
+        const key = (r['ชื่อผู้ขอ']||r['ชื่อผู้แจ้ง']||'') + '|' + (r['ทะเบียนผู้ขอ']||r['ทะเบียน']||'');
+        const dateRaw = r['วันที่จอด'] || r['วันที่บันทึก'] || '';
+        const dateISO = parseThaiDate(dateRaw);
+        if (!otherGrouped[key]) {
+          otherGrouped[key] = {
+            location: r['ชั้น']              || 'หน้าอาคาร',
+            name:     r['ชื่อผู้ขอ']         || r['ชื่อผู้แจ้ง'] || '–',
+            plate:    r['ทะเบียนผู้ขอ']      || r['ทะเบียน'] || '–',
+            carType:  r['ประเภทรถ']          || '–',
+            timeType: r['ประเภทการจอด']      || 'ไม่ค้างคืน',
+            status:   'รออนุมัติ',
+            statusCls:'tag-orange',
+            note:     r['หมายเหตุ']          || '–',
+            dates:    dateISO ? [dateISO] : [],
+          };
+        } else {
+          if (dateISO && !otherGrouped[key].dates.includes(dateISO)) otherGrouped[key].dates.push(dateISO);
+        }
+      });
+      Object.values(otherGrouped).forEach(entry => ARI_OTHER_BOOKINGS.push(entry));
+    }
+
+    // ── re-render เฉพาะส่วนที่จำเป็น (ไม่ reset ปฏิทินฟอร์ม) ──
+    const today = new Date().toISOString().slice(0,10);
+    // อัพเดตตารางรายการแจ้งจอด
+    if (document.getElementById('ari-common-tbody')) {
+      renderBookingTable(ariSelectedDate || today);
+    }
+    // อัพเดตปฏิทิน booking (ไม่ reset ปีเดือน)
+    if (document.getElementById('ari-calendar')) {
+      renderAriCalendar();
+    }
+    buildAllSummary();
+    gsSetStatus('ok');
+
+    // อัพเดต overview cards และ badge ถ้าหน้า booking เปิดอยู่
+    if (document.getElementById('view-booking')?.classList.contains('active')) {
+      const commonUsed = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').length;
+      const subPending = ARI_SUB_BOOKINGS.filter(r=>r.status==='รออนุมัติ').length;
+      const bkCommon = document.getElementById('bk-common-used');
+      const bkSub    = document.getElementById('bk-sub-pending');
+      const bkComBar = document.getElementById('bk-common-bar');
+      const bkSubBar = document.getElementById('bk-sub-bar');
+      if (bkCommon) bkCommon.textContent = commonUsed;
+      if (bkSub)    bkSub.textContent    = subPending;
+      if (bkComBar) bkComBar.style.width = Math.round(commonUsed/18*100)+'%';
+      if (bkSubBar && ARI_SUB_BOOKINGS.length) bkSubBar.style.width = Math.round(subPending/ARI_SUB_BOOKINGS.length*100)+'%';
+      const navBadge = document.getElementById('booking-nav-badge');
+      if (navBadge) navBadge.textContent = commonUsed + ARI_SUB_BOOKINGS.length;
+      renderWeeklySummary();
+      renderAriReportDate();
+    }
+
+  } catch(err) {
+    console.warn('gsRefreshFromSheet error:', err);
+    gsSetStatus('err');
+  }
+}
+
+// ── ส่งข้อมูลการจองใหม่ไป Sheet ──
+// signature ใหม่: รับ dateISO (YYYY-MM-DD) แยกชัดเจน
+function sendToSheet(type, name, plate, dateISO, extraOpts) {
+  const now = new Date();
+  const ts  = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()+543} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+  // แปลง YYYY-MM-DD → วันที่ไทย สำหรับแสดงใน Sheet
+  let dateThai = dateISO || '–';
+  if (dateISO && dateISO.match(/^\d{4}-\d{2}-\d{2}$/)) {
+    const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+    const [y,m,d] = dateISO.split('-').map(Number);
+    dateThai = `${d} ${thMonths[m-1]} ${y+543}`;
+  }
+
+  let sheetName, row;
+
+  if (type === 'common') {
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียน/ประเภทรถ/วันที่จอด/ประเภทการจอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
+    const carLabel  = (extraOpts && extraOpts.carLabel) || document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
+    const note      = document.getElementById('book-note')?.value.trim() || '–';
+    const overnight = document.getElementById('book-overnight')?.checked ? 'ค้างคืน' : 'ไม่ค้างคืน';
+    const parkMode  = (extraOpts && extraOpts.parkMode) || 'รายวัน';
+    sheetName = 'Bookings';
+    row = ['auto', name, plate, carLabel, dateThai, parkMode, overnight, 'ชั้น 5 ส่วนกลางขวามือ', note, ts];
+
+  } else if (type === 'sub') {
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
+    const owner     = document.getElementById('book-plate-owner')?.value.trim() || (extraOpts && extraOpts.owner) || '';
+    const carLabel  = (extraOpts && extraOpts.carLabel) || document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
+    const note      = document.getElementById('book-note')?.value.trim() || '–';
+    const overnight = (extraOpts && extraOpts.overnight) || (document.getElementById('book-sub-overnight')?.checked ? 'ค้างคืน' : 'ไม่ค้างคืน');
+    const floor     = (extraOpts && extraOpts.floor) || '–';
+    sheetName = 'SubPark';
+    row = ['auto', name, plate, carLabel, owner, dateThai, overnight, floor, note, ts];
+
+  } else if (type === 'other') {
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ประเภทรถ/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
+    // ตัดคำ "(จอดหน้าอาคาร)" ออกจาก carLabel ก่อนบันทึก
+    const rawLabel  = (extraOpts && extraOpts.carLabel) || document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
+    const carLabel  = rawLabel.replace(/\s*\(จอดหน้าอาคาร\)/g, '').replace(/[^a-zA-Zก-๙ ๐-๙\u0E00-\u0E7F🚐📦🏪🚌🚑]/g,'').trim();
+    const note      = document.getElementById('book-note')?.value.trim() || '–';
+    const overnight = (extraOpts && extraOpts.overnight) || (document.getElementById('book-sub-overnight')?.checked ? 'ค้างคืน' : 'ไม่ค้างคืน');
+    sheetName = 'OtherCars';
+    row = ['auto', name, plate, carLabel, dateThai, overnight, 'หน้าอาคาร', note, ts];
+  }
+
+  gsSetStatus('loading');
+  const payload = JSON.stringify({ action: 'addBooking', sheet: sheetName, row });
+
+  fetch(GS_URL, {
+    method: 'POST',
+    mode:   'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: payload,
+  })
+  .then(() => {
+    gsSetStatus('ok');
+    setTimeout(gsRefreshFromSheet, 2500);
+  })
+  .catch(err => {
+    console.warn('GS POST failed, trying GET fallback:', err);
+    const params = new URLSearchParams({ action: 'addBooking', sheet: sheetName, data: payload });
+    fetch(`${GS_URL}?${params}`, { method: 'GET', mode: 'no-cors' })
+    .then(() => {
+      gsSetStatus('ok');
+      setTimeout(gsRefreshFromSheet, 2500);
+    })
+    .catch(err2 => {
+      console.warn('GS fallback failed:', err2);
+      gsSetStatus('err');
+      alert('⚠️ ไม่สามารถส่งข้อมูลไปยัง Google Sheets ได้\nกรุณาตรวจสอบการเชื่อมต่อ หรือ Deploy URL ของ Apps Script');
+    });
+  });
+}
+
+// ── คลิก status bar: ถ้า error = test connection, ถ้าอื่น = refresh ──
+function gsStatusClick() {
+  const label = document.getElementById('gs-status-label');
+  if (label && label.textContent.includes('ล้มเหลว')) {
+    gsTestConnection();
+  } else {
+    gsRefreshFromSheet();
+  }
+}
+
+// โหลดครั้งแรกตอนเปิดแอป
+gsRefreshFromSheet();
+
+// โหลดข้อมูลใหม่ทุก 60 วินาทีแบบ silent (ไม่ reset ปฏิทิน)
+setInterval(gsRefreshFromSheet, 60000);
 </script>
 </body>
 </html>
