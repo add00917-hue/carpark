@@ -7,32 +7,35 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold: #E8B84B;
-    --gold-light: #F5D07A;
-    --gold-dark: #C9980A;
-    --bg: #E8E8E4;
-    --surface: #F2F2EE;
-    --surface2: #EBEBЕ7;
-    --card: #FAFAF8;
-    --text: #1A1A1A;
-    --text-muted: #888880;
-    --text-light: #BBBBB0;
-    --border: #E0E0DA;
+    --gold: #7C3AED;
+    --gold-light: #A78BFA;
+    --gold-dark: #5B21B6;
+    --bg: #ECEAF6;
+    --surface: #F7F5FC;
+    --surface2: #F0EDF8;
+    --card: #FFFFFF;
+    --text: #1A1235;
+    --text-muted: #8B84B0;
+    --text-light: #C4B5FD;
+    --border: #E9E5F8;
     --radius: 16px;
     --radius-sm: 10px;
-    --shadow: 0 2px 12px rgba(0,0,0,0.06);
-    --shadow-md: 0 4px 24px rgba(0,0,0,0.09);
-    /* slot types */
-    --slot-fixed: #1A1A1A;
+    --shadow: 0 2px 16px rgba(91,33,182,0.07);
+    --shadow-md: 0 6px 28px rgba(91,33,182,0.11);
+    --accent-pink: #E8519A;
+    --accent-pink-bg: #FCE7F3;
+    --accent-teal: #0D9488;
+    --accent-amber: #D97706;
+    --slot-fixed: #1A1235;
     --slot-fixed-text: #fff;
-    --slot-common: #2563EB;
-    --slot-common-bg: #EFF6FF;
-    --slot-common-border: #BFDBFE;
+    --slot-common: #7C3AED;
+    --slot-common-bg: #F5F3FF;
+    --slot-common-border: #DDD6FE;
     --slot-free-bg: #F0FDF4;
     --slot-free-border: #BBF7D0;
     --slot-free-text: #15803D;
-    --slot-occupied-bg: #F5F5F2;
-    --slot-occupied-border: #E0E0DA;
+    --slot-occupied-bg: #F7F5FC;
+    --slot-occupied-border: #E9E5F8;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,21 +48,67 @@
   }
 
   /* ─── LAYOUT ─── */
-  .app { display: flex; height: 100vh; overflow: hidden; }
+  .app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-  /* ─── SIDEBAR ─── */
-  .sidebar {
-    width: 220px;
-    flex-shrink: 0;
-    background: var(--card);
-    border-right: 1px solid var(--border);
+  /* ─── TOP NAV ─── */
+  .topnav {
     display: flex;
-    flex-direction: column;
-    padding: 20px 14px 8px;
-    gap: 4px;
-    height: 100vh;
-    overflow-y: auto;
+    align-items: center;
+    padding: 0 16px;
+    height: 54px;
+    flex-shrink: 0;
+    background: #080810;
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    gap: 6px;
+    z-index: 100;
   }
+  .topnav-brand {
+    display: flex; flex-direction: column;
+    margin-right: 12px; flex-shrink: 0; cursor: default;
+  }
+  .topnav-brand-main { font-size: 11px; font-weight: 700; color: #fff; line-height: 1; }
+  .topnav-brand-sub  { font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+  .topnav-divider    { width: 0.5px; height: 28px; background: rgba(255,255,255,0.12); margin: 0 10px; flex-shrink:0; }
+  .topnav-links      { display: flex; align-items: center; gap: 3px; flex: 1; overflow: hidden; }
+  .topnav-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 500;
+    padding: 6px 11px; border-radius: 8px;
+    cursor: pointer; white-space: nowrap;
+    border: none; display: flex; align-items: center; gap: 5px;
+    transition: all 0.15s;
+  }
+  .topnav-btn.purple  { background: linear-gradient(135deg,#6D28D9,#7C3AED); color: #fff; box-shadow: 0 0 16px rgba(124,58,237,0.45), 0 1px 0 rgba(255,255,255,0.1) inset; }
+  .topnav-btn.purple:hover { box-shadow: 0 0 24px rgba(124,58,237,0.65), 0 1px 0 rgba(255,255,255,0.1) inset; }
+  .topnav-btn.ghost   { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); border: 0.5px solid rgba(255,255,255,0.1); }
+  .topnav-btn.ghost:hover { background: rgba(255,255,255,0.09); color: #fff; border-color: rgba(255,255,255,0.22); }
+  .topnav-btn.active-amber { background: rgba(217,119,6,0.18); color: #fbbf24; border: 0.5px solid rgba(217,119,6,0.4); box-shadow: 0 0 14px rgba(251,191,36,0.22), 0 0 0 1px rgba(217,119,6,0.15); }
+  .topnav-badge { background: #E8519A; color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 10px; }
+  .topnav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
+  .topnav-gs-wrap {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 4px 10px 4px 8px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .topnav-gs-dot { width: 7px; height: 7px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
+  .topnav-gs-label { font-size: 10px; color: rgba(255,255,255,0.45); white-space: nowrap; }
+  .topnav-clock { font-size: 11px; color: rgba(255,255,255,0.45); font-family: 'DM Mono', monospace; white-space: nowrap; }
+  .topnav-clock strong { color: #fff; font-weight: 600; }
+  .topnav-icon-btn {
+    width: 32px; height: 32px; border-radius: 7px;
+    border: 0.5px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.4); font-size: 14px; cursor: pointer;
+  }
+  .topnav-avatar { width: 32px; height: 32px; border-radius: 50%; background: #7C3AED; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; }
+  .topnav-user-name { font-size: 11px; font-weight: 600; color: #fff; }
+  .topnav-user-role { font-size: 9px; color: rgba(255,255,255,0.3); }
+
+  /* ─── SIDEBAR (hidden – kept for reference) ─── */
+  .sidebar { display: none; }
 
   .logo {
     font-size: 20px;
@@ -69,7 +118,21 @@
     border-bottom: 1px solid var(--border);
     margin-bottom: 8px;
   }
-  .logo span { color: var(--gold-dark); }
+  .logo span { color: var(--gold); }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .ov-card.highlight { background: linear-gradient(145deg, #5B3FD8, #7C3AED); color: #fff; box-shadow: 0 8px 24px rgba(91,33,182,0.3); }
+  .ov-card.highlight .ov-label { color: rgba(255,255,255,0.55); }
+  .ov-card.highlight .ov-sub { color: rgba(255,255,255,0.6); }
+  .ov-card.highlight .ov-bar { background: rgba(255,255,255,0.15); }
+  .ov-card.highlight .ov-bar-fill { background: rgba(255,255,255,0.8); }
 
   .nav-section-label {
     font-size: 10px;
@@ -97,11 +160,11 @@
     text-align: left;
   }
   .nav-item:hover { background: var(--surface); color: var(--text); }
-  .nav-item.active { background: var(--text); color: #fff; }
+  .nav-item.active { background: linear-gradient(135deg, #5B3FD8, #7C3AED); color: #fff; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
   .nav-item .nav-icon { font-size: 15px; width: 20px; text-align: center; }
   .nav-item .nav-badge {
     margin-left: auto;
-    background: var(--gold);
+    background: var(--accent-pink);
     color: #fff;
     font-size: 10px;
     font-weight: 700;
@@ -138,12 +201,151 @@
   /* ─── MAIN ─── */
   .main {
     flex: 1;
-    overflow-y: auto;
-    padding: 24px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 0;
+    background: #080810;
   }
+  .building-view:not(#view-all) {
+    padding: 20px 24px 24px;
+    overflow-y: auto;
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    background: transparent;
+  }
+  .building-view:not(#view-all).active { display: flex; }
+
+  /* overlay สำหรับ views ที่มีภาพพื้นหลัง — ใช้ inset div แทน ::before */
+  .view-bg-layer {
+    position: fixed;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .view-bg-layer::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(6,6,14,0.65);
+  }
+  #view-booking, #view-ari, #view-bts, #view-ksl, #view-settings {
+    position: relative;
+    background-image: none !important;
+  }
+  #view-booking > *:not(.view-bg-layer),
+  #view-ari > *:not(.view-bg-layer),
+  #view-bts > *:not(.view-bg-layer),
+  #view-ksl > *:not(.view-bg-layer),
+  #view-settings > *:not(.view-bg-layer) {
+    position: relative; z-index: 1;
+  }
+
+  /* ── ปฏิทิน: ข้อความสีขาวใน booking view ── */
+  #view-booking .cal-day { color: rgba(255,255,255,0.75); }
+  #view-booking .cal-day:hover { background: rgba(255,255,255,0.1); }
+  #view-booking .cal-day.other-month { color: rgba(255,255,255,0.25); }
+  #view-booking .cal-day.today { background: #0ea5e9; color: #fff; font-weight: 700; box-shadow: 0 0 12px rgba(14,165,233,0.4); }
+  #view-booking .cal-day.selected { background: linear-gradient(135deg,#7C3AED,#5B3FD8) !important; color: #fff !important; }
+  #view-booking .cal-day-label { color: rgba(255,255,255,0.35); }
+
+  /* ─── Per-view Background Images ─── */
+  #view-all {
+    flex: 1; display: none; flex-direction: column; overflow: hidden; position: relative;
+    background-size: cover; background-position: center; background-repeat: no-repeat;
+    background-color: #080810;
+  }
+  /* Background images handled by JS (viewBgLayer) */
+  #view-all.active { display: flex; }
+  .dash-hero {
+    flex: 1; position: relative;
+    display: flex; flex-direction: column;
+    justify-content: space-between; overflow: hidden;
+    background: transparent;
+  }
+  .dash-hero-bg {
+    position: absolute; inset: 0;
+    background: transparent;
+    z-index: 0;
+  }
+  .dash-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(120deg, rgba(6,6,14,0.55) 0%, rgba(6,6,14,0.18) 55%, rgba(6,6,14,0.38) 100%);
+    z-index: 1;
+  }
+  .dash-hero-top { position: relative; z-index: 2; padding: 22px 28px 0; display: flex; justify-content: space-between; align-items: flex-start; }
+  .dash-hero-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 4px; }
+  .dash-hero-sm { font-size: 22px; font-weight: 400; color: rgba(255,255,255,0.7); }
+  .dash-hero-lg { font-size: 68px; font-weight: 700; letter-spacing: -3px; color: #fbbf24; line-height: 1.0; margin-top: 2px; text-shadow: 0 2px 32px rgba(251,191,36,0.45); }
+  .dash-hero-date { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 6px; }
+  .dash-hero-topright { text-align: right; max-width: 240px; }
+  .dash-hero-desc { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.65; }
+  .dash-hero-link { font-size: 12px; color: #a78bfa; cursor: pointer; margin-top: 8px; display: inline-flex; align-items: center; gap: 4px; }
+  .dash-hero-link:hover { color: #c4b5fd; }
+  .dash-color-dots { display: flex; gap: 7px; align-items: center; justify-content: flex-end; margin-top: 10px; }
+  .dash-color-dot { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.15); }
+  .dash-hero-bottom { position: relative; z-index: 2; padding: 0 28px 22px; display: flex; justify-content: space-between; align-items: center; }
+  .dash-stat-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 4px; }
+  .dash-stat-num { font-size: 56px; font-weight: 700; letter-spacing: -4px; color: #fff; line-height: 1; font-family: 'DM Mono', monospace; text-shadow: 0 2px 24px rgba(255,255,255,0.2); }
+  .dash-stat-sub { font-size: 13px; margin-top: 5px; }
+  .dash-stat-sub .g { color: #4ade80; }
+  .dash-stat-sub .r { color: #f87171; }
+  .dash-stat-sub .sep { color: rgba(255,255,255,0.2); margin: 0 5px; }
+  .dash-actions { display: flex; align-items: center; padding-bottom: 0; }
+  .dash-action-main {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff; font-family: 'DM Sans', sans-serif;
+    font-size: 20px; font-weight: 700;
+    padding: 20px 48px; border-radius: 50px;
+    cursor: pointer; white-space: nowrap; border: none;
+    box-shadow: 0 6px 32px rgba(217,119,6,0.55), 0 1px 0 rgba(255,255,255,0.15) inset;
+    transition: all 0.2s; letter-spacing: -0.3px;
+  }
+  .dash-action-main:hover { box-shadow: 0 10px 40px rgba(217,119,6,0.7); transform: translateY(-2px); }
+
+  /* ─── DASHBOARD BOTTOM BAR — Glass Cards ─── */
+  .dash-bottom {
+    flex-shrink: 0;
+    background: transparent;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    padding: 8px 10px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 7px;
+    position: relative; z-index: 2;
+  }
+  .dash-stat-card {
+    background: rgba(255,255,255,0.08);
+    border: 0.5px solid rgba(255,255,255,0.16);
+    border-radius: 12px;
+    padding: 10px 8px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 5px; text-align: center;
+    position: relative; overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25), 0 0.5px 0 rgba(255,255,255,0.08) inset;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .dash-stat-card::before {
+    content: '';
+    position: absolute; top: 0; left: 15%; right: 15%; height: 0.5px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+  }
+  .dash-stat-card:hover { background: rgba(255,255,255,0.13); }
+  .dash-sc-icon { width: 30px; height: 30px; flex-shrink: 0; }
+  .dash-sc-label { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); line-height: 1; }
+  .dash-sc-val { font-size: 30px; font-weight: 700; color: #fff; letter-spacing: -1px; line-height: 1; }
+  .dash-sc-val.g { color: #4ade80; text-shadow: 0 0 12px rgba(74,222,128,0.45); }
+  .dash-sc-val.r { color: #f87171; text-shadow: 0 0 12px rgba(248,113,113,0.45); }
+  .dash-sc-val.a { color: #fbbf24; text-shadow: 0 0 12px rgba(251,191,36,0.45); }
+  .dash-sc-val.p { color: #a78bfa; text-shadow: 0 0 12px rgba(167,139,250,0.45); }
+  .dash-sc-val.t { font-size: 16px; color: rgba(255,255,255,0.5); font-weight: 500; letter-spacing: 0; }
 
   /* ─── TOP BAR ─── */
   .topbar {
@@ -151,6 +353,12 @@
     align-items: center;
     gap: 12px;
     margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    padding: 10px 0;
+    margin-top: -10px;
   }
   .topbar-title {
     font-size: 22px;
@@ -194,8 +402,6 @@
     align-items: center;
     gap: 8px;
   }
-  .bld-tab:hover { color: var(--text); background: var(--surface); }
-  .bld-tab.active { background: var(--text); color: #fff; }
   .bld-tab .bld-count {
     font-size: 11px;
     background: rgba(255,255,255,0.2);
@@ -223,27 +429,11 @@
     flex-direction: column;
     gap: 6px;
   }
-  .ov-card.highlight { background: var(--text); color: #fff; }
   .ov-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
-  .ov-card.highlight .ov-label { color: rgba(255,255,255,0.5); }
   .ov-value { font-size: 28px; font-weight: 700; letter-spacing: -1px; font-family: 'DM Mono', monospace; line-height: 1; }
   .ov-sub { font-size: 12px; color: var(--text-muted); }
-  .ov-card.highlight .ov-sub { color: rgba(255,255,255,0.6); }
-  .ov-bar {
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    margin-top: 4px;
-    overflow: hidden;
-  }
-  .ov-bar-fill {
-    height: 100%;
-    background: var(--gold);
-    border-radius: 2px;
-    transition: width 0.6s ease;
-  }
-  .ov-card.highlight .ov-bar { background: rgba(255,255,255,0.15); }
-  .ov-card.highlight .ov-bar-fill { background: var(--gold); }
+  .ov-bar { height: 4px; background: var(--border); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+  .ov-bar-fill { height: 100%; background: var(--gold); border-radius: 2px; transition: width 0.6s ease; }
 
   /* ─── CONTENT GRID ─── */
   .content-grid {
@@ -253,24 +443,12 @@
     align-items: start;
   }
 
-  /* ─── CARD ─── */
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 20px;
-    border: 1px solid var(--border);
-  }
   .card-header {
     display: flex; align-items: center; justify-content: space-between;
     margin-bottom: 16px;
   }
-  .card-title {
-    font-size: 15px; font-weight: 700; letter-spacing: -0.3px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
 
-  /* ─── FLOOR TABS ─── */
+  /* ─── OVERVIEW CARDS (second instance - floor tabs follow) ─── */
   .floor-tabs {
     display: flex;
     gap: 6px;
@@ -289,7 +467,12 @@
     transition: all 0.15s;
   }
   .floor-tab:hover { border-color: var(--gold); color: var(--text); }
-  .floor-tab.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .floor-tab.active { background: linear-gradient(135deg,#7C3AED,#5B3FD8); border-color: transparent; color: #fff; box-shadow: 0 3px 10px rgba(124,58,237,0.3); }
+
+  .bld-tab:hover { color: var(--text); background: var(--surface); }
+  .bld-tab.active { background: linear-gradient(135deg,#5B3FD8,#7C3AED); color: #fff; box-shadow: 0 4px 12px rgba(91,33,182,0.25); }
+
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
   .floor-tab .fl-cnt {
     font-size: 10px;
     opacity: 0.75;
@@ -315,20 +498,26 @@
     width: 10px; height: 10px;
     border-radius: 3px;
   }
-  .ld-fixed { background: #C8C8C2; border: 1.5px solid #A8A8A0; }
-  .ld-common { background: #BFDBFE; border: 1.5px solid #93C5FD; }
+  .ld-fixed { background: #1A1235; border: 1.5px solid #3D3560; }
+  .ld-common { background: #DDD6FE; border: 1.5px solid #A78BFA; }
   .ld-free { background: #BBF7D0; border: 1.5px solid #86EFAC; }
-  .ld-occupied { background: #D0D0CA; border: 1.5px solid #A8A8A0; }
+  .ld-occupied { background: #E9E5F8; border: 1.5px solid #C4B5FD; }
 
   /* ─── SLOT GRID ─── */
   .slot-grid {
-    background: #EFEFEB;
+    background: #F0EDF8;
     border-radius: var(--radius-sm);
     padding: 14px 12px;
     display: grid;
     grid-template-columns: repeat(auto-fill, 74px);
     gap: 10px;
   }
+  .slot-wrap.common-avail .slot-box {
+    background: #F5F3FF;
+    border-color: rgba(124,58,237,0.2);
+    box-shadow: inset 0 3px 6px rgba(124,58,237,0.10), inset 0 1px 3px rgba(124,58,237,0.07), inset 0 -1px 0 rgba(255,255,255,0.65), 0 1px 0 rgba(255,255,255,0.9);
+  }
+  .slot-wrap.common-avail .slot-label { color: #7C3AED; }
 
   /* ── SLOT wrapper: fixed size, number BELOW the box ── */
   .slot-wrap {
@@ -453,18 +642,13 @@
     filter: drop-shadow(0 2px 3px rgba(0,0,0,0.18));
   }
 
-  /* selected — ขอบทองแทนที่ inner shadow */
   .slot-wrap.selected .slot-box {
-    border-color: var(--gold) !important;
-    background: #FAF0D0 !important;
-    box-shadow:
-      inset 0 3px 7px rgba(180,130,0,0.18),
-      inset 0 1px 3px rgba(180,130,0,0.12),
-      0 0 0 2.5px rgba(232,184,75,0.4),
-      0 1px 0 rgba(255,255,255,0.8) !important;
+    border-color: #7C3AED !important;
+    background: #F5F3FF !important;
+    box-shadow: inset 0 3px 7px rgba(124,58,237,0.18), inset 0 1px 3px rgba(124,58,237,0.12), 0 0 0 2.5px rgba(124,58,237,0.35), 0 1px 0 rgba(255,255,255,0.8) !important;
     transform: scale(1.07);
   }
-  .slot-wrap.selected .slot-num { color: var(--gold-dark); font-weight: 700; }
+  .slot-wrap.selected .slot-num { color: #7C3AED; font-weight: 700; }
 
   /* ── Moto slot (purple) ── */
   .slot-wrap.moto-avail .slot-box {
@@ -500,12 +684,207 @@
       0 1px 0 rgba(255,255,255,0.85);
   }
 
-  /* ─── BOOKING MODE 3-COL GRID ─── */
+  /* ─── BOOKING MODE GRID ─── */
   .book-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    align-items: start;
+    display: flex;
+    gap: 0;
+    align-items: flex-start;
+    height: 100%;
+    flex: 1;
+  }
+  /* ซ้าย: flex:1 จัด panel ให้กึ่งกลาง */
+  .book-left-half {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 10px 0 0;
+  }
+  .book-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 780px;
+    width: 100%;
+  }
+  /* ขวา: 50% ของจอ */
+  .book-right-half {
+    width: 50%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  /* Glass card สำหรับ booking */
+  .bk-gc {
+    background: rgba(255,255,255,0.07);
+    border: 0.5px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 14px;
+    position: relative; overflow: hidden;
+  }
+  .bk-gc::before {
+    content: '';
+    position: absolute; top: 0; left: 10%; right: 10%; height: 0.5px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  }
+  /* ── ปุ่มแจ้งจอง — neumorphic pill ── */
+  .book-btn-wrap {
+    width: 100%; padding: 0; border: none; border-radius: 50px; cursor: pointer;
+    background: #14162a;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5), 0 2px 0 rgba(255,255,255,0.05) inset;
+    transition: all 0.22s;
+    outline: 3px solid transparent;
+    outline-offset: 0px;
+    display: block;
+  }
+  .book-btn-wrap:hover {
+    transform: translateY(-2px);
+    outline: 3px solid #fbbf24;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45), 0 2px 0 rgba(255,255,255,0.05) inset;
+  }
+  .book-btn-wrap:active { transform: translateY(1px); }
+  .book-btn-inner {
+    margin: 4px; border-radius: 50px; padding: 13px 24px;
+    background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12), 0 1px 0 rgba(255,255,255,0.95) inset;
+  }
+  /* Glass table card */
+  .bk-tc {
+    background: rgba(255,255,255,0.06);
+    border: 0.5px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 14px;
+    position: relative; overflow: hidden;
+  }
+  .bk-tc::before {
+    content: '';
+    position: absolute; top: 0; left: 10%; right: 10%; height: 0.5px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  }
+  /* ── Glass overrides สำหรับ views ที่มีภาพพื้นหลัง ── */
+  #view-booking .card,
+  #view-ari .card,
+  #view-bts .card,
+  #view-ksl .card,
+  #view-settings .card {
+    background: rgba(255,255,255,0.07) !important;
+    border: 0.5px solid rgba(255,255,255,0.14) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25), 0 0.5px 0 rgba(255,255,255,0.06) inset !important;
+    color: rgba(255,255,255,0.85);
+    position: relative;
+  }
+  #view-booking .card::before,
+  #view-ari .card::before,
+  #view-bts .card::before,
+  #view-ksl .card::before,
+  #view-settings .card::before {
+    content: '';
+    position: absolute; top: 0; left: 10%; right: 10%; height: 0.5px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    pointer-events: none;
+  }
+  /* Text colors */
+  #view-ari .card-title, #view-bts .card-title, #view-ksl .card-title,
+  #view-settings .card-title { color: rgba(255,255,255,0.85); }
+  #view-ari .ov-label, #view-bts .ov-label, #view-ksl .ov-label { color: rgba(255,255,255,0.5); font-size: 11px; }
+  #view-ari .ov-value, #view-bts .ov-value, #view-ksl .ov-value { color: #fff; }
+  #view-ari .ov-sub, #view-bts .ov-sub, #view-ksl .ov-sub { color: rgba(255,255,255,0.4); }
+  #view-ari .ov-bar, #view-bts .ov-bar, #view-ksl .ov-bar { background: rgba(255,255,255,0.1); }
+
+  /* nav section labels */
+  #view-ari .nav-section-label, #view-bts .nav-section-label, #view-ksl .nav-section-label { color: rgba(255,255,255,0.35); }
+
+  /* floor tabs */
+  #view-ari .floor-tab, #view-bts .floor-tab, #view-ksl .floor-tab {
+    background: rgba(255,255,255,0.07);
+    border: 0.5px solid rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.6);
+  }
+  #view-ari .floor-tab.active, #view-bts .floor-tab.active, #view-ksl .floor-tab.active {
+    background: rgba(124,58,237,0.3);
+    border-color: rgba(124,58,237,0.5);
+    color: #c4b5fd;
+  }
+
+  /* overview row cards */
+  #view-ari .ov-card:not(.highlight), #view-bts .ov-card, #view-ksl .ov-card {
+    background: rgba(255,255,255,0.07) !important;
+    border: 0.5px solid rgba(255,255,255,0.12) !important;
+    backdrop-filter: blur(14px);
+  }
+
+  /* slot grid */
+  #view-ari .slot, #view-bts .slot, #view-ksl .slot { opacity: 0.95; }
+
+  /* right panel */
+  #view-ari .right-panel .card, #view-bts .right-panel .card, #view-ksl .right-panel .card {
+    background: rgba(255,255,255,0.07) !important;
+  }
+
+  /* empty state */
+  #view-ari .empty-state p, #view-bts .empty-state p, #view-ksl .empty-state p {
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* legend */
+  #view-ari .legend-item, #view-bts .legend-item, #view-ksl .legend-item { color: rgba(255,255,255,0.6); }
+
+  /* BTS/KSL counters */
+  #view-bts .bts-counter, #view-ksl .bts-counter {
+    background: rgba(255,255,255,0.07) !important;
+    border-color: rgba(255,255,255,0.12) !important;
+  }
+  #view-bts .bts-counter .label, #view-ksl .bts-counter .label { color: rgba(255,255,255,0.5); }
+
+  /* sub-topbar title for non-dashboard views */
+  #sub-topbar { background: transparent !important; }
+  #topbar-title-text { color: rgba(255,255,255,0.9) !important; }
+  #view-booking .tbl-th {
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.4);
+    border-bottom: 0.5px solid rgba(255,255,255,0.1);
+    font-size: 10px;
+    padding: 6px 8px;
+    white-space: nowrap;
+  }
+  #view-booking table {
+    table-layout: auto !important;
+  }
+  #view-booking table td {
+    color: rgba(255,255,255,0.75);
+    border-bottom: 0.5px solid rgba(255,255,255,0.05);
+    font-size: 11px;
+    padding: 7px 10px;
+    background: transparent !important;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  /* ชื่อผู้ขอ — wrap ได้ ไม่ตัด */
+  #view-booking table td:nth-child(2) {
+    white-space: normal;
+    word-break: break-word;
+    min-width: 80px;
+    max-width: 140px;
+  }
+  #view-booking table tr { background: transparent !important; }
+  #view-booking table tr:nth-child(even) { background: rgba(255,255,255,0.025) !important; }
+  #view-booking table tr:hover { background: rgba(255,255,255,0.05) !important; }
+  #view-booking .card-title { color: rgba(255,255,255,0.8); }
+  #view-booking .dot { background: #7C3AED; }
+  .bk-kpi-chip {
+    background: rgba(255,255,255,0.06);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
   }
 
   /* ─── ARI MODE TOGGLE ─── */
@@ -534,7 +913,7 @@
     position: relative;
   }
   .ari-mode-btn:hover { background: var(--surface); color: var(--text); }
-  .ari-mode-btn.active { background: var(--text); color: #fff; }
+  .ari-mode-btn.active { background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; box-shadow: 0 3px 10px rgba(124,58,237,0.28); }
   .mode-icon { font-size: 15px; }
   .mode-badge {
     background: var(--gold);
@@ -560,7 +939,7 @@
     transition: border-color 0.15s;
     width: 100%;
   }
-  .form-input:focus, .form-select:focus { outline: none; border-color: var(--gold); }
+  .form-input:focus, .form-select:focus { outline: none; border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
 
   /* ─── TABLE HEADERS ─── */
   .tbl-th {
@@ -608,8 +987,8 @@
   }
   .cal-day:hover { background: var(--surface); }
   .cal-day.other-month { color: var(--text-light); }
-  .cal-day.today { background: var(--surface); font-weight: 700; }
-  .cal-day.has-booking::after {
+  .cal-day.today { background: #EDE9FE; color: #7C3AED; font-weight: 700; }
+  .cal-day.has-booking::after { background: var(--accent-pink) !important;
     content: '';
     width: 5px; height: 5px;
     border-radius: 50%;
@@ -617,8 +996,8 @@
     position: absolute;
     bottom: 3px;
   }
-  .cal-day.selected {
-    background: var(--text) !important;
+    .cal-day.selected {
+    background: linear-gradient(135deg,#7C3AED,#5B3FD8) !important;
     color: #fff !important;
   }
   .cal-day.selected::after { background: var(--gold); }
@@ -638,8 +1017,8 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-  .bts-counter:hover { border-color: var(--gold); background: #FDF9EE; }
-  .bts-counter.active-type { border-color: var(--gold); background: #FDF5DC; }
+  .bts-counter:hover { border-color: var(--gold); background: #F5F3FF; }
+  .bts-counter.active-type { border-color: var(--gold); background: #EDE9FE; }
   .bts-icon { font-size: 22px; }
   .bts-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
   .bts-nums { display: flex; align-items: baseline; gap: 4px; }
@@ -647,7 +1026,7 @@
   .bts-total { font-size: 14px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
   .bts-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 4px; }
   .bts-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s; }
-  .fill-gold { background: var(--gold); }
+  .fill-gold { background: #7C3AED; }
   .fill-blue { background: #3B82F6; }
   .fill-red { background: #EF4444; }
   .fill-green { background: #22C55E; }
@@ -689,8 +1068,8 @@
   .info-value { font-size: 13px; font-weight: 700; }
 
   .slot-detail {
-    background: #FDF5DC;
-    border: 1.5px solid var(--gold-light);
+    background: #F5F3FF;
+    border: 1.5px solid #DDD6FE;
     border-radius: var(--radius-sm);
     padding: 14px;
     display: none;
@@ -728,9 +1107,9 @@
     gap: 6px;
     text-align: left;
   }
-  .qa-btn:hover { border-color: var(--gold); background: #FDF9EE; }
-  .qa-btn.primary { background: var(--text); color: #fff; border-color: var(--text); grid-column: 1/-1; }
-  .qa-btn.primary:hover { background: #333; }
+  .qa-btn:hover { border-color: var(--gold); background: #F5F3FF; }
+  .qa-btn.primary { background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; border-color: transparent; grid-column: 1/-1; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+  .qa-btn.primary:hover { opacity: 0.88; }
   .qa-icon { font-size: 16px; }
   .qa-label { font-size: 12px; line-height: 1.3; }
 
@@ -750,13 +1129,11 @@
 
   /* building views */
   .building-view { display: none; }
-  .building-view.active { display: block; }
-  .building-view.active > * + * { margin-top: 20px; }
+  .building-view.active { display: flex; flex-direction: column; gap: 16px; }
 
-  /* ─── MODAL OVERLAY ─── */
   .modal-overlay {
     position: fixed; inset: 0;
-    background: rgba(0,0,0,0.35);
+    background: rgba(91,33,182,0.25);
     backdrop-filter: blur(4px);
     display: flex; align-items: center; justify-content: center;
     z-index: 100;
@@ -770,7 +1147,7 @@
     padding: 28px;
     width: 400px;
     max-width: 90vw;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 24px 64px rgba(91,33,182,0.2);
     transform: translateY(12px);
     transition: transform 0.2s;
   }
@@ -791,8 +1168,8 @@
   .modal-field input:focus, .modal-field select:focus { outline: none; border-color: var(--gold); }
   .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
   .btn-cancel { flex: 1; padding: 12px; border-radius: 10px; border: 1.5px solid var(--border); background: none; font-size: 14px; font-weight: 600; cursor: pointer; }
-  .btn-confirm { flex: 1; padding: 12px; border-radius: 10px; border: none; background: var(--text); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
-  .btn-confirm:hover { background: #333; }
+  .btn-confirm { flex: 1; padding: 12px; border-radius: 10px; border: none; background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.15s; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+  .btn-confirm:hover { opacity: 0.88; }
 
   /* ─── RESPONSIVE — TABLET ─── */
   @media (max-width: 1100px) {
@@ -931,84 +1308,77 @@
 
 <div class="app">
 
-  <!-- ─── SIDEBAR ─── -->
-  <aside class="sidebar">
-    <div class="logo" style="font-size:13px;line-height:1.3;">ระบบจัดการลานจอด<br><span style="font-size:10px;font-weight:400;color:var(--text-muted);letter-spacing:0.3px;">Parking Management System</span></div>
-
-    <!-- กลับหน้าหลัก (บนสุด) -->
-    <a href="https://add00917-hue.github.io/GNR3-Building-MS/"
-      style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;text-decoration:none;color:#fff;font-size:13px;font-weight:700;background:linear-gradient(135deg,#2A2A2A,#1A1A1A);border:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 10px rgba(0,0,0,0.25),0 1px 0 rgba(255,255,255,0.07) inset;transition:all 0.15s;letter-spacing:0.1px;"
-      onmouseover="this.style.boxShadow='0 6px 16px rgba(0,0,0,0.35),0 1px 0 rgba(255,255,255,0.07) inset';this.style.transform='translateY(-1px)'"
-      onmouseout="this.style.boxShadow='0 4px 10px rgba(0,0,0,0.25),0 1px 0 rgba(255,255,255,0.07) inset';this.style.transform='translateY(0)'">
-      <span style="font-size:18px;line-height:1;">🏠</span>
-      <div style="display:flex;flex-direction:column;gap:1px;">
-        <span style="font-size:13px;font-weight:700;color:#fff;">หน้าหลัก OMS GNR3</span>
-        <span style="font-size:10px;font-weight:400;color:rgba(255,255,255,0.45);letter-spacing:0.2px;">Office Management System</span>
-      </div>
-      <span style="margin-left:auto;font-size:11px;opacity:0.4;">›</span>
-    </a>
-
-    <div class="nav-section-label">ภาพรวม</div>
-    <button class="nav-item active" onclick="setNav(this);switchView('all')">
-      <span class="nav-icon">📊</span> Dashboard
-    </button>
-    <button class="nav-item" onclick="setNav(this);switchView('booking')">
-      <span class="nav-icon">📅</span> การแจ้งจอด
-      <span class="nav-badge" id="booking-nav-badge">7</span>
-    </button>
-
-    <div class="nav-section-label">อาคาร</div>
-    <button class="nav-item" onclick="setNav(this);switchBuilding('ari')">
-      <span class="nav-icon">🏢</span> Ari Hills
-    </button>
-    <button class="nav-item" onclick="setNav(this);switchBuilding('bts')">
-      <span class="nav-icon">🚇</span> BTS
-    </button>
-    <button class="nav-item" onclick="setNav(this);switchBuilding('ksl')">
-      <span class="nav-icon">🏬</span> KSL
-    </button>
-
-    <div class="nav-section-label" style="display:flex;align-items:center;justify-content:space-between;">
-      <span>ระบบ</span>
-      <span id="admin-badge" onclick="openAdminLogin()" title="Admin Login"
-        style="font-size:9px;padding:1px 7px;border-radius:4px;cursor:pointer;background:#F3F4F6;color:#9CA3AF;font-weight:600;border:1px solid #E5E7EB;">
-        🔐 Admin
-      </span>
+  <!-- ─── TOP NAV ─── -->
+  <nav class="topnav">
+    <div class="topnav-brand">
+      <div class="topnav-brand-main">ระบบจัดการลานจอด</div>
+      <div class="topnav-brand-sub">Parking Management System</div>
     </div>
-
-    <div class="sidebar-footer">
-      <div class="user-chip">
-        <div class="avatar">AD</div>
-        <div class="user-info">
-          <div class="user-name">Admin</div>
-          <div class="user-role">ผู้ดูแลระบบ</div>
+    <div class="topnav-divider"></div>
+    <div class="topnav-links">
+      <a href="https://add00917-hue.github.io/GNR3-Building-MS/" class="topnav-btn purple" style="text-decoration:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        OMS GNR3
+      </a>
+      <button class="topnav-btn active-amber" id="tnav-all" onclick="tnav(this,'all')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </button>
+      <button class="topnav-btn ghost" id="tnav-booking" onclick="tnav(this,'booking')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        การแจ้งจอด <span class="topnav-badge" id="booking-nav-badge">7</span>
+      </button>
+      <button class="topnav-btn ghost" id="tnav-ari" onclick="tnav(this,'ari')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/><path d="M8 7V5a2 2 0 0 0-4 0v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        Ari Hills
+      </button>
+      <button class="topnav-btn ghost" id="tnav-bts" onclick="tnav(this,'bts')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h.01M12 12h.01M18 12h.01"/><path d="M2 10h20"/><path d="M6 18v2M18 18v2"/></svg>
+        BTS
+      </button>
+      <button class="topnav-btn ghost" id="tnav-ksl" onclick="tnav(this,'ksl')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        KSL
+      </button>
+      <button class="topnav-btn ghost" onclick="openAdminLogin()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span id="admin-badge">Admin</span>
+      </button>
+    </div>
+    <div class="topnav-right">
+      <div class="topnav-gs-wrap" id="gs-topbar-status" onclick="gsStatusClick()" title="คลิกเพื่อ sync">
+        <span class="topnav-gs-dot" id="gs-status-dot"></span>
+        <span class="topnav-gs-label" id="gs-status-label">Google Sheets</span>
+      </div>
+      <div class="topnav-clock" id="liveClock"></div>
+      <div class="topnav-icon-btn" title="การแจ้งเตือน">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </div>
+      <div class="topnav-icon-btn" title="ตั้งค่า" onclick="tnav(null,'settings')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;">
+        <div class="topnav-avatar">AD</div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="topnav-user-name">Admin</div>
+          <div class="topnav-user-role">ผู้ดูแลระบบ</div>
         </div>
       </div>
     </div>
-  </aside>
+  </nav>
+
+  <!-- hidden sidebar kept for compat -->
+  <aside class="sidebar"></aside>
 
   <!-- ─── MAIN ─── -->
   <main class="main">
 
-    <!-- TOP BAR -->
-    <div class="topbar">
-      <div>
-        <div class="topbar-title" id="topbar-title-text">Dashboard <span>/ ภาพรวมที่จอดรถ</span></div>
-      </div>
-      <div class="topbar-right">
-        <!-- Google Sheets status -->
-        <div id="gs-topbar-status" onclick="gsStatusClick()" title="คลิกเพื่อ sync / ตรวจสอบการเชื่อมต่อ"
-          style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:100px;background:#F5F5F2;border:1px solid var(--border);cursor:pointer;transition:all 0.15s;font-size:12px;font-weight:600;color:var(--text-muted);">
-          <span id="gs-status-dot" style="width:7px;height:7px;border-radius:50%;background:#ccc;flex-shrink:0;"></span>
-          <span id="gs-status-label">Google Sheets</span>
-        </div>
-        <div id="liveClock" style="font-size:13px;font-weight:600;color:var(--text-muted);font-family:'DM Mono',monospace;"></div>
-        <button class="icon-btn">🔔</button>
-        <button class="icon-btn">⚙️</button>
-      </div>
+    <!-- sub-topbar: shows for non-dashboard views -->
+    <div id="sub-topbar" style="display:none;align-items:center;gap:10px;padding:14px 24px 0;flex-shrink:0;">
+      <div style="font-size:20px;font-weight:700;letter-spacing:-0.5px;color:var(--text);" id="topbar-title-text">Dashboard</div>
     </div>
 
-    <!-- BUILDING TABS -->
+    <!-- BUILDING TABS (hidden, kept for compat) -->
     <div class="building-tabs" style="display:none;" aria-hidden="true">
       <button class="bld-tab active" id="tab-all" onclick="switchBuilding('all')">
         ทุกอาคาร <span class="bld-count" id="cnt-all">–</span>
@@ -1027,124 +1397,82 @@
     <!-- ════════════════ ALL VIEW — DASHBOARD ════════════════ -->
     <div id="view-all" class="building-view active">
 
-      <!-- ROW 1: KPI Cards -->
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;">
+      <!-- HERO -->
+      <div class="dash-hero">
+        <div class="dash-hero-bg"></div>
+        <div class="dash-hero-overlay"></div>
 
-        <div class="ov-card highlight" style="grid-column:span 1;">
-          <div class="ov-label">ช่องจอดรถยนต์รวม</div>
-          <div class="ov-value" id="ov-total" style="font-size:32px;">–</div>
-          <div class="ov-sub">ทุกอาคาร (ไม่รวมมอไซค์)</div>
-        </div>
-
-        <div class="ov-card">
-          <div class="ov-label">🟢 ว่างอยู่ตอนนี้</div>
-          <div class="ov-value" id="ov-avail" style="color:var(--slot-free-text);font-size:32px;">–</div>
-          <div class="ov-sub" id="ov-avail-sub">ช่อง</div>
-          <div class="ov-bar"><div class="ov-bar-fill" id="ov-bar-avail" style="background:#22C55E;"></div></div>
-        </div>
-
-        <div class="ov-card">
-          <div class="ov-label">🔴 จอดอยู่</div>
-          <div class="ov-value" id="ov-occ" style="font-size:32px;">–</div>
-          <div class="ov-sub" id="ov-occ-sub">ช่อง</div>
-          <div class="ov-bar"><div class="ov-bar-fill" id="ov-bar-occ" style="background:#1A1A1A;"></div></div>
-        </div>
-
-        <div class="ov-card">
-          <div class="ov-label">🏍️ มอเตอร์ไซค์</div>
-          <div class="ov-value" style="color:#7C3AED;font-size:32px;">85</div>
-          <div class="ov-sub">Ari Hills 50 · BTS 35</div>
-          <div class="ov-bar"><div class="ov-bar-fill" style="width:60%;background:#7C3AED;"></div></div>
-        </div>
-
-        <div class="ov-card">
-          <div class="ov-label">📋 การแจ้งจองวันนี้</div>
-          <div class="ov-value" style="color:var(--gold-dark);font-size:32px;" id="ov-bookings">–</div>
-          <div class="ov-sub" id="ov-bookings-sub">รายการ</div>
-          <div class="ov-bar"><div class="ov-bar-fill" style="background:var(--gold);width:40%;"></div></div>
-        </div>
-      </div>
-
-      <!-- ROW 2: อาคาร + ชั้น + กิจกรรมล่าสุด -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 320px;gap:14px;">
-
-        <!-- อาคาร summary table -->
-        <div class="card">
-          <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> สถานะแต่ละอาคาร</div>
-          <div id="all-building-summary"></div>
-        </div>
-
-        <!-- ชั้นใน Ari Hills -->
-        <div class="card">
-          <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> การใช้งานแต่ละชั้น — Ari Hills</div>
-          <div id="all-floor-summary"></div>
-          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
-            <div class="card-title" style="margin-bottom:10px;font-size:12px;color:var(--text-muted);">BTS · KSL</div>
-            <div id="all-floor-summary-bts-ksl"></div>
-          </div>
-        </div>
-
-        <!-- กิจกรรมล่าสุด + แจ้งเตือน -->
-        <div style="display:flex;flex-direction:column;gap:14px;">
-
-          <!-- แจ้งเตือน -->
-          <div class="card" style="padding:14px;">
-            <div class="card-title" style="margin-bottom:10px;"><span class="dot" style="background:#EF4444;"></span> แจ้งเตือน</div>
-            <div id="dash-alerts"></div>
-          </div>
-
-          <!-- กิจกรรมล่าสุด -->
-          <div class="card" style="padding:14px;">
-            <div class="card-title" style="margin-bottom:10px;"><span class="dot"></span> กิจกรรมล่าสุด</div>
-            <div id="dash-activity"></div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- ROW 3: สรุปประเภทช่อง + การจองวันนี้ -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-
-        <!-- สรุปประเภทช่อง -->
-        <div class="card">
-          <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> สรุปประเภทช่องจอด (Ari Hills)</div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-            <div style="background:#F5F5F2;border-radius:10px;padding:14px;border:1.5px solid #DDDDD8;text-align:center;">
-              <div style="font-size:10px;font-weight:600;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;">🔒 ประจำ</div>
-              <div style="font-size:26px;font-weight:700;color:#1A1A1A;" id="dash-fixed-total">–</div>
-              <div style="font-size:10px;color:var(--text-muted);" id="dash-fixed-occ">ช่อง</div>
-            </div>
-            <div style="background:#EFF6FF;border-radius:10px;padding:14px;border:1.5px solid #BFDBFE;text-align:center;">
-              <div style="font-size:10px;font-weight:600;color:#1D4ED8;margin-bottom:4px;text-transform:uppercase;">🔵 ส่วนกลาง</div>
-              <div style="font-size:26px;font-weight:700;color:#2563EB;" id="dash-common-total">–</div>
-              <div style="font-size:10px;color:#2563EB;" id="dash-common-occ">ช่อง</div>
-            </div>
-            <div style="background:#F0FDF4;border-radius:10px;padding:14px;border:1.5px solid #BBF7D0;text-align:center;">
-              <div style="font-size:10px;font-weight:600;color:#15803D;margin-bottom:4px;text-transform:uppercase;">🟢 ไม่กำหนด</div>
-              <div style="font-size:26px;font-weight:700;color:#16A34A;" id="dash-free-total">–</div>
-              <div style="font-size:10px;color:#16A34A;" id="dash-free-occ">ช่อง</div>
+        <div class="dash-hero-top">
+          <div>
+            <div class="dash-hero-lg">Parking Management</div>
+            <div class="dash-hero-date" id="dash-hero-date">Ari Hills · BTS · KSL</div>
+            <!-- ย้ายมาจาก hero-bottom — ขนาด 2x -->
+            <div style="margin-top:18px;">
+              <div style="font-size:20px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:4px;">ช่องจอดรวม</div>
+              <div style="font-size:112px;font-weight:700;letter-spacing:-6px;color:#fff;line-height:0.9;font-family:'DM Mono',monospace;text-shadow:0 2px 32px rgba(255,255,255,0.2);" id="hero-grand-total">–</div>
+              <div style="font-size:26px;margin-top:8px;">
+                <span style="color:#4ade80;" id="hero-grand-avail">–</span>
+                <span style="color:rgba(255,255,255,0.2);margin:0 8px;">ว่าง ·</span>
+                <span style="color:#f87171;" id="hero-grand-occ">–</span>
+                <span style="color:rgba(255,255,255,0.2);margin-left:8px;">จอดอยู่</span>
+              </div>
             </div>
           </div>
-
-          <!-- mini progress bars -->
-          <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px;" id="dash-type-bars"></div>
-        </div>
-
-        <!-- การแจ้งจองวันนี้ snapshot -->
-        <div class="card">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-            <div class="card-title"><span class="dot"></span> การแจ้งจองวันนี้</div>
-            <button onclick="setNav(document.querySelector('.nav-item:nth-child(6)'));switchView('booking')"
-              style="font-size:11px;font-weight:600;padding:5px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;">
-              ดูทั้งหมด →
-            </button>
+          <div class="dash-hero-topright">
+            <div class="dash-hero-desc">ระบบจัดการลานจอดรถอัจฉริยะ เชื่อมต่อ<br>Google Sheets แบบเรียลไทม์ รองรับ 3<br>อาคาร ช่องจอดรวม <span id="dash-hero-total-desc">–</span> ช่อง</div>
+            <div class="dash-hero-link" onclick="tnav(document.getElementById('tnav-ari'),'ari')">ดูแผนผัง →</div>
+            <div class="dash-color-dots">
+              <span style="font-size:10px;color:rgba(255,255,255,0.25);">อาคาร:</span>
+              <div class="dash-color-dot" style="background:#7C3AED;"></div>
+              <div class="dash-color-dot" style="background:#0D9488;"></div>
+              <div class="dash-color-dot" style="background:#E8519A;"></div>
+            </div>
           </div>
-          <div id="dash-today-bookings"></div>
         </div>
 
-      </div>
+        <div class="dash-hero-bottom">
+          <div></div>
+          <div class="dash-actions">
+            <button class="dash-action-main" onclick="tnav(document.getElementById('tnav-booking'),'booking')">ดูการแจ้งจอด</button>
+          </div>
+        </div>
+      </div><!-- /dash-hero -->
 
-    </div>
+      <!-- BOTTOM STATS BAR -->
+      <div class="dash-bottom">
+        <div class="dash-stat-card">
+          <svg class="dash-sc-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M12 12v4"/><path d="M10 14h4"/></svg>
+          <div class="dash-sc-label">อาคาร</div>
+          <div class="dash-sc-val">3 <span style="font-size:14px;color:rgba(255,255,255,0.3);font-weight:400;">แห่ง</span></div>
+        </div>
+        <div class="dash-stat-card">
+          <svg class="dash-sc-icon" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div class="dash-sc-label">ว่างอยู่</div>
+          <div class="dash-sc-val g" id="hero-avail-card">–</div>
+        </div>
+        <div class="dash-stat-card">
+          <svg class="dash-sc-icon" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="1"/><circle cx="12" cy="20" r="1"/><circle cx="20" cy="20" r="1"/></svg>
+          <div class="dash-sc-label">จอดอยู่</div>
+          <div class="dash-sc-val r" id="hero-occ-card">–</div>
+        </div>
+        <div class="dash-stat-card">
+          <svg class="dash-sc-icon" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <div class="dash-sc-label">แจ้งจอดวันนี้</div>
+          <div class="dash-sc-val a" id="hero-today-bk">–</div>
+        </div>
+        <div class="dash-stat-card">
+          <svg class="dash-sc-icon" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          <div class="dash-sc-label">มอเตอร์ไซต์</div>
+          <div class="dash-sc-val p">85</div>
+        </div>
+        <div class="dash-stat-card">
+          <svg class="dash-sc-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.08-8.16"/></svg>
+          <div class="dash-sc-label">อัพเดตล่าสุด</div>
+          <div class="dash-sc-val t" id="hero-updated-time">–</div>
+        </div>
+      </div><!-- /dash-bottom -->
+
+    </div><!-- /view-all -->
 
     <!-- ════════════════ ARI HILLS VIEW ════════════════ -->
     <div id="view-ari" class="building-view">
@@ -1210,299 +1538,160 @@
 
     <!-- ════════════════ VIEW: การแจ้งจอด ════════════════ -->
     <div id="view-booking" class="building-view">
-
-      <div class="overview-row" style="grid-template-columns:repeat(3,1fr);">
-        <div class="ov-card highlight">
-          <div class="ov-label">การแจ้งจอด</div>
-          <div class="ov-value" style="font-size:20px;letter-spacing:0;">Ari Hills</div>
-          <div class="ov-sub">ระบบจองและแจ้งจอดที่จอดรถ</div>
-        </div>
-        <div class="ov-card">
-          <div class="ov-label">ส่วนกลาง — ใช้งานวันนี้</div>
-          <div class="ov-value" style="color:var(--slot-common)" id="bk-common-used">–</div>
-          <div class="ov-sub">จาก 18 ช่อง (66–83)</div>
-          <div class="ov-bar"><div class="ov-bar-fill" id="bk-common-bar" style="background:var(--slot-common)"></div></div>
-        </div>
-        <div class="ov-card">
-          <div class="ov-label">จอดแทน — รอดำเนินการ</div>
-          <div class="ov-value" style="color:#B45309" id="bk-sub-pending">–</div>
-          <div class="ov-sub">รายการรออนุมัติ</div>
-          <div class="ov-bar"><div class="ov-bar-fill" id="bk-sub-bar" style="background:#E8B84B"></div></div>
-        </div>
-      </div>
-
       <div class="book-grid">
-        <!-- ซ้าย: ตารางรายการ -->
-        <div class="card" style="min-width:0;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-            <div class="card-title"><span class="dot"></span> รายการแจ้งจอด — <span id="ari-selected-date-label" style="color:var(--gold-dark);">วันนี้</span></div>
-            <button onclick="printAriReport()" style="font-size:11px;font-weight:600;padding:5px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;white-space:nowrap;">🖨️ พิมพ์/ส่งฝ่ายอาคาร</button>
-          </div>
-          <div style="margin-bottom:14px;">
-            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;display:flex;align-items:center;gap:6px;">
-              <span style="width:7px;height:7px;border-radius:50%;background:#2563EB;display:inline-block;flex-shrink:0;"></span>
-              แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ
-              <span id="common-count" style="font-size:10px;background:#DBEAFE;color:#1D4ED8;padding:1px 7px;border-radius:100px;font-weight:700;"></span>
+
+        <!-- ══ ซ้าย: panel กึ่งกลาง ══ -->
+        <div class="book-left-half">
+          <div class="book-panel">
+
+          <!-- แถวบน: สรุป + ปฏิทิน เคียงกัน ความสูงเท่ากัน -->
+          <div style="display:flex;gap:18px;align-items:stretch;margin-bottom:0;">
+
+            <!-- สรุปรายวัน -->
+            <div class="bk-gc" style="flex:1;min-width:0;display:flex;flex-direction:column;padding:20px;">
+              <div style="font-size:18px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+                <span style="width:8px;height:8px;border-radius:50%;background:#fbbf24;display:inline-block;"></span>
+                สรุปรายวัน — <span id="daily-summary-label" style="color:#fbbf24;font-weight:700;">วันนี้</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;">
+                <div class="bk-kpi-chip" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 10px;">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M12 12v4M10 14h4"/></svg>
+                  <div style="font-size:38px;font-weight:700;color:#a78bfa;font-family:'DM Mono',monospace;line-height:1;" id="daily-common-num">–</div>
+                  <div style="font-size:13px;color:#a78bfa;font-weight:600;">ส่วนกลาง</div>
+                  <div style="font-size:11px;color:rgba(167,139,250,0.65);" id="daily-common-sub">จาก 18 ช่อง</div>
+                </div>
+                <div class="bk-kpi-chip" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 10px;">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  <div style="font-size:38px;font-weight:700;color:#4ade80;font-family:'DM Mono',monospace;line-height:1;" id="daily-sub-num">–</div>
+                  <div style="font-size:13px;color:#4ade80;font-weight:600;">จอดแทน</div>
+                  <div style="font-size:11px;color:rgba(74,222,128,0.65);">รายการ</div>
+                </div>
+                <div class="bk-kpi-chip" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 10px;">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  <div style="font-size:38px;font-weight:700;color:#fbbf24;font-family:'DM Mono',monospace;line-height:1;" id="daily-other-num">–</div>
+                  <div style="font-size:13px;color:#fbbf24;font-weight:600;">รถอื่นๆ</div>
+                  <div style="font-size:11px;color:rgba(251,191,36,0.65);">หน้าอาคาร</div>
+                </div>
+                <div class="bk-kpi-chip" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 10px;">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                  <div style="font-size:38px;font-weight:700;color:#fff;font-family:'DM Mono',monospace;line-height:1;" id="daily-total-num">–</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:600;">รวม</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.3);">รายการ</div>
+                </div>
+              </div>
+              <div style="display:none;">
+                <span id="bk-common-used">–</span><span id="bk-common-bar"></span>
+                <span id="bk-sub-pending">–</span><span id="bk-sub-bar"></span>
+              </div>
             </div>
-            <table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;">
-              <thead><tr style="background:#F5F5F2;">
+
+            <!-- ปฏิทิน — สูงเท่า summary -->
+            <div class="bk-gc" style="flex:1;min-width:0;display:flex;flex-direction:column;padding:20px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-shrink:0;">
+                <div style="font-size:18px;font-weight:700;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:8px;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#a78bfa;display:inline-block;"></span> ปฏิทินการจอง
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <button onclick="ariCalPrev()" class="icon-btn" style="width:32px;height:32px;font-size:16px;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);">‹</button>
+                  <div id="ari-cal-label" style="font-size:14px;font-weight:700;min-width:90px;text-align:center;color:#fff;"></div>
+                  <button onclick="ariCalNext()" class="icon-btn" style="width:32px;height:32px;font-size:16px;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);">›</button>
+                </div>
+              </div>
+              <div id="ari-calendar" style="--cal-cell-size:42px;flex:1;"></div>
+            </div>
+
+          </div><!-- /แถวบน -->
+
+          <!-- ปุ่มแจ้งจอง — amber pill ด้านล่าง ชิดซ้าย -->
+          <div style="display:flex;justify-content:flex-start;">
+            <button onclick="openBookingModal()"
+              style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;padding:18px 48px;border-radius:50px;border:none;cursor:pointer;white-space:nowrap;box-shadow:0 6px 24px rgba(217,119,6,0.5),0 1px 0 rgba(255,255,255,0.15) inset;transition:all 0.2s;letter-spacing:-0.3px;"
+              onmouseover="this.style.outline='3px solid #fbbf24';this.style.outlineOffset='0px';this.style.transform='translateY(-2px)'"
+              onmouseout="this.style.outline='none';this.style.transform='translateY(0)'">
+              แจ้งจองที่จอดรถ
+            </button>
+          </div>
+
+          <div id="booking-login-prompt" style="display:none;"></div>
+          <div id="booking-form-card" style="display:none;"></div>
+        </div>
+        </div>
+
+        <!-- ══ ขวา: ตาราง 50% ══ -->
+        <div class="book-right-half">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-size:14px;font-weight:700;color:#fff;">
+              รายการแจ้งจอด — <span id="ari-selected-date-label" style="color:#fbbf24;">วันนี้</span>
+            </div>
+            <button onclick="printAriReport()" style="font-size:11px;font-weight:600;padding:6px 14px;border-radius:8px;border:0.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);cursor:pointer;color:rgba(255,255,255,0.7);backdrop-filter:blur(8px);">🖨️ พิมพ์/ส่งฝ่ายอาคาร</button>
+          </div>
+
+          <!-- ส่วนกลาง -->
+          <div class="bk-tc">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#a78bfa;display:inline-block;flex-shrink:0;"></span>
+              แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ
+              <span id="common-count" style="font-size:10px;background:rgba(167,139,250,0.2);color:#a78bfa;padding:1px 7px;border-radius:100px;font-weight:700;border:0.5px solid rgba(167,139,250,0.3);"></span>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:auto;">
+              <thead><tr>
                 <th class="tbl-th" style="width:38px;">ลำดับ</th>
                 <th class="tbl-th">ชื่อผู้ขอ</th>
                 <th class="tbl-th" style="width:86px;">ทะเบียน</th>
                 <th class="tbl-th" style="width:80px;">ประเภทรถ</th>
-                <th class="tbl-th" style="width:110px;">ประเภทการจอด</th>
-                <th class="tbl-th" style="width:110px;text-align:center;">ชั้น (จอด ชั้น 5 ส่วนกลางขวามือ)</th>
-                <th class="tbl-th" style="width:96px;">หมายเหตุ</th>
+                <th class="tbl-th" style="width:100px;">ประเภทการจอด</th>
+                <th class="tbl-th" style="width:110px;text-align:center;">ชั้น</th>
+                <th class="tbl-th" style="width:80px;">หมายเหตุ</th>
               </tr></thead>
               <tbody id="ari-common-tbody"></tbody>
             </table>
           </div>
-          <div style="border-top:1.5px dashed var(--border);margin-bottom:14px;"></div>
-          <div>
-            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;display:flex;align-items:center;gap:6px;">
-              <span style="width:7px;height:7px;border-radius:50%;background:#16A34A;display:inline-block;flex-shrink:0;"></span>
+
+          <!-- จอดแทน -->
+          <div class="bk-tc">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#4ade80;display:inline-block;flex-shrink:0;"></span>
               แจ้งจอดแทน
-              <span id="sub-count" style="font-size:10px;background:#DCFCE7;color:#15803D;padding:1px 7px;border-radius:100px;font-weight:700;"></span>
+              <span id="sub-count" style="font-size:10px;background:rgba(74,222,128,0.15);color:#4ade80;padding:1px 7px;border-radius:100px;font-weight:700;border:0.5px solid rgba(74,222,128,0.3);"></span>
             </div>
-            <table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;">
-              <thead><tr style="background:#F5F5F2;">
+            <table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:auto;">
+              <thead><tr>
                 <th class="tbl-th" style="width:38px;">ลำดับ</th>
                 <th class="tbl-th">ชื่อผู้ขอ</th>
                 <th class="tbl-th" style="width:84px;">ทะเบียนผู้ขอ</th>
-                <th class="tbl-th" style="width:76px;">ประเภทรถ</th>
-                <th class="tbl-th" style="width:96px;">ทะเบียนสิทธิ์จอดแทน</th>
-                <th class="tbl-th" style="width:100px;text-align:center;">ประเภทการจอด</th>
-                <th class="tbl-th" style="width:60px;text-align:center;">ชั้น</th>
-                <th class="tbl-th" style="width:90px;">หมายเหตุ</th>
+                <th class="tbl-th" style="width:72px;">ประเภทรถ</th>
+                <th class="tbl-th" style="width:90px;">ทะเบียนสิทธิ์</th>
+                <th class="tbl-th" style="width:90px;text-align:center;">ประเภทการจอด</th>
+                <th class="tbl-th" style="width:55px;text-align:center;">ชั้น</th>
+                <th class="tbl-th" style="width:80px;">หมายเหตุ</th>
               </tr></thead>
               <tbody id="ari-sub-tbody"></tbody>
             </table>
           </div>
 
-          <div style="border-top:1.5px dashed var(--border);margin-bottom:14px;"></div>
-
-          <!-- ตาราง 3: รถอื่นๆ -->
-          <div>
-            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px;display:flex;align-items:center;gap:6px;">
-              <span style="width:7px;height:7px;border-radius:50%;background:#7C3AED;display:inline-block;flex-shrink:0;"></span>
+          <!-- รถอื่นๆ -->
+          <div class="bk-tc">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#fbbf24;display:inline-block;flex-shrink:0;"></span>
               แจ้งจอดรถอื่นๆ (รถตู้ / รถส่งของ / รถ Vendor / รถบัส / รถพยาบาล)
-              <span id="other-count" style="font-size:10px;background:#EDE9FE;color:#7C3AED;padding:1px 7px;border-radius:100px;font-weight:700;"></span>
+              <span id="other-count" style="font-size:10px;background:rgba(251,191,36,0.15);color:#fbbf24;padding:1px 7px;border-radius:100px;font-weight:700;border:0.5px solid rgba(251,191,36,0.3);"></span>
             </div>
-            <table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;">
-              <thead><tr style="background:#F5F5F2;">
+            <table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:auto;">
+              <thead><tr>
                 <th class="tbl-th" style="width:38px;">ลำดับ</th>
                 <th class="tbl-th">ชื่อผู้ขอ</th>
                 <th class="tbl-th" style="width:86px;">ทะเบียนผู้ขอ</th>
                 <th class="tbl-th" style="width:90px;">ประเภทรถ</th>
                 <th class="tbl-th" style="width:100px;text-align:center;">ประเภทการจอด</th>
                 <th class="tbl-th" style="width:110px;text-align:center;">ชั้น (จอดหน้าอาคาร)</th>
-                <th class="tbl-th" style="width:96px;">หมายเหตุ</th>
+                <th class="tbl-th" style="width:80px;">หมายเหตุ</th>
               </tr></thead>
               <tbody id="ari-other-tbody"></tbody>
             </table>
           </div>
         </div>
 
-        <!-- ขวา: ปฏิทิน + สรุป + ฟอร์ม -->
-        <div style="display:flex;flex-direction:column;gap:14px;min-width:0;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;">
-            <div style="display:flex;flex-direction:column;gap:14px;">
-              <div class="card" style="min-width:0;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                  <div class="card-title" style="font-size:13px;"><span class="dot"></span> ปฏิทิน</div>
-                  <div style="display:flex;align-items:center;gap:4px;">
-                    <button onclick="ariCalPrev()" class="icon-btn" style="width:24px;height:24px;font-size:11px;">‹</button>
-                    <div id="ari-cal-label" style="font-size:11px;font-weight:700;min-width:76px;text-align:center;"></div>
-                    <button onclick="ariCalNext()" class="icon-btn" style="width:24px;height:24px;font-size:11px;">›</button>
-                  </div>
-                </div>
-                <div id="ari-calendar"></div>
-              </div>
-              <div class="card" style="min-width:0;">
-                <div class="card-title" style="margin-bottom:10px;"><span class="dot"></span> สรุปรายวัน — <span id="daily-summary-label" style="color:var(--gold-dark);font-weight:700;">วันนี้</span></div>
-                <table style="width:100%;border-collapse:collapse;font-size:11px;">
-                  <thead><tr style="background:#F5F5F2;">
-                    <th class="tbl-th" style="font-size:10px;">ประเภท</th>
-                    <th class="tbl-th" style="text-align:center;font-size:10px;"><span style="color:#22C55E;">●</span> ส่วนกลาง</th>
-                    <th class="tbl-th" style="text-align:center;font-size:10px;"><span style="color:#E8B84B;">●</span> จอดแทน</th>
-                    <th class="tbl-th" style="text-align:center;font-size:10px;"><span style="color:#EF4444;">●</span> รถอื่นๆ</th>
-                    <th class="tbl-th" style="text-align:center;font-size:10px;">รวม</th>
-                  </tr></thead>
-                  <tbody id="ari-daily-tbody"></tbody>
-                </table>
-              </div>
-            </div>
-            <!-- Login prompt (shown when not logged in) -->
-            <div id="booking-login-prompt" class="card" style="padding:0;overflow:hidden;min-width:0;display:none;">
-              <div style="background:#1A1A1A;padding:12px 14px;">
-                <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:1px;">แจ้งจองที่จอดรถ</div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.4);">Ari Hills</div>
-              </div>
-              <div style="padding:24px 16px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:10px;">🔐</div>
-                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">ต้องเข้าสู่ระบบก่อน</div>
-                <div style="font-size:11px;color:var(--text-muted);margin-bottom:16px;">สามารถดูรายการได้ แต่ต้องล็อกอินก่อนแจ้งจอง</div>
-                <button onclick="showInlineLogin('booking')" style="padding:9px 22px;border-radius:10px;border:none;background:#1A1A1A;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">
-                  เข้าสู่ระบบ Admin
-                </button>
-                <div id="inline-login-booking" style="display:none;margin-top:16px;text-align:left;">
-                  <div class="form-field" style="margin-bottom:8px;"><label class="form-label">ชื่อผู้ใช้</label><input class="form-input" id="il-user-booking" placeholder="username"></div>
-                  <div class="form-field" style="margin-bottom:8px;"><label class="form-label">รหัสผ่าน</label><input class="form-input" id="il-pass-booking" type="password" placeholder="password" onkeydown="if(event.key==='Enter')doInlineLogin('booking')"></div>
-                  <div id="il-error-booking" style="display:none;font-size:11px;color:#DC2626;background:#FEF2F2;padding:6px 10px;border-radius:8px;margin-bottom:8px;">❌ ไม่ถูกต้อง</div>
-                  <button onclick="doInlineLogin('booking')" style="width:100%;padding:10px;border-radius:10px;border:none;background:var(--gold);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">เข้าสู่ระบบ</button>
-                </div>
-              </div>
-            </div>
-
-            <div id="booking-form-card" class="card" style="padding:0;overflow:hidden;min-width:0;">
-              <div style="background:#1A1A1A;padding:12px 14px;">
-                <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:1px;">แจ้งจองที่จอดรถ</div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.4);">Ari Hills</div>
-              </div>
-              <div style="padding:12px 14px;display:flex;flex-direction:column;gap:10px;">
-
-                <!-- 1. ประเภทการจอด -->
-                <div class="form-field">
-                  <label class="form-label">1. ประเภทการจอด</label>
-                  <select class="form-select" id="book-type" onchange="onBookTypeChange()">
-                    <option value="common">🅿️ แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ</option>
-                    <option value="sub">🔄 จอดแทน</option>
-                    <option value="other">🚌 จอดรถอื่นๆ (หน้าอาคาร)</option>
-                  </select>
-                </div>
-
-                <!-- 1.1 รูปแบบการจอด (รายวัน/จอดยาว) — แสดงทุก type แต่ซ่อน long สำหรับ sub/other -->
-                <div class="form-field" id="book-park-mode-row">
-                  <label class="form-label" id="park-mode-label">1.1 รูปแบบการจอด</label>
-                  <div id="park-mode-toggle-btns" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-                    <button type="button" id="parkmode-daily" onclick="setParkMode('daily')"
-                      style="padding:10px 8px;border-radius:10px;border:1.5px solid var(--gold);background:#FFFBEB;font-size:12px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;">
-                      <span style="font-size:16px;">📅</span>
-                      <span>รายวัน</span>
-                      <span style="font-size:9px;color:var(--text-muted);font-weight:400;">เลือกหลายวันได้</span>
-                    </button>
-                    <button type="button" id="parkmode-long" onclick="setParkMode('long')"
-                      style="padding:10px 8px;border-radius:10px;border:1.5px solid var(--border);background:transparent;font-size:12px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--text-muted);">
-                      <span style="font-size:16px;">📆</span>
-                      <span>จอดยาว</span>
-                      <span style="font-size:9px;font-weight:400;">เลือกช่วงวัน</span>
-                    </button>
-                  </div>
-
-                  <!-- ปฏิทินรายวัน (เลือกหลายวัน) -->
-                  <div id="park-daily-cal" style="border:1.5px solid var(--border);border-radius:10px;padding:10px;background:var(--surface);">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-                      <button onclick="multiCalNav(-1)" style="border:none;background:none;cursor:pointer;font-size:15px;padding:2px 6px;">‹</button>
-                      <span id="multi-cal-label" style="font-size:11px;font-weight:700;"></span>
-                      <button onclick="multiCalNav(1)" style="border:none;background:none;cursor:pointer;font-size:15px;padding:2px 6px;">›</button>
-                    </div>
-                    <div id="multi-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:10px;"></div>
-                    <div id="multi-cal-selected" style="margin-top:8px;font-size:10px;color:var(--gold-dark);font-weight:600;min-height:16px;"></div>
-                  </div>
-
-                  <!-- ปฏิทินจอดยาว (เลือกช่วง) -->
-                  <div id="park-long-cal" style="display:none;border:1.5px solid var(--border);border-radius:10px;padding:10px;background:var(--surface);">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-                      <button onclick="rangeCalNav(-1)" style="border:none;background:none;cursor:pointer;font-size:15px;padding:2px 6px;">‹</button>
-                      <span id="range-cal-label" style="font-size:11px;font-weight:700;"></span>
-                      <button onclick="rangeCalNav(1)" style="border:none;background:none;cursor:pointer;font-size:15px;padding:2px 6px;">›</button>
-                    </div>
-                    <div id="range-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:10px;"></div>
-                    <div id="range-cal-selected" style="margin-top:8px;font-size:10px;color:#7C3AED;font-weight:600;min-height:16px;"></div>
-                  </div>
-
-                  <!-- ค้างคืน (สำหรับ common เท่านั้น) -->
-                  <div id="common-overnight-div" style="margin-top:8px;display:flex;align-items:center;gap:8px;padding:8px 10px;background:#F5F5F2;border-radius:8px;border:1px solid var(--border);">
-                    <label style="font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex:1;">
-                      <input type="checkbox" id="book-overnight" style="width:15px;height:15px;accent-color:#E8B84B;cursor:pointer;">
-                      🌙 ค้างคืน (23:00 – 08:00)
-                    </label>
-                    <span style="font-size:10px;color:var(--text-muted);">ไม่ติ๊ก = ไม่ค้างคืน</span>
-                  </div>
-                </div>
-
-                <!-- 2. ประเภทรถ -->
-                <div class="form-field">
-                  <label class="form-label">2. ประเภทรถ</label>
-                  <select class="form-select" id="book-car-type" onchange="onCarTypeChange()">
-                    <option value="sedan">🚗 รถเก๋ง</option>
-                    <option value="suv">🚙 รถ SUV</option>
-                    <option value="ev">⚡ รถไฟฟ้า</option>
-                    <option value="truck">🚚 รถกระบะ</option>
-                    <!-- ตัวเลือกด้านล่างจะแสดงเฉพาะประเภท จอดรถอื่นๆ -->
-                    <option value="van" class="opt-other" style="display:none;">🚐 รถตู้</option>
-                    <option value="delivery" class="opt-other" style="display:none;">📦 รถส่งของ</option>
-                    <option value="vendor" class="opt-other" style="display:none;">🏪 รถ Vendor</option>
-                    <option value="bus" class="opt-other" style="display:none;">🚌 รถบัส</option>
-                    <option value="ambulance" class="opt-other" style="display:none;">🚑 รถพยาบาล</option>
-                  </select>
-                  <div id="book-special-note" style="display:none;font-size:10px;color:#B45309;margin-top:3px;padding:5px 8px;background:#FEF3C7;border-radius:6px;">
-                    ⚠️ รถประเภทนี้จะบันทึกในตาราง <strong>แจ้งจอดรถอื่นๆ</strong> (จอดหน้าอาคาร) โดยอัตโนมัติ
-                  </div>
-                </div>
-
-                <!-- 3. วันที่ (hidden fields for compatibility) -->
-                <input type="hidden" id="book-date-from">
-                <input type="hidden" id="book-date-to">
-                <input type="hidden" id="book-date-from-display">
-                <input type="hidden" id="book-date-to-display">
-
-                <!-- 3. ชื่อผู้แจ้งจอง -->
-                <div class="form-field">
-                  <label class="form-label">3. ชื่อผู้แจ้งจอง</label>
-                  <input type="text" class="form-input" id="book-name" placeholder="ชื่อ-นามสกุล">
-                </div>
-
-                <!-- 4. ทะเบียนรถ -->
-                <div class="form-field">
-                  <label class="form-label">4. ทะเบียนผู้แจ้ง</label>
-                  <input type="text" class="form-input" id="book-plate" placeholder="เช่น กข 1234">
-                </div>
-
-                <!-- ทะเบียนเจ้าของ + ผลตรวจสอบ (จอดแทนเท่านั้น) -->
-                <div id="book-owner-row" class="form-field" style="display:none;">
-                  <label class="form-label">ทะเบียนสิทธิ์จอดแทน (เจ้าของช่อง)</label>
-                  <input type="text" class="form-input" id="book-plate-owner" placeholder="เช่น กข 5678" oninput="checkOwnerPlate()">
-                  <div id="book-owner-result" style="display:none;margin-top:4px;font-size:11px;padding:6px 10px;border-radius:8px;"></div>
-                </div>
-
-                <!-- ชั้นที่จอดแทน (จอดแทนเท่านั้น) -->
-                <div id="book-sub-floor-row" class="form-field" style="display:none;">
-                  <label class="form-label">ชั้นที่จอดแทน</label>
-                  <select class="form-select" id="book-sub-floor">
-                    <option value="visitor">🅿️ ไม่กำหนด (จอดช่อง Visitor)</option>
-                    <option value="P3A">ชั้น P3A — ช่องจอดประจำ</option>
-                    <option value="P4">ชั้น P4 — ช่องจอดประจำ</option>
-                    <option value="P4A">ชั้น P4A — ช่องจอดประจำ</option>
-                    <option value="P5">ชั้น P5 — ช่องจอดประจำ</option>
-                    <option value="P5A">ชั้น P5A — ช่องจอดประจำ</option>
-                    <option value="P6">ชั้น P6 — ช่องจอดประจำ</option>
-                  </select>
-                </div>
-
-                <!-- 5. หมายเหตุ (common + other เท่านั้น) -->
-                <div class="form-field" id="book-note-row">
-                  <label class="form-label">5. หมายเหตุ</label>
-                  <input type="text" class="form-input" id="book-note" placeholder="(ถ้ามี)">
-                </div>
-
-                <!-- ค้างคืน สำหรับ จอดแทน / รถอื่นๆ -->
-                <div id="book-overnight-row" style="display:none;align-items:center;gap:8px;padding:8px 10px;background:#F5F5F2;border-radius:8px;border:1px solid var(--border);">
-                  <label style="font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex:1;">
-                    <input type="checkbox" id="book-sub-overnight" style="width:15px;height:15px;accent-color:#E8B84B;cursor:pointer;">
-                    🌙 ค้างคืน
-                  </label>
-                  <span style="font-size:10px;color:var(--text-muted);">ไม่ติ๊ก = ไม่ค้างคืน</span>
-                </div>
-
-                <button onclick="submitBooking()" style="width:100%;padding:11px;border-radius:10px;border:none;background:var(--gold);color:#fff;font-size:13px;font-weight:700;cursor:pointer;margin-top:2px;">
-                  ✓ บันทึกการจอง
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div><!-- /book-grid -->
     </div>
 
     <!-- ════════════════ VIEW: จองคิวที่จอดรถสำนักงาน ════════════════ -->
@@ -1515,7 +1704,7 @@
           <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">พนักงาน 1 คน · 1 อาคาร · สูงสุด 3 ทะเบียน · จอดได้ 1 ช่องต่อครั้ง</div>
         </div>
         <button onclick="adminLoggedIn ? openAddQueue() : showInlineLogin('queue')"
-          style="padding:9px 18px;border-radius:10px;border:none;background:var(--gold);color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">
+          style="padding:9px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,#7C3AED,#5B3FD8);color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 4px 12px rgba(124,58,237,0.28);">
           🔐 + เพิ่มรายการ
         </button>
       </div>
@@ -1902,6 +2091,281 @@
   </div>
 </div>
 
+<!-- ════ BOOKING MODAL POPUP — 2-column no-scroll ════ -->
+<div id="booking-modal-overlay" onclick="if(event.target===this)closeBookingModal()"
+  style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.52);backdrop-filter:blur(8px);z-index:400;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:20px;width:820px;max-width:96vw;box-shadow:0 24px 64px rgba(0,0,0,0.2);animation:bm-in 0.22s ease;display:flex;flex-direction:column;max-height:calc(100vh - 40px);">
+
+    <!-- Header -->
+    <div style="padding:16px 22px 14px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <i class="ti ti-parking" style="font-size:22px;color:#7C3AED" aria-hidden="true"></i>
+        <div>
+          <div style="font-size:18px;font-weight:700;color:#1a1a2e;letter-spacing:-0.3px;">แจ้งจองที่จอดรถ</div>
+          <div style="font-size:11px;color:#aaa;margin-top:1px;">Ari Hills — เลือกวันด้านซ้าย กรอกข้อมูลด้านขวา</div>
+        </div>
+        <span style="background:#7C3AED;color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-left:4px;">Ari Hills</span>
+      </div>
+      <button onclick="closeBookingModal()" style="width:30px;height:30px;border-radius:50%;border:none;background:#f5f5f5;color:#888;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background 0.15s;" onmouseover="this.style.background='#eee'" onmouseout="this.style.background='#f5f5f5'">✕</button>
+    </div>
+
+    <!-- 2-col body -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;flex:1;overflow:hidden;border-radius:0 0 20px 20px;">
+
+      <!-- LEFT: ปฏิทิน -->
+      <div style="padding:16px 14px 16px 20px;display:flex;flex-direction:column;gap:12px;border-right:1px solid #f0f0f0;overflow-y:auto;">
+      <div id="book-park-mode-row" style="display:flex;flex-direction:column;gap:12px;">
+
+        <!-- รูปแบบการจอด -->
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:8px;" id="park-mode-label">รูปแบบการจอด</div>
+          <div id="park-mode-toggle-btns" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <button type="button" id="parkmode-daily" onclick="setParkMode('daily')"
+              style="padding:9px 8px;border-radius:10px;border:1.5px solid #7C3AED;background:#f5f3ff;font-size:11px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:#7C3AED;transition:all 0.18s;box-shadow:0 0 0 3px rgba(124,58,237,0.1);">
+              <i class="ti ti-calendar-event" style="font-size:16px" aria-hidden="true"></i>
+              <span>รายวัน</span>
+              <span style="font-size:9px;font-weight:400;opacity:0.7;">เลือกหลายวันได้</span>
+            </button>
+            <button type="button" id="parkmode-long" onclick="setParkMode('long')"
+              style="padding:9px 8px;border-radius:10px;border:1.5px solid #eee;background:#fff;font-size:11px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:#aaa;transition:all 0.18s;">
+              <i class="ti ti-calendar-stats" style="font-size:16px" aria-hidden="true"></i>
+              <span>จอดยาว</span>
+              <span style="font-size:9px;font-weight:400;">เลือกช่วงวัน</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ปฏิทินรายวัน -->
+        <div id="park-daily-cal" style="background:#f9f9fb;border-radius:12px;padding:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <button onclick="multiCalNav(-1)" style="border:none;background:rgba(0,0,0,0.05);border-radius:7px;cursor:pointer;font-size:15px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#666;transition:background 0.15s;" onmouseover="this.style.background='rgba(0,0,0,0.1)'" onmouseout="this.style.background='rgba(0,0,0,0.05)'">‹</button>
+            <span id="multi-cal-label" style="font-size:13px;font-weight:700;color:#1a1a2e;"></span>
+            <button onclick="multiCalNav(1)" style="border:none;background:rgba(0,0,0,0.05);border-radius:7px;cursor:pointer;font-size:15px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#666;transition:background 0.15s;" onmouseover="this.style.background='rgba(0,0,0,0.1)'" onmouseout="this.style.background='rgba(0,0,0,0.05)'">›</button>
+          </div>
+          <div id="multi-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:11px;"></div>
+          <div id="multi-cal-selected" style="margin-top:8px;font-size:10px;color:#7C3AED;font-weight:600;min-height:16px;display:flex;align-items:center;gap:4px;"></div>
+        </div>
+
+        <!-- ปฏิทินจอดยาว -->
+        <div id="park-long-cal" style="display:none;background:#f9f9fb;border-radius:12px;padding:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <button onclick="rangeCalNav(-1)" style="border:none;background:rgba(0,0,0,0.05);border-radius:7px;cursor:pointer;font-size:15px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#666;">‹</button>
+            <span id="range-cal-label" style="font-size:13px;font-weight:700;color:#1a1a2e;"></span>
+            <button onclick="rangeCalNav(1)" style="border:none;background:rgba(0,0,0,0.05);border-radius:7px;cursor:pointer;font-size:15px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#666;">›</button>
+          </div>
+          <div id="range-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:11px;"></div>
+          <div id="range-cal-selected" style="margin-top:8px;font-size:10px;color:#7C3AED;font-weight:600;min-height:16px;"></div>
+        </div>
+
+        <!-- Occupancy card (ส่วนกลาง) -->
+        <div id="bm-occ-card" style="background:#f5f3ff;border-radius:12px;padding:12px 14px;">
+          <div style="font-size:11px;font-weight:700;color:#6D28D9;margin-bottom:8px;display:flex;align-items:center;gap:5px;">
+            <i class="ti ti-chart-bar" style="font-size:12px" aria-hidden="true"></i> ส่วนกลาง ชั้น 5 ขวามือ
+          </div>
+          <div style="height:5px;background:#e0d9f7;border-radius:3px;overflow:hidden;margin-bottom:8px;">
+            <div id="bm-occ-bar" style="height:100%;background:linear-gradient(90deg,#7C3AED,#a78bfa);border-radius:3px;width:11%;transition:width 0.5s ease;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-around;text-align:center;">
+            <div><div id="bm-occ-booked" style="font-size:18px;font-weight:700;color:#7C3AED;">–</div><div style="font-size:9px;color:#a78bfa;font-weight:600;">จองแล้ว</div></div>
+            <div style="width:1px;background:#ddd5ff;"></div>
+            <div><div id="bm-occ-avail" style="font-size:18px;font-weight:700;color:#16a34a;">–</div><div style="font-size:9px;color:#4ade80;font-weight:600;">ว่างอยู่</div></div>
+            <div style="width:1px;background:#ddd5ff;"></div>
+            <div><div style="font-size:18px;font-weight:700;color:#999;">18</div><div style="font-size:9px;color:#bbb;font-weight:600;">ทั้งหมด</div></div>
+          </div>
+        </div>
+
+        <!-- ค้างคืน (hidden checkbox for JS compat) -->
+        <div id="common-overnight-div" style="display:none;">
+          <input type="checkbox" id="book-overnight">
+        </div>
+
+      </div><!-- /book-park-mode-row -->
+      </div><!-- /LEFT -->
+
+      <!-- RIGHT: ฟอร์ม -->
+      <div style="padding:16px 20px 16px 14px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;">
+
+        <!-- ประเภทการจอด — card tabs -->
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:8px;">ประเภทการจอด <span style="color:#ef4444;">*</span></div>
+          <div style="display:flex;gap:6px;margin-bottom:8px;">
+            <div id="bm-tc-common" onclick="setBmType('common')"
+              style="flex:1;padding:10px 6px;border-radius:10px;border:1.5px solid #7C3AED;background:#f5f3ff;text-align:center;cursor:pointer;transition:all 0.2s;box-shadow:0 2px 8px rgba(124,58,237,0.18);">
+              <i class="ti ti-building-community" style="font-size:16px;display:block;margin-bottom:3px;color:#7C3AED" aria-hidden="true"></i>
+              <div style="font-size:11px;font-weight:700;color:#1a1a2e;">ส่วนกลาง</div>
+              <div style="font-size:9px;color:#a78bfa;">ชั้น 5 ขวามือ</div>
+            </div>
+            <div id="bm-tc-sub" onclick="setBmType('sub')"
+              style="flex:1;padding:10px 6px;border-radius:10px;border:1.5px solid #eee;background:#fff;text-align:center;cursor:pointer;transition:all 0.2s;">
+              <i class="ti ti-users" style="font-size:16px;display:block;margin-bottom:3px;color:#ccc" aria-hidden="true"></i>
+              <div style="font-size:11px;font-weight:700;color:#1a1a2e;">จอดแทน</div>
+              <div style="font-size:9px;color:#bbb;">ใช้สิทธิ์แทน</div>
+            </div>
+            <div id="bm-tc-other" onclick="setBmType('other')"
+              style="flex:1;padding:10px 6px;border-radius:10px;border:1.5px solid #eee;background:#fff;text-align:center;cursor:pointer;transition:all 0.2s;">
+              <i class="ti ti-truck-delivery" style="font-size:16px;display:block;margin-bottom:3px;color:#ccc" aria-hidden="true"></i>
+              <div style="font-size:11px;font-weight:700;color:#1a1a2e;">รถอื่นๆ</div>
+              <div style="font-size:9px;color:#bbb;">Vendor / บัส</div>
+            </div>
+          </div>
+          <!-- hidden select for JS compat -->
+          <select id="book-type" onchange="onBookTypeChange()" style="display:none;">
+            <option value="common">ส่วนกลาง</option>
+            <option value="sub">จอดแทน</option>
+            <option value="other">รถอื่นๆ</option>
+          </select>
+        </div>
+
+        <!-- ประเภทรถ -->
+        <div>
+          <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px;">ประเภทรถ <span style="color:#ef4444;">*</span></label>
+          <select class="form-select" id="book-car-type" onchange="onCarTypeChange()" style="width:100%;padding:9px 11px;border:1.5px solid #eee;border-radius:9px;font-size:13px;outline:none;transition:all 0.15s;" onfocus="this.style.borderColor='#7C3AED';this.style.boxShadow='0 0 0 3px rgba(124,58,237,0.1)'" onblur="this.style.borderColor='#eee';this.style.boxShadow='none'">
+            <option value="sedan" class="opt-normal">🚗 รถเก๋ง</option>
+            <option value="suv" class="opt-normal">🚙 รถ SUV / PPV</option>
+            <option value="ev" class="opt-normal">⚡ รถไฟฟ้า</option>
+            <option value="truck" class="opt-normal">🚚 รถกระบะ</option>
+            <option value="van" class="opt-other" style="display:none;">🚐 รถตู้</option>
+            <option value="delivery" class="opt-other" style="display:none;">📦 รถส่งของ</option>
+            <option value="vendor" class="opt-other" style="display:none;">🏪 รถ Vendor</option>
+            <option value="bus" class="opt-other" style="display:none;">🚌 รถบัส</option>
+            <option value="ambulance" class="opt-other" style="display:none;">🚑 รถพยาบาล</option>
+          </select>
+          <div id="book-special-note" style="display:none;font-size:10px;color:#B45309;margin-top:4px;padding:5px 8px;background:#FEF3C7;border-radius:7px;">
+            ⚠️ รถประเภทนี้บันทึกในตาราง <strong>แจ้งจอดรถอื่นๆ</strong> (หน้าอาคาร) โดยอัตโนมัติ
+          </div>
+        </div>
+
+        <!-- hidden date fields -->
+        <input type="hidden" id="book-date-from">
+        <input type="hidden" id="book-date-to">
+        <input type="hidden" id="book-date-from-display">
+        <input type="hidden" id="book-date-to-display">
+
+        <!-- ชื่อผู้แจ้งจอง -->
+        <div>
+          <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px;">ชื่อผู้แจ้งจอง <span style="color:#ef4444;">*</span></label>
+          <input type="text" class="form-input" id="book-name" placeholder="ชื่อ-นามสกุล" style="width:100%;padding:9px 11px;border:1.5px solid #eee;border-radius:9px;font-size:13px;outline:none;box-sizing:border-box;transition:all 0.15s;" onfocus="this.style.borderColor='#7C3AED';this.style.boxShadow='0 0 0 3px rgba(124,58,237,0.1)'" onblur="this.style.borderColor='#eee';this.style.boxShadow='none'">
+        </div>
+
+        <!-- ทะเบียนผู้แจ้ง -->
+        <div>
+          <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px;">ทะเบียนรถ <span style="color:#ef4444;">*</span></label>
+          <input type="text" class="form-input" id="book-plate" placeholder="เช่น กข 1234" style="width:100%;padding:9px 11px;border:1.5px solid #eee;border-radius:9px;font-size:13px;outline:none;box-sizing:border-box;transition:all 0.15s;" onfocus="this.style.borderColor='#7C3AED';this.style.boxShadow='0 0 0 3px rgba(124,58,237,0.1)'" onblur="this.style.borderColor='#eee';this.style.boxShadow='none'">
+        </div>
+
+        <!-- ทะเบียนสิทธิ์ (จอดแทน) -->
+        <div id="book-owner-row" style="display:none;">
+          <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px;">ทะเบียนสิทธิ์จอดแทน <span style="color:#ef4444;">*</span></label>
+          <input type="text" class="form-input" id="book-plate-owner" placeholder="ทะเบียนเจ้าของช่อง" oninput="checkOwnerPlate()" style="width:100%;padding:9px 11px;border:1.5px solid #eee;border-radius:9px;font-size:13px;outline:none;box-sizing:border-box;">
+          <div id="book-owner-result" style="display:none;margin-top:4px;font-size:11px;padding:6px 10px;border-radius:8px;"></div>
+        </div>
+
+        <!-- ชั้นที่จอดแทน -->
+        <div id="book-sub-floor-row" style="display:none;">
+          <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px;">ชั้นที่จอดแทน <span style="color:#ef4444;">*</span></label>
+          <select class="form-select" id="book-sub-floor" style="width:100%;padding:9px 11px;border:1.5px solid #eee;border-radius:9px;font-size:13px;outline:none;">
+            <option value="visitor">🅿️ ไม่กำหนด (จอดช่อง Visitor)</option>
+            <option value="P3A">ชั้น P3A</option>
+            <option value="P4">ชั้น P4</option>
+            <option value="P4A">ชั้น P4A</option>
+            <option value="P5">ชั้น P5</option>
+            <option value="P5A">ชั้น P5A</option>
+            <option value="P6">ชั้น P6</option>
+          </select>
+        </div>
+
+        <!-- ค้างคืน — toggle buttons (ฝั่งขวา) -->
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:6px;">
+            <i class="ti ti-moon" style="font-size:12px;vertical-align:-1px;margin-right:4px;color:#7C3AED" aria-hidden="true"></i>ค้างคืน <span style="color:#ef4444;">*</span>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <div id="bm-ov-no" onclick="setBmOvernight('no')"
+              style="flex:1;padding:9px 8px;border-radius:9px;border:1.5px solid #16a34a;background:#f0fdf4;text-align:center;font-size:12px;font-weight:700;color:#16a34a;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all 0.18s;box-shadow:0 0 0 3px rgba(22,163,74,0.1);">
+              <i class="ti ti-sun" style="font-size:14px" aria-hidden="true"></i>ไม่ค้างคืน
+            </div>
+            <div id="bm-ov-yes" onclick="setBmOvernight('yes')"
+              style="flex:1;padding:9px 8px;border-radius:9px;border:1.5px solid #eee;background:#fff;text-align:center;font-size:12px;font-weight:700;color:#aaa;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all 0.18s;">
+              <i class="ti ti-moon" style="font-size:14px" aria-hidden="true"></i>ค้างคืน
+            </div>
+          </div>
+          <!-- hidden checkboxes for JS compat -->
+          <div style="display:none;">
+            <input type="checkbox" id="book-sub-overnight">
+          </div>
+          <div id="book-overnight-row" style="display:none;"></div>
+        </div>
+
+        <!-- หมายเหตุ -->
+        <div id="book-note-row">
+          <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px;">หมายเหตุ <span style="font-size:10px;font-weight:400;color:#bbb;">(ไม่บังคับ)</span></label>
+          <input type="text" class="form-input" id="book-note" placeholder="ระบุเพิ่มเติม..." style="width:100%;padding:9px 11px;border:1.5px solid #eee;border-radius:9px;font-size:13px;outline:none;box-sizing:border-box;transition:all 0.15s;" onfocus="this.style.borderColor='#7C3AED';this.style.boxShadow='0 0 0 3px rgba(124,58,237,0.1)'" onblur="this.style.borderColor='#eee';this.style.boxShadow='none'">
+        </div>
+
+        <div style="flex:1;"></div>
+
+        <!-- ปุ่ม -->
+        <div style="display:flex;gap:8px;margin-top:4px;">
+          <button onclick="closeBookingModal()" style="flex:1;padding:11px;border-radius:50px;border:1.5px solid #eee;background:#fff;font-size:13px;color:#888;cursor:pointer;font-weight:600;transition:all 0.15s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='#fff'">ยกเลิก</button>
+          <button onclick="submitBooking()" style="flex:2;padding:11px;border-radius:50px;border:none;background:#7C3AED;color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 14px rgba(124,58,237,0.4);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(124,58,237,0.5)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(124,58,237,0.4)'">
+            <i class="ti ti-check" style="font-size:16px" aria-hidden="true"></i> บันทึกการจอง
+          </button>
+        </div>
+
+      </div><!-- /RIGHT -->
+    </div><!-- /2-col -->
+  </div>
+</div>
+<style>
+@keyframes bm-in {
+  from { opacity:0; transform:scale(0.96) translateY(10px); }
+  to   { opacity:1; transform:scale(1)    translateY(0); }
+}
+@keyframes gsPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: 0.5; transform: scale(0.85); }
+}
+/* ── ปฏิทินใหญ่ (side calendar in booking view) ── */
+#ari-calendar .cal-grid { gap: 4px; margin-top: 8px; }
+#ari-calendar .cal-day  { font-size: 13px; font-weight: 600; border-radius: 8px; min-height: 36px; }
+#ari-calendar .cal-day-label { font-size: 11px; padding: 4px 0; }
+#ari-calendar .cal-day.has-booking::after { background: var(--accent-pink) !important; width: 6px; height: 6px; bottom: 4px; }
+/* ── ปฏิทินใน modal ── */
+#multi-cal-grid > div, #range-cal-grid > div {
+  text-align:center; padding:5px 2px; border-radius:7px; cursor:pointer; transition:all 0.1s;
+}
+#multi-cal-grid > div:hover, #range-cal-grid > div:hover { background:var(--surface); }
+</style>
+
+<!-- Hidden stubs: JS references these IDs from the old dashboard layout -->
+<div style="display:none" aria-hidden="true">
+  <div id="all-building-summary"></div>
+  <div id="all-floor-summary-bts-ksl"></div>
+  <div id="dash-alerts"></div>
+  <div id="dash-activity"></div>
+  <div id="dash-fixed-total"></div>
+  <div id="dash-fixed-occ"></div>
+  <div id="dash-common-total"></div>
+  <div id="dash-common-occ"></div>
+  <div id="dash-free-total"></div>
+  <div id="dash-free-occ"></div>
+  <div id="dash-type-bars"></div>
+  <div id="ov-bookings-sub"></div>
+  <div id="ov-bar-avail"></div>
+  <div id="ov-bar-occ"></div>
+  <div id="ari-mode-badge"></div>
+  <div id="login-wall-overlay"></div>
+</div>
+<!-- mini-cal popup (legacy date picker, must be at document level for positioning) -->
+<div id="mini-cal-popup" style="display:none;position:absolute;z-index:999;background:#fff;border:1px solid #E9E5F8;border-radius:12px;padding:12px;box-shadow:0 8px 24px rgba(91,33,182,0.12);width:220px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+    <button onclick="miniCalNav(-1)" style="border:none;background:none;cursor:pointer;font-size:15px;padding:2px 6px;color:#7C3AED;">‹</button>
+    <span id="mini-cal-label" style="font-size:12px;font-weight:600;color:#1A1235;"></span>
+    <button onclick="miniCalNav(1)" style="border:none;background:none;cursor:pointer;font-size:15px;padding:2px 6px;color:#7C3AED;">›</button>
+  </div>
+  <div id="mini-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:11px;"></div>
+</div>
+
 <script>
 // ═══════════════════════════════════════════════
 //  DATA
@@ -1964,9 +2428,30 @@ let selectedKslFloor = 'P4';
 // ═══════════════════════════════════════════════
 //  NAVIGATION
 // ═══════════════════════════════════════════════
+function tnav(el, view) {
+  // update topnav button styles
+  document.querySelectorAll('.topnav-btn[id^="tnav-"]').forEach(b => {
+    b.classList.remove('active-amber');
+    b.classList.add('ghost');
+  });
+  if (el) {
+    el.classList.remove('ghost');
+    el.classList.add('active-amber');
+  }
+  // show/hide sub-topbar
+  const subBar = document.getElementById('sub-topbar');
+  if (subBar) subBar.style.display = (view === 'all') ? 'none' : 'flex';
+  // switch view
+  if (['ari','bts','ksl'].includes(view)) {
+    switchBuilding(view);
+  } else {
+    switchView(view);
+  }
+}
+
 function setNav(el) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  el.classList.add('active');
+  if (el) el.classList.add('active');
 }
 
 // ═══════════════════════════════════════════════
@@ -2379,31 +2864,69 @@ function buildAllSummary() {
   const totalPct = Math.round(grandOcc/grandTotal*100);
 
   // ── Tab badges ──
-  document.getElementById('cnt-all').textContent = grandTotal;
-  document.getElementById('cnt-ari').textContent = `${ariTotal-ariOcc} ว่าง`;
-  document.getElementById('cnt-bts').textContent = `${btsTotal-btsOcc} ว่าง`;
-  document.getElementById('cnt-ksl').textContent = `${kslTotal-kslOcc} ว่าง`;
+  const _s = id => document.getElementById(id);
+  const _set = (id, val) => { const el = _s(id); if (el) el.textContent = val; };
+  const _setHTML = (id, val) => { const el = _s(id); if (el) el.innerHTML = val; };
+  const _setStyle = (id, prop, val) => { const el = _s(id); if (el) el.style[prop] = val; };
 
-  // ── KPI cards ──
-  document.getElementById('ov-total').textContent = grandTotal;
-  document.getElementById('ov-avail').textContent = grandAvail;
-  document.getElementById('ov-avail-sub').textContent = `${Math.round(grandAvail/grandTotal*100)}% ว่าง`;
-  document.getElementById('ov-bar-avail').style.width = Math.round(grandAvail/grandTotal*100)+'%';
-  document.getElementById('ov-occ').textContent = grandOcc;
-  document.getElementById('ov-occ-sub').textContent = `${totalPct}% ใช้งาน`;
-  document.getElementById('ov-bar-occ').style.width = totalPct+'%';
+  // ── Dashboard Hero stats ──
+  _set('hero-grand-total', grandTotal);
+  _set('hero-grand-avail', grandAvail);
+  _set('hero-grand-occ', grandOcc);
+  _set('hero-avail-card', grandAvail);
+  _set('hero-occ-card', grandOcc);
+  _set('hero-total-desc', grandTotal);
+  _set('dash-hero-total-desc', grandTotal);
+  const todayAllBk = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').length + ARI_SUB_BOOKINGS.length + ARI_OTHER_BOOKINGS.length;
+  _set('hero-today-bk', todayAllBk);
+  const now2 = new Date();
+  const thM2 = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const days2 = ['อา','จ','อ','พ','พฤ','ศ','ส'];
+  _set('dash-hero-date', `Ari Hills · BTS · KSL · ${days2[now2.getDay()]} ${now2.getDate()} ${thM2[now2.getMonth()]} ${now2.getFullYear()+543}`);
+  const h2=String(now2.getHours()).padStart(2,'0'), m2=String(now2.getMinutes()).padStart(2,'0');
+  _set('hero-updated-time', `${h2}:${m2} น.`);
+
+  _set('cnt-all', grandTotal);
+  _set('cnt-ari', `${ariTotal-ariOcc} ว่าง`);
+  _set('cnt-bts', `${btsTotal-btsOcc} ว่าง`);
+  _set('cnt-ksl', `${kslTotal-kslOcc} ว่าง`);
+
+  // ── KPI cards (dashboard) ──
+  _set('ov-total', grandTotal);
+  _set('ov-avail', grandAvail);
+  _set('ov-avail-sub', `${Math.round(grandAvail/grandTotal*100)}% ว่าง`);
+  _setStyle('ov-bar-avail','width', Math.round(grandAvail/grandTotal*100)+'%');
+  _set('ov-occ', grandOcc);
+  _set('ov-occ-sub', `${totalPct}% ใช้งาน`);
+  _setStyle('ov-bar-occ','width', totalPct+'%');
   const todayBookings = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').length + ARI_SUB_BOOKINGS.length + ARI_OTHER_BOOKINGS.length;
-  document.getElementById('ov-bookings').textContent = todayBookings;
-  document.getElementById('ov-bookings-sub').textContent = 'รายการ (Ari Hills)';
+  _set('ov-bookings', ARI_OTHER_BOOKINGS.length);
+  _set('ov-bookings-sub', 'รายการ (Ari Hills)');
 
-  // ── Building summary table ──
-  const el = document.getElementById('all-building-summary');
+  // ── Dashboard unique IDs ──
+  const commonUsedToday = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').length;
+  const subPendingCount = ARI_SUB_BOOKINGS.filter(r=>r.status==='รออนุมัติ').length;
+  _set('dash-bk-used', commonUsedToday);
+  _setStyle('dash-bk-bar','width', Math.round(commonUsedToday/18*100)+'%');
+  _set('dash-sub-pend', subPendingCount);
+  _set('bk-common-used2', commonUsedToday);
+
+  // Update dashboard date chip
+  const dc = _s('dash-date-chip');
+  if (dc) {
+    const now = new Date();
+    const thMonths=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+    dc.textContent = `${now.getDate()} ${thMonths[now.getMonth()]} ${now.getFullYear()+543}`;
+  }
+
+  // ── Building summary table (null-safe) ──
+  const el = _s('all-building-summary');
   const pctBadge = (pct) => {
     const bg  = pct>80?'#FEE2E2':pct>50?'#FEF9C3':'#DCFCE7';
     const col = pct>80?'#DC2626':pct>50?'#CA8A04':'#15803D';
     return `<span style="font-size:10px;padding:2px 8px;border-radius:100px;background:${bg};color:${col};font-weight:700;">${pct}%</span>`;
   };
-  el.innerHTML = `
+  if (el) el.innerHTML = `
     <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:6px;font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;padding:0 0 8px;border-bottom:1px solid var(--border);">
       <div>อาคาร</div><div style="text-align:right">ทั้งหมด</div><div style="text-align:right">จอดอยู่</div><div style="text-align:right">ว่าง</div><div style="text-align:right">%ใช้</div>
     </div>
@@ -2428,80 +2951,18 @@ function buildAllSummary() {
     </div>
   `;
 
-  // ── Floor summary (Ari Hills) ──
-  const fl = document.getElementById('all-floor-summary');
-  fl.innerHTML = Object.entries(ARI_FLOORS).map(([flName, data]) => {
+  // ── Floor summary (Ari Hills hero card — white on purple) ──
+  const fl = _s('all-floor-summary');
+  if (fl) fl.innerHTML = Object.entries(ARI_FLOORS).map(([flName, data]) => {
     const tot = data.fixed.length + data.common.length + data.free.length;
     const occ = [...data.fixed,...data.common,...data.free].filter(n=>ARI_OCCUPIED.has(n)).length;
     const pct = tot > 0 ? Math.round(occ/tot*100) : 0;
-    return `<div class="floor-summary-row">
-      <div class="fs-floor">${flName}</div>
-      <div class="fs-bar"><div class="fs-fill" style="width:${pct}%"></div></div>
-      <div class="fs-nums">${occ}/${tot}</div>
+    return `<div style="display:flex;align-items:center;gap:8px;">
+      <div style="font-size:10px;color:rgba(255,255,255,0.55);width:28px;font-family:'DM Mono',monospace;">${flName}</div>
+      <div style="flex:1;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:rgba(255,255,255,0.75);border-radius:2px;"></div></div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.55);width:32px;text-align:right;">${occ}/${tot}</div>
     </div>`;
   }).join('');
-
-  const flBK = document.getElementById('all-floor-summary-bts-ksl');
-  flBK.innerHTML = `
-    <div class="floor-summary-row">
-      <div class="fs-floor" style="width:60px;">BTS</div>
-      <div class="fs-bar"><div class="fs-fill" style="width:${btsPct}%"></div></div>
-      <div class="fs-nums">${btsOcc}/${btsTotal}</div>
-    </div>
-    <div class="floor-summary-row">
-      <div class="fs-floor" style="width:60px;">KSL</div>
-      <div class="fs-bar"><div class="fs-fill" style="width:${kslPct}%"></div></div>
-      <div class="fs-nums">${kslOcc}/${kslTotal}</div>
-    </div>`;
-
-  // ── Alerts ──
-  const alerts = [];
-  if (btsPct >= 90) alerts.push({color:'#DC2626',bg:'#FEF2F2',text:`BTS เต็ม ${btsPct}% — เหลือ ${btsTotal-btsOcc} ช่อง`});
-  if (ariPct >= 80) alerts.push({color:'#CA8A04',bg:'#FFFBEB',text:`Ari Hills ${ariPct}% — ใกล้เต็ม`});
-  const subPending = ARI_SUB_BOOKINGS.filter(r=>r.status==='รออนุมัติ').length;
-  if (subPending > 0) alerts.push({color:'#B45309',bg:'#FEF3C7',text:`รออนุมัติจอดแทน ${subPending} รายการ`});
-  alerts.push({color:'#2563EB',bg:'#EFF6FF',text:`จองส่วนกลางวันนี้ ${ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').length}/18 ช่อง`});
-
-  document.getElementById('dash-alerts').innerHTML = alerts.map(a => `
-    <div style="font-size:12px;padding:7px 10px;border-radius:8px;background:${a.bg};color:${a.color};font-weight:500;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
-      <span style="width:6px;height:6px;border-radius:50%;background:${a.color};flex-shrink:0;display:inline-block;"></span>${a.text}
-    </div>`).join('');
-
-  // ── Activity feed ──
-  const activities = [
-    {icon:'🟢',text:'คุณสมชาย จอดส่วนกลาง ช่อง 66', time:'เมื่อกี้'},
-    {icon:'🔄',text:'คุณวิภา แจ้งจอดแทน ช่อง 31', time:'10 นาที'},
-    {icon:'🌙',text:'คุณนิรัน จอดค้างคืน BTS', time:'1 ชม.'},
-    {icon:'✅',text:'อนุมัติจอดแทน ช่อง 12', time:'2 ชม.'},
-  ];
-  document.getElementById('dash-activity').innerHTML = activities.map(a => `
-    <div style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--border);">
-      <span style="font-size:13px;flex-shrink:0;">${a.icon}</span>
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:12px;color:var(--text);line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${a.text}</div>
-        <div style="font-size:10px;color:var(--text-muted);margin-top:1px;">${a.time}ที่แล้ว</div>
-      </div>
-    </div>`).join('');
-
-  // ── Type breakdown (Ari Hills) ──
-  document.getElementById('dash-fixed-total').textContent  = ariFixed;
-  document.getElementById('dash-fixed-occ').textContent    = `${ariFixedOcc} จอดอยู่ · ${ariFixed-ariFixedOcc} ว่าง`;
-  document.getElementById('dash-common-total').textContent = ariCommon;
-  document.getElementById('dash-common-occ').textContent   = `${ariCommonOcc} จอดอยู่ · ${ariCommon-ariCommonOcc} ว่าง`;
-  document.getElementById('dash-free-total').textContent   = ariFree;
-  document.getElementById('dash-free-occ').textContent     = `${ariFreeOcc} จอดอยู่ · ${ariFree-ariFreeOcc} ว่าง`;
-
-  document.getElementById('dash-type-bars').innerHTML = [
-    {label:'ประจำ', occ:ariFixedOcc, tot:ariFixed, color:'#555550', bg:'#F5F5F2'},
-    {label:'ส่วนกลาง', occ:ariCommonOcc, tot:ariCommon, color:'#2563EB', bg:'#DBEAFE'},
-    {label:'ไม่กำหนด', occ:ariFreeOcc, tot:ariFree, color:'#16A34A', bg:'#DCFCE7'},
-  ].map(t => `<div style="display:flex;align-items:center;gap:8px;">
-    <div style="font-size:11px;font-weight:600;color:var(--text-muted);width:68px;flex-shrink:0;">${t.label}</div>
-    <div style="flex:1;height:6px;background:${t.bg};border-radius:3px;overflow:hidden;">
-      <div style="width:${t.tot?Math.round(t.occ/t.tot*100):0}%;height:100%;background:${t.color};border-radius:3px;"></div>
-    </div>
-    <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--text-muted);width:44px;text-align:right;">${t.occ}/${t.tot}</div>
-  </div>`).join('');
 
   // ── Today bookings snapshot ──
   const snapRows = [
@@ -2515,24 +2976,32 @@ function buildAllSummary() {
       icon:'🚌', label:r.location, name:r.name, plate:r.plate, status:r.status, statusCls:r.statusCls
     })),
   ];
-  document.getElementById('dash-today-bookings').innerHTML = snapRows.length
-    ? `<table style="width:100%;border-collapse:collapse;font-size:12px;">
-        <thead><tr style="background:#F5F5F2;">
-          <th class="tbl-th" style="width:24px;"></th>
-          <th class="tbl-th" style="width:70px;">ช่อง</th>
-          <th class="tbl-th">ชื่อ</th>
-          <th class="tbl-th" style="width:82px;">ทะเบียน</th>
-          <th class="tbl-th" style="width:60px;text-align:center;">สถานะ</th>
+  const snapEl = document.getElementById('dash-today-bookings');
+  if (snapEl) snapEl.innerHTML = snapRows.length
+    ? `<table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:auto;">
+        <colgroup>
+          <col style="width:28px">
+          <col style="width:18%">
+          <col style="width:auto">
+          <col style="width:22%">
+          <col style="width:64px">
+        </colgroup>
+        <thead><tr style="background:var(--surface);">
+          <th class="tbl-th" style="padding:7px 6px;"></th>
+          <th class="tbl-th" style="padding:7px 8px;">ช่อง / ที่จอด</th>
+          <th class="tbl-th" style="padding:7px 8px;">ชื่อผู้แจ้ง</th>
+          <th class="tbl-th" style="padding:7px 8px;">ทะเบียน</th>
+          <th class="tbl-th" style="padding:7px 8px;text-align:center;">สถานะ</th>
         </tr></thead>
-        <tbody>${snapRows.map((r,i) => `<tr style="background:${i%2?'#FAFAF8':'transparent'}">
-          <td class="tbl-td" style="text-align:center;">${r.icon}</td>
-          <td class="tbl-td" style="font-weight:700;font-size:11px;font-family:'DM Mono',monospace;">${r.label}</td>
-          <td class="tbl-td" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
-          <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.plate}</td>
-          <td class="tbl-td" style="text-align:center;"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:100px;${TAG_STYLES[r.statusCls]}">${r.status}</span></td>
+        <tbody>${snapRows.map((r,i) => `<tr style="background:${i%2?'var(--surface)':'transparent'};">
+          <td class="tbl-td" style="text-align:center;padding:8px 6px;font-size:13px;">${r.icon}</td>
+          <td class="tbl-td" style="font-weight:600;font-size:11px;font-family:'DM Mono',monospace;color:var(--gold);padding:8px 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.label}</td>
+          <td class="tbl-td" style="padding:8px 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;">${r.name}</td>
+          <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;padding:8px 8px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.plate}</td>
+          <td class="tbl-td" style="text-align:center;padding:8px 6px;"><span style="font-size:10px;font-weight:600;padding:3px 8px;border-radius:100px;${TAG_STYLES[r.statusCls]}">${r.status}</span></td>
         </tr>`).join('')}</tbody>
       </table>`
-    : '<div style="text-align:center;color:var(--text-light);padding:20px;font-size:13px;">ไม่มีรายการวันนี้</div>';
+    : '<div style="text-align:center;color:var(--text-light);padding:24px;font-size:13px;">ไม่มีรายการวันนี้</div>';
 }
 
 // ═══════════════════════════════════════════════
@@ -2598,20 +3067,45 @@ function closeModal() {
 // ═══════════════════════════════════════════════
 const ALL_VIEWS = ['all','ari','bts','ksl','booking','report'];
 
+// ── Per-view background images ─────────────────────────────
+const VIEW_BG = {
+  'booking': 'https://raw.githubusercontent.com/add00917-hue/parkzone-assets/main/parking.jpg',
+  'ari':     'https://raw.githubusercontent.com/add00917-hue/parkzone-assets/main/robot.jpg',
+  'bts':     'https://raw.githubusercontent.com/add00917-hue/parkzone-assets/main/robot.jpg',
+  'ksl':     'https://raw.githubusercontent.com/add00917-hue/parkzone-assets/main/robot.jpg',
+  'settings':'https://raw.githubusercontent.com/add00917-hue/parkzone-assets/main/mini.jpg',
+};
+function applyViewBg(view) {
+  // remove all existing bg layers
+  document.querySelectorAll('.view-bg-layer').forEach(el => el.remove());
+  const url = VIEW_BG[view];
+  if (!url) return;
+  const viewEl = document.getElementById('view-' + view);
+  if (!viewEl) return;
+  const layer = document.createElement('div');
+  layer.className = 'view-bg-layer';
+  layer.style.backgroundImage = `url('${url}')`;
+  viewEl.insertBefore(layer, viewEl.firstChild);
+}
+
 function switchView(view) {
+  applyViewBg(view);
   ALL_VIEWS.forEach(v => {
     const el = document.getElementById('view-'+v);
     if (el) el.classList.toggle('active', v === view);
   });
   const titles = {
-    all: 'Dashboard <span>/ ภาพรวมที่จอดรถ</span>',
-    ari: 'Ari Hills <span>/ แผนผังช่องจอด</span>',
-    bts: 'BTS Building <span>/ แผนผังช่องจอด</span>',
-    ksl: 'KSL Building <span>/ แผนผังช่องจอด</span>',
-    booking: 'การแจ้งจอด <span>/ Ari Hills</span>',
-    report: 'รายงาน <span>/ สรุปการใช้งาน</span>',
+    all: 'Dashboard',
+    ari: 'Ari Hills / แผนผังช่องจอด',
+    bts: 'BTS Building / แผนผังช่องจอด',
+    ksl: 'KSL Building / แผนผังช่องจอด',
+    booking: 'การแจ้งจอด / Ari Hills',
+    report: 'รายงาน / สรุปการใช้งาน',
   };
-  document.querySelector('.topbar-title').innerHTML = titles[view] || titles['all'];
+  const tt = document.getElementById('topbar-title-text');
+  if (tt) tt.textContent = titles[view] || titles['all'];
+  const subBar = document.getElementById('sub-topbar');
+  if (subBar) subBar.style.display = (view === 'all') ? 'none' : 'flex';
   if (view === 'booking') initBookMode();
   if (view === 'bts') renderBtsGrid();
   if (view === 'ksl') { buildKslFloorTabs(); renderKslGrid(); buildKslFloorSummary(); }
@@ -2662,7 +3156,11 @@ function initBookMode() {
   renderBookingTable(ariSelectedDate);
   renderAriReportDate();
   renderDailySummary(ariSelectedDate || new Date().toISOString().slice(0,10));
-  // update booking overview cards
+  // re-render again after short delay in case GS data loads shortly after
+  setTimeout(() => {
+    renderDailySummary(ariSelectedDate || new Date().toISOString().slice(0,10));
+  }, 2000);
+  // update booking overview cards (booking page)
   const commonUsed = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').length;
   const subPending = ARI_SUB_BOOKINGS.filter(r=>r.status==='รออนุมัติ').length;
   const bkCommon = document.getElementById('bk-common-used');
@@ -2673,6 +3171,13 @@ function initBookMode() {
   if (bkSub)    bkSub.textContent    = subPending;
   if (bkComBar) bkComBar.style.width = Math.round(commonUsed/18*100)+'%';
   if (bkSubBar) bkSubBar.style.width = Math.round(subPending/ARI_SUB_BOOKINGS.length*100)+'%';
+  // update dashboard unique IDs
+  const dashBkUsed = document.getElementById('dash-bk-used');
+  const dashBkBar  = document.getElementById('dash-bk-bar');
+  const dashSubPend = document.getElementById('dash-sub-pend');
+  if (dashBkUsed)  dashBkUsed.textContent   = commonUsed;
+  if (dashBkBar)   dashBkBar.style.width     = Math.round(commonUsed/18*100)+'%';
+  if (dashSubPend) dashSubPend.textContent   = subPending;
   // update sidebar badge
   const navBadge = document.getElementById('booking-nav-badge');
   if (navBadge) navBadge.textContent = commonUsed + ARI_SUB_BOOKINGS.length;
@@ -2829,18 +3334,9 @@ function renderBookingTable(dateStr) {
     </tr>`;
   }).join('');
 
-  const emptyHtml = Array.from({length: emptySlots}, (_, i) => {
-    const rowIdx = bookedRows.length + i;
-    return `<tr style="background:${rowIdx%2===0?'transparent':'#FAFAF8'}">
-      <td class="tbl-td" style="text-align:center;"><span style="color:var(--text-light)">–</span></td>
-      <td class="tbl-td" style="color:var(--text-muted);">–</td>
-      <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-light);">–</td>
-      <td class="tbl-td" style="font-size:11px;color:var(--text-light);">–</td>
-      <td class="tbl-td"><span style="color:var(--text-light)">–</span></td>
-      <td class="tbl-td" style="text-align:center;"><span style="color:var(--text-light)">–</span></td>
-      <td class="tbl-td" style="font-size:11px;color:var(--text-light);">–</td>
-    </tr>`;
-  }).join('');
+  const emptyHtml = bookedRows.length === 0
+    ? `<tr><td colspan="7" class="tbl-td" style="text-align:center;color:var(--text-light);padding:20px 0;">ไม่มีการแจ้งจอด</td></tr>`
+    : '';
 
   cTbody.innerHTML = bookedHtml + emptyHtml;
 
@@ -2903,6 +3399,17 @@ function renderBookingTable(dateStr) {
   if (ccEl) ccEl.textContent = `${bookedRows.length} จาก 18 ช่อง`;
   const scEl = document.getElementById('sub-count');
   if (scEl) scEl.textContent = subs.length + ' รายการ';
+
+  // ── อัพเดต KPI chips ซ้าย (สรุปรายวัน) ──
+  const otherCount2 = (typeof others !== 'undefined') ? others.length : ARI_OTHER_BOOKINGS.length;
+  const total2 = bookedRows.length + subs.length + otherCount2;
+  const _c = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  _c('daily-common-num', bookedRows.length || 0);
+  _c('daily-sub-num',    subs.length || 0);
+  _c('daily-other-num',  otherCount2 || 0);
+  _c('daily-total-num',  total2 || 0);
+  const csub2 = document.getElementById('daily-common-sub');
+  if (csub2) csub2.textContent = `${bookedRows.length}/18 ช่อง`;
 }
 
 // ─── Form: slot options by type ───
@@ -2914,24 +3421,46 @@ function renderDailySummary(dateStr) {
   const today   = new Date().toISOString().slice(0,10);
   const ds      = dateStr || today;
 
-  // นับจาก local arrays
-  const commonCount = ARI_COMMON_BOOKINGS.filter(r => {
+  // นับจาก local arrays — ใช้ตรรกะเดียวกับ renderBookingTable
+  function countForDate(arr, filterFn) {
+    const matched = arr.filter(r => {
+      if (r.status === 'ว่าง') return false;
+      if (filterFn) return filterFn(r);
+      if (r.dates && r.dates.length > 0) return r.dates.includes(ds);
+      return true; // fallback: นับทั้งหมดถ้าไม่มี date info
+    });
+    return matched.length;
+  }
+
+  const commonCount = countForDate(ARI_COMMON_BOOKINGS, r => {
     if (r.status === 'ว่าง') return false;
     if (r.dates && r.dates.length > 0) return r.dates.includes(ds);
-    return ds === today;
-  }).length;
-
-  const subCount = ARI_SUB_BOOKINGS.filter(r => {
+    return true;
+  });
+  const subCount   = countForDate(ARI_SUB_BOOKINGS,    r => {
     if (r.dates && r.dates.length > 0) return r.dates.includes(ds);
-    return ds === today;
-  }).length;
-
-  const otherCount = ARI_OTHER_BOOKINGS.filter(r => {
+    return true;
+  });
+  const otherCount = countForDate(ARI_OTHER_BOOKINGS,  r => {
     if (r.dates && r.dates.length > 0) return r.dates.includes(ds);
-    return ds === today;
-  }).length;
+    return true;
+  });
 
   const total = commonCount + subCount + otherCount;
+
+  // อัพเดต KPI chips ใหม่
+  const _chip = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val !== null && val !== undefined ? val : '–'; };
+  _chip('daily-common-num', commonCount);
+  _chip('daily-sub-num', subCount);
+  _chip('daily-other-num', otherCount);
+  _chip('daily-total-num', total);
+  const csub = document.getElementById('daily-common-sub');
+  if (csub) csub.textContent = `${commonCount}/18 ช่อง`;
+
+  // compat: อัพเดต bk-common-used / bk-sub-pending
+  const _s = id => document.getElementById(id);
+  if (_s('bk-common-used')) _s('bk-common-used').textContent = commonCount;
+  if (_s('bk-sub-pending')) _s('bk-sub-pending').textContent = subCount;
 
   // อัพเดต label
   const labelEl = document.getElementById('daily-summary-label');
@@ -2976,6 +3505,88 @@ const PLATE_DB = {
 
 const SPECIAL_CAR = ['bus','ambulance','van','delivery','vendor'];
 
+// ─── Booking Modal open / close ───
+// ── New booking modal UI helpers ──────────────────────────────
+function setBmType(type) {
+  // update card highlight
+  ['common','sub','other'].forEach(function(t) {
+    var el = document.getElementById('bm-tc-' + t);
+    if (!el) return;
+    var icon = el.querySelector('i');
+    if (t === type) {
+      el.style.borderColor = '#7C3AED';
+      el.style.background = '#f5f3ff';
+      el.style.boxShadow = '0 2px 8px rgba(124,58,237,0.18)';
+      el.style.transform = 'translateY(-2px)';
+      if (icon) icon.style.color = '#7C3AED';
+    } else {
+      el.style.borderColor = '#eee';
+      el.style.background = '#fff';
+      el.style.boxShadow = 'none';
+      el.style.transform = 'translateY(0)';
+      if (icon) icon.style.color = '#ccc';
+    }
+  });
+  // sync hidden select
+  var sel = document.getElementById('book-type');
+  if (sel) { sel.value = type; onBookTypeChange(); }
+  // show/hide occupancy card
+  var occ = document.getElementById('bm-occ-card');
+  if (occ) occ.style.display = (type === 'common') ? 'block' : 'none';
+}
+
+function setBmOvernight(v) {
+  var no  = document.getElementById('bm-ov-no');
+  var yes = document.getElementById('bm-ov-yes');
+  if (v === 'no') {
+    if (no)  { no.style.borderColor='#16a34a'; no.style.background='#f0fdf4'; no.style.color='#16a34a'; no.style.boxShadow='0 0 0 3px rgba(22,163,74,0.1)'; }
+    if (yes) { yes.style.borderColor='#eee'; yes.style.background='#fff'; yes.style.color='#aaa'; yes.style.boxShadow='none'; }
+    var cb1 = document.getElementById('book-overnight'); if(cb1) cb1.checked = false;
+    var cb2 = document.getElementById('book-sub-overnight'); if(cb2) cb2.checked = false;
+  } else {
+    if (yes) { yes.style.borderColor='#7C3AED'; yes.style.background='#f5f3ff'; yes.style.color='#7C3AED'; yes.style.boxShadow='0 0 0 3px rgba(124,58,237,0.1)'; }
+    if (no)  { no.style.borderColor='#eee'; no.style.background='#fff'; no.style.color='#aaa'; no.style.boxShadow='none'; }
+    var cb1 = document.getElementById('book-overnight'); if(cb1) cb1.checked = true;
+    var cb2 = document.getElementById('book-sub-overnight'); if(cb2) cb2.checked = true;
+  }
+}
+
+function updateBmOccupancy() {
+  const todayISO = new Date().toISOString().slice(0,10);
+  const booked = ARI_COMMON_BOOKINGS.filter(function(r) {
+    if (r.status === 'ว่าง') return false;
+    if (r.dates && r.dates.length > 0) return r.dates.includes(todayISO);
+    return true;
+  }).length;
+  const avail = 18 - booked;
+  const pct   = Math.round(booked / 18 * 100);
+  const bEl = document.getElementById('bm-occ-booked');
+  const aEl = document.getElementById('bm-occ-avail');
+  const barEl = document.getElementById('bm-occ-bar');
+  if (bEl) bEl.textContent = booked;
+  if (aEl) aEl.textContent = avail;
+  if (barEl) barEl.style.width = Math.max(2, pct) + '%';
+}
+
+function openBookingModal() {
+  const overlay = document.getElementById('booking-modal-overlay');
+  overlay.style.display = 'flex';
+  initMultiCal();
+  initRangeCal();
+  setParkMode('daily');
+  setBmType('common');
+  setBmOvernight('no');
+  updateBmOccupancy();
+  onBookTypeChange();
+  document.body.style.overflow = 'hidden';
+}
+
+function closeBookingModal() {
+  const overlay = document.getElementById('booking-modal-overlay');
+  overlay.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
 function onBookTypeChange() {
   const type = document.getElementById('book-type').value;
   const ownerRow      = document.getElementById('book-owner-row');
@@ -3006,20 +3617,25 @@ function onBookTypeChange() {
   if (parkModeLabel) parkModeLabel.textContent = type === 'common' ? '1.1 รูปแบบการจอด' : '1.1 เลือกวันที่';
   if (toggleBtnsDiv) toggleBtnsDiv.style.gridTemplateColumns = type === 'common' ? '1fr 1fr' : '1fr';
 
-  // ── ประเภทรถ: แสดง opt-other เฉพาะเมื่อเลือก "จอดรถอื่นๆ" ──
+  // ── ประเภทรถ: rebuild options ตาม type ──
   const carSel = document.getElementById('book-car-type');
   if (carSel) {
     const isOther = type === 'other';
-    carSel.querySelectorAll('.opt-other').forEach(opt => {
-      opt.style.display = isOther ? '' : 'none';
-    });
-    // ถ้าตอนนี้ value เป็น special car แต่ไม่ได้เลือก other → reset
-    if (!isOther && SPECIAL_CAR.includes(carSel.value)) {
-      carSel.value = 'sedan';
-    }
-    // ถ้าเพิ่งเปลี่ยนมา other และ value ยังไม่ใช่ special car → เลือก van ให้ทันที
-    if (isOther && !SPECIAL_CAR.includes(carSel.value)) {
-      carSel.value = 'van';
+    if (isOther) {
+      carSel.innerHTML = `
+        <option value="van">🚐 รถตู้</option>
+        <option value="delivery">📦 รถส่งของ</option>
+        <option value="vendor">🏪 รถ Vendor</option>
+        <option value="bus">🚌 รถบัส</option>
+        <option value="ambulance">🚑 รถพยาบาล</option>
+      `;
+    } else {
+      carSel.innerHTML = `
+        <option value="sedan">🚗 รถเก๋ง</option>
+        <option value="suv">🚙 รถ SUV / PPV</option>
+        <option value="ev">⚡ รถไฟฟ้า</option>
+        <option value="truck">🚚 รถกระบะ</option>
+      `;
     }
   }
 
@@ -3432,6 +4048,9 @@ function submitBooking() {
       dates: bookedDates
     });
   }
+
+  // ปิด modal
+  closeBookingModal();
 
   // re-render ตารางและปฏิทิน (dot) ทันที
   const currentDate = ariSelectedDate || new Date().toISOString().slice(0,10);
@@ -4128,65 +4747,103 @@ setInterval(updateClock, 1000);
 // ═══════════════════════════════════════════════
 const GS_URL = 'https://script.google.com/macros/s/AKfycbygcWG2vixbaLa83aFve03NRw_iV-TvJ54ssJ9thraVH-I4-PK_hoHY3VonPCcbN9Uz0A/exec';
 
+// ── JSONP helper — ใช้แทน fetch เพื่อหลีกเลี่ยง CORS ──
+// ── JSONP helper (fallback) ──────────────────────────────────
+function gsJsonp(url, callback) {
+  const cbName = '_pz_' + Date.now();
+  const script = document.createElement('script');
+  const timer  = setTimeout(() => { cleanup(); callback(null, new Error('Timeout')); }, 15000);
+  function cleanup() {
+    clearTimeout(timer);
+    delete window[cbName];
+    if (script.parentNode) script.parentNode.removeChild(script);
+  }
+  window[cbName] = function(data) { cleanup(); callback(data, null); };
+  script.onerror = function() { cleanup(); callback(null, new Error('Script error')); };
+  script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cbName;
+  document.head.appendChild(script);
+}
+
 // ── ทดสอบการเชื่อมต่อ ──
 async function gsTestConnection() {
-  const dot   = document.getElementById('gs-status-dot');
-  const label = document.getElementById('gs-status-label');
+  const dot = document.getElementById('gs-status-dot');
   if (!dot) return;
-  dot.style.background = '#E8B84B'; label.textContent = '⏳ กำลังทดสอบ…';
+  dot.style.background = '#7C3AED';
+  document.getElementById('gs-status-label').textContent = '⏳ กำลังทดสอบ…';
   try {
-    const res = await fetch(GS_URL + '?action=ping', { mode: 'cors', redirect: 'follow' });
-    const txt = await res.text();
-    const obj = JSON.parse(txt);
-    if (obj.ok) {
-      gsSetStatus('ok');
-      alert('✅ เชื่อมต่อ Google Sheets สำเร็จ!\n' + obj.msg);
-    } else {
-      throw new Error(obj.msg);
-    }
+    const res  = await fetch(GS_URL + '?action=ping', { redirect: 'follow', credentials: 'omit' });
+    const data = await res.json();
+    if (data.ok) { gsSetStatus('ok'); alert('✅ เชื่อมต่อสำเร็จ!\n' + (data.msg||'')); }
+    else throw new Error(data.msg);
   } catch(e) {
     gsSetStatus('err');
-    alert('❌ เชื่อมต่อไม่ได้\n\nสาเหตุ: ' + e.message + '\n\nวิธีแก้:\n1. เปิด Apps Script → Deploy → Manage Deployments\n2. เลือก Deployment → Edit → New version → Deploy\n3. ตรวจสอบว่า Who has access = Anyone');
+    alert('❌ เชื่อมต่อไม่ได้\n' + e.message + '\n\nตรวจสอบ: Apps Script Deploy → Who has access = Anyone');
   }
 }
 
 // ── Status UI ──
-function gsSetStatus(state) {
-  // state: 'idle' | 'loading' | 'ok' | 'err'
+function gsSetStatus(state, detail) {
   const dot   = document.getElementById('gs-status-dot');
   const label = document.getElementById('gs-status-label');
   const wrap  = document.getElementById('gs-topbar-status');
   if (!dot) return;
   const map = {
-    idle:    { color:'#ccc',     text:'Google Sheets',   bg:'#F5F5F2' },
-    loading: { color:'#E8B84B',  text:'⏳ กำลังโหลด…',  bg:'#FFFBEB' },
-    ok:      { color:'#34A853',  text:'✅ ซิงค์แล้ว',    bg:'#F0FDF4' },
-    err:     { color:'#EF4444',  text:'❌ เชื่อมต่อล้มเหลว (คลิกเพื่อแก้ไข)', bg:'#FEF2F2' },
+    idle:    { color:'rgba(255,255,255,0.3)', text:'Google Sheets' },
+    loading: { color:'#7C3AED',              text:'⏳ กำลังโหลด…' },
+    ok:      { color:'#4ade80',              text:'✅ ซิงค์แล้ว'  },
+    err:     { color:'#f87171',              text:'❌ ล้มเหลว (คลิก)' },
   };
   const s = map[state] || map.idle;
   dot.style.background   = s.color;
   label.textContent      = s.text;
-  wrap.style.background  = s.bg;
-  wrap.style.borderColor = s.color + '55';
+  dot.style.animation = state === 'loading' ? 'gsPulse 1s ease-in-out infinite' : 'none';
 }
 
-// ── โหลดข้อมูลจาก Sheet มาแสดงในตาราง ──
+// ── โหลดข้อมูลจาก Sheet ──
+let _gsRetryCount = 0;
+const _gsMaxRetry = 3;
+
 async function gsRefreshFromSheet() {
   gsSetStatus('loading');
+
+  // ① ลอง fetch ก่อน (เร็วกว่า ถ้า CORS ผ่าน)
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000); // timeout 10s
+    const ctrl = new AbortController();
+    const t    = setTimeout(() => ctrl.abort(), 12000);
     const res  = await fetch(GS_URL + '?action=readAll', {
-      redirect: 'follow',
-      mode: 'cors',
-      signal: controller.signal,
+      redirect: 'follow', credentials: 'omit', signal: ctrl.signal
     });
-    clearTimeout(timer);
+    clearTimeout(t);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-    if (!data.ok) throw new Error(data.msg || 'unknown error');
+    if (!data.ok) throw new Error(data.msg || 'error');
+    _gsRetryCount = 0;
+    processGsData(data);
+    return;
+  } catch(fetchErr) {
+    console.log('fetch failed, trying JSONP fallback:', fetchErr.message);
+  }
 
-    // ── helper: แปลงวันที่ไทย → ISO (ใช้ร่วมกันทั้ง 3 sheet) ──
+  // ② Fallback: JSONP
+  gsJsonp(GS_URL + '?action=readAll', function(data, err) {
+    if (err || !data || !data.ok) {
+      console.warn('JSONP error:', err ? err.message : (data && data.msg));
+      _gsRetryCount++;
+      if (_gsRetryCount <= _gsMaxRetry) {
+        const label = document.getElementById('gs-status-label');
+        if (label) label.textContent = `⏳ retry ${_gsRetryCount}/${_gsMaxRetry}…`;
+        setTimeout(gsRefreshFromSheet, _gsRetryCount * 5000);
+      } else {
+        gsSetStatus('err');
+      }
+      return;
+    }
+    _gsRetryCount = 0;
+    processGsData(data);
+  });
+}
+
+function processGsData(data) {
     const thMonthMap = {'ม.ค.':1,'ก.พ.':2,'มี.ค.':3,'เม.ย.':4,'พ.ค.':5,'มิ.ย.':6,'ก.ค.':7,'ส.ค.':8,'ก.ย.':9,'ต.ค.':10,'พ.ย.':11,'ธ.ค.':12};
     function parseThaiDate(raw) {
       if (!raw) return '';
@@ -4316,32 +4973,24 @@ async function gsRefreshFromSheet() {
     if (document.getElementById('ari-calendar')) {
       renderAriCalendar();
     }
-    buildAllSummary();
+    buildAllSummary();  // ← updates all dashboard IDs including dash-bk-used, dash-sub-pend
     gsSetStatus('ok');
 
-    // อัพเดต overview cards และ badge ถ้าหน้า booking เปิดอยู่
+    // อัพเดต daily summary chips เสมอ (ไม่ว่าจะอยู่หน้าไหน)
+    const todayISO = new Date().toISOString().slice(0,10);
+    if (typeof renderDailySummary === 'function') renderDailySummary(todayISO);
+    if (typeof updateBmOccupancy === 'function') updateBmOccupancy();
+
+    // อัพเดต overview cards booking page ถ้าเปิดอยู่
     if (document.getElementById('view-booking')?.classList.contains('active')) {
-      const commonUsed = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').length;
-      const subPending = ARI_SUB_BOOKINGS.filter(r=>r.status==='รออนุมัติ').length;
-      const bkCommon = document.getElementById('bk-common-used');
-      const bkSub    = document.getElementById('bk-sub-pending');
-      const bkComBar = document.getElementById('bk-common-bar');
-      const bkSubBar = document.getElementById('bk-sub-bar');
-      if (bkCommon) bkCommon.textContent = commonUsed;
-      if (bkSub)    bkSub.textContent    = subPending;
-      if (bkComBar) bkComBar.style.width = Math.round(commonUsed/18*100)+'%';
-      if (bkSubBar && ARI_SUB_BOOKINGS.length) bkSubBar.style.width = Math.round(subPending/ARI_SUB_BOOKINGS.length*100)+'%';
-      const navBadge = document.getElementById('booking-nav-badge');
-      if (navBadge) navBadge.textContent = commonUsed + ARI_SUB_BOOKINGS.length;
       renderWeeklySummary();
       renderAriReportDate();
+      const commonUsed = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').length;
+      const subPending = ARI_SUB_BOOKINGS.filter(r=>r.status==='รออนุมัติ').length;
+      const navBadge = document.getElementById('booking-nav-badge');
+      if (navBadge) navBadge.textContent = commonUsed + ARI_SUB_BOOKINGS.length;
     }
-
-  } catch(err) {
-    console.warn('gsRefreshFromSheet error:', err);
-    gsSetStatus('err');
-  }
-}
+} // end processGsData
 
 // ── ส่งข้อมูลการจองใหม่ไป Sheet ──
 // signature ใหม่: รับ dateISO (YYYY-MM-DD) แยกชัดเจน
@@ -4433,6 +5082,83 @@ gsRefreshFromSheet();
 
 // โหลดข้อมูลใหม่ทุก 60 วินาทีแบบ silent (ไม่ reset ปฏิทิน)
 setInterval(gsRefreshFromSheet, 60000);
+
+// ── Dashboard Background Switcher (manual) ──────────────────
+const DASH_BG_IMAGES = [
+  'https://raw.githubusercontent.com/add00917-hue/parkzone-assets/main/bg.jpg',
+  'https://raw.githubusercontent.com/add00917-hue/parkzone-assets/main/minimalist.jpg'
+];
+let _bgIndex = 0;
+
+function initDashSlideshow() {
+  const el   = document.getElementById('view-all');
+  const bgEl = document.getElementById('dash-hero-bg');
+  if (!el) return;
+
+  // preload
+  DASH_BG_IMAGES.forEach(src => { const img = new Image(); img.src = src; });
+
+  // set first image
+  if (bgEl) {
+    bgEl.style.cssText = `
+      position:absolute; inset:0; z-index:0;
+      background-size:cover; background-position:center; background-repeat:no-repeat;
+      background-image:url('${DASH_BG_IMAGES[0]}');
+      transition: opacity 1.2s ease-in-out;
+    `;
+  } else {
+    el.style.backgroundImage = `url('${DASH_BG_IMAGES[0]}')`;
+  }
+
+  // inject switch button into hero-bottom left side
+  const heroBottom = document.querySelector('.dash-hero-bottom');
+  if (heroBottom) {
+    const btn = document.createElement('button');
+    btn.id = 'bg-switch-btn';
+    btn.title = 'เปลี่ยนภาพพื้นหลัง';
+    btn.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+    `;
+    btn.style.cssText = `
+      position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+      width:42px; height:42px; border-radius:50%;
+      background:rgba(255,255,255,0.1);
+      border:0.5px solid rgba(255,255,255,0.2);
+      backdrop-filter:blur(8px);
+      color:rgba(255,255,255,0.7);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition:all 0.2s;
+      z-index:10;
+    `;
+    btn.onmouseenter = () => btn.style.background = 'rgba(255,255,255,0.18)';
+    btn.onmouseleave = () => btn.style.background = 'rgba(255,255,255,0.1)';
+    btn.onclick = () => switchDashBg();
+    document.querySelector('.dash-hero').appendChild(btn);
+  }
+}
+
+function switchDashBg() {
+  _bgIndex = (_bgIndex + 1) % DASH_BG_IMAGES.length;
+  const nextSrc = DASH_BG_IMAGES[_bgIndex];
+  const bgEl = document.getElementById('dash-hero-bg');
+  const el   = document.getElementById('view-all');
+
+  if (bgEl) {
+    bgEl.style.opacity = '0';
+    setTimeout(() => {
+      bgEl.style.backgroundImage = `url('${nextSrc}')`;
+      bgEl.style.opacity = '1';
+    }, 600);
+  } else if (el) {
+    el.style.backgroundImage = `url('${nextSrc}')`;
+  }
+}
+
+initDashSlideshow();
 </script>
 </body>
 </html>
