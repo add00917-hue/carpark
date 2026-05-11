@@ -1980,6 +1980,7 @@
               <thead><tr>
                 <th class="tbl-th" style="width:38px;">ลำดับ</th>
                 <th class="tbl-th">ชื่อผู้ขอ</th>
+                <th class="tbl-th" style="width:80px;">ฝ่าย</th>
                 <th class="tbl-th" style="width:86px;">ทะเบียน</th>
                 <th class="tbl-th" style="width:80px;">ประเภทรถ</th>
                 <th class="tbl-th" style="width:100px;">ประเภทการจอด</th>
@@ -2001,6 +2002,7 @@
               <thead><tr>
                 <th class="tbl-th" style="width:38px;">ลำดับ</th>
                 <th class="tbl-th">ชื่อผู้ขอ</th>
+                <th class="tbl-th" style="width:80px;">ฝ่าย</th>
                 <th class="tbl-th" style="width:84px;">ทะเบียนผู้ขอ</th>
                 <th class="tbl-th" style="width:72px;">ประเภทรถ</th>
                 <th class="tbl-th" style="width:90px;">ทะเบียนสิทธิ์</th>
@@ -2023,6 +2025,7 @@
               <thead><tr>
                 <th class="tbl-th" style="width:38px;">ลำดับ</th>
                 <th class="tbl-th">ชื่อผู้ขอ</th>
+                <th class="tbl-th" style="width:80px;">ฝ่าย</th>
                 <th class="tbl-th" style="width:86px;">ทะเบียนผู้ขอ</th>
                 <th class="tbl-th" style="width:90px;">ประเภทรถ</th>
                 <th class="tbl-th" style="width:100px;text-align:center;">ประเภทการจอด</th>
@@ -2580,6 +2583,12 @@
         <div>
           <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px;">ทะเบียนรถ <span style="color:#ef4444;">*</span></label>
           <input type="text" class="form-input" id="book-plate" placeholder="เช่น กข 1234" style="width:100%;padding:9px 11px;border:1.5px solid #eee;border-radius:9px;font-size:13px;outline:none;box-sizing:border-box;transition:all 0.15s;" onfocus="this.style.borderColor='#7C3AED';this.style.boxShadow='0 0 0 3px rgba(124,58,237,0.1)'" onblur="this.style.borderColor='#eee';this.style.boxShadow='none'">
+        </div>
+
+        <!-- ฝ่าย -->
+        <div>
+          <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px;">ฝ่าย <span style="color:#ef4444;">*</span></label>
+          <input type="text" class="form-input" id="book-dept" placeholder="เช่น ฝ่ายบัญชี, IT, HR" style="width:100%;padding:9px 11px;border:1.5px solid #eee;border-radius:9px;font-size:13px;outline:none;box-sizing:border-box;transition:all 0.15s;" onfocus="this.style.borderColor='#7C3AED';this.style.boxShadow='0 0 0 3px rgba(124,58,237,0.1)'" onblur="this.style.borderColor='#eee';this.style.boxShadow='none'">
         </div>
 
         <!-- ทะเบียนสิทธิ์ (จอดแทน) -->
@@ -3655,6 +3664,7 @@ function renderBookingTable(dateStr) {
     return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
       <td class="tbl-td" style="text-align:center;"><span style="font-weight:700;color:var(--text-muted);">${i+1}</span></td>
       <td class="tbl-td" style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
+      <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.dept||'–'}</td>
       <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.plate}</td>
       <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.carType}</td>
       <td class="tbl-td">${parkTypeTag}</td>
@@ -3685,6 +3695,7 @@ function renderBookingTable(dateStr) {
         return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
           <td class="tbl-td" style="text-align:center;font-weight:700;color:var(--text-muted);">${i+1}</td>
           <td class="tbl-td" style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
+          <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.dept||'–'}</td>
           <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.plateReq}</td>
           <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.carTypeReq}</td>
           <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${r.plateOwner}</td>
@@ -3693,7 +3704,7 @@ function renderBookingTable(dateStr) {
           <td class="tbl-td" style="font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note||'–'}</td>
         </tr>`;
       }).join('')
-    : `<tr><td colspan="8" class="tbl-td" style="text-align:center;color:var(--text-light);padding:16px;">ไม่มีรายการ</td></tr>`;
+    : `<tr><td colspan="9" class="tbl-td" style="text-align:center;color:var(--text-light);padding:16px;">ไม่มีรายการ</td></tr>`;
 
   // ── รถอื่นๆ: กรองเฉพาะวันที่เลือก ──
   const others = ARI_OTHER_BOOKINGS.filter(r => {
@@ -3711,6 +3722,7 @@ function renderBookingTable(dateStr) {
           return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
             <td class="tbl-td" style="text-align:center;font-weight:700;color:var(--text-muted);">${i+1}</td>
             <td class="tbl-td" style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
+            <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.dept||'–'}</td>
             <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.plate}</td>
             <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.carType}</td>
             <td class="tbl-td" style="text-align:center;">${parkTypeTag}</td>
@@ -3718,7 +3730,7 @@ function renderBookingTable(dateStr) {
             <td class="tbl-td" style="font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note}</td>
           </tr>`;
         }).join('')
-      : `<tr><td colspan="7" class="tbl-td" style="text-align:center;color:var(--text-light);padding:14px;">ไม่มีรายการ</td></tr>`;
+      : `<tr><td colspan="8" class="tbl-td" style="text-align:center;color:var(--text-light);padding:14px;">ไม่มีรายการ</td></tr>`;
     const otherEl = document.getElementById('other-count');
     if (otherEl) otherEl.textContent = others.length + ' รายการ';
   }
@@ -4279,10 +4291,11 @@ function submitBooking() {
   const type  = document.getElementById('book-type').value;
   const plate = document.getElementById('book-plate').value.trim();
   const name  = document.getElementById('book-name').value.trim();
+  const deptVal = document.getElementById('book-dept')?.value.trim() || '';
 
-  if (!plate || !name) {
-    alert('กรุณากรอกทะเบียนรถและชื่อผู้แจ้งจองให้ครบถ้วน'); return;
-  }
+  if (!name)  { alert('กรุณากรอกชื่อผู้แจ้งจอง'); return; }
+  if (!plate) { alert('กรุณากรอกทะเบียนรถ'); return; }
+  if (!deptVal) { alert('กรุณากรอกฝ่าย'); return; }
 
   // ── อ่านค่า form ทั้งหมดก่อน (ป้องกัน reset/blur ก่อนนำไปใช้) ──
   const carLabel      = document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
@@ -4351,7 +4364,7 @@ function submitBooking() {
     const freeIdx = ARI_COMMON_BOOKINGS.findIndex(r => r.status === 'ว่าง');
     const entry = {
       slot: freeIdx >= 0 ? ARI_COMMON_BOOKINGS[freeIdx].slot : 'ส่วนกลาง',
-      name, plate, carType: carLabel,
+      name, plate, carType: carLabel, dept: deptVal,
       parkType: currentParkMode,
       overnight: comOvernight,
       status: 'จอง', statusCls: 'tag-blue', note: noteVal,
@@ -4363,7 +4376,7 @@ function submitBooking() {
     const found = PLATE_DB[subOwner] || {};
     ARI_SUB_BOOKINGS.push({
       slot: found.slot||'–', floor: subFloorLabel, name, plateReq: plate,
-      carTypeReq: carLabel, plateOwner: subOwner,
+      carTypeReq: carLabel, plateOwner: subOwner, dept: deptVal,
       timeType: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
       status: 'รออนุมัติ', statusCls: 'tag-orange', note: noteVal,
       dates: bookedDates
@@ -4371,7 +4384,7 @@ function submitBooking() {
   } else if (type === 'other') {
     const cleanCarLabel = carLabel.replace(/\s*\(จอดหน้าอาคาร\)/g,'').trim();
     ARI_OTHER_BOOKINGS.push({
-      location: 'หน้าอาคาร', name, plate, carType: cleanCarLabel,
+      location: 'หน้าอาคาร', name, plate, carType: cleanCarLabel, dept: deptVal,
       timeType: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
       status: 'รออนุมัติ', statusCls: 'tag-orange', note: noteVal,
       dates: bookedDates
@@ -4386,10 +4399,11 @@ function submitBooking() {
   renderBookingTable(currentDate);
   renderAriCalendar();
 
-  // ── ส่งไป Google Sheets (ส่งค่าที่อ่านไว้แล้วผ่าน extraOpts ไม่อ่าน DOM อีก) ──
+  // ── ส่งไป Google Sheets ──
   const sheetOpts = { parkMode: currentParkMode === 'long' ? 'จอดยาว' : 'รายวัน',
                       overnight: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
                       floor: subFloorLabel,
+                      dept: deptVal,
                       carLabel: carLabel.replace(/\s*\(จอดหน้าอาคาร\)/g,'').trim() };
   if (bookedDates.length > 0) {
     bookedDates.forEach((ds, idx) => {
@@ -4400,7 +4414,7 @@ function submitBooking() {
   }
 
   // ── Reset form ──
-  ['book-plate','book-name','book-note','book-plate-owner'].forEach(id => {
+  ['book-plate','book-name','book-note','book-plate-owner','book-dept'].forEach(id => {
     const el = document.getElementById(id); if(el) el.value = '';
   });
   const subOvEl = document.getElementById('book-sub-overnight');
@@ -5213,6 +5227,7 @@ function processGsData(data) {
           grouped[key] = {
             name:      r['ชื่อผู้ขอ']   || '–',
             plate:     r['ทะเบียน']      || '–',
+            dept:      r['ฝ่าย']         || '–',
             carType:   r['ประเภทรถ']     || '–',
             parkType:  isParkLong ? 'long' : 'daily',
             overnight: isOvernight,
@@ -5248,6 +5263,7 @@ function processGsData(data) {
             slot:       r['ช่อง']              || '–',
             floor:      r['ชั้น']              || '–',
             name:       r['ชื่อผู้ขอ']         || '–',
+            dept:       r['ฝ่าย']              || '–',
             plateReq:   r['ทะเบียนผู้ขอ']     || '–',
             carTypeReq: r['ประเภทรถ']          || '–',
             plateOwner: r['ทะเบียนสิทธิ์']    || r['ทะเบียนสิทธิ์จอดแทน'] || '–',
@@ -5277,6 +5293,7 @@ function processGsData(data) {
           otherGrouped[key] = {
             location: r['ชั้น']              || 'หน้าอาคาร',
             name:     r['ชื่อผู้ขอ']         || r['ชื่อผู้แจ้ง'] || '–',
+            dept:     r['ฝ่าย']              || '–',
             plate:    r['ทะเบียนผู้ขอ']      || r['ทะเบียน'] || '–',
             carType:  r['ประเภทรถ']          || '–',
             timeType: r['ประเภทการจอด']      || 'ไม่ค้างคืน',
@@ -5338,33 +5355,35 @@ function sendToSheet(type, name, plate, dateISO, extraOpts) {
   let sheetName, row;
 
   if (type === 'common') {
-    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียน/ประเภทรถ/วันที่จอด/ประเภทการจอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียน/ฝ่าย/ประเภทรถ/วันที่จอด/ประเภทการจอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
     const carLabel  = (extraOpts && extraOpts.carLabel) || document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
     const note      = document.getElementById('book-note')?.value.trim() || '–';
+    const dept      = (extraOpts && extraOpts.dept) || document.getElementById('book-dept')?.value.trim() || '–';
     const overnight = document.getElementById('book-overnight')?.checked ? 'ค้างคืน' : 'ไม่ค้างคืน';
     const parkMode  = (extraOpts && extraOpts.parkMode) || 'รายวัน';
     sheetName = 'Bookings';
-    row = ['auto', name, plate, carLabel, dateThai, parkMode, overnight, 'ชั้น 5 ส่วนกลางขวามือ', note, ts];
+    row = ['auto', name, plate, dept, carLabel, dateThai, parkMode, overnight, 'ชั้น 5 ส่วนกลางขวามือ', note, ts];
 
   } else if (type === 'sub') {
-    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
     const owner     = document.getElementById('book-plate-owner')?.value.trim() || (extraOpts && extraOpts.owner) || '';
     const carLabel  = (extraOpts && extraOpts.carLabel) || document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
     const note      = document.getElementById('book-note')?.value.trim() || '–';
+    const dept      = (extraOpts && extraOpts.dept) || document.getElementById('book-dept')?.value.trim() || '–';
     const overnight = (extraOpts && extraOpts.overnight) || (document.getElementById('book-sub-overnight')?.checked ? 'ค้างคืน' : 'ไม่ค้างคืน');
     const floor     = (extraOpts && extraOpts.floor) || '–';
     sheetName = 'SubPark';
-    row = ['auto', name, plate, carLabel, owner, dateThai, overnight, floor, note, ts];
+    row = ['auto', name, plate, dept, carLabel, owner, dateThai, overnight, floor, note, ts];
 
   } else if (type === 'other') {
-    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ประเภทรถ/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
-    // ตัดคำ "(จอดหน้าอาคาร)" ออกจาก carLabel ก่อนบันทึก
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
     const rawLabel  = (extraOpts && extraOpts.carLabel) || document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
     const carLabel  = rawLabel.replace(/\s*\(จอดหน้าอาคาร\)/g, '').replace(/[^a-zA-Zก-๙ ๐-๙\u0E00-\u0E7F🚐📦🏪🚌🚑]/g,'').trim();
     const note      = document.getElementById('book-note')?.value.trim() || '–';
+    const dept      = (extraOpts && extraOpts.dept) || document.getElementById('book-dept')?.value.trim() || '–';
     const overnight = (extraOpts && extraOpts.overnight) || (document.getElementById('book-sub-overnight')?.checked ? 'ค้างคืน' : 'ไม่ค้างคืน');
     sheetName = 'OtherCars';
-    row = ['auto', name, plate, carLabel, dateThai, overnight, 'หน้าอาคาร', note, ts];
+    row = ['auto', name, plate, dept, carLabel, dateThai, overnight, 'หน้าอาคาร', note, ts];
   }
 
   gsSetStatus('loading');
