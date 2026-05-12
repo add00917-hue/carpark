@@ -259,12 +259,26 @@
     padding: 20px 24px 24px;
     overflow-y: auto;
     flex: 1;
+    min-height: 0;          /* ← สำคัญ: ให้ flex:1 มี height จริงๆ */
     display: none;
     flex-direction: column;
     gap: 16px;
     background: transparent;
   }
   .building-view:not(#view-all).active { display: flex; }
+
+  /* ── view-booking: column → book-grid เติม flex:1 เต็มความสูง ── */
+  #view-booking {
+    padding: 0 !important;
+    overflow: hidden !important;
+    gap: 0 !important;
+    flex-direction: column !important;
+  }
+  /* book-grid ขยายเต็มความสูงที่เหลือ */
+  #view-booking > .book-grid {
+    flex: 1;
+    min-height: 0;
+  }
 
   /* overlay สำหรับ views ที่มีภาพพื้นหลัง — ใช้ inset div แทน ::before */
   .view-bg-layer {
@@ -733,18 +747,19 @@
   /* ─── BOOKING MODE GRID ─── */
   .book-grid {
     display: flex;
-    gap: 0;
-    align-items: flex-start;
-    height: 100%;
+    flex-direction: row;
+    align-items: stretch;
     flex: 1;
+    overflow: hidden;      /* บังคับให้ children ไม่เกิน parent */
   }
-  /* ซ้าย: flex:1 จัด panel ให้กึ่งกลาง */
+  /* ซ้าย: ไม่ scroll — สูงเต็ม */
   .book-left-half {
     flex: 1;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding: 0 10px 0 0;
+    padding: 20px 10px 20px 20px;
+    overflow: hidden;
   }
   .book-panel {
     display: flex;
@@ -753,14 +768,20 @@
     max-width: 780px;
     width: 100%;
   }
-  /* ขวา: 50% ของจอ */
+  /* ขวา: scroll ได้เฉพาะฝั่งนี้ */
   .book-right-half {
     width: 50%;
     flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    overflow-y: auto;
+    padding: 20px 20px 20px 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(167,139,250,0.4) transparent;
+    border-left: 0.5px solid rgba(255,255,255,0.07);
   }
+  .book-right-half::-webkit-scrollbar { width: 4px; }
+  .book-right-half::-webkit-scrollbar-track { background: transparent; }
+  .book-right-half::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.35); border-radius: 99px; }
+  .book-right-half::-webkit-scrollbar-thumb:hover { background: rgba(167,139,250,0.6); }
   /* Glass card สำหรับ booking */
   .bk-gc {
     background: rgba(255,255,255,0.07);
@@ -1458,6 +1479,48 @@
     .book-grid { grid-template-columns: 1fr; }
   }
 
+  /* ─── RESPONSIVE — จอ 1366×768 (HD ทั่วไป) ─── */
+  @media (max-width: 1366px) and (max-height: 800px) {
+
+    /* topnav เล็กลงนิด */
+    .topnav { height: 46px; }
+    .topnav-btn { font-size: 11px; padding: 5px 9px; }
+
+    /* booking left: ลด padding + ฟอนต์ */
+    .book-left-half { padding: 12px 8px 12px 14px; }
+    .book-right-half { padding: 12px 14px 12px 8px; }
+
+    /* KPI chips: ตัวเลขเล็กลง */
+    #daily-common-num, #daily-sub-num,
+    #daily-other-num,  #daily-total-num {
+      font-size: 28px !important;
+    }
+    .bk-kpi-chip { padding: 8px 6px !important; gap: 3px !important; }
+    .bk-kpi-chip svg { width: 22px !important; height: 22px !important; }
+    .bk-gc { padding: 12px !important; }
+
+    /* ปุ่มแจ้งจอง: เล็กลง */
+    #view-booking button[style*="font-size:22px"] {
+      font-size: 16px !important;
+      padding: 13px 32px !important;
+    }
+
+    /* ปฏิทิน: cell เล็กลง */
+    #ari-calendar { --cal-cell-size: 34px !important; }
+    .cal-day { font-size: 10px !important; border-radius: 5px !important; }
+    #ari-cal-label { font-size: 12px !important; }
+
+    /* ตาราง: ฟอนต์เล็กลงนิด */
+    .tbl-th { font-size: 10px !important; padding: 5px 6px !important; }
+    .tbl-td { font-size: 11px !important; padding: 5px 6px !important; }
+
+    /* dash hero: ตัวเลขใหญ่ลดลง */
+    #hero-grand-total { font-size: 80px !important; }
+    .dash-sc-val { font-size: 24px !important; }
+    .dash-sc-icon { width: 24px !important; height: 24px !important; }
+    .dash-bottom { padding: 6px 8px; gap: 5px; }
+  }
+
   /* ─── RESPONSIVE — MOBILE ─── */
   @media (max-width: 768px) {
     /* hide desktop sidebar */
@@ -1581,6 +1644,78 @@
       display: none; position: fixed; inset: 0; z-index: 198; background: rgba(0,0,0,0.3);
     }
     .bn-overlay.open { display: block; }
+  }
+
+  /* ─── RESPONSIVE — มือถือ (430px และต่ำกว่า: iPhone/Android ทั่วไป) ─── */
+  @media (max-width: 430px) {
+
+    /* topnav: ซ่อน links เหลือแค่ logo + right */
+    .topnav-links { display: none; }
+    .topnav { padding: 0 10px; height: 48px; }
+    .topnav-brand-main { font-size: 10px; }
+    .topnav-clock { display: none; }
+    .topnav-user-name, .topnav-user-role { display: none; }
+    .topnav-avatar { width: 28px; height: 28px; font-size: 10px; }
+
+    /* booking: stack ซ้าย-ขวาเป็น column เต็มจอ */
+    #view-booking {
+      flex-direction: column !important;
+      overflow-y: auto !important;
+    }
+    .book-left-half {
+      flex: none !important;
+      width: 100%;
+      padding: 12px 12px 0 12px;
+      overflow: visible !important;
+    }
+    .book-right-half {
+      width: 100% !important;
+      border-left: none !important;
+      border-top: 0.5px solid rgba(255,255,255,0.07);
+      padding: 12px;
+      overflow-y: visible !important;
+    }
+    #view-booking {
+      overflow-y: auto !important;
+    }
+
+    /* KPI: 2×2 grid เล็กลง */
+    #daily-common-num, #daily-sub-num,
+    #daily-other-num,  #daily-total-num {
+      font-size: 24px !important;
+    }
+    .bk-kpi-chip { padding: 8px 4px !important; }
+    .bk-kpi-chip svg { width: 18px !important; height: 18px !important; }
+    .bk-gc { padding: 10px !important; }
+
+    /* ปุ่มแจ้งจอง: เต็มความกว้าง */
+    #view-booking button[style*="font-size:22px"] {
+      font-size: 15px !important;
+      padding: 12px 24px !important;
+      width: 100% !important;
+      border-radius: 14px !important;
+    }
+
+    /* ตาราง: scroll horizontal */
+    .bk-tc { overflow-x: auto; }
+    .bk-tc table { min-width: 520px; }
+    .tbl-th { font-size: 10px !important; padding: 5px 5px !important; }
+    .tbl-td { font-size: 10px !important; padding: 5px 5px !important; }
+
+    /* ปฏิทิน: เล็กลง */
+    .cal-day { font-size: 10px !important; }
+    #ari-cal-label { font-size: 12px !important; }
+
+    /* slot grid มือถือ */
+    .slot-grid { grid-template-columns: repeat(auto-fill, 52px) !important; }
+    .slot-box { height: 54px !important; }
+
+    /* dashboard hero */
+    #hero-grand-total { font-size: 64px !important; letter-spacing: -4px !important; }
+    .dash-bottom { grid-template-columns: repeat(3, 1fr) !important; gap: 5px !important; }
+    .dash-sc-val { font-size: 20px !important; }
+    .dash-sc-icon { width: 20px !important; height: 20px !important; }
+    .dash-action-main { font-size: 15px !important; padding: 14px 28px !important; }
   }
 </style>
 </head>
