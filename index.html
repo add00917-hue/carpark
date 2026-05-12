@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ระบบจัดการลานจอด — Parking Management System</title>
+<title>ระบบจัดการลานจอด — Parking Management System v16</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -2506,11 +2506,6 @@
           </div>
         </div>
 
-        <!-- ค้างคืน (hidden checkbox for JS compat) -->
-        <div id="common-overnight-div" style="display:none;">
-          <input type="checkbox" id="book-overnight">
-        </div>
-
       </div><!-- /book-park-mode-row -->
       </div><!-- /LEFT -->
 
@@ -2602,13 +2597,12 @@
         <div id="book-sub-floor-row" style="display:none;">
           <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px;">ชั้นที่จอดแทน <span style="color:#ef4444;">*</span></label>
           <select class="form-select" id="book-sub-floor" style="width:100%;padding:9px 11px;border:1.5px solid #eee;border-radius:9px;font-size:13px;outline:none;">
-            <option value="visitor">🅿️ ไม่กำหนด (จอดช่อง Visitor)</option>
-            <option value="P3A">ชั้น P3A</option>
-            <option value="P4">ชั้น P4</option>
-            <option value="P4A">ชั้น P4A</option>
-            <option value="P5">ชั้น P5</option>
-            <option value="P5A">ชั้น P5A</option>
-            <option value="P6">ชั้น P6</option>
+            <option value="P3A">🅿️ ชั้น P3A</option>
+            <option value="P4A">🅿️ ชั้น P4A</option>
+            <option value="P5">🅿️ ชั้น P5</option>
+            <option value="P5A">🅿️ ชั้น P5A</option>
+            <option value="P6">🅿️ ชั้น P6</option>
+            <option value="3A,4A,5,5A,6">🅿️ ชั้น 3A,4A,5,5A,6</option>
           </select>
         </div>
 
@@ -2627,11 +2621,8 @@
               <i class="ti ti-moon" style="font-size:14px" aria-hidden="true"></i>ค้างคืน
             </div>
           </div>
-          <!-- hidden checkboxes for JS compat -->
-          <div style="display:none;">
-            <input type="checkbox" id="book-sub-overnight">
-          </div>
-          <div id="book-overnight-row" style="display:none;"></div>
+          <!-- hidden value: 'yes' = ค้างคืน, 'no' = ไม่ค้างคืน -->
+          <input type="hidden" id="bm-overnight-val" value="no">
         </div>
 
         <!-- หมายเหตุ -->
@@ -3652,13 +3643,17 @@ function renderBookingTable(dateStr) {
   const bookedHtml = bookedRows.map((r, i) => {
     // ประเภทการจอด tag
     let parkTypeTag = `<span style="color:var(--text-light)">–</span>`;
-    if (r.parkType === 'daily') {
-      parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">📅 รายวัน</span>`;
-    } else if (r.parkType === 'long') {
-      parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#F3E8FF;color:#7C3AED;white-space:nowrap;">📆 จอดยาว</span>`;
+    if (r.parkType === 'daily' || r.parkType === 'long' || r.parkType) {
+      if (r.parkType === 'long') {
+        parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#F3E8FF;color:#7C3AED;white-space:nowrap;">📆 จอดยาว</span>`;
+      } else {
+        parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">📅 รายวัน</span>`;
+      }
     }
-    if (r.overnight) {
-      parkTypeTag += `<span style="font-size:9px;font-weight:600;padding:1px 5px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;margin-left:3px;">🌙</span>`;
+    // overnight: ❌ ห้ามใช้ .includes() เพราะ "ไม่ค้างคืน".includes("ค้างคืน") === true
+    const isOvernightTrue = r.overnight === true || r.overnight === 'ค้างคืน';
+    if (isOvernightTrue) {
+      parkTypeTag += `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;margin-left:3px;">🌙 ค้างคืน</span>`;
     }
     const floorCell = `<span style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;background:#F0F9FF;color:#0369A1;padding:2px 8px;border-radius:6px;">ชั้น 5 ขวามือ</span>`;
     return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
@@ -3737,7 +3732,7 @@ function renderBookingTable(dateStr) {
 
   // ── อัพเดต badge count ──
   const ccEl = document.getElementById('common-count');
-  if (ccEl) ccEl.textContent = `${bookedRows.length} จาก 18 ช่อง`;
+  if (ccEl) ccEl.textContent = `${bookedRows.length} จาก 18 ช่อง${bookedRows.length > 18 ? ' ⚠️ เกิน' : ''}`;
   const scEl = document.getElementById('sub-count');
   if (scEl) scEl.textContent = subs.length + ' รายการ';
 
@@ -3868,6 +3863,21 @@ function setBmType(type) {
       if (icon) icon.style.color = '#ccc';
     }
   });
+  // ── BUG FIX: ล้างข้อมูลในช่องกรอกทุกครั้งที่สลับประเภทการจอด ──
+  ['book-plate','book-name','book-note','book-plate-owner','book-dept'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+  // reset car type to first option
+  var carSel = document.getElementById('book-car-type');
+  if (carSel) carSel.selectedIndex = 0;
+  // reset floor
+  var floorEl = document.getElementById('book-sub-floor');
+  if (floorEl) floorEl.value = 'P3A';
+  // hide owner result
+  var ownerRes = document.getElementById('book-owner-result');
+  if (ownerRes) ownerRes.style.display = 'none';
+  // reset overnight to ไม่ค้างคืน default
+  setBmOvernight('no');
   // sync hidden select
   var sel = document.getElementById('book-type');
   if (sel) { sel.value = type; onBookTypeChange(); }
@@ -3879,16 +3889,15 @@ function setBmType(type) {
 function setBmOvernight(v) {
   var no  = document.getElementById('bm-ov-no');
   var yes = document.getElementById('bm-ov-yes');
+  var hid = document.getElementById('bm-overnight-val');
   if (v === 'no') {
     if (no)  { no.style.borderColor='#16a34a'; no.style.background='#f0fdf4'; no.style.color='#16a34a'; no.style.boxShadow='0 0 0 3px rgba(22,163,74,0.1)'; }
     if (yes) { yes.style.borderColor='#eee'; yes.style.background='#fff'; yes.style.color='#aaa'; yes.style.boxShadow='none'; }
-    var cb1 = document.getElementById('book-overnight'); if(cb1) cb1.checked = false;
-    var cb2 = document.getElementById('book-sub-overnight'); if(cb2) cb2.checked = false;
+    if (hid) hid.value = 'no';
   } else {
     if (yes) { yes.style.borderColor='#7C3AED'; yes.style.background='#f5f3ff'; yes.style.color='#7C3AED'; yes.style.boxShadow='0 0 0 3px rgba(124,58,237,0.1)'; }
     if (no)  { no.style.borderColor='#eee'; no.style.background='#fff'; no.style.color='#aaa'; no.style.boxShadow='none'; }
-    var cb1 = document.getElementById('book-overnight'); if(cb1) cb1.checked = true;
-    var cb2 = document.getElementById('book-sub-overnight'); if(cb2) cb2.checked = true;
+    if (hid) hid.value = 'yes';
   }
 }
 
@@ -3933,7 +3942,6 @@ function onBookTypeChange() {
   const ownerRow      = document.getElementById('book-owner-row');
   const noteRow       = document.getElementById('book-note-row');
   const parkModeRow   = document.getElementById('book-park-mode-row');
-  const overnightRow  = document.getElementById('book-overnight-row');
   const parkmodeLong  = document.getElementById('parkmode-long');
 
   // owner plate field — only for sub
@@ -3947,11 +3955,7 @@ function onBookTypeChange() {
   parkModeRow.style.display = '';
   // long-park button — only for common
   if (parkmodeLong) parkmodeLong.style.display = type === 'common' ? '' : 'none';
-  // overnight under calendar (common) — only for common
-  const commonOvernightDiv = document.getElementById('common-overnight-div');
-  if (commonOvernightDiv) commonOvernightDiv.style.display = type === 'common' ? '' : 'none';
-  // overnight for sub/other
-  if (overnightRow) overnightRow.style.display = (type === 'sub' || type === 'other') ? 'flex' : 'none';
+  // overnight toggle ปุ่มอยู่ฝั่งขวาตลอด ทุก type ใช้ร่วมกัน
   // update calendar section label
   const parkModeLabel = document.getElementById('park-mode-label');
   const toggleBtnsDiv = document.getElementById('park-mode-toggle-btns');
@@ -4301,10 +4305,13 @@ function submitBooking() {
   const carLabel      = document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
   const noteVal       = document.getElementById('book-note')?.value.trim() || '–';
   const subOwner      = document.getElementById('book-plate-owner')?.value.trim() || '';
-  const subOvernight  = !!(document.getElementById('book-sub-overnight')?.checked);
-  const subFloorSel   = document.getElementById('book-sub-floor')?.value || 'visitor';
-  const subFloorLabel = subFloorSel === 'visitor' ? 'Visitor' : subFloorSel;
-  const comOvernight  = !!(document.getElementById('book-overnight')?.checked);
+  // อ่านค่าค้างคืนจาก hidden input เดียว (เขียนโดย setBmOvernight)
+  const _ovVal        = document.getElementById('bm-overnight-val')?.value || 'no';
+  const isOvernight   = _ovVal === 'yes';
+  const subOvernight  = isOvernight;   // alias สำหรับ sub/other
+  const comOvernight  = isOvernight;   // alias สำหรับ common
+  const subFloorSel   = document.getElementById('book-sub-floor')?.value || 'P3A';
+  const subFloorLabel = subFloorSel;
 
   // ── Validation ──
   if (type === 'sub') {
@@ -4400,11 +4407,16 @@ function submitBooking() {
   renderAriCalendar();
 
   // ── ส่งไป Google Sheets ──
-  const sheetOpts = { parkMode: currentParkMode === 'long' ? 'จอดยาว' : 'รายวัน',
-                      overnight: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
-                      floor: subFloorLabel,
-                      dept: deptVal,
-                      carLabel: carLabel.replace(/\s*\(จอดหน้าอาคาร\)/g,'').trim() };
+  // ✅ ส่งค่าทั้งหมดผ่าน sheetOpts เพราะ sendToSheet ถูกเรียกหลัง reset แล้ว
+  const sheetOpts = {
+    parkMode:  currentParkMode === 'long' ? 'จอดยาว' : 'รายวัน',
+    overnight: isOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
+    floor:     subFloorLabel,
+    dept:      deptVal,
+    carLabel:  carLabel.replace(/\s*\(จอดหน้าอาคาร\)/g,'').trim(),
+    note:      noteVal,
+    owner:     subOwner,
+  };
   if (bookedDates.length > 0) {
     bookedDates.forEach((ds, idx) => {
       setTimeout(() => sendToSheet(type, name, plate, ds, sheetOpts), idx * 300);
@@ -4417,10 +4429,10 @@ function submitBooking() {
   ['book-plate','book-name','book-note','book-plate-owner','book-dept'].forEach(id => {
     const el = document.getElementById(id); if(el) el.value = '';
   });
-  const subOvEl = document.getElementById('book-sub-overnight');
-  if (subOvEl) subOvEl.checked = false;
+  // reset overnight hidden input และ UI ปุ่ม
+  setBmOvernight('no');
   const subFloorEl = document.getElementById('book-sub-floor');
-  if (subFloorEl) subFloorEl.value = 'visitor';
+  if (subFloorEl) subFloorEl.value = 'P3A';
   document.getElementById('book-owner-result').style.display = 'none';
   if (type === 'common') { selectedDays.clear(); rangeStart=null; rangeEnd=null; renderMultiCal(); renderRangeCal(); }
   if (type === 'sub' || type === 'other') { selectedDays.clear(); renderMultiCal(); }
@@ -4467,7 +4479,7 @@ function printAriReport() {
   const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()+543}  ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} น.`;
 
   const stripEmoji = s => (s||'').replace(/\p{Emoji}/gu, '').trim();
-  const commonRows = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.parkType==='long'?'จอดยาว':'รายวัน'}${r.overnight?' (ค้างคืน)':''}</td><td>ชั้น 5 ส่วนกลางขวามือ</td><td>${r.note||'–'}</td></tr>`).join('');
+  const commonRows = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.parkType==='long'?'จอดยาว':'รายวัน'}${(r.overnight===true||r.overnight==='ค้างคืน')?' (ค้างคืน)':''}</td><td>ชั้น 5 ส่วนกลางขวามือ</td><td>${r.note||'–'}</td></tr>`).join('');
   const subRows = ARI_SUB_BOOKINGS.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plateReq}</td><td>${r.carTypeReq.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.plateOwner}</td><td>${r.timeType}</td><td>${r.floor}</td><td>${r.note||'–'}</td></tr>`).join('');
   const otherRows = ARI_OTHER_BOOKINGS.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.timeType}</td><td>หน้าอาคาร</td><td>${r.note}</td></tr>`).join('');
 
@@ -5205,24 +5217,28 @@ function processGsData(data) {
       return '';
     }
 
-    // ── แปลงข้อมูล Bookings → format ใหม่ (1 row ต่อ 1 วัน) ──
-    // คอลัมน์ Bookings: ลำดับ/ชื่อผู้ขอ/ทะเบียน/ประเภทรถ/วันที่จอด/ประเภทการจอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
+    // ── แปลงข้อมูล Bookings → 1 entry ต่อ 1 การจอง (ไม่ cap ที่ 18) ──
+    // คอลัมน์ Bookings: ลำดับ/ชื่อผู้ขอ/ทะเบียน/ฝ่าย/ประเภทรถ/วันที่จอด/ประเภทการจอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
     ARI_COMMON_BOOKINGS.length = 0;
-    for (let i = 66; i <= 83; i++) {
-      ARI_COMMON_BOOKINGS.push({ slot:'ช่อง '+i, name:'–', plate:'–', carType:'–', parkType:'', overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–', dates:[] });
-    }
     if (data.common && data.common.length) {
-      // group ตาม name+plate เพื่อรวม dates หลายวัน
+      // group ตาม name+plate+ประเภทการจอด เพื่อรวมหลายวันของจอดยาว (long)
+      // แต่ daily แต่ละ row = แต่ละการจอง (ไม่ merge)
       const grouped = {};
       data.common.forEach(r => {
-        const key = (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียน']||'');
-        const parkTypeStr = r['ประเภทการจอด'] || r['ประเภทการจอด'] || '';
-        const overnightStr = r['ค้างคืน'] || r['ประเภทการจอด'] || '';
-        const isOvernight = overnightStr.includes('ค้างคืน');
-        const isParkLong  = parkTypeStr.includes('จอดยาว');
-        // อ่าน วันที่จอด จากคอลัมน์ใหม่ก่อน fallback ไปที่ วันที่บันทึก
-        const dateRaw = r['วันที่จอด'] || r['วันที่บันทึก'] || '';
-        const dateISO = parseThaiDate(dateRaw);
+        const parkTypeStr  = r['ประเภทการจอด'] || '';
+        const overnightStr = r['ค้างคืน'] || '';
+        // ❌ ห้ามใช้ .includes('ค้างคืน') เพราะ "ไม่ค้างคืน".includes("ค้างคืน") === true
+        const isOvernight  = overnightStr.trim() === 'ค้างคืน';
+        const isParkLong   = parkTypeStr.includes('จอดยาว');
+        const dateRaw  = r['วันที่จอด'] || r['วันที่บันทึก'] || '';
+        const dateISO  = parseThaiDate(dateRaw);
+
+        // จอดยาว → merge หลายวันของ name+plate เดียวกันเป็น 1 entry
+        // รายวัน  → แต่ละ row คือ 1 การจอง แยก key ด้วย dateISO
+        const key = isParkLong
+          ? (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียน']||'') + '|long'
+          : (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียน']||'') + '|' + (dateISO||'');
+
         if (!grouped[key]) {
           grouped[key] = {
             name:      r['ชื่อผู้ขอ']   || '–',
@@ -5237,25 +5253,33 @@ function processGsData(data) {
             dates:     dateISO ? [dateISO] : [],
           };
         } else {
+          // merge dates เพิ่มเติม (สำหรับ long เท่านั้น)
           if (dateISO && !grouped[key].dates.includes(dateISO)) grouped[key].dates.push(dateISO);
         }
       });
-      let slotIdx = 0;
-      Object.values(grouped).forEach(entry => {
-        if (slotIdx >= 18) return;
-        ARI_COMMON_BOOKINGS[slotIdx] = { slot: 'ช่อง ' + (66 + slotIdx), ...entry };
-        slotIdx++;
+      // ใส่ทุก entry ลงใน ARI_COMMON_BOOKINGS โดยไม่ cap
+      Object.values(grouped).forEach((entry, idx) => {
+        ARI_COMMON_BOOKINGS.push({
+          slot: 'ช่อง ' + (66 + (idx % 18)),  // วนช่องถ้ามากกว่า 18
+          ...entry
+        });
       });
+    }
+    // ถ้าไม่มีข้อมูลเลย → reset เป็น 18 ช่องว่าง
+    if (ARI_COMMON_BOOKINGS.length === 0) {
+      for (let i = 66; i <= 83; i++) {
+        ARI_COMMON_BOOKINGS.push({ slot:'ช่อง '+i, name:'–', plate:'–', carType:'–', parkType:'', overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–', dates:[] });
+      }
     }
 
     // ── แปลง SubPark ──
-    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
     if (data.sub && data.sub.length) {
       ARI_SUB_BOOKINGS.length = 0;
       const subGrouped = {};
       data.sub.forEach(r => {
         const key = (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียนผู้ขอ']||'');
-        const timeType = r['ประเภทการจอด'] || 'ไม่ค้างคืน';
+        const timeType = (r['ค้างคืน']||'').trim() === 'ค้างคืน' ? 'ค้างคืน' : 'ไม่ค้างคืน';
         const dateRaw = r['วันที่จอด'] || r['วันที่บันทึก'] || '';
         const dateISO = parseThaiDate(dateRaw);
         if (!subGrouped[key]) {
@@ -5296,7 +5320,7 @@ function processGsData(data) {
             dept:     r['ฝ่าย']              || '–',
             plate:    r['ทะเบียนผู้ขอ']      || r['ทะเบียน'] || '–',
             carType:  r['ประเภทรถ']          || '–',
-            timeType: r['ประเภทการจอด']      || 'ไม่ค้างคืน',
+            timeType: (r['ค้างคืน']||'').trim() === 'ค้างคืน' ? 'ค้างคืน' : 'ไม่ค้างคืน',
             status:   'รออนุมัติ',
             statusCls:'tag-orange',
             note:     r['หมายเหตุ']          || '–',
@@ -5354,36 +5378,31 @@ function sendToSheet(type, name, plate, dateISO, extraOpts) {
 
   let sheetName, row;
 
+  // ⚠️ sendToSheet ถูกเรียกผ่าน setTimeout หลัง modal ปิดและ reset แล้ว
+  // จึงต้องอ่านค่าทั้งหมดจาก extraOpts ที่ submitBooking อ่านไว้ก่อน reset
+  // ห้ามอ่านจาก DOM ที่นี่เด็ดขาด
+  const _overnight = (extraOpts && extraOpts.overnight) || 'ไม่ค้างคืน';
+  const _carLabel  = (extraOpts && extraOpts.carLabel)  || '';
+  const _dept      = (extraOpts && extraOpts.dept)      || '–';
+  const _note      = (extraOpts && extraOpts.note)      || '–';
+  const _parkMode  = (extraOpts && extraOpts.parkMode)  || 'รายวัน';
+  const _floor     = (extraOpts && extraOpts.floor)     || '–';
+  const _owner     = (extraOpts && extraOpts.owner)     || '';
+
   if (type === 'common') {
     // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียน/ฝ่าย/ประเภทรถ/วันที่จอด/ประเภทการจอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
-    const carLabel  = (extraOpts && extraOpts.carLabel) || document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
-    const note      = document.getElementById('book-note')?.value.trim() || '–';
-    const dept      = (extraOpts && extraOpts.dept) || document.getElementById('book-dept')?.value.trim() || '–';
-    const overnight = document.getElementById('book-overnight')?.checked ? 'ค้างคืน' : 'ไม่ค้างคืน';
-    const parkMode  = (extraOpts && extraOpts.parkMode) || 'รายวัน';
     sheetName = 'Bookings';
-    row = ['auto', name, plate, dept, carLabel, dateThai, parkMode, overnight, 'ชั้น 5 ส่วนกลางขวามือ', note, ts];
+    row = ['auto', name, plate, _dept, _carLabel, dateThai, _parkMode, _overnight, 'ชั้น 5 ส่วนกลางขวามือ', _note, ts];
 
   } else if (type === 'sub') {
-    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
-    const owner     = document.getElementById('book-plate-owner')?.value.trim() || (extraOpts && extraOpts.owner) || '';
-    const carLabel  = (extraOpts && extraOpts.carLabel) || document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
-    const note      = document.getElementById('book-note')?.value.trim() || '–';
-    const dept      = (extraOpts && extraOpts.dept) || document.getElementById('book-dept')?.value.trim() || '–';
-    const overnight = (extraOpts && extraOpts.overnight) || (document.getElementById('book-sub-overnight')?.checked ? 'ค้างคืน' : 'ไม่ค้างคืน');
-    const floor     = (extraOpts && extraOpts.floor) || '–';
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
     sheetName = 'SubPark';
-    row = ['auto', name, plate, dept, carLabel, owner, dateThai, overnight, floor, note, ts];
+    row = ['auto', name, plate, _dept, _carLabel, _owner, dateThai, _overnight, _floor, _note, ts];
 
   } else if (type === 'other') {
-    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/วันที่จอด/ประเภทการจอด/ชั้น/หมายเหตุ/วันที่บันทึก
-    const rawLabel  = (extraOpts && extraOpts.carLabel) || document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
-    const carLabel  = rawLabel.replace(/\s*\(จอดหน้าอาคาร\)/g, '').replace(/[^a-zA-Zก-๙ ๐-๙\u0E00-\u0E7F🚐📦🏪🚌🚑]/g,'').trim();
-    const note      = document.getElementById('book-note')?.value.trim() || '–';
-    const dept      = (extraOpts && extraOpts.dept) || document.getElementById('book-dept')?.value.trim() || '–';
-    const overnight = (extraOpts && extraOpts.overnight) || (document.getElementById('book-sub-overnight')?.checked ? 'ค้างคืน' : 'ไม่ค้างคืน');
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/วันที่จอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
     sheetName = 'OtherCars';
-    row = ['auto', name, plate, dept, carLabel, dateThai, overnight, 'หน้าอาคาร', note, ts];
+    row = ['auto', name, plate, _dept, _carLabel, dateThai, _overnight, 'หน้าอาคาร', _note, ts];
   }
 
   gsSetStatus('loading');
