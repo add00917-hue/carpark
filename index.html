@@ -267,6 +267,26 @@
   }
   .building-view:not(#view-all).active { display: flex; }
 
+  .bk-print-btn { font-size:11px; font-weight:600; padding:6px 14px; border-radius:8px; border:0.5px solid rgba(255,255,255,0.3); background:rgba(255,255,255,0.15); cursor:pointer; color:#ffffff !important; white-space:nowrap; }
+  .bk-print-btn:hover { background:rgba(255,255,255,0.25); }
+  html[data-theme="light"] .bk-print-btn { color:#ffffff !important; }
+
+  /* ─── booking right header — solid dark bar ─── */
+  .book-right-header-bar {
+    background: rgba(20,14,50,0.88);
+    border: 0.5px solid rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .bk-hdr-title { font-size:14px; font-weight:700; color:#ffffff !important; }
+  html[data-theme="light"] .bk-hdr-title  { color:#ffffff !important; }
+  html[data-theme="light"] .book-right-header-bar button { color:#fff !important; }
+
   /* ── view-booking: column → book-grid เติม flex:1 เต็มความสูง ── */
   #view-booking {
     padding: 0 !important;
@@ -1244,15 +1264,24 @@
 
   /* ─── TABLE HEADERS ─── */
   .tbl-th {
-    padding: 7px 8px;
+    padding: 8px 10px;
     text-align: left;
     font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 600;
-    border-bottom: 1.5px solid var(--border);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #fff;
+    background: rgba(30,20,60,0.75);
+    border-bottom: 1.5px solid rgba(255,255,255,0.12);
+    white-space: nowrap;
+  }
+  /* light mode header */
+  html[data-theme="light"] .tbl-th {
+    color: #374151;
+    background: rgba(240,238,255,0.92);
+    border-bottom: 1.5px solid #ddd6fe;
   }
   .tbl-td {
-    padding: 7px 8px;
+    padding: 7px 10px;
     border-bottom: 0.5px solid var(--border);
     font-size: 12px;
   }
@@ -1471,6 +1500,60 @@
   .btn-cancel { flex: 1; padding: 12px; border-radius: 10px; border: 1.5px solid var(--border); background: none; font-size: 14px; font-weight: 600; cursor: pointer; }
   .btn-confirm { flex: 1; padding: 12px; border-radius: 10px; border: none; background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.15s; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
   .btn-confirm:hover { opacity: 0.88; }
+
+  /* ─── RESPONSIVE — TABLET PORTRAIT (≤900px) ─── */
+  @media (max-width: 900px) {
+
+    /* book-grid: ซ้อนบน-ล่าง */
+    .book-grid {
+      flex-direction: column !important;
+      overflow-y: auto;
+    }
+
+    /* left panel: ไม่ overflow hidden เพื่อให้เห็นเนื้อหาครบ */
+    .book-left-half {
+      flex: none !important;
+      padding: 14px 14px 0 !important;
+      overflow: visible !important;
+    }
+
+    .book-panel {
+      max-width: 100% !important;
+      gap: 12px;
+    }
+
+    /* panel row: สรุป + ปฏิทิน เคียงกันบนบรรทัดเดียว */
+    .book-panel > div:first-child {
+      flex-direction: row !important;
+      gap: 10px;
+    }
+
+    /* ขวา: ตาราง ไปอยู่ล่าง เต็มความกว้าง */
+    .book-right-half {
+      width: 100% !important;
+      flex-shrink: 1 !important;
+      border-left: none !important;
+      border-top: 0.5px solid rgba(255,255,255,0.08) !important;
+      padding: 14px !important;
+      overflow-y: visible !important;
+      background: rgba(8,8,18,0.82);
+      backdrop-filter: blur(12px);
+    }
+
+    /* ตาราง: font เล็กลงให้พอดี */
+    .bk-tc table { font-size: 10px; }
+    .bk-tc th, .tbl-th { font-size: 9px !important; padding: 5px 6px !important; }
+    .bk-tc td, .tbl-td { font-size: 10px !important; padding: 5px 6px !important; }
+
+    /* KPI เล็กลง */
+    #daily-common-num, #daily-sub-num,
+    #daily-other-num, #daily-total-num { font-size: 24px !important; }
+    .bk-kpi-chip { padding: 8px 6px !important; }
+    .bk-kpi-chip svg { width: 18px !important; height: 18px !important; }
+
+    /* ปฏิทิน --cal-cell-size เล็กลง */
+    #ari-calendar { --cal-cell-size: 32px; }
+  }
 
   /* ─── RESPONSIVE — TABLET ─── */
   @media (max-width: 1100px) {
@@ -2097,11 +2180,11 @@
 
         <!-- ══ ขวา: ตาราง 50% ══ -->
         <div class="book-right-half">
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <div style="font-size:14px;font-weight:700;color:#fff;">
+          <div class="book-right-header-bar">
+            <div class="bk-hdr-title">
               รายการแจ้งจอด — <span id="ari-selected-date-label" style="color:#fbbf24;">วันนี้</span>
             </div>
-            <button onclick="printAriReport()" style="font-size:11px;font-weight:600;padding:6px 14px;border-radius:8px;border:0.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);cursor:pointer;color:rgba(255,255,255,0.7);backdrop-filter:blur(8px);">🖨️ พิมพ์/ส่งฝ่ายอาคาร</button>
+            <button onclick="printAriReport()" class="bk-print-btn">🖨️ พิมพ์/ส่งฝ่ายอาคาร</button>
           </div>
 
           <!-- ส่วนกลาง -->
@@ -2559,7 +2642,7 @@
 </div>
 
 <!-- ════ BOOKING MODAL POPUP — 2-column no-scroll ════ -->
-<div id="booking-modal-overlay" onclick="if(event.target===this)closeBookingModal()"
+<div id="booking-modal-overlay"
   style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.52);backdrop-filter:blur(8px);z-index:400;align-items:center;justify-content:center;padding:20px;">
   <div style="background:#fff;border-radius:20px;width:820px;max-width:96vw;box-shadow:0 24px 64px rgba(0,0,0,0.2);animation:bm-in 0.22s ease;display:flex;flex-direction:column;max-height:calc(100vh - 40px);">
 
@@ -2733,11 +2816,12 @@
           <label style="font-size:12px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px;">ชั้นที่จอดแทน <span style="color:#ef4444;">*</span></label>
           <select class="form-select" id="book-sub-floor" style="width:100%;padding:9px 11px;border:1.5px solid #eee;border-radius:9px;font-size:13px;outline:none;">
             <option value="P3A">🅿️ ชั้น P3A</option>
+            <option value="P4">🅿️ ชั้น P4</option>
             <option value="P4A">🅿️ ชั้น P4A</option>
             <option value="P5">🅿️ ชั้น P5</option>
             <option value="P5A">🅿️ ชั้น P5A</option>
             <option value="P6">🅿️ ชั้น P6</option>
-            <option value="3A,4A,5,5A,6">🅿️ ชั้น 3A,4A,5,5A,6</option>
+            <option value="P3A,P4,P4A,P5,P5A,P6">🅿️ P3A,P4,P4A,P5,P5A,P6</option>
           </select>
         </div>
 
@@ -4611,15 +4695,50 @@ function renderAriReportDate() {
 function printAriReport() {
   const now = new Date();
   const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-  const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()+543}  ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} น.`;
+  const nowStr  = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()+543}  ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} น.`;
 
-  const stripEmoji = s => (s||'').replace(/\p{Emoji}/gu, '').trim();
-  const commonRows = ARI_COMMON_BOOKINGS.filter(r=>r.status!=='ว่าง').map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.parkType==='long'?'จอดยาว':'รายวัน'}${(r.overnight===true||r.overnight==='ค้างคืน')?' (ค้างคืน)':''}</td><td>ชั้น 5 ส่วนกลางขวามือ</td><td>${r.note||'–'}</td></tr>`).join('');
-  const subRows = ARI_SUB_BOOKINGS.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plateReq}</td><td>${r.carTypeReq.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.plateOwner}</td><td>${r.timeType}</td><td>${r.floor}</td><td>${r.note||'–'}</td></tr>`).join('');
-  const otherRows = ARI_OTHER_BOOKINGS.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.timeType}</td><td>หน้าอาคาร</td><td>${r.note}</td></tr>`).join('');
+  // ── กรองเฉพาะวันที่เลือกในปฏิทิน (ariSelectedDate) ──
+  const today   = now.toISOString().slice(0, 10);
+  const printDs = ariSelectedDate || today;   // YYYY-MM-DD
+
+  // แปลงวันที่เลือกเป็นภาษาไทยสำหรับหัวเอกสาร
+  const [py, pm, pd] = printDs.split('-').map(Number);
+  const printDateThai = `${pd} ${months[pm-1]} ${py+543}`;
+  const dateStr = `${nowStr}  |  วันที่รายงาน: ${printDateThai}`;
+
+  // ── กรองเหมือน renderBookingTable ──
+  const filteredCommon = ARI_COMMON_BOOKINGS.filter(r => {
+    if (r.status === 'ว่าง') return false;
+    if (r.dates && r.dates.length > 0) return r.dates.includes(printDs);
+    return printDs === today; // fallback ข้อมูลเก่า
+  });
+
+  const filteredSub = ARI_SUB_BOOKINGS.filter(r => {
+    if (r.dates && r.dates.length > 0) return r.dates.includes(printDs);
+    return printDs === today;
+  });
+
+  const filteredOther = ARI_OTHER_BOOKINGS.filter(r => {
+    if (r.dates && r.dates.length > 0) return r.dates.includes(printDs);
+    return printDs === today;
+  });
+
+  const emptyRow = cols => `<tr><td colspan="${cols}" style="text-align:center;color:#aaa;padding:12px;">ไม่มีรายการ</td></tr>`;
+
+  const commonRows = filteredCommon.length
+    ? filteredCommon.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.parkType==='long'?'จอดยาว':'รายวัน'}${(r.overnight===true||r.overnight==='ค้างคืน')?' (ค้างคืน)':''}</td><td>ชั้น 5 ส่วนกลางขวามือ</td><td>${r.note||'–'}</td></tr>`).join('')
+    : emptyRow(7);
+
+  const subRows = filteredSub.length
+    ? filteredSub.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plateReq}</td><td>${r.carTypeReq.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.plateOwner}</td><td>${r.timeType}</td><td>${r.floor}</td><td>${r.note||'–'}</td></tr>`).join('')
+    : emptyRow(8);
+
+  const otherRows = filteredOther.length
+    ? filteredOther.map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.plate}</td><td>${r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()}</td><td>${r.timeType}</td><td>หน้าอาคาร</td><td>${r.note||'–'}</td></tr>`).join('')
+    : emptyRow(7);
 
   const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
-  <title>รายงานจอดรถ Ari Hills — ${dateStr}</title>
+  <title>รายงานจอดรถ Ari Hills — ${printDateThai}</title>
   <style>
     body{font-family:sans-serif;font-size:13px;color:#111;margin:24px;}
     h1{font-size:16px;margin-bottom:2px;} .sub{font-size:12px;color:#666;margin-bottom:20px;}
@@ -4630,39 +4749,21 @@ function printAriReport() {
     .footer{margin-top:28px;font-size:11px;color:#aaa;border-top:1px solid #eee;padding-top:10px;}
     @media print{body{margin:12px;}}
   </style></head><body>
-  <h1>รายงานการจอดรถ — Ari Hills</h1>
-  <div class="sub">พิมพ์เมื่อ: ${dateStr} &nbsp;|&nbsp; จัดทำโดย: ระบบจัดการลานจอด</div>
-  <h2>แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ</h2>
+  <h1>รายงานการจอดรถ — Ari Hills &nbsp;<span style="font-weight:400;color:#555;">วันที่ ${printDateThai}</span></h1>
+  <div class="sub">พิมพ์เมื่อ: ${nowStr} &nbsp;|&nbsp; จัดทำโดย: ระบบจัดการลานจอด</div>
+  <h2>แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ <span style="font-weight:400;color:#888;">(${filteredCommon.length} รายการ)</span></h2>
   <table><thead><tr><th>ลำดับ</th><th>ชื่อผู้ขอ</th><th>ทะเบียน</th><th>ประเภทรถ</th><th>ประเภทการจอด</th><th>ชั้น (จอด)</th><th>หมายเหตุ</th></tr></thead>
   <tbody>${commonRows}</tbody></table>
-  <h2>แจ้งจอดแทน</h2>
+  ${filteredSub.length ? `
+  <h2>แจ้งจอดแทน <span style="font-weight:400;color:#888;">(${filteredSub.length} รายการ)</span></h2>
   <table><thead><tr><th>ลำดับ</th><th>ชื่อผู้ขอ</th><th>ทะเบียนผู้ขอ</th><th>ประเภทรถ</th><th>ทะเบียนสิทธิ์จอดแทน</th><th>ประเภทการจอด</th><th>ชั้น</th><th>หมายเหตุ</th></tr></thead>
-  <tbody>${subRows}</tbody></table>
-  <h2>แจ้งจอดรถอื่นๆ (รถตู้ / รถส่งของ / รถ Vendor / รถบัส / รถพยาบาล)</h2>
+  <tbody>${subRows}</tbody></table>` : ''}
+  ${filteredOther.length ? `
+  <h2>แจ้งจอดรถอื่นๆ (รถตู้ / รถส่งของ / รถ Vendor / รถบัส / รถพยาบาล) <span style="font-weight:400;color:#888;">(${filteredOther.length} รายการ)</span></h2>
   <table><thead><tr><th>ลำดับ</th><th>ชื่อผู้ขอ</th><th>ทะเบียนผู้ขอ</th><th>ประเภทรถ</th><th>ประเภทการจอด</th><th>ชั้น (จอดหน้าอาคาร)</th><th>หมายเหตุ</th></tr></thead>
-  <tbody>${otherRows}</tbody></table>
-  <div class="footer">เอกสารนี้ออกจากระบบจัดการลานจอดโดยอัตโนมัติ — ไม่ต้องลงนาม</div>
-  <!-- ════ ADMIN LOGIN MODAL ════ -->
-<div id="admin-login-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:600;align-items:center;justify-content:center;">
-  <div style="background:var(--card);border-radius:16px;width:340px;box-shadow:0 24px 64px rgba(0,0,0,0.25);overflow:hidden;">
-    <div style="background:#1A1A1A;padding:20px 22px;text-align:center;">
-      <div style="font-size:28px;margin-bottom:6px;">🔐</div>
-      <div style="font-size:15px;font-weight:700;color:#fff;">Admin Login</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">ต้องเข้าสู่ระบบเพื่อใช้งานส่วนนี้</div>
-    </div>
-    <div style="padding:20px;display:flex;flex-direction:column;gap:12px;">
-      <div class="form-field"><label class="form-label">ชื่อผู้ใช้</label><input class="form-input" id="admin-user" placeholder="username" autocomplete="off"></div>
-      <div class="form-field"><label class="form-label">รหัสผ่าน</label><input class="form-input" id="admin-pass" type="password" placeholder="password" onkeydown="if(event.key==='Enter')doAdminLogin()"></div>
-      <div id="admin-error" style="display:none;font-size:11px;color:#DC2626;background:#FEF2F2;padding:7px 10px;border-radius:8px;">❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</div>
-      <div style="display:flex;gap:8px;margin-top:4px;">
-        <button onclick="closeAdminLogin()" style="flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:transparent;cursor:pointer;font-size:13px;font-weight:600;">ยกเลิก</button>
-        <button onclick="doAdminLogin()" style="flex:2;padding:10px;border-radius:10px;border:none;background:#1A1A1A;color:#fff;cursor:pointer;font-size:13px;font-weight:700;">เข้าสู่ระบบ</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-</body></html>`;
+  <tbody>${otherRows}</tbody></table>` : ''}
+  <div class="footer">เอกสารนี้ออกจากระบบจัดการลานจอดโดยอัตโนมัติ — ไม่ต้องลงนาม &nbsp;|&nbsp; รายงานเฉพาะวันที่ ${printDateThai}</div>
+  </body></html>`;
 
   const w = window.open('','_blank');
   w.document.write(html);
