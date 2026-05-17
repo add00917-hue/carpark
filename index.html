@@ -2712,25 +2712,28 @@
           <div>
             <div class="nv-sec-label">🔑 LINE Messaging API</div>
             <div class="nv-block">
-              <div style="font-size:10px;font-weight:600;color:#8899BB;margin-bottom:4px;">Channel Access Token</div>
-              <div class="nv-row">
-                <input type="password" id="nv-token" class="nv-input" placeholder="Channel access token (long-lived)…" oninput="nvOnToken()">
-                <button class="nv-btn nv-btn-line" onclick="nvTest()">ทดสอบ</button>
+              <div style="display:flex;align-items:center;gap:8px;padding:6px 4px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#06C755;flex-shrink:0;"></div>
+                <div style="font-size:11px;color:#8899BB;">ใช้ Token และ Group ID จาก Apps Script</div>
+                <button class="nv-btn nv-btn-line" style="margin-left:auto;" onclick="nvTest()">ทดสอบ</button>
               </div>
-              <div style="font-size:10px;font-weight:600;color:#8899BB;margin:8px 0 4px;">Target ID <span style="font-weight:400;">(User / Group)</span></div>
-              <div class="nv-row">
-                <input type="text" id="nv-target" class="nv-input" placeholder="Cxxxxxxx… (Group) หรือ Uxxxxxxx… (User)" oninput="nvSave()">
-                <button class="nv-btn nv-btn-ghost" onclick="nvGetGroupId()" title="ดึง Group ID อัตโนมัติจาก Webhook">🔍</button>
-              </div>
-              <div class="nv-hint">รับ Token ที่ <a href="https://developers.line.biz/" target="_blank" style="color:#06C755;">developers.line.biz</a> → Messaging API channel → Channel access token</div>
+              <div class="nv-hint" style="margin-top:4px;">Token และ Target ID ตั้งค่าไว้ใน Apps Script แล้ว ไม่ต้องกรอกซ้ำ</div>
             </div>
           </div>
           <div>
             <div class="nv-sec-label">📊 Google Sheets URL</div>
             <div class="nv-block">
               <input type="text" id="nv-gs" class="nv-input" placeholder="https://script.google.com/macros/s/…/exec" style="font-size:10px;" oninput="nvSave()">
+              <div style="margin-top:8px;">
+                <div style="font-size:10px;font-weight:600;color:#8899BB;margin-bottom:5px;">📅 เลือกวันที่ต้องการดึงข้อมูล</div>
+                <div class="nv-row" style="gap:6px;">
+                  <input type="date" id="nv-date-pick" class="nv-input" style="flex:1;font-size:11px;" onchange="nvSave()">
+                  <button class="nv-btn nv-btn-ghost" onclick="nvSetDate(0)" title="วันนี้">วันนี้</button>
+                  <button class="nv-btn nv-btn-ghost" onclick="nvSetDate(1)" title="พรุ่งนี้">พรุ่งนี้</button>
+                </div>
+              </div>
               <div class="nv-row" style="margin-top:7px;">
-                <button class="nv-btn nv-btn-ghost" onclick="nvLoad(true)">🔄 โหลดข้อมูล</button>
+                <button class="nv-btn nv-btn-line" onclick="nvLoadByDate()" style="flex:1;">🔄 โหลดข้อมูล</button>
                 <button class="nv-btn nv-btn-ghost" onclick="nvClear()">🗑️ ล้าง</button>
               </div>
               <div class="nv-notice">⚠️ ต้องเพิ่ม sendLine() ใน Apps Script เพื่อส่งผ่าน GS</div>
@@ -6028,20 +6031,52 @@ function nvPreview(){
   const ce=document.getElementById('nv-ce');if(ce)ce.style.display='none';
   const ct=document.getElementById('nv-ct');if(ct)ct.textContent=`${String(new Date().getHours()).padStart(2,'0')}:${String(new Date().getMinutes()).padStart(2,'0')}`;
 }
-async function nvSendNow(){const tok=document.getElementById('nv-token')?.value.trim();if(!tok){alert('กรุณาใส่ Channel Access Token');return;}const tid=document.getElementById('nv-target')?.value.trim();if(!tid){alert('กรุณาใส่ Target ID (Group/User)');return;}if(!_nvData.date){if(confirm('ยังไม่ได้โหลดข้อมูล — โหลดแล้วส่งเลยไหม?')){await nvLoad(true);}return;}nvDoSend(tok,tid);}
-async function nvDoSend(tok,tid){
+async function nvSendNow(){if(!_nvData.date){if(confirm('ยังไม่ได้โหลดข้อมูล — โหลดแล้วส่งเลยไหม?')){await nvLoadByDate();}return;}nvDoSend();}
+async function nvDoSend(){
   const msg=nvBuildMsg();nvLog('info',`กำลังส่ง LINE Messaging API… (${msg.length} chars)`);const btn=document.getElementById('nv-send-btn');if(btn)btn.disabled=true;
-  try{const gsUrl=document.getElementById('nv-gs')?.value.trim();if(!gsUrl)throw new Error('ไม่มี GS URL');const p=new URLSearchParams({action:'sendLine',token:tok,targetId:tid,message:msg});const res=await fetch(`${gsUrl}?${p}`,{method:'GET',mode:'cors',credentials:'omit'});const d=await res.json();if(d.ok){nvLog('ok','✅ ส่ง LINE Messaging API สำเร็จ!');nvStat('online','ส่งแล้ว ✅');}else throw new Error(d.msg||'error');}
+  try{const gsUrl=document.getElementById('nv-gs')?.value.trim();if(!gsUrl)throw new Error('ไม่มี GS URL');const res=await fetch(`${gsUrl}?action=sendLine&message=${encodeURIComponent(msg)}`,{mode:'cors',credentials:'omit'});const d=await res.json();if(d.ok){nvLog('ok','✅ ส่ง LINE Messaging API สำเร็จ!');nvStat('online','ส่งแล้ว ✅');}else throw new Error(d.msg||'error');}
   catch(e){nvLog('err','ส่งไม่ได้: '+e.message);}
   finally{if(btn)btn.disabled=false;}
 }
-async function nvTest(){const tok=document.getElementById('nv-token')?.value.trim();if(!tok){alert('กรุณาใส่ Channel Access Token');return;}const tid=document.getElementById('nv-target')?.value.trim();if(!tid){alert('กรุณาใส่ Target ID ก่อน');return;}const gs=document.getElementById('nv-gs')?.value.trim();if(!gs){nvLog('err','ต้องใส่ GS URL ก่อน');return;}nvLog('info','ทดสอบส่ง LINE Messaging API…');nvStat('waiting','กำลังทดสอบ…');try{const p=new URLSearchParams({action:'sendLine',token:tok,targetId:tid,message:'\n🅿️ Parking Management — ทดสอบการเชื่อมต่อ ✅\nLINE Messaging API พร้อมใช้งาน'});const res=await fetch(`${gs}?${p}`,{mode:'cors',credentials:'omit'});const d=await res.json();if(d.ok){nvStat('online','LINE API ✅');nvLog('ok','ทดสอบสำเร็จ — ตรวจสอบข้อความใน LINE ได้เลย');}else throw new Error(d.msg);}catch(e){nvStat('offline','Error');nvLog('err','ทดสอบล้มเหลว: '+e.message);}}
+async function nvTest(){
+  const gs=document.getElementById('nv-gs')?.value.trim();
+  if(!gs){nvLog('err','ต้องใส่ GS URL ก่อน');return;}
+  nvLog('info','ทดสอบส่ง LINE Messaging API…');nvStat('waiting','กำลังทดสอบ…');
+  try{
+    const testMsg='\n🅿️ Parking Management — ทดสอบการเชื่อมต่อ ✅\nLINE Messaging API พร้อมใช้งาน';
+    const res=await fetch(`${gs}?action=sendLine&message=${encodeURIComponent(testMsg)}`,{mode:'cors',credentials:'omit'});
+    const d=await res.json();
+    if(d.ok){nvStat('online','LINE API ✅');nvLog('ok','ทดสอบสำเร็จ — ตรวจสอบข้อความใน LINE ได้เลย');}
+    else throw new Error(d.msg);
+  }catch(e){nvStat('offline','Error');nvLog('err','ทดสอบล้มเหลว: '+e.message);}
+}
 async function nvGetGroupId(){const gs=document.getElementById('nv-gs')?.value.trim();if(!gs){nvLog('err','ต้องใส่ GS URL ก่อน');return;}nvLog('info','กำลังดึง Group ID จาก Webhook…');try{const res=await fetch(`${gs}?action=getGroupId`,{mode:'cors',credentials:'omit'});const d=await res.json();if(d.ok&&d.sourceId){const t=document.getElementById('nv-target');if(t)t.value=d.sourceId;nvLog('ok',`ดึง Group ID สำเร็จ: ${d.sourceId} (${d.type})`);nvSave();}else nvLog('warn',d.msg||'ยังไม่มีข้อมูล Webhook');}catch(e){nvLog('err','ดึง Group ID ไม่ได้: '+e.message);}}
-function nvOnToken(){const has=!!(document.getElementById('nv-token')?.value.trim()&&document.getElementById('nv-target')?.value.trim());const btn=document.getElementById('nv-send-btn');if(btn)btn.disabled=!(has&&_nvData.date);nvSave();}
+function nvSetDate(offsetDays){
+  const d=new Date(); d.setDate(d.getDate()+offsetDays);
+  const iso=d.toISOString().slice(0,10);
+  const el=document.getElementById('nv-date-pick');
+  if(el) el.value=iso; nvSave();
+}
+async function nvLoadByDate(){
+  const el=document.getElementById('nv-date-pick');
+  const target=el?.value||new Date().toISOString().slice(0,10);
+  const gsUrl=document.getElementById('nv-gs')?.value.trim();
+  if(!gsUrl){nvLog('err','ไม่ได้ตั้งค่า GS URL');return;}
+  nvLog('info',`กำลังดึงข้อมูลวัน ${target}…`);nvStat('waiting','กำลังโหลด…');
+  try{
+    const ctrl=new AbortController();const t=setTimeout(()=>ctrl.abort(),12000);
+    const res=await fetch(`${gsUrl}?action=readAll`,{redirect:'follow',credentials:'omit',signal:ctrl.signal});
+    clearTimeout(t);if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();if(!data.ok)throw new Error(data.msg);
+    nvProc(data,target);nvStat('online','เชื่อมต่อ GS แล้ว');
+    nvLog('ok',`โหลดสำเร็จ — ${_nvData.common.length}+${_nvData.sub.length}+${_nvData.other.length} รายการ`);
+  }catch(e){nvStat('offline','ล้มเหลว');nvLog('err','ดึงข้อมูลไม่ได้: '+e.message);nvDemo(target);}
+}
+function nvOnToken(){const btn=document.getElementById('nv-send-btn');if(btn)btn.disabled=!(_nvData.date);}
 async function nvCopy(){try{await navigator.clipboard.writeText(nvBuildMsg());nvLog('ok','คัดลอกแล้ว');}catch(e){nvLog('warn','คัดลอกไม่ได้');}}
 function nvClear(){_nvData={common:[],sub:[],other:[],date:''};nvTables();nvLog('info','ล้างข้อมูลแล้ว');}
 function nvSave(){try{localStorage.setItem('pz-nv',JSON.stringify({gs:document.getElementById('nv-gs')?.value,token:document.getElementById('nv-token')?.value,target:document.getElementById('nv-target')?.value,scheds:_nvScheds,footer:document.getElementById('nv-footer')?.value}));}catch(e){}}
-(function nvInit(){try{const r=localStorage.getItem('pz-nv');if(r){const c=JSON.parse(r);if(c.gs){const el=document.getElementById('nv-gs');if(el)el.value=c.gs;}if(c.token){const el=document.getElementById('nv-token');if(el)el.value=c.token;}if(c.target){const el=document.getElementById('nv-target');if(el)el.value=c.target;}if(c.scheds?.length)_nvScheds=c.scheds;if(c.footer){const el=document.getElementById('nv-footer');if(el)el.value=c.footer;}}}catch(e){}const gs=document.getElementById('nv-gs');if(gs&&typeof GS_URL!=='undefined'){gs.value=GS_URL;nvSave();}nvRenderScheds();setTimeout(()=>{nvLog('ok','LINE Messaging API พร้อมใช้งาน');nvLog('info','กรอก Token + Target ID → ทดสอบ → ตั้งเวลาส่ง');},600);})();
+(function nvInit(){try{const r=localStorage.getItem('pz-nv');if(r){const c=JSON.parse(r);if(c.gs){const el=document.getElementById('nv-gs');if(el)el.value=c.gs;}if(c.token){const el=document.getElementById('nv-token');if(el)el.value=c.token;}if(c.target){const el=document.getElementById('nv-target');if(el)el.value=c.target;}if(c.scheds?.length)_nvScheds=c.scheds;if(c.footer){const el=document.getElementById('nv-footer');if(el)el.value=c.footer;}}}catch(e){}const gs=document.getElementById('nv-gs');if(gs&&typeof GS_URL!=='undefined'){gs.value=GS_URL;nvSave();}const dp=document.getElementById('nv-date-pick');if(dp&&!dp.value)dp.value=new Date().toISOString().slice(0,10);nvRenderScheds();setTimeout(()=>{nvLog('ok','LINE Messaging API พร้อมใช้งาน');nvLog('info','กรอก Token + Target ID → ทดสอบ → ตั้งเวลาส่ง');},600);})();
 // ══ END LINE NOTIFY ══
 
 // ── Dashboard Background Switcher (manual) ──────────────────
