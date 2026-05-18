@@ -1501,113 +1501,117 @@
   .btn-confirm { flex: 1; padding: 12px; border-radius: 10px; border: none; background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.15s; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
   .btn-confirm:hover { opacity: 0.88; }
 
-  /* ── LINE NOTIFY VIEW v2 (UI redesign) ── */
-  #view-notify { background:#0f1117 !important; overflow:hidden; flex:1; min-height:0; }
-  #view-notify .nv2-page { display:grid; grid-template-columns:260px 1fr; height:100%; overflow:hidden; }
-  #view-notify .nv2-sb { background:#161b25; border-right:0.5px solid rgba(255,255,255,0.06); display:flex; flex-direction:column; overflow:hidden; }
-  #view-notify .nv2-sb-hdr { padding:14px 13px 10px; border-bottom:0.5px solid rgba(255,255,255,0.06); flex-shrink:0; }
-  #view-notify .nv2-sb-title { font-size:12px; font-weight:700; color:#fff; margin-bottom:1px; }
-  #view-notify .nv2-sb-sub { font-size:9px; color:rgba(255,255,255,0.3); letter-spacing:.5px; text-transform:uppercase; }
-  #view-notify .nv2-sb-status { display:inline-flex; align-items:center; gap:5px; margin-top:8px; padding:4px 9px; background:rgba(29,158,117,0.12); border:0.5px solid rgba(29,158,117,0.3); border-radius:20px; font-size:10px; color:#5DCAA5; }
-  #view-notify .nv2-sb-dot { width:5px; height:5px; border-radius:50%; background:#1D9E75; flex-shrink:0; }
-  #view-notify .nv2-sb-body { flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:14px; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.08) transparent; }
-  #view-notify .nv2-sec-lbl { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:6px; }
-  #view-notify .nv2-block { background:rgba(255,255,255,0.04); border:0.5px solid rgba(255,255,255,0.07); border-radius:8px; padding:10px; }
-  #view-notify .nv2-date-lbl { font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:4px; }
-  #view-notify .nv2-date-disp { font-size:12px; font-weight:600; color:#fff; display:flex; align-items:center; gap:5px; margin-bottom:7px; }
-  #view-notify .nv2-date-btns { display:flex; gap:5px; }
-  #view-notify .nv2-dbtn { flex:1; font-size:10px; padding:5px 0; text-align:center; border:0.5px solid rgba(255,255,255,0.12); border-radius:6px; background:transparent; cursor:pointer; color:rgba(255,255,255,0.6); }
-  #view-notify .nv2-dbtn:hover { background:rgba(255,255,255,0.07); color:#fff; }
-  #view-notify .nv2-load-btn { width:100%; margin-top:7px; padding:7px; border-radius:7px; border:none; background:#1D9E75; color:#fff; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; }
-  #view-notify .nv2-send-btn { width:100%; margin-top:5px; padding:7px; border-radius:7px; border:none; background:#185FA5; color:#fff; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; }
-  #view-notify .nv2-send-btn:disabled { opacity:0.4; cursor:not-allowed; }
-  #view-notify .nv2-test-btn { width:100%; padding:6px; border:0.5px solid rgba(29,158,117,0.4); border-radius:7px; background:rgba(29,158,117,0.1); color:#5DCAA5; font-size:11px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; }
-  #view-notify .nv2-sched-card { display:flex; align-items:center; background:rgba(255,255,255,0.04); border:0.5px solid rgba(255,255,255,0.07); border-radius:8px; padding:8px 9px; margin-bottom:5px; gap:7px; }
-  #view-notify .nv2-sched-time { font-size:14px; font-weight:700; color:#1D9E75; font-family:monospace; min-width:40px; }
-  #view-notify .nv2-sched-name { font-size:11px; color:#fff; font-weight:500; }
-  #view-notify .nv2-sched-type { font-size:10px; color:rgba(255,255,255,0.35); }
-  #view-notify .nv2-stoggle { width:28px; height:16px; background:#1D9E75; border-radius:999px; position:relative; cursor:pointer; flex-shrink:0; margin-left:auto; }
-  #view-notify .nv2-stoggle::after { content:''; position:absolute; top:2px; right:2px; width:12px; height:12px; background:#fff; border-radius:50%; }
-  #view-notify .nv2-stoggle.off { background:rgba(255,255,255,0.15); }
-  #view-notify .nv2-stoggle.off::after { right:auto; left:2px; }
-  #view-notify .nv2-add-sched { width:100%; padding:6px; border:0.5px dashed rgba(255,255,255,0.15); border-radius:7px; background:transparent; font-size:11px; cursor:pointer; color:rgba(255,255,255,0.4); }
-  #view-notify .nv2-cd-box { margin-top:8px; background:rgba(186,117,23,0.1); border:0.5px solid rgba(186,117,23,0.25); border-radius:8px; padding:8px; text-align:center; }
-  #view-notify .nv2-cd-lbl { font-size:10px; color:rgba(255,255,255,0.35); margin-bottom:2px; }
-  #view-notify .nv2-cd-val { font-size:18px; font-weight:700; color:#EF9F27; font-family:monospace; }
-  #view-notify .nv2-opt-row { display:flex; align-items:center; gap:7px; padding:4px 0; font-size:11px; color:rgba(255,255,255,0.7); cursor:pointer; }
-  #view-notify .nv2-chk { width:14px; height:14px; border-radius:3px; background:#185FA5; border:0.5px solid #378ADD; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
-  #view-notify .nv2-chk.off { background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.15); }
-  #view-notify .nv2-footer-inp { width:100%; margin-top:6px; padding:5px 7px; border:0.5px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.6); font-size:10px; }
+  /* ── LINE NOTIFY VIEW v4 ── */
+  #view-notify.building-view { padding: 0 !important; overflow: hidden !important; }
+  #view-notify.building-view.active { flex-direction: column !important; gap: 0 !important; }
+  #view-notify{background:#0f1117!important;overflow:hidden;flex:1;min-height:0}
+  #view-notify .nv2-page{display:grid;grid-template-columns:240px 1fr 270px;height:100%;overflow:hidden}
+  /* sidebar */
+  #view-notify .nv2-sb{background:#161b25;border-right:0.5px solid rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden}
+  #view-notify .nv2-sb-hdr{padding:13px 14px 10px;border-bottom:0.5px solid rgba(255,255,255,.06);flex-shrink:0}
+  #view-notify .nv2-sb-title{font-size:12px;font-weight:700;color:#fff}
+  #view-notify .nv2-sb-sub{font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.5px;text-transform:uppercase}
+  #view-notify .nv2-sb-status{display:inline-flex;align-items:center;gap:5px;margin-top:7px;padding:3px 8px;background:rgba(29,158,117,.12);border:0.5px solid rgba(29,158,117,.3);border-radius:20px;font-size:10px;color:#5DCAA5}
+  #view-notify .nv2-sb-dot{width:5px;height:5px;border-radius:50%;background:#1D9E75;flex-shrink:0}
+  #view-notify .nv2-sb-body{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent}
+  #view-notify .nv2-sec-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:5px}
+  #view-notify .nv2-block{background:rgba(255,255,255,.04);border:0.5px solid rgba(255,255,255,.07);border-radius:8px;padding:10px}
+  #view-notify .nv2-date-disp{font-size:12px;font-weight:600;color:#fff;display:flex;align-items:center;gap:5px;margin-bottom:7px}
+  #view-notify .nv2-cal-nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  #view-notify .nv2-cnav{background:rgba(255,255,255,.07);border:0.5px solid rgba(255,255,255,.12);border-radius:4px;color:rgba(255,255,255,.7);font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  #view-notify .nv2-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+  #view-notify .nv2-ch{font-size:9px;font-weight:600;color:rgba(255,255,255,.3);padding:1px 0}
+  #view-notify .nv2-cd{font-size:10px;color:rgba(255,255,255,.6);padding:3px 1px;border-radius:4px;cursor:pointer}
+  #view-notify .nv2-cd:hover{background:rgba(255,255,255,.08)}
+  #view-notify .nv2-cd.sel{background:#1D9E75;color:#fff;font-weight:700}
+  #view-notify .nv2-cd.tod{background:rgba(29,158,117,.2);color:#5DCAA5;font-weight:600}
+  #view-notify .nv2-date-btns{display:flex;gap:5px;margin-top:6px}
+  #view-notify .nv2-dbtn{flex:1;font-size:10px;padding:5px 0;text-align:center;border:0.5px solid rgba(255,255,255,.12);border-radius:6px;background:transparent;cursor:pointer;color:rgba(255,255,255,.6)}
+  #view-notify .nv2-dbtn:hover{background:rgba(255,255,255,.07);color:#fff}
+  #view-notify .nv2-send-btn{width:100%;margin-top:5px;padding:7px;border-radius:7px;border:none;background:#185FA5;color:#fff;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+  #view-notify .nv2-send-btn:disabled{opacity:.4;cursor:not-allowed}
+  #view-notify .nv2-test-btn{width:100%;padding:6px;border:0.5px solid rgba(29,158,117,.4);border-radius:7px;background:rgba(29,158,117,.1);color:#5DCAA5;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
   /* main */
-  #view-notify .nv2-main { display:flex; flex-direction:column; overflow:hidden; background:#fff; }
-  html[data-theme="dark"] #view-notify .nv2-main { background:rgba(10,12,22,0.95); }
-  #view-notify .nv2-mh { padding:12px 16px; border-bottom:0.5px solid rgba(0,0,0,0.08); display:flex; align-items:center; gap:8px; flex-shrink:0; }
-  html[data-theme="dark"] #view-notify .nv2-mh { border-bottom-color:rgba(255,255,255,0.06); }
-  #view-notify .nv2-mh-title { font-size:14px; font-weight:700; color:#1a1a2e; }
-  html[data-theme="dark"] #view-notify .nv2-mh-title { color:#fff; }
-  #view-notify .nv2-mh-date { font-size:11px; color:#6b7280; }
-  html[data-theme="dark"] #view-notify .nv2-mh-date { color:rgba(255,255,255,0.4); }
-  #view-notify .nv2-mh-cnt { font-size:10px; background:#f3f4f6; border:0.5px solid #e5e7eb; border-radius:999px; padding:2px 8px; color:#6b7280; }
-  html[data-theme="dark"] #view-notify .nv2-mh-cnt { background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.1); color:rgba(255,255,255,0.4); }
-  #view-notify .nv2-mh-r { margin-left:auto; }
-  #view-notify .nv2-prev-btn { display:flex; align-items:center; gap:5px; font-size:11px; padding:6px 12px; border:0.5px solid #e5e7eb; border-radius:7px; background:#fff; cursor:pointer; color:#374151; font-weight:500; }
-  html[data-theme="dark"] #view-notify .nv2-prev-btn { background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.12); color:rgba(255,255,255,0.7); }
-  #view-notify .nv2-body { flex:1; overflow-y:auto; padding:12px 16px; scrollbar-width:thin; }
-  #view-notify .nv2-tbl-wrap { border:0.5px solid #e5e7eb; border-radius:10px; overflow:hidden; }
-  html[data-theme="dark"] #view-notify .nv2-tbl-wrap { border-color:rgba(255,255,255,0.08); }
-  #view-notify .nv2-tbl { width:100%; border-collapse:collapse; table-layout:fixed; }
-  #view-notify .nv2-tbl th { font-size:10px; font-weight:600; color:#6b7280; text-align:left; padding:7px 10px; border-bottom:0.5px solid #f3f4f6; background:#f9fafb; white-space:nowrap; }
-  html[data-theme="dark"] #view-notify .nv2-tbl th { color:rgba(255,255,255,0.4); background:rgba(255,255,255,0.03); border-bottom-color:rgba(255,255,255,0.05); }
-  #view-notify .nv2-tbl td { font-size:11px; padding:7px 10px; border-bottom:0.5px solid #f9fafb; color:#1a1a2e; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  html[data-theme="dark"] #view-notify .nv2-tbl td { color:rgba(255,255,255,0.8); border-bottom-color:rgba(255,255,255,0.04); }
-  #view-notify .nv2-tbl tr:last-child td { border-bottom:none; }
-  #view-notify .nv2-sec-row td { background:#f3f4f6; font-size:10px; font-weight:600; color:#6b7280; padding:5px 10px; }
-  html[data-theme="dark"] #view-notify .nv2-sec-row td { background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.35); }
-  #view-notify .nv2-plate { font-family:monospace; font-size:10px; background:#f3f4f6; border:0.5px solid #e5e7eb; border-radius:3px; padding:1px 5px; }
-  html[data-theme="dark"] #view-notify .nv2-plate { background:rgba(255,255,255,0.07); border-color:rgba(255,255,255,0.1); color:rgba(255,255,255,0.8); }
-  #view-notify .nv2-tag { font-size:10px; padding:1px 7px; border-radius:999px; }
-  #view-notify .nv2-tag-long { background:#FAEEDA; color:#854F0B; }
-  #view-notify .nv2-tag-daily { background:#E6F1FB; color:#185FA5; }
-  #view-notify .nv2-tag-ov { background:#EEEDFE; color:#3C3489; }
-  #view-notify .nv2-sec-badge { font-size:10px; padding:1px 7px; border-radius:999px; margin-left:5px; }
-  #view-notify .nv2-av { width:20px; height:20px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:9px; font-weight:600; vertical-align:middle; margin-right:5px; }
-  #view-notify .nv2-av-b { background:#E6F1FB; color:#185FA5; }
-  #view-notify .nv2-av-t { background:#E1F5EE; color:#0F6E56; }
-  #view-notify .nv2-av-a { background:#FAEEDA; color:#854F0B; }
-  #view-notify .nv2-no-data { text-align:center; padding:14px; color:#9ca3af; font-size:11px; }
-  html[data-theme="dark"] #view-notify .nv2-no-data { color:rgba(255,255,255,0.25); }
-  #view-notify .nv2-log { border-top:0.5px solid #f3f4f6; background:#f9fafb; padding:7px 16px; height:70px; overflow-y:auto; flex-shrink:0; scrollbar-width:thin; }
-  html[data-theme="dark"] #view-notify .nv2-log { background:rgba(10,12,22,0.98); border-top-color:rgba(255,255,255,0.05); }
-  #view-notify .nv2-log-lbl { font-size:10px; font-weight:600; color:#9ca3af; }
-  #view-notify .nv2-log-row { display:flex; gap:8px; font-size:10px; font-family:monospace; }
-  #view-notify .nv2-log-ts { color:#9ca3af; min-width:56px; }
-  #view-notify .nv2-log-ok { color:#1D9E75; }
-  #view-notify .nv2-log-err { color:#E24B4A; }
-  #view-notify .nv2-log-info { color:#185FA5; }
-  #view-notify .nv2-log-warn { color:#BA7517; }
-  /* popup */
-  #nv2-popup-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.55); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; z-index:800; }
-  #nv2-popup-overlay.open { display:flex; }
-  #nv2-popup { background:#fff; border:0.5px solid #e5e7eb; border-radius:14px; padding:20px; width:340px; max-width:90vw; }
-  html[data-theme="dark"] #nv2-popup { background:#161b25; border-color:rgba(255,255,255,0.1); }
-  #nv2-popup .pp-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
-  #nv2-popup .pp-title { font-size:13px; font-weight:700; color:#1a1a2e; }
-  html[data-theme="dark"] #nv2-popup .pp-title { color:#fff; }
-  #nv2-popup .pp-close { width:26px; height:26px; border-radius:7px; background:#f3f4f6; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#6b7280; }
-  #nv2-popup .pp-phone { width:180px; background:#1a1a2e; border-radius:22px; overflow:hidden; border:4px solid #2a2a3e; margin:0 auto; }
-  #nv2-popup .pp-phone-bar { background:#111; padding:5px 12px 4px; display:flex; justify-content:space-between; font-size:9px; color:rgba(255,255,255,0.4); font-family:monospace; }
-  #nv2-popup .pp-chat { background:#1a242e; padding:10px; min-height:260px; display:flex; flex-direction:column; gap:5px; }
-  #nv2-popup .pp-cd { text-align:center; font-size:8px; color:rgba(255,255,255,0.3); background:rgba(255,255,255,0.05); padding:2px 8px; border-radius:6px; display:table; margin:0 auto 4px; }
-  #nv2-popup .pp-bubble { background:#2a2a2a; border-radius:3px 10px 10px 10px; padding:9px 10px; font-size:9px; line-height:1.65; color:#d0d0d0; white-space:pre-wrap; word-break:break-word; }
-  #nv2-popup .pp-bh { font-size:10px; font-weight:700; color:#06C755; margin-bottom:4px; }
-  #nv2-popup .pp-bs { margin-top:5px; padding-top:4px; border-top:0.5px solid rgba(255,255,255,0.08); }
-  #nv2-popup .pp-bst { font-size:8px; color:rgba(255,255,255,0.35); margin-bottom:2px; text-transform:uppercase; }
-  #nv2-popup .pp-bf { margin-top:4px; font-size:8px; color:rgba(255,255,255,0.25); padding-top:3px; border-top:0.5px solid rgba(255,255,255,0.06); }
-  #nv2-popup .pp-ct { font-size:8px; color:rgba(255,255,255,0.2); margin-left:3px; }
-  #nv2-popup .pp-actions { display:flex; gap:8px; margin-top:14px; }
-  #nv2-popup .pp-btn { flex:1; padding:8px; border-radius:8px; border:0.5px solid #e5e7eb; background:transparent; font-size:11px; cursor:pointer; color:#374151; display:flex; align-items:center; justify-content:center; gap:5px; }
-  html[data-theme="dark"] #nv2-popup .pp-btn { border-color:rgba(255,255,255,0.1); color:rgba(255,255,255,0.7); }
-  #nv2-popup .pp-send { background:#185FA5; border-color:#185FA5; color:#fff; }
+  #view-notify .nv2-main{display:flex;flex-direction:column;overflow:hidden;background:#fff}
+  html[data-theme="dark"] #view-notify .nv2-main{background:rgba(10,12,22,.95)}
+  #view-notify .nv2-mh{padding:11px 14px;border-bottom:0.5px solid rgba(0,0,0,.08);display:flex;align-items:center;gap:7px;flex-shrink:0}
+  html[data-theme="dark"] #view-notify .nv2-mh{border-bottom-color:rgba(255,255,255,.06)}
+  #view-notify .nv2-mh-title{font-size:13px;font-weight:700;color:#1a1a2e}
+  html[data-theme="dark"] #view-notify .nv2-mh-title{color:#fff}
+  #view-notify .nv2-mh-date{font-size:10px;color:#6b7280}
+  html[data-theme="dark"] #view-notify .nv2-mh-date{color:rgba(255,255,255,.4)}
+  #view-notify .nv2-mh-cnt{font-size:10px;background:#f3f4f6;border:0.5px solid #e5e7eb;border-radius:999px;padding:2px 8px;color:#6b7280}
+  html[data-theme="dark"] #view-notify .nv2-mh-cnt{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.4)}
+  #view-notify .nv2-mh-r{margin-left:auto;display:flex;gap:5px}
+  #view-notify .nv2-mh-btn{display:flex;align-items:center;gap:4px;font-size:10px;padding:5px 10px;border:0.5px solid #e5e7eb;border-radius:7px;background:#fff;cursor:pointer;color:#374151;font-weight:500}
+  html[data-theme="dark"] #view-notify .nv2-mh-btn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+  #view-notify .nv2-mh-send{background:#185FA5;color:#fff!important;border-color:#185FA5}
+  #view-notify .nv2-body{flex:1;overflow-y:auto;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;scrollbar-width:thin}
+  #view-notify .nv2-phone{width:185px;background:#1a1a2e;border-radius:20px;overflow:hidden;border:4px solid #2a2a3e;box-shadow:0 8px 28px rgba(0,0,0,.4);flex-shrink:0}
+  #view-notify .nv2-phone-bar{background:#111;padding:4px 12px;display:flex;justify-content:space-between;font-size:9px;color:rgba(255,255,255,.4);font-family:monospace}
+  #view-notify .nv2-chat{background:#1a242e;padding:8px;min-height:280px;display:flex;flex-direction:column;gap:4px}
+  #view-notify .nv2-chat-date{text-align:center;font-size:8px;color:rgba(255,255,255,.3);background:rgba(255,255,255,.05);padding:2px 8px;border-radius:5px;display:table;margin:0 auto 4px}
+  #view-notify .nv2-bubble{background:#2a2a2a;border-radius:3px 10px 10px 10px;padding:8px 9px;font-size:9px;line-height:1.65;color:#d0d0d0;white-space:pre-wrap;word-break:break-word}
+  #view-notify .nv2-bh{font-size:10px;font-weight:700;color:#06C755;margin-bottom:3px}
+  #view-notify .nv2-ct{font-size:8px;color:rgba(255,255,255,.2);margin:2px 0 0 2px}
+  #view-notify .nv2-txt-pre{flex:1;font-family:monospace;font-size:11px;line-height:1.7;color:#1a1a2e;background:#f9fafb;border:0.5px solid #e5e7eb;border-radius:8px;padding:10px 12px;white-space:pre-wrap;word-break:break-word;max-height:320px;overflow-y:auto;margin:0}
+  html[data-theme="dark"] #view-notify .nv2-txt-pre{color:rgba(255,255,255,.8);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+  #view-notify .nv2-log{border-top:0.5px solid #f3f4f6;background:#f9fafb;padding:6px 14px;height:62px;overflow-y:auto;flex-shrink:0;display:flex;flex-direction:column;gap:2px;scrollbar-width:thin}
+  html[data-theme="dark"] #view-notify .nv2-log{background:rgba(10,12,22,.98);border-top-color:rgba(255,255,255,.05)}
+  #view-notify .nv2-log-row{display:flex;gap:6px;font-size:10px;font-family:monospace}
+  #view-notify .nv2-log-ts{color:#9ca3af;min-width:52px}
+  #view-notify .nv2-log-ok{color:#1D9E75}
+  #view-notify .nv2-log-err{color:#E24B4A}
+  #view-notify .nv2-log-info{color:#185FA5}
+  #view-notify .nv2-log-warn{color:#BA7517}
+  /* right panel */
+  #view-notify .nv2-rp{border-left:0.5px solid rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden;background:#1a1f2e}
+  #view-notify .nv2-rp-hdr{padding:11px 13px 9px;border-bottom:0.5px solid rgba(255,255,255,.08);flex-shrink:0;background:#141824}
+  #view-notify .nv2-rp-title{font-size:12px;font-weight:700;color:#f0f4ff}
+  #view-notify .nv2-rp-sub{font-size:10px;color:rgba(255,255,255,.45);margin-top:1px}
+  #view-notify .nv2-rp-body{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:9px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent}
+  /* accordion */
+  #view-notify .nv2-acc{border:0.5px solid rgba(255,255,255,.08);border-radius:9px;overflow:hidden}
+  #view-notify .nv2-acc-hdr{display:flex;align-items:center;gap:7px;padding:8px 11px;cursor:pointer;background:rgba(255,255,255,.05);user-select:none;transition:background .15s}
+  #view-notify .nv2-acc-name{font-size:11px;font-weight:600;flex:1;color:#e0e8ff}
+  #view-notify .nv2-acc-cnt{font-size:10px;font-weight:600;padding:1px 7px;border-radius:999px}
+  #view-notify .nv2-acc-arr{font-size:12px;color:rgba(255,255,255,.4);transition:transform .2s;display:inline-block}
+  #view-notify .nv2-acc-arr.open{transform:rotate(90deg)}
+  #view-notify .nv2-acc-body{padding:9px 11px;border-top:0.5px solid rgba(255,255,255,.07);background:rgba(0,0,0,.15)}
+  /* chips */
+  #view-notify .nv2-col-lbl{font-size:10px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:5px;display:flex;align-items:center;justify-content:space-between}
+  #view-notify .nv2-chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:7px}
+  #view-notify .nv2-chip{font-size:10px;padding:3px 9px;border-radius:6px;border:0.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);cursor:pointer;color:rgba(255,255,255,.65);transition:all .15s;user-select:none}
+  #view-notify .nv2-chip.on{background:#185FA5;color:#fff;border-color:#185FA5}
+  /* mini table */
+  #view-notify .nv2-mt{width:100%;border-collapse:collapse;font-size:10px}
+  #view-notify .nv2-mt th{font-size:9px;color:rgba(255,255,255,.4);text-align:left;padding:4px 6px;border-bottom:0.5px solid rgba(255,255,255,.07);background:rgba(255,255,255,.04);font-weight:500;white-space:nowrap}
+  #view-notify .nv2-mt td{font-size:10px;padding:4px 6px;border-bottom:0.5px solid rgba(255,255,255,.05);color:rgba(255,255,255,.8);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:80px}
+  #view-notify .nv2-mt tr:last-child td{border-bottom:none}
+  #view-notify .nv2-mp{font-family:monospace;font-size:9px;background:rgba(255,255,255,.08);border:0.5px solid rgba(255,255,255,.15);border-radius:3px;padding:1px 4px;color:#e0e8ff}
+  #view-notify .nv2-tag-long{font-size:9px;padding:1px 5px;border-radius:999px;background:#FAEEDA;color:#854F0B}
+  #view-notify .nv2-tag-daily{font-size:9px;padding:1px 5px;border-radius:999px;background:#E6F1FB;color:#185FA5}
+  #view-notify .nv2-no-data{text-align:center;padding:12px;font-size:11px;color:rgba(255,255,255,.3)}
+  /* sched in right panel */
+  #view-notify .nv2-sched-sec{border:0.5px solid rgba(255,255,255,.08);border-radius:9px;overflow:hidden}
+  #view-notify .nv2-sched-hdr{display:flex;align-items:center;gap:7px;padding:8px 11px;cursor:pointer;background:rgba(255,255,255,.05);user-select:none}
+  #view-notify .nv2-sched-title{font-size:11px;font-weight:600;flex:1;color:#e0e8ff}
+  #view-notify .nv2-sched-body{padding:9px 11px;border-top:0.5px solid rgba(255,255,255,.07);background:rgba(0,0,0,.15)}
+  #view-notify .nv2-sched-card{display:flex;align-items:center;background:rgba(255,255,255,.05);border:0.5px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 10px;margin-bottom:5px;gap:7px}
+  #view-notify .nv2-sched-time{font-size:14px;font-weight:700;color:#1D9E75;font-family:monospace;min-width:40px}
+  #view-notify .nv2-sched-name{font-size:11px;font-weight:500;color:#e0e8ff}
+  #view-notify .nv2-sched-type{font-size:10px;color:rgba(255,255,255,.4)}
+  #view-notify .nv2-stg{width:28px;height:16px;border-radius:999px;background:#1D9E75;border:none;position:relative;cursor:pointer;flex-shrink:0;margin-left:auto;transition:background .2s}
+  #view-notify .nv2-stg.off{background:rgba(255,255,255,.15)}
+  #view-notify .nv2-stg::after{content:'';position:absolute;top:2px;right:2px;width:12px;height:12px;background:#fff;border-radius:50%;transition:right .2s}
+  #view-notify .nv2-stg.off::after{right:auto;left:2px}
+  #view-notify .nv2-del-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.3);font-size:13px;padding:2px 4px}
+  #view-notify .nv2-add-sched{width:100%;padding:6px;border:0.5px dashed rgba(255,255,255,.2);border-radius:7px;background:transparent;font-size:11px;cursor:pointer;color:rgba(255,255,255,.45)}
+  #view-notify .nv2-add-sched:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.8)}
+  #view-notify .nv2-cd-box{margin-top:7px;background:rgba(186,117,23,.06);border:0.5px solid rgba(186,117,23,.2);border-radius:8px;padding:7px;text-align:center}
+  #view-notify .nv2-cd-lbl{font-size:10px;color:var(--color-text-secondary);margin-bottom:1px}
+  #view-notify .nv2-cd-val{font-size:17px;font-weight:700;color:#BA7517;font-family:monospace}
+  #view-notify .nv2-fi{width:100%;font-size:11px;padding:6px 9px;border:0.5px solid rgba(255,255,255,.15);border-radius:7px;background:rgba(255,255,255,.06);color:#e0e8ff}
   @keyframes nvPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
   #view-notify .nv-toggle-row { display:flex; align-items:center; gap:7px; padding:5px 0; }
   #view-notify .nv-toggle-row label { font-size:11px; color:var(--nv-text); flex:1; cursor:pointer; }
@@ -2730,11 +2734,11 @@
       </div>
     </div>
 
-    <!-- ════════════════ NOTIFY VIEW v2 ════════════════ -->
+    <!-- ════════════════ NOTIFY VIEW v4 ════════════════ -->
     <div id="view-notify" class="building-view" style="flex-direction:column;overflow:hidden;">
       <div class="nv2-page">
 
-        <!-- SIDEBAR -->
+        <!-- SIDEBAR: LINE API + calendar + send -->
         <div class="nv2-sb">
           <div class="nv2-sb-hdr">
             <div class="nv2-sb-title">LINE Notify</div>
@@ -2746,120 +2750,172 @@
             <div>
               <div class="nv2-sec-lbl">LINE Messaging API</div>
               <div class="nv2-block">
-                <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:7px;display:flex;align-items:center;gap:6px;">
-                  <div class="nv2-sb-dot"></div>ใช้ Token/Group จาก Apps Script
-                </div>
-                <button class="nv2-test-btn" onclick="nvTest()">
-                  <i class="ti ti-plug" style="font-size:12px" aria-hidden="true"></i>ทดสอบการเชื่อมต่อ
-                </button>
+                <div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:7px;display:flex;align-items:center;gap:5px;"><div class="nv2-sb-dot"></div>ใช้ Token/Group จาก Apps Script</div>
+                <button class="nv2-test-btn" onclick="nvTest()"><i class="ti ti-plug" style="font-size:12px"></i>ทดสอบการเชื่อมต่อ</button>
               </div>
             </div>
 
             <div>
               <div class="nv2-sec-lbl">เลือกวันที่</div>
               <div class="nv2-block">
-                <div class="nv2-date-lbl">วันที่ต้องการดึงข้อมูล</div>
-                <div id="nv-mini-cal" style="margin-bottom:7px;">
-                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
-                    <button onclick="nvCalNav(-1)" style="background:rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.12);border-radius:5px;color:rgba(255,255,255,0.7);font-size:13px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;">‹</button>
-                    <span id="nv-cal-label" style="font-size:12px;font-weight:600;color:#fff;"></span>
-                    <button onclick="nvCalNav(1)" style="background:rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.12);border-radius:5px;color:rgba(255,255,255,0.7);font-size:13px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;">›</button>
-                  </div>
-                  <div id="nv-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;"></div>
+                <div class="nv2-date-disp"><i class="ti ti-calendar" style="font-size:13px;color:rgba(255,255,255,.3)"></i><span id="nv2-date-show">เลือกวันจากปฏิทิน</span></div>
+                <div class="nv2-cal-nav-row">
+                  <div class="nv2-cnav" onclick="nvCalNav(-1)">‹</div>
+                  <span id="nv-cal-label" style="font-size:11px;font-weight:600;color:#fff;"></span>
+                  <div class="nv2-cnav" onclick="nvCalNav(1)">›</div>
                 </div>
+                <div class="nv2-cal-grid" id="nv-cal-grid"></div>
                 <input type="hidden" id="nv-date-pick">
-                <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:6px;display:flex;align-items:center;gap:5px;">
-                  <i class="ti ti-calendar-check" style="font-size:12px;color:#1D9E75" aria-hidden="true"></i>
-                  <span id="nv2-date-show">เลือกวันจากปฏิทิน</span>
-                </div>
                 <div class="nv2-date-btns">
                   <button class="nv2-dbtn" onclick="nvSetDate(0)">วันนี้</button>
                   <button class="nv2-dbtn" onclick="nvSetDate(1)">พรุ่งนี้</button>
                 </div>
-              </div>
-            </div>
-
-            <div>
-              <div class="nv2-sec-lbl">ตั้งเวลาอัตโนมัติ</div>
-              <div id="nv-sched-list"></div>
-              <button class="nv2-add-sched" onclick="nvOpenSched()">+ เพิ่มเวลาส่ง</button>
-              <div class="nv2-cd-box">
-                <div class="nv2-cd-lbl">ส่งครั้งถัดไปใน</div>
-                <div class="nv2-cd-val" id="nv-countdown">—</div>
-              </div>
-            </div>
-
-            <div>
-              <div class="nv2-sec-lbl">ตัวเลือก</div>
-              <div class="nv2-block">
-                <div class="nv2-opt-row"><div class="nv2-chk" id="chk-c"><i class="ti ti-check" style="font-size:9px;color:#fff" aria-hidden="true"></i></div><input type="checkbox" id="nv-op-c" checked onchange="nvSyncAndPreview()" style="display:none">ส่วนกลาง ชั้น 5</div>
-                <div class="nv2-opt-row"><div class="nv2-chk" id="chk-s"><i class="ti ti-check" style="font-size:9px;color:#fff" aria-hidden="true"></i></div><input type="checkbox" id="nv-op-s" checked onchange="nvSyncAndPreview()" style="display:none">แจ้งจอดแทน</div>
-                <div class="nv2-opt-row"><div class="nv2-chk" id="chk-o"><i class="ti ti-check" style="font-size:9px;color:#fff" aria-hidden="true"></i></div><input type="checkbox" id="nv-op-o" checked onchange="nvSyncAndPreview()" style="display:none">รถอื่นๆ</div>
-                <div class="nv2-opt-row"><div class="nv2-chk" id="chk-ov"><i class="ti ti-check" style="font-size:9px;color:#fff" aria-hidden="true"></i></div><input type="checkbox" id="nv-op-ov" checked onchange="nvSyncAndPreview()" style="display:none">สถานะค้างคืน</div>
-                <input class="nv2-footer-inp" type="text" id="nv-footer" value="— ระบบจัดการลานจอด Ari Hills" oninput="nvSyncAndPreview()">
+                <button class="nv2-send-btn" id="nv-send-btn" onclick="nvSendNow()" disabled>
+                  <i class="ti ti-brand-line" style="font-size:13px"></i>ส่ง LINE ตอนนี้เลย
+                </button>
               </div>
             </div>
 
           </div>
         </div><!-- /sidebar -->
 
-        <!-- MAIN: LINE preview โดยตรง -->
+        <!-- MAIN: preview -->
         <div class="nv2-main">
           <div class="nv2-mh">
             <div class="nv2-mh-title">Preview ข้อความ LINE</div>
             <span class="nv2-mh-date" id="nv2-date-lbl">เลือกวันจากปฏิทิน</span>
             <span class="nv2-mh-cnt" id="nv2-cnt-total">0 รายการ</span>
-            <div class="nv2-mh-r" style="display:flex;gap:7px;">
-              <button class="nv2-prev-btn" onclick="nvCopy()">
-                <i class="ti ti-copy" style="font-size:13px" aria-hidden="true"></i>คัดลอก
-              </button>
-              <button class="nv2-prev-btn" id="nv-send-btn" onclick="nvSendNow()" disabled
-                style="background:#185FA5;color:#fff;border-color:#185FA5;">
-                <i class="ti ti-brand-line" style="font-size:13px" aria-hidden="true"></i>ส่ง LINE
-              </button>
+            <div class="nv2-mh-r">
+              <button class="nv2-mh-btn" onclick="nvCopy()"><i class="ti ti-copy" style="font-size:12px"></i>คัดลอก</button>
+              <button class="nv2-mh-btn nv2-mh-send" onclick="nvSendNow()"><i class="ti ti-brand-line" style="font-size:12px"></i>ส่ง LINE</button>
             </div>
           </div>
-
-          <!-- Preview area -->
-          <div class="nv2-body" style="display:flex;gap:16px;align-items:flex-start;">
-
-            <!-- Phone mockup -->
+          <div class="nv2-body">
             <div style="flex-shrink:0;">
-              <div style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:#9ca3af;margin-bottom:8px;">จำลองข้อความ</div>
-              <div style="width:220px;background:#1a1a2e;border-radius:22px;overflow:hidden;border:4px solid #2a2a3e;box-shadow:0 12px 36px rgba(0,0,0,0.4);">
-                <div style="background:#111;padding:5px 12px 4px;display:flex;justify-content:space-between;font-size:9px;color:rgba(255,255,255,0.4);font-family:monospace;">
-                  <span id="nv-pt">12:50</span><span>LINE</span>
-                </div>
-                <div style="background:#1a242e;padding:10px;min-height:300px;display:flex;flex-direction:column;gap:5px;">
-                  <div style="text-align:center;font-size:8px;color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.05);padding:2px 8px;border-radius:6px;display:table;margin:0 auto 4px;" id="nv-cd">เลือกวันที่</div>
-                  <div id="nv-bw" style="display:none;">
-                    <div style="background:#2a2a2a;border-radius:3px 10px 10px 10px;padding:9px 10px;font-size:9px;line-height:1.65;color:#d0d0d0;white-space:pre-wrap;word-break:break-word;">
-                      <div style="font-size:10px;font-weight:700;color:#06C755;margin-bottom:3px;">Parking Management Notify</div>
-                      <div id="nv-bc"></div>
-                    </div>
-                    <div style="font-size:8px;color:rgba(255,255,255,0.2);margin-left:3px;" id="nv-ct">12:50</div>
+              <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9ca3af;margin-bottom:6px">จำลองข้อความ</div>
+              <div class="nv2-phone">
+                <div class="nv2-phone-bar"><span id="nv-pt">16:30</span><span>LINE</span></div>
+                <div class="nv2-chat">
+                  <div class="nv2-chat-date" id="nv-cd">เลือกวันที่</div>
+                  <div id="nv-bw" style="display:none">
+                    <div class="nv2-bubble"><div class="nv2-bh">Parking Management Notify</div><div id="nv-bc"></div></div>
+                    <div class="nv2-ct" id="nv-ct">16:30</div>
                   </div>
-                  <div id="nv-ce" style="text-align:center;padding:40px 8px;font-size:10px;color:rgba(255,255,255,0.2);">เลือกวันในปฏิทิน<br>เพื่อดูข้อความ</div>
+                  <div id="nv-ce" style="text-align:center;padding:40px 8px;font-size:10px;color:rgba(255,255,255,.2)">เลือกวันในปฏิทิน<br>เพื่อดูข้อความ</div>
                 </div>
               </div>
             </div>
-
-            <!-- Text preview -->
             <div style="flex:1;min-width:0;">
-              <div style="font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:#9ca3af;margin-bottom:8px;">ข้อความ</div>
-              <pre id="nv-text-preview" style="font-family:monospace;font-size:12px;line-height:1.7;color:var(--text-primary,#1a1a2e);background:var(--bg-secondary,#f9fafb);border:0.5px solid var(--border,#e5e7eb);border-radius:8px;padding:12px 14px;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto;margin:0;">เลือกวันที่จากปฏิทินเพื่อดูข้อความ</pre>
+              <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9ca3af;margin-bottom:6px">ข้อความ</div>
+              <pre id="nv-text-preview" class="nv2-txt-pre">เลือกวันที่จากปฏิทินเพื่อดูข้อความ</pre>
             </div>
-
           </div>
-
           <div class="nv2-log">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;padding-bottom:4px;border-bottom:0.5px solid #f0f0f0;">
-              <span class="nv2-log-lbl">Activity Log</span>
-              <span style="font-size:10px;color:#9ca3af;cursor:pointer;" onclick="nvClearLog()">ล้าง</span>
+            <div style="display:flex;justify-content:space-between;padding-bottom:3px;border-bottom:0.5px solid #e5e7eb;margin-bottom:3px;">
+              <span style="font-size:10px;font-weight:600;color:#9ca3af">Activity Log</span>
+              <span style="font-size:10px;color:#9ca3af;cursor:pointer" onclick="nvClearLog()">ล้าง</span>
             </div>
             <div id="nv-log"></div>
           </div>
         </div><!-- /main -->
+
+        <!-- RIGHT PANEL: column selector + schedule -->
+        <div class="nv2-rp">
+          <div class="nv2-rp-hdr">
+            <div class="nv2-rp-title">ตัวเลือกการส่งข้อมูล</div>
+            <div class="nv2-rp-sub">เลือก column + ตั้งเวลาส่งอัตโนมัติ</div>
+          </div>
+          <div class="nv2-rp-body">
+
+            <!-- ส่วนกลาง -->
+            <div class="nv2-acc">
+              <div class="nv2-acc-hdr" onclick="nvTogAcc(this)">
+                <div style="width:7px;height:7px;border-radius:50%;background:#185FA5;flex-shrink:0"></div>
+                <span class="nv2-acc-name">ส่วนกลาง ชั้น 5</span>
+                <span class="nv2-acc-cnt nv2-acc-cnt-c" style="background:#E6F1FB;color:#185FA5" id="nv-rp-cnt-c">0</span>
+                <span class="nv2-acc-arr open">›</span>
+              </div>
+              <div class="nv2-acc-body">
+                <div class="nv2-col-lbl"><span>แสดงใน LINE</span><span style="font-size:9px;cursor:pointer;color:#185FA5" onclick="nvSelAll(this)">เลือกทั้งหมด</span></div>
+                <div class="nv2-chips" id="nv-chips-c">
+                  <div class="nv2-chip on" data-col="name">ชื่อผู้ขอ</div>
+                  <div class="nv2-chip on" data-col="dept">ฝ่าย</div>
+                  <div class="nv2-chip on" data-col="plate">ทะเบียน</div>
+                  <div class="nv2-chip" data-col="carType">ประเภทรถ</div>
+                  <div class="nv2-chip on" data-col="parkType">ประเภทการจอด</div>
+                  <div class="nv2-chip" data-col="floor">ชั้น</div>
+                  <div class="nv2-chip" data-col="note">หมายเหตุ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- จอดแทน -->
+            <div class="nv2-acc">
+              <div class="nv2-acc-hdr" onclick="nvTogAcc(this)">
+                <div style="width:7px;height:7px;border-radius:50%;background:#1D9E75;flex-shrink:0"></div>
+                <span class="nv2-acc-name">แจ้งจอดแทน</span>
+                <span class="nv2-acc-cnt" style="background:#E1F5EE;color:#0F6E56" id="nv-rp-cnt-s">0</span>
+                <span class="nv2-acc-arr">›</span>
+              </div>
+              <div class="nv2-acc-body" style="display:none">
+                <div class="nv2-chips" id="nv-chips-s">
+                  <div class="nv2-chip on" data-col="name">ชื่อผู้ขอ</div>
+                  <div class="nv2-chip on" data-col="dept">ฝ่าย</div>
+                  <div class="nv2-chip on" data-col="plateReq">ทะเบียน</div>
+                  <div class="nv2-chip" data-col="carType">ประเภทรถ</div>
+                  <div class="nv2-chip on" data-col="plateOwner">ทะเบียนสิทธิ์</div>
+                  <div class="nv2-chip on" data-col="floor">ชั้น</div>
+                  <div class="nv2-chip" data-col="note">หมายเหตุ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- รถอื่นๆ -->
+            <div class="nv2-acc">
+              <div class="nv2-acc-hdr" onclick="nvTogAcc(this)">
+                <div style="width:7px;height:7px;border-radius:50%;background:#BA7517;flex-shrink:0"></div>
+                <span class="nv2-acc-name">รถอื่นๆ</span>
+                <span class="nv2-acc-cnt" style="background:#FAEEDA;color:#854F0B" id="nv-rp-cnt-o">0</span>
+                <span class="nv2-acc-arr">›</span>
+              </div>
+              <div class="nv2-acc-body" style="display:none">
+                <div class="nv2-chips" id="nv-chips-o">
+                  <div class="nv2-chip on" data-col="name">ชื่อผู้ขอ</div>
+                  <div class="nv2-chip on" data-col="dept">ฝ่าย</div>
+                  <div class="nv2-chip on" data-col="plate">ทะเบียน</div>
+                  <div class="nv2-chip on" data-col="carType">ประเภทรถ</div>
+                  <div class="nv2-chip" data-col="parkType">ประเภทการจอด</div>
+                  <div class="nv2-chip" data-col="floor">ชั้น</div>
+                  <div class="nv2-chip" data-col="note">หมายเหตุ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ตั้งเวลา (ย้ายมาขวา) -->
+            <div class="nv2-sched-sec">
+              <div class="nv2-sched-hdr" onclick="nvTogSchedPanel(this)">
+                <i class="ti ti-clock" style="font-size:13px;color:var(--color-text-secondary)"></i>
+                <span class="nv2-sched-title">ตั้งเวลาส่งอัตโนมัติ</span>
+                <span class="nv2-acc-arr open">›</span>
+              </div>
+              <div class="nv2-sched-body" id="nv-sched-panel">
+                <div id="nv-sched-list"></div>
+                <button class="nv2-add-sched" onclick="nvOpenSched()">+ เพิ่มเวลาส่ง</button>
+                <div class="nv2-cd-box">
+                  <div class="nv2-cd-lbl">ส่งครั้งถัดไปใน</div>
+                  <div class="nv2-cd-val" id="nv-countdown">—</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ข้อความท้าย -->
+            <div>
+              <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:5px">ข้อความท้าย</div>
+              <input type="text" id="nv-footer" class="nv2-fi" value="— ระบบจัดการลานจอด Ari Hills" oninput="nvBuildAndPreview()">
+            </div>
+
+          </div>
+        </div><!-- /rp -->
 
       </div><!-- /nv2-page -->
 
@@ -2872,12 +2928,12 @@
       <div id="nv-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);z-index:900;align-items:center;justify-content:center;">
         <div style="background:#141E30;border:0.5px solid rgba(255,255,255,0.12);border-radius:12px;padding:22px;width:340px;max-width:90vw;">
           <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:14px;">เพิ่มเวลาส่งอัตโนมัติ</div>
-          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">เวลา (HH:MM)</div><input type="time" id="nv-m-time" class="nv2-footer-inp" value="16:30"></div>
-          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ชื่อรอบ</div><input type="text" id="nv-m-name" class="nv2-footer-inp" placeholder="ชื่อรอบนี้…"></div>
-          <div style="margin-bottom:16px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ประเภทข้อมูล</div><select id="nv-m-type" class="nv2-footer-inp"><option value="tomorrow">รายการวันพรุ่งนี้</option><option value="today">รายการวันนี้</option></select></div>
+          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">เวลา (HH:MM)</div><input type="time" id="nv-m-time" class="nv2-fi" value="16:30" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"></div>
+          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ชื่อรอบ</div><input type="text" id="nv-m-name" class="nv2-fi" placeholder="ชื่อรอบนี้…" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"></div>
+          <div style="margin-bottom:16px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ประเภทข้อมูล</div><select id="nv-m-type" class="nv2-fi" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"><option value="tomorrow">รายการวันพรุ่งนี้</option><option value="today">รายการวันนี้</option></select></div>
           <div style="display:flex;justify-content:flex-end;gap:7px;">
             <button class="nv2-dbtn" style="padding:7px 14px;" onclick="document.getElementById('nv-modal').style.display='none'">ยกเลิก</button>
-            <button class="nv2-load-btn" style="width:auto;padding:7px 14px;margin:0;" onclick="nvAddSched()">บันทึก</button>
+            <button class="nv2-send-btn" style="width:auto;padding:7px 14px;" onclick="nvAddSched()">บันทึก</button>
           </div>
         </div>
       </div>
@@ -3915,9 +3971,9 @@ function switchView(view) {
     settings: 'ตั้งค่าระบบ',
   };
   const tt = document.getElementById('topbar-title-text');
-  if (tt) tt.textContent = titles[view] || titles['all'];
+  if (tt) tt.textContent = titles[view] !== undefined ? titles[view] : titles['all'];
   const subBar = document.getElementById('sub-topbar');
-  if (subBar) subBar.style.display = (view === 'all') ? 'none' : 'flex';
+  if (subBar) subBar.style.display = (view === 'all') ? 'none' : (view === 'notify') ? 'none' : 'flex';
   if (view === 'notify') {
     const nvGs = document.getElementById('nv-gs');
     if (nvGs && !nvGs.value) {
@@ -6018,7 +6074,7 @@ function nvClearLog(){_nvLogs=[];const el=document.getElementById('nv-log');if(e
 function nvStat(s,t){
   const tx=document.getElementById('nv-status-txt');if(tx)tx.textContent=t;
   const sb=document.querySelector('#view-notify .nv2-sb-status');
-  if(sb){sb.style.borderColor=s==='online'?'rgba(29,158,117,0.3)':s==='offline'?'rgba(226,75,74,0.3)':'rgba(186,117,23,0.3)';sb.style.color=s==='online'?'#5DCAA5':s==='offline'?'#f87171':'#FFB700';}
+  if(sb){sb.style.borderColor=s==='online'?'rgba(29,158,117,.3)':s==='offline'?'rgba(226,75,74,.3)':'rgba(186,117,23,.3)';sb.style.color=s==='online'?'#5DCAA5':s==='offline'?'#f87171':'#FFB700';}
 }
 function nvSetDateDisplay(){
   const dp=document.getElementById('nv-date-pick');if(!dp||!dp.value)return;
@@ -6084,19 +6140,59 @@ function nvParseDate(r){if(!r)return'';const m1=r.trim().match(/^(\d{1,2})\s+([\
 function nvFmtDate(iso){const D=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];const M=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];const[y,m,d]=iso.split('-').map(Number);return`${D[new Date(iso).getDay()]}ที่ ${d} ${M[m-1]} ${y+543}`;}
 
 setInterval(function(){
-  const n=new Date();const h=String(n.getHours()).padStart(2,'0');const m=String(n.getMinutes()).padStart(2,'0');const s=String(n.getSeconds()).padStart(2,'0');
-  const c=document.getElementById('nv-clock');if(c)c.textContent=`${h}:${m}:${s}`;
+  const n=new Date();
+  const h=String(n.getHours()).padStart(2,'0');
+  const m=String(n.getMinutes()).padStart(2,'0');
+  const s=String(n.getSeconds()).padStart(2,'0');
   const p=document.getElementById('nv-pt');if(p)p.textContent=`${h}:${m}`;
   const hm=`${h}:${m}`;
+
+  // ── ตรวจเวลา trigger ──
   if(hm!==_nvFired){
-    _nvScheds.forEach(sc=>{if(sc.enabled&&sc.time===hm){_nvFired=hm;nvLog('info',`⏰ ${sc.time} — "${sc.name}"`);const tok=document.getElementById('nv-token')?.value.trim();if(tok)nvLoad(sc.type==='tomorrow').then(()=>nvDoSend(tok));}});
-    const nm=n.getHours()*60+n.getMinutes();const en=_nvScheds.filter(x=>x.enabled);const cd=document.getElementById('nv-countdown');
-    if(cd&&en.length){let md=Infinity;en.forEach(sc=>{const[hh,mm2]=sc.time.split(':').map(Number);const sm=hh*60+mm2;const df=sm>nm?sm-nm:1440-(nm-sm);if(df<md)md=df;});cd.textContent=`${String(Math.floor(md/60)).padStart(2,'0')}:${String(md%60).padStart(2,'0')} น.`;}
-    else if(cd)cd.textContent='—';
+    _nvScheds.forEach(sc=>{
+      if(sc.enabled && sc.time===hm){
+        _nvFired=hm;
+        nvLog('info',`⏰ ${sc.time} — "${sc.name}" กำลังส่ง…`);
+        // กรองข้อมูลตามประเภท
+        const targetDate = (()=>{
+          const d=new Date();
+          if(sc.type==='tomorrow') d.setDate(d.getDate()+1);
+          return d.toISOString().slice(0,10);
+        })();
+        // set date picker แล้ว filter
+        const dp=document.getElementById('nv-date-pick');
+        if(dp){ dp.value=targetDate; nvSetDateDisplay(); }
+        nvFilterAndRender(targetDate);
+        // ส่งหลัง filter เสร็จ (100ms)
+        setTimeout(()=>{
+          nvDoSend();
+        }, 100);
+      }
+    });
   }
+
+  // ── อัพเดต countdown เสมอ ──
+  const nm=n.getHours()*60+n.getMinutes();
+  const en=_nvScheds.filter(x=>x.enabled);
+  const cd=document.getElementById('nv-countdown');
+  if(cd && en.length){
+    let md=Infinity;
+    en.forEach(sc=>{
+      const[hh,mm2]=sc.time.split(':').map(Number);
+      const sm=hh*60+mm2;
+      const df=sm>nm?sm-nm:1440-(nm-sm);
+      if(df<md)md=df;
+    });
+    cd.textContent=`${String(Math.floor(md/60)).padStart(2,'0')}:${String(md%60).padStart(2,'0')} น.`;
+  } else if(cd) cd.textContent='—';
+
 },1000);
 
-function nvRenderScheds(){const el=document.getElementById('nv-sched-list');if(!el)return;if(!_nvScheds.length){el.innerHTML='<div style="text-align:center;padding:10px;font-size:10px;color:#8899BB;">ยังไม่มีรอบส่ง</div>';return;}el.innerHTML=_nvScheds.map(s=>`<div class="nv2-sched-card"><div class="nv2-sched-time">${s.time}</div><div style="flex:1;"><div class="nv2-sched-name">${s.name}</div><div class="nv2-sched-type">ข้อมูล${s.type==='tomorrow'?'วันพรุ่งนี้':'วันนี้'}</div></div><button style="background:transparent;border:none;cursor:pointer;font-size:12px;color:rgba(255,255,255,.3);" onclick="nvDelSched(${s.id})">✕</button><div class="nv2-stoggle ${s.enabled?'':'off'}" onclick="nvTogSched(${s.id})"></div></div>`).join('');}
+function nvRenderScheds(){
+  const el=document.getElementById('nv-sched-list');if(!el)return;
+  if(!_nvScheds.length){el.innerHTML='<div style="text-align:center;padding:8px;font-size:11px;color:var(--color-text-secondary)">ยังไม่มีรอบส่ง</div>';return;}
+  el.innerHTML=_nvScheds.map(s=>`<div class="nv2-sched-card"><div class="nv2-sched-time">${s.time}</div><div style="flex:1"><div class="nv2-sched-name">${s.name}</div><div class="nv2-sched-type">ข้อมูล${s.type==='tomorrow'?'วันพรุ่งนี้':'วันนี้'}</div></div><button class="nv2-stg ${s.enabled?'':'off'}" onclick="nvTogSched(${s.id})"></button><button class="nv2-del-btn" onclick="nvDelSched(${s.id})">✕</button></div>`).join('');
+}
 function nvTogSched(id){const s=_nvScheds.find(x=>x.id===id);if(s)s.enabled=!s.enabled;nvRenderScheds();nvSave();}
 function nvDelSched(id){_nvScheds=_nvScheds.filter(x=>x.id!==id);nvRenderScheds();nvSave();}
 function nvOpenSched(){const m=document.getElementById('nv-modal');if(m)m.style.display='flex';}
@@ -6150,13 +6246,36 @@ function nvTables(){
 }
 function nvBuildMsg(){
   const iso=_nvData.date;const n=new Date();const h=String(n.getHours()).padStart(2,'0');const m=String(n.getMinutes()).padStart(2,'0');
-  const M=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];const ft=document.getElementById('nv-footer')?.value.trim()||'';
-  const sc=document.getElementById('nv-op-c')?.checked;const ss=document.getElementById('nv-op-s')?.checked;const so=document.getElementById('nv-op-o')?.checked;const sov=document.getElementById('nv-op-ov')?.checked;
+  const M=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const sc=document.getElementById('nv-op-c')?.checked!==false;
+  const ss=document.getElementById('nv-op-s')?.checked!==false;
+  const so=document.getElementById('nv-op-o')?.checked!==false;
+  const sov=document.getElementById('nv-op-ov')?.checked!==false;
+  const colsC=nvGetCols('nv-chips-c');
+  const colsS=nvGetCols('nv-chips-s');
+  const colsO=nvGetCols('nv-chips-o');
+  const ft=document.getElementById('nv-footer')?.value||'';
   let msg=`\n🅿️ รายการแจ้งจอดรถ\nวัน${iso?nvFmtDate(iso):'ไม่ระบุ'}\n──────────────────\n`;
-  if(sc&&_nvData.common.length){msg+=`\n📦 พื้นที่ส่วนกลาง ชั้น 5 (${_nvData.common.length} รายการ)\n`;_nvData.common.forEach((r,i)=>{const ov=sov?(r.overnight?' [ค้างคืน]':' [ไม่ค้างคืน]'):'';const pt=r.parkType==='จอดยาว'?' [จอดยาว]':'';msg+=`${i+1}. ${r.name} | ${r.plate}${ov}${pt}\n`;});}
-  if(ss&&_nvData.sub.length){msg+=`\n🔄 แจ้งจอดแทน (${_nvData.sub.length} รายการ)\n`;_nvData.sub.forEach((r,i)=>{const ov=sov?` [${r.timeType}]`:'';msg+=`${i+1}. ${r.name} | ${r.plateReq} → ${r.plateOwner} (${r.floor})${ov}\n`;});}
-  if(so&&_nvData.other.length){msg+=`\n🚌 รถอื่นๆ (${_nvData.other.length} รายการ)\n`;_nvData.other.forEach((r,i)=>{const ov=sov?` [${r.timeType}]`:'';msg+=`${i+1}. ${r.carType} | ${r.plate}${ov}\n`;if(r.note&&r.note!=='–')msg+=`   หมายเหตุ: ${r.note}\n`;});}
-  msg+=`──────────────────\n📤 ส่งเมื่อ ${h}:${m} น. ${n.getDate()} ${M[n.getMonth()]} ${n.getFullYear()+543}\n`;if(ft)msg+=ft;return msg;
+  function fmtRow(r,cols){
+    const parts=[];
+    if(cols.includes('name'))parts.push(r.name);
+    if(cols.includes('dept')&&r.dept&&r.dept!=='–')parts.push(r.dept);
+    if(cols.includes('plate'))parts.push(r.plate);
+    if(cols.includes('plateReq'))parts.push(r.plateReq);
+    if(cols.includes('plateOwner')&&r.plateOwner)parts.push(`→ ${r.plateOwner}`);
+    if(cols.includes('carType')&&r.carType&&r.carType!=='–')parts.push(r.carType);
+    if(cols.includes('parkType')&&r.parkType)parts.push(`[${r.parkType}]`);
+    if(cols.includes('floor')&&r.floor&&r.floor!=='–')parts.push(`(${r.floor})`);
+    if(sov&&(cols.includes('parkType')||cols.length===0))parts.push(r.overnight||r.timeType?`[${r.overnight?'ค้างคืน':r.timeType||'ไม่ค้างคืน'}]`:'');
+    if(cols.includes('note')&&r.note&&r.note!=='–')parts.push(`📝${r.note}`);
+    return parts.filter(Boolean).join(' | ');
+  }
+  if(sc&&_nvData.common.length){msg+=`\n📦 พื้นที่ส่วนกลาง ชั้น 5 (${_nvData.common.length} รายการ)\n`;_nvData.common.forEach((r,i)=>{msg+=`${i+1}. ${fmtRow(r,colsC)}\n`;});}
+  if(ss&&_nvData.sub.length){msg+=`\n🔄 แจ้งจอดแทน (${_nvData.sub.length} รายการ)\n`;_nvData.sub.forEach((r,i)=>{msg+=`${i+1}. ${fmtRow(r,colsS)}\n`;});}
+  if(so&&_nvData.other.length){msg+=`\n🚌 รถอื่นๆ (${_nvData.other.length} รายการ)\n`;_nvData.other.forEach((r,i)=>{msg+=`${i+1}. ${fmtRow(r,colsO)}\n`;});}
+  msg+=`──────────────────\n📤 ส่งเมื่อ ${h}:${m} น. ${n.getDate()} ${M[n.getMonth()]} ${n.getFullYear()+543}\n`;
+  if(ft)msg+=ft;
+  return msg;
 }
 function nvPreview(){
   const msg=nvBuildMsg();const lines=msg.trim().split('\n');let html='';
@@ -6263,6 +6382,9 @@ function nvFilterAndRender(target){
   const tp = document.getElementById('nv-text-preview');
   if(tp) tp.textContent = nvBuildMsg();
 
+  nvUpdateRpTables();
+  nvUpdateRpTables();
+  nvBuildAndPreview();
   nvStat('online','ซิงค์จากระบบ');
   nvLog('ok',`กรองสำเร็จ — ${_nvData.common.length}+${_nvData.sub.length}+${_nvData.other.length} รายการ`);
 }
@@ -6270,7 +6392,146 @@ function nvOnToken(){const btn=document.getElementById('nv-send-btn');if(btn)btn
 async function nvCopy(){try{await navigator.clipboard.writeText(nvBuildMsg());nvLog('ok','คัดลอกแล้ว');}catch(e){nvLog('warn','คัดลอกไม่ได้');}}
 function nvClear(){_nvData={common:[],sub:[],other:[],date:''};nvTables();nvLog('info','ล้างข้อมูลแล้ว');}
 function nvSave(){try{localStorage.setItem('pz-nv',JSON.stringify({gs:document.getElementById('nv-gs')?.value,token:document.getElementById('nv-token')?.value,target:document.getElementById('nv-target')?.value,scheds:_nvScheds,footer:document.getElementById('nv-footer')?.value}));}catch(e){}}
-(function nvInit(){try{const r=localStorage.getItem('pz-nv');if(r){const c=JSON.parse(r);if(c.gs){const el=document.getElementById('nv-gs');if(el)el.value=c.gs;}if(c.token){const el=document.getElementById('nv-token');if(el)el.value=c.token;}if(c.target){const el=document.getElementById('nv-target');if(el)el.value=c.target;}if(c.scheds?.length)_nvScheds=c.scheds;if(c.footer){const el=document.getElementById('nv-footer');if(el)el.value=c.footer;}}}catch(e){}const gs=document.getElementById('nv-gs');if(gs&&typeof GS_URL!=='undefined'){gs.value=GS_URL;nvSave();}const dp=document.getElementById('nv-date-pick');if(dp){if(!dp.value)dp.value=new Date().toISOString().slice(0,10);nvSetDateDisplay();}nvInitCalendar();nvRenderScheds();setTimeout(()=>{nvLog('ok','LINE Messaging API พร้อมใช้งาน');nvLog('info','กรอก Token + Target ID → ทดสอบ → ตั้งเวลาส่ง');},600);})();
+(function nvInit(){try{const r=localStorage.getItem('pz-nv');if(r){const c=JSON.parse(r);if(c.gs){const el=document.getElementById('nv-gs');if(el)el.value=c.gs;}if(c.token){const el=document.getElementById('nv-token');if(el)el.value=c.token;}if(c.target){const el=document.getElementById('nv-target');if(el)el.value=c.target;}if(c.scheds?.length)_nvScheds=c.scheds;if(c.footer){const el=document.getElementById('nv-footer');if(el)el.value=c.footer;}}}catch(e){}const gs=document.getElementById('nv-gs');if(gs&&typeof GS_URL!=='undefined'){gs.value=GS_URL;nvSave();}const dp=document.getElementById('nv-date-pick');if(dp){if(!dp.value)dp.value=new Date().toISOString().slice(0,10);nvSetDateDisplay();}nvInitCalendar();nvRenderScheds();nvInitChips();setTimeout(()=>{nvLog('ok','LINE Messaging API พร้อมใช้งาน');nvLog('info','เลือกวันจากปฏิทิน → ข้อมูลแสดงทันที');},600);})();
+
+// ── Right panel helpers ──
+function nvTogAcc(hdr){
+  const b=hdr.nextElementSibling; const a=hdr.querySelector('.nv2-acc-arr');
+  if(!b) return;
+  const isOpen=b.style.display==='none'||!b.style.display||b.style.display==='';
+  if(!b.style.display||b.style.display===''){b.style.display='none'; if(a)a.classList.remove('open');}
+  else{b.style.display=''; if(a)a.classList.add('open');}
+}
+function nvTogSched(hdr){
+  const b=document.getElementById('nv-sched-body'); const a=hdr.querySelector('.nv2-acc-arr');
+  if(!b) return;
+  if(b.style.display==='none'){b.style.display=''; if(a)a.classList.add('open');}
+  else{b.style.display='none'; if(a)a.classList.remove('open');}
+}
+function nvSelAll(btn){
+  const chips=btn.closest('.nv2-acc-body').querySelectorAll('.nv2-chip');
+  const allOn=[...chips].every(c=>c.classList.contains('on'));
+  chips.forEach(c=>{ if(allOn)c.classList.remove('on'); else c.classList.add('on'); });
+  nvSyncAndPreview();
+}
+function nvChipToggle(chip){ chip.classList.toggle('on'); nvSyncAndPreview(); }
+
+// ── Update right panel mini tables ──
+function nvUpdateRpTables(){
+  // common
+  const cnt_c=document.getElementById('nv-rp-cnt-c'); if(cnt_c)cnt_c.textContent=_nvData.common.length;
+  const tb_c=document.getElementById('nv-rp-tb-c');
+  if(tb_c) tb_c.innerHTML=_nvData.common.length?_nvData.common.map((r,i)=>`<tr><td>${r.name}</td><td style="color:#9ca3af;font-size:9px">${r.dept||'–'}</td><td><span class="nv2-mp">${r.plate}</span></td><td>${r.parkType==='จอดยาว'?'<span class="nv2-tag" style="background:#FAEEDA;color:#854F0B">จอดยาว</span>':'<span class="nv2-tag" style="background:#E6F1FB;color:#185FA5">รายวัน</span>'}</td></tr>`).join(''):`<tr><td colspan="4" class="nv2-no-data">ไม่มีรายการ</td></tr>`;
+  // sub
+  const cnt_s=document.getElementById('nv-rp-cnt-s'); if(cnt_s)cnt_s.textContent=_nvData.sub.length;
+  const tb_s=document.getElementById('nv-rp-tb-s');
+  if(tb_s) tb_s.innerHTML=_nvData.sub.length?_nvData.sub.map((r,i)=>`<tr><td>${r.name}</td><td style="color:#9ca3af;font-size:9px">${r.dept||'–'}</td><td><span class="nv2-mp">${r.plateReq}</span></td><td style="color:#9ca3af">${r.floor}</td></tr>`).join(''):`<tr><td colspan="4" class="nv2-no-data">ไม่มีรายการ</td></tr>`;
+  // other
+  const cnt_o=document.getElementById('nv-rp-cnt-o'); if(cnt_o)cnt_o.textContent=_nvData.other.length;
+  const tb_o=document.getElementById('nv-rp-tb-o');
+  if(tb_o) tb_o.innerHTML=_nvData.other.length?_nvData.other.map((r,i)=>`<tr><td>${r.name}</td><td style="color:#9ca3af;font-size:9px">${r.dept||'–'}</td><td><span class="nv2-mp">${r.plate}</span></td><td style="color:#9ca3af">${r.carType}</td></tr>`).join(''):`<tr><td colspan="4" class="nv2-no-data">ไม่มีรายการ</td></tr>`;
+}
+
+// ── nvBuildMsg with column selection ──
+function nvBuildMsgWithCols(){
+  const getOnCols=(id)=>[...document.querySelectorAll(`#${id} .nv2-chip.on`)].map(c=>c.dataset.col);
+  const colsC=getOnCols('nv-chips-c');
+  const colsS=getOnCols('nv-chips-s');
+  const colsO=getOnCols('nv-chips-o');
+  const iso=_nvData.date; const n=new Date();
+  const h=String(n.getHours()).padStart(2,'0'), m=String(n.getMinutes()).padStart(2,'0');
+  const M=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const footer=document.getElementById('nv-footer')?.value.trim()||'';
+  let msg=`\n🅿️ รายการแจ้งจอดรถ\nวัน${iso?nvFmtDate(iso):'ไม่ระบุ'}\n──────────────────\n`;
+  if(document.getElementById('nv-op-c')?.checked!==false&&_nvData.common.length){
+    msg+=`\n📦 พื้นที่ส่วนกลาง ชั้น 5 (${_nvData.common.length} รายการ)\n`;
+    _nvData.common.forEach((r,i)=>{
+      const parts=[];
+      if(colsC.includes('name')) parts.push(r.name);
+      if(colsC.includes('dept')&&r.dept&&r.dept!=='–') parts.push(r.dept);
+      if(colsC.includes('plate')) parts.push(r.plate);
+      if(colsC.includes('carType')) parts.push(r.carType);
+      if(colsC.includes('parkType')) parts.push(r.parkType);
+      if(colsC.includes('note')&&r.note&&r.note!=='–') parts.push(r.note);
+      const ov=(document.getElementById('nv-op-ov')?.checked!==false&&r.overnight)?' [ค้างคืน]':'';
+      msg+=`${i+1}. ${parts.join(' | ')}${ov}\n`;
+    });
+  }
+  if(document.getElementById('nv-op-s')?.checked!==false&&_nvData.sub.length){
+    msg+=`\n🔄 แจ้งจอดแทน (${_nvData.sub.length} รายการ)\n`;
+    _nvData.sub.forEach((r,i)=>{
+      const parts=[];
+      if(colsS.includes('name')) parts.push(r.name);
+      if(colsS.includes('dept')&&r.dept&&r.dept!=='–') parts.push(r.dept);
+      if(colsS.includes('plateReq')) parts.push(r.plateReq);
+      if(colsS.includes('floor')) parts.push(`(${r.floor})`);
+      if(colsS.includes('timeType')) parts.push(`[${r.timeType}]`);
+      if(colsS.includes('note')&&r.note&&r.note!=='–') parts.push(r.note);
+      msg+=`${i+1}. ${parts.join(' | ')}\n`;
+    });
+  }
+  if(document.getElementById('nv-op-o')?.checked!==false&&_nvData.other.length){
+    msg+=`\n🚌 รถอื่นๆ (${_nvData.other.length} รายการ)\n`;
+    _nvData.other.forEach((r,i)=>{
+      const parts=[];
+      if(colsO.includes('name')) parts.push(r.name);
+      if(colsO.includes('dept')&&r.dept&&r.dept!=='–') parts.push(r.dept);
+      if(colsO.includes('plate')) parts.push(r.plate);
+      if(colsO.includes('carType')) parts.push(r.carType);
+      if(colsO.includes('timeType')) parts.push(`[${r.timeType}]`);
+      if(colsO.includes('note')&&r.note&&r.note!=='–') parts.push(r.note);
+      msg+=`${i+1}. ${parts.join(' | ')}\n`;
+    });
+  }
+  msg+=`──────────────────\n📤 ส่งเมื่อ ${h}:${m} น. ${n.getDate()} ${M[n.getMonth()]} ${n.getFullYear()+543}\n`;
+  if(footer) msg+=footer;
+  return msg;
+}
+// ── Add chip onclick handlers after init ──
+setTimeout(function(){
+  document.querySelectorAll('#view-notify .nv2-chip').forEach(function(c){
+    c.onclick=function(){ this.classList.toggle('on'); nvSyncAndPreview(); };
+  });
+},800);
+
+// ── notify v4 helpers ──
+function nvTogAcc(hdr){
+  const b=hdr.nextElementSibling;const a=hdr.querySelector('.nv2-acc-arr');
+  if(!b)return;
+  if(b.style.display==='none'){b.style.display='';if(a)a.classList.add('open');}
+  else{b.style.display='none';if(a)a.classList.remove('open');}
+}
+function nvTogSchedPanel(hdr){
+  const b=document.getElementById('nv-sched-panel');const a=hdr.querySelector('.nv2-acc-arr');
+  if(!b)return;
+  if(b.style.display==='none'){b.style.display='';if(a)a.classList.add('open');}
+  else{b.style.display='none';if(a)a.classList.remove('open');}
+}
+function nvSelAll(btn){
+  const chips=btn.closest('.nv2-acc-body').querySelectorAll('.nv2-chip');
+  const allOn=[...chips].every(c=>c.classList.contains('on'));
+  chips.forEach(c=>c.classList[allOn?'remove':'add']('on'));
+  nvBuildAndPreview();
+}
+function nvInitChips(){
+  document.querySelectorAll('#view-notify .nv2-chip').forEach(c=>{
+    c.onclick=()=>{ c.classList.toggle('on'); nvBuildAndPreview(); };
+  });
+}
+function nvGetCols(id){
+  return [...document.querySelectorAll(`#${id} .nv2-chip.on`)].map(c=>c.dataset.col);
+}
+function nvBuildAndPreview(){ nvPreview(); const tp=document.getElementById('nv-text-preview'); if(tp)tp.textContent=nvBuildMsg(); }
+
+function nvUpdateRpTables(){
+  // update counts
+  const cc=document.getElementById('nv-rp-cnt-c');if(cc)cc.textContent=_nvData.common.length;
+  const cs=document.getElementById('nv-rp-cnt-s');if(cs)cs.textContent=_nvData.sub.length;
+  const co=document.getElementById('nv-rp-cnt-o');if(co)co.textContent=_nvData.other.length;
+  // render mini tables
+
+}
+
 // ══ END LINE NOTIFY ══
 
 // ── Dashboard Background Switcher (manual) ──────────────────
