@@ -1504,6 +1504,83 @@
   /* ── LINE NOTIFY VIEW v4 ── */
   #view-notify.building-view { padding: 0 !important; overflow: hidden !important; }
   #view-notify.building-view.active { flex-direction: column !important; gap: 0 !important; }
+
+  @media (max-width: 768px) {
+    /* ── LINE Notify: stack 3 cols → 1 col ── */
+    #view-notify .nv2-page {
+      grid-template-columns: 1fr !important;
+      height: auto !important;
+      overflow-y: auto !important;
+    }
+    #view-notify.building-view {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+    }
+    /* sidebar: ความกว้างเต็ม ไม่ fixed */
+    #view-notify .nv2-sb {
+      width: 100% !important;
+      border-right: none !important;
+      border-bottom: 0.5px solid rgba(255,255,255,0.08) !important;
+      overflow: visible !important;
+    }
+    #view-notify .nv2-sb-body {
+      padding: 10px 12px !important;
+    }
+    /* calendar 2 col grid compact */
+    #view-notify .nv2-cal-grid {
+      gap: 1px !important;
+    }
+    #view-notify .nv2-cd {
+      padding: 4px 1px !important;
+      font-size: 10px !important;
+    }
+    /* main preview: full width */
+    #view-notify .nv2-main {
+      width: 100% !important;
+      border-left: none !important;
+    }
+    /* body: stack phone + text vertically */
+    #view-notify .nv2-body {
+      flex-direction: column !important;
+      align-items: center !important;
+      padding: 12px !important;
+      gap: 14px !important;
+    }
+    #view-notify .nv2-phone {
+      width: 240px !important;
+    }
+    #view-notify .nv2-txt-pre {
+      width: 100% !important;
+      max-height: 220px !important;
+      font-size: 10px !important;
+    }
+    /* right panel: full width, below main */
+    #view-notify .nv2-rp {
+      width: 100% !important;
+      border-left: none !important;
+      border-top: 0.5px solid rgba(255,255,255,0.08) !important;
+    }
+    /* log เล็กลง */
+    #view-notify .nv2-log {
+      height: 54px !important;
+    }
+    /* send btn full width */
+    #view-notify .nv2-mh-r {
+      gap: 5px !important;
+    }
+    #view-notify .nv2-mh-btn {
+      font-size: 10px !important;
+      padding: 5px 9px !important;
+    }
+    /* chips wrap */
+    #view-notify .nv2-chips {
+      gap: 3px !important;
+    }
+    #view-notify .nv2-chip {
+      font-size: 10px !important;
+      padding: 3px 8px !important;
+    }
+  }
   #view-notify{background:#0f1117!important;overflow:hidden;flex:1;min-height:0}
   #view-notify .nv2-page{display:grid;grid-template-columns:240px 1fr 270px;height:100%;overflow:hidden}
   /* sidebar */
@@ -1636,10 +1713,10 @@
       gap: 12px;
     }
 
-    /* panel row: สรุป + ปฏิทิน เคียงกันบนบรรทัดเดียว */
+    /* panel row: สรุปอยู่บน ปฏิทินอยู่ล่าง */
     .book-panel > div:first-child {
-      flex-direction: row !important;
-      gap: 10px;
+      flex-direction: column !important;
+      gap: 12px;
     }
 
     /* ขวา: ตาราง ไปอยู่ล่าง เต็มความกว้าง */
@@ -1665,8 +1742,8 @@
     .bk-kpi-chip { padding: 8px 6px !important; }
     .bk-kpi-chip svg { width: 18px !important; height: 18px !important; }
 
-    /* ปฏิทิน --cal-cell-size เล็กลง */
-    #ari-calendar { --cal-cell-size: 32px; }
+    /* ปฏิทิน --cal-cell-size */
+    #ari-calendar { --cal-cell-size: 38px; }
   }
 
   /* ─── RESPONSIVE — TABLET ─── */
@@ -1725,9 +1802,45 @@
 
     /* main: leave room for bottom bar */
     .main { padding: 14px 12px; gap: 14px; padding-bottom: 74px; }
+    /* allow building view pages to scroll naturally */
+    .main { overflow: auto; }
 
     /* topbar compact */
     .topbar { padding: 12px 14px; }
+
+    /* ── Building views: สถิติบน, แผนผังล่าง ── */
+    #view-ari, #view-bts, #view-ksl {
+      flex-direction: column !important;
+      overflow: auto !important;       /* override inline overflow:hidden */
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      height: auto !important;
+      max-height: none !important;
+    }
+    #view-ari > div:first-child,
+    #view-bts > div:first-child,
+    #view-ksl > div:first-child {
+      width: 100% !important;
+      flex-shrink: 0 !important;
+      overflow: visible !important;
+    }
+    #view-ari > div:nth-child(2),
+    #view-bts > div:nth-child(2),
+    #view-ksl > div:nth-child(2) {
+      width: 100% !important;
+      flex-shrink: 0 !important;
+      flex: none !important;
+      border-left: none !important;
+      border-top: 0.5px solid rgba(255,255,255,0.08) !important;
+      overflow-x: auto !important;
+      overflow-y: visible !important;
+      min-height: 260px;
+      padding-bottom: 80px !important;
+    }
+    .ari-slot { width: 30px !important; height: 30px !important; font-size: 8px !important; }
+    .bts-slot, .ksl-slot { width: 26px !important; height: 26px !important; font-size: 7px !important; }
+    .bts-grid { gap: 3px !important; }
+    .bts-counter { font-size: 22px !important; }
     .topbar-title { font-size: 14px; }
     .topbar-title span { display: none; }
 
@@ -1765,13 +1878,16 @@
       display: flex;
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      height: 60px;
-      background: var(--card);
-      border-top: 1px solid var(--border);
+      height: 68px;
+      background: rgba(12,12,20,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 0.5px solid rgba(255,255,255,0.08);
       z-index: 200;
-      box-shadow: 0 -4px 16px rgba(0,0,0,0.07);
-      padding: 0 4px;
+      padding: 0 8px;
       padding-bottom: env(safe-area-inset-bottom);
+      gap: 2px;
+      align-items: center;
     }
     .bn-item {
       flex: 1;
@@ -1783,37 +1899,86 @@
       border: none;
       background: transparent;
       cursor: pointer;
-      padding: 6px 2px;
-      border-radius: 10px;
-      transition: background 0.15s;
+      padding: 8px 4px 6px;
+      border-radius: 14px;
+      transition: all 0.2s cubic-bezier(.34,1.56,.64,1);
       position: relative;
-      color: var(--text-muted);
+      color: rgba(255,255,255,0.4);
+      min-height: 52px;
     }
-    .bn-item:active { background: var(--surface); }
-    .bn-item.active { color: var(--text); }
+    .bn-item:active {
+      transform: scale(0.92);
+    }
+    .bn-item.active {
+      color: #fff;
+    }
+    .bn-item.active .bn-pill {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+    .bn-pill {
+      position: absolute;
+      top: 4px; left: 8px; right: 8px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--accent, #7C3AED);
+      opacity: 0;
+      transform: scaleX(0.4);
+      transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
+    }
+    .bn-icon-wrap {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      transition: background 0.2s;
+      font-size: 18px;
+    }
+    .bn-item.active .bn-icon-wrap {
+      background: rgba(124,58,237,0.18);
+    }
     .bn-icon {
-      font-size: 20px;
+      font-size: 18px;
       line-height: 1;
+      transition: transform 0.2s;
+    }
+    .bn-item.active .bn-icon {
+      transform: scale(1.1);
     }
     .bn-label {
-      font-size: 9.5px;
+      font-size: 9px;
       font-weight: 600;
       letter-spacing: 0.2px;
       white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .bn-item.active .bn-label {
+      color: rgba(255,255,255,0.9);
     }
     .bn-badge {
       position: absolute;
-      top: 4px;
-      right: calc(50% - 18px);
-      background: var(--gold);
+      top: 3px;
+      right: calc(50% - 20px);
+      background: #f59e0b;
       color: #fff;
       font-size: 9px;
       font-weight: 700;
       padding: 1px 5px;
-      border-radius: 100px;
+      border-radius: 99px;
       min-width: 16px;
       text-align: center;
+      border: 1.5px solid rgba(12,12,20,0.9);
     }
+    /* notify icon สีเขียว LINE */
+    #bn-notify.active .bn-icon-wrap { background: rgba(6,199,85,0.15); }
+    #bn-notify.active .bn-pill { background: #06C755; }
+    #bn-notify.active .bn-icon { filter: none; }
+    /* booking icon สีทอง */
+    #bn-booking.active .bn-icon-wrap { background: rgba(245,158,11,0.15); }
+    #bn-booking.active .bn-pill { background: #f59e0b; }
+  }
     /* more menu drawer */
     .bn-more-drawer {
       display: none;
@@ -2117,7 +2282,7 @@
     </div><!-- /view-all -->
 
     <!-- ════════════════ ARI HILLS VIEW ════════════════ -->
-    <div id="view-ari" class="building-view" style="padding:0;overflow:hidden;flex-direction:row;">
+    <div id="view-ari" class="building-view" style="padding:0;overflow:hidden;flex-direction:row;" data-overflow="hidden">
 
       <!-- LEFT: glass โปร่งใส -->
       <div style="width:230px;flex-shrink:0;padding:14px 12px;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1;overflow-y:auto;">
@@ -2947,24 +3112,39 @@
 
 <nav class="bottom-nav" id="bottom-nav">
   <button class="bn-item active" id="bn-all" onclick="bnNav('all')">
-    <span class="bn-icon">📊</span>
+    <div class="bn-pill"></div>
+    <div class="bn-icon-wrap"><span class="bn-icon">📊</span></div>
     <span class="bn-label">Dashboard</span>
   </button>
   <button class="bn-item" id="bn-booking" onclick="bnNav('booking')">
-    <span class="bn-icon">📅</span>
+    <div class="bn-pill"></div>
+    <div class="bn-icon-wrap"><span class="bn-icon">📅</span></div>
     <span class="bn-label">แจ้งจอด</span>
   </button>
   <button class="bn-item" id="bn-ari" onclick="bnNav('ari')">
-    <span class="bn-icon">🏢</span>
+    <div class="bn-pill"></div>
+    <div class="bn-icon-wrap"><span class="bn-icon">🏢</span></div>
     <span class="bn-label">Ari Hills</span>
   </button>
   <button class="bn-item" id="bn-bts" onclick="bnNav('bts')">
-    <span class="bn-icon">🚇</span>
+    <div class="bn-pill"></div>
+    <div class="bn-icon-wrap"><span class="bn-icon">🚇</span></div>
     <span class="bn-label">BTS</span>
   </button>
   <button class="bn-item" id="bn-ksl" onclick="bnNav('ksl')">
-    <span class="bn-icon">🏬</span>
+    <div class="bn-pill"></div>
+    <div class="bn-icon-wrap"><span class="bn-icon">🏬</span></div>
     <span class="bn-label">KSL</span>
+  </button>
+  <button class="bn-item" id="bn-notify" onclick="bnNav('notify')">
+    <div class="bn-pill"></div>
+    <div class="bn-icon-wrap"><span class="bn-icon">💬</span></div>
+    <span class="bn-label">LINE</span>
+  </button>
+  <button class="bn-item" id="bn-admin" onclick="bnNav('admin')">
+    <div class="bn-pill"></div>
+    <div class="bn-icon-wrap"><span class="bn-icon">⚙️</span></div>
+    <span class="bn-label">ตั้งค่า</span>
   </button>
 </nav>
 
@@ -5106,17 +5286,17 @@ function printAriReport() {
 // ═══════════════════════════════════════════════
 //  BOTTOM NAV (mobile)
 // ═══════════════════════════════════════════════
-const BN_MAIN_ITEMS = ['all','booking','ari','bts','ksl'];
+const BN_MAIN_ITEMS = ['all','booking','ari','bts','ksl','notify','admin'];
 
 function bnNav(view) {
-  // update bottom nav active state
   BN_MAIN_ITEMS.forEach(v => {
     const btn = document.getElementById('bn-'+v);
     if (btn) btn.classList.toggle('active', v === view);
   });
-  // navigate
   if (['ari','bts','ksl'].includes(view)) {
     switchBuilding(view);
+  } else if (view === 'admin') {
+    tnav(null, 'admin');
   } else {
     switchView(view);
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
