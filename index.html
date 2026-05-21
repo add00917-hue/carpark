@@ -1397,7 +1397,61 @@
   .info-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
   .info-value { font-size: 13px; font-weight: 700; }
 
-  .slot-detail {
+  /* ── Mobile slot popup ── */
+  #slot-mobile-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 600;
+    align-items: flex-end;
+    justify-content: center;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+  }
+  #slot-mobile-popup.open { display: flex; }
+  #slot-mobile-popup .smp-sheet {
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 22px 36px;
+    width: 100%;
+    max-width: 480px;
+    animation: smpIn 0.25s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.2);
+  }
+  html[data-theme="dark"] #slot-mobile-popup .smp-sheet { background: #1a1a2e; }
+  @keyframes smpIn {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  #slot-mobile-popup .smp-handle {
+    width: 40px; height: 4px; border-radius: 2px;
+    background: #e5e7eb; margin: 0 auto 16px;
+  }
+  html[data-theme="dark"] #slot-mobile-popup .smp-handle { background: rgba(255,255,255,0.15); }
+  #slot-mobile-popup .smp-slot  { font-size: 28px; font-weight: 700; font-family: 'DM Mono',monospace; color: #1A1235; }
+  html[data-theme="dark"] #slot-mobile-popup .smp-slot { color: #fff; }
+  #slot-mobile-popup .smp-type  { font-size: 12px; font-weight: 600; color: #7C7A9A; margin-top: 4px; margin-bottom: 14px; }
+  #slot-mobile-popup .smp-divider { height: 1px; background: #E8EAF2; margin: 12px 0; }
+  html[data-theme="dark"] #slot-mobile-popup .smp-divider { background: rgba(255,255,255,0.1); }
+  #slot-mobile-popup .smp-row {
+    display: flex; justify-content: space-between;
+    padding: 8px 0; font-size: 13px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  html[data-theme="dark"] #slot-mobile-popup .smp-row { border-bottom-color: rgba(255,255,255,0.06); }
+  #slot-mobile-popup .smp-row:last-of-type { border-bottom: none; }
+  #slot-mobile-popup .smp-lbl { color: #9ca3af; }
+  #slot-mobile-popup .smp-val { font-weight: 600; color: #1A1235; }
+  html[data-theme="dark"] #slot-mobile-popup .smp-val { color: #fff; }
+  #slot-mobile-popup .smp-status-free { color: #16a34a; font-weight: 700; }
+  #slot-mobile-popup .smp-status-occ  { color: #dc2626; font-weight: 700; }
+  #slot-mobile-popup .smp-close {
+    margin-top: 16px; width: 100%; padding: 12px;
+    border-radius: 12px; border: none;
+    background: #F5F6FA; font-size: 14px; font-weight: 600;
+    color: #7C7A9A; cursor: pointer;
+  }
+  html[data-theme="dark"] #slot-mobile-popup .smp-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
     background: #F5F3FF;
     border: 1.5px solid #DDD6FE;
     border-radius: var(--radius-sm);
@@ -1501,7 +1555,28 @@
   .btn-confirm { flex: 1; padding: 12px; border-radius: 10px; border: none; background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.15s; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
   .btn-confirm:hover { opacity: 0.88; }
 
-  /* ── LINE NOTIFY VIEW v4 ── */
+  /* ── Admin Panel ── */
+  #view-admin { background:#0a0c14 !important; overflow:hidden; flex:1; min-height:0; }
+  .adm-tab { padding:10px 16px; font-size:12px; font-weight:600; color:rgba(255,255,255,0.4); background:transparent; border:none; cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; transition:all 0.15s; }
+  .adm-tab:hover { color:rgba(255,255,255,0.7); }
+  .adm-tab.active { color:#7C3AED; border-bottom-color:#7C3AED; background:rgba(124,58,237,0.06); }
+  .adm-card { background:rgba(255,255,255,0.04); border:0.5px solid rgba(255,255,255,0.08); border-radius:12px; padding:14px; }
+  .adm-card-hdr { display:flex; align-items:flex-start; gap:10px; margin-bottom:2px; }
+  .adm-card-ico { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .adm-card-title { font-size:13px; font-weight:700; color:#fff; }
+  .adm-card-sub { font-size:10px; color:rgba(255,255,255,0.4); margin-top:1px; }
+  .adm-btn { display:inline-flex; align-items:center; gap:5px; padding:7px 12px; border-radius:8px; font-size:11px; font-weight:600; cursor:pointer; border:none; transition:all 0.15s; }
+  .adm-btn-green { background:#1D9E75; color:#fff; }
+  .adm-btn-green:hover { background:#16a06a; }
+  .adm-btn-ghost { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.7); border:0.5px solid rgba(255,255,255,0.12); }
+  .adm-btn-ghost:hover { background:rgba(255,255,255,0.1); color:#fff; }
+  .adm-role-badge { font-size:10px; font-weight:600; padding:3px 9px; border-radius:20px; border:0.5px solid; }
+  @media (max-width: 768px) {
+    #view-admin { overflow-y:auto !important; overflow-x:hidden !important; }
+    #view-admin > div:last-child { padding-bottom: 88px !important; }
+    .adm-card { background:rgba(255,255,255,0.05) !important; }
+    .adm-tab { font-size:11px !important; padding:8px 12px !important; }
+  }
   #view-notify.building-view { padding: 0 !important; overflow: hidden !important; }
   #view-notify.building-view.active { flex-direction: column !important; gap: 0 !important; }
 
@@ -1693,6 +1768,8 @@
   #view-notify .nv-toggle-row { display:flex; align-items:center; gap:7px; padding:5px 0; }
   #view-notify .nv-toggle-row label { font-size:11px; color:var(--nv-text); flex:1; cursor:pointer; }
   #view-notify .nv-notice { background:rgba(255,183,0,0.1); border:1px solid rgba(255,183,0,0.25); border-radius:7px; padding:8px 10px; font-size:10px; color:#FFB700; margin-top:7px; line-height:1.5; }
+  .bottom-nav { display: none; }
+
   @media (max-width: 900px) {
 
     /* book-grid: ซ้อนบน-ล่าง */
@@ -1795,308 +1872,285 @@
     .dash-bottom { padding: 6px 8px; gap: 5px; }
   }
 
-  /* ─── RESPONSIVE — MOBILE ─── */
+  /* ═══════════════════════════════════════════════════════
+     📱 MOBILE UI v2 — Pastel Clean (≤768px)
+     ═══════════════════════════════════════════════════════ */
+
+  /* ── Design tokens ── */
   @media (max-width: 768px) {
-    /* hide desktop sidebar */
-    .sidebar { display: none; }
-
-    /* main: leave room for bottom bar */
-    .main { padding: 14px 12px; gap: 14px; padding-bottom: 74px; }
-    /* allow building view pages to scroll naturally */
-    .main { overflow: auto; }
-
-    /* topbar compact */
-    .topbar { padding: 12px 14px; }
-
-    /* ── Building views: สถิติบน, แผนผังล่าง ── */
-    #view-ari, #view-bts, #view-ksl {
-      flex-direction: column !important;
-      overflow: auto !important;       /* override inline overflow:hidden */
-      overflow-x: hidden !important;
-      overflow-y: auto !important;
-      height: auto !important;
-      max-height: none !important;
+    :root {
+      --m-bg:#F7F8FC; --m-card:#FFFFFF; --m-border:#EEF0F8;
+      --m-shadow:0 2px 16px rgba(100,80,200,0.08);
+      --m-text:#1E1B3A; --m-sub:#8B88AA; --m-muted:#C4C2D8;
+      --m-purple:#7C3AED; --m-teal:#0EA5A0; --m-amber:#F59E0B;
+      --m-green:#22C55E; --m-red:#EF4444; --m-blue:#3B82F6;
+      --m-mint:#E8FBF5; --m-lavender:#EEF0FF; --m-peach:#FFF3E8;
+      --m-radius:16px; --m-radius-sm:12px;
     }
-    #view-ari > div:first-child,
-    #view-bts > div:first-child,
-    #view-ksl > div:first-child {
-      width: 100% !important;
-      flex-shrink: 0 !important;
-      overflow: visible !important;
-    }
-    #view-ari > div:nth-child(2),
-    #view-bts > div:nth-child(2),
-    #view-ksl > div:nth-child(2) {
-      width: 100% !important;
-      flex-shrink: 0 !important;
-      flex: none !important;
-      border-left: none !important;
-      border-top: 0.5px solid rgba(255,255,255,0.08) !important;
-      overflow-x: auto !important;
-      overflow-y: visible !important;
-      min-height: 260px;
-      padding-bottom: 80px !important;
-    }
-    .ari-slot { width: 30px !important; height: 30px !important; font-size: 8px !important; }
-    .bts-slot, .ksl-slot { width: 26px !important; height: 26px !important; font-size: 7px !important; }
-    .bts-grid { gap: 3px !important; }
-    .bts-counter { font-size: 22px !important; }
-    .topbar-title { font-size: 14px; }
-    .topbar-title span { display: none; }
+    body,.main,.app { background:var(--m-bg)!important; color:var(--m-text)!important; }
+    .app::before,.app::after,.view-bg-layer { opacity:0.04!important; }
 
-    /* overview cards: 2 cols */
-    .overview-row { grid-template-columns: repeat(2,1fr); gap: 10px; }
-    .ov-card { padding: 12px; }
-    .ov-value { font-size: 26px; }
+    /* topbar */
+    .topnav { background:rgba(255,255,255,0.96)!important; backdrop-filter:blur(20px)!important; border-bottom:1px solid var(--m-border)!important; box-shadow:0 2px 16px rgba(100,80,200,0.07)!important; padding:10px 16px!important; }
+    .topnav-brand { font-size:14px!important; font-weight:700!important; color:var(--m-text)!important; }
+    .topnav-brand-sub,.topnav-gs-label,.topnav-clock { color:var(--m-sub)!important; font-size:10px!important; }
+    .topnav * { color:var(--m-text)!important; }
+    #topbar-title-text { display:none!important; }
+    #sub-topbar { display:none!important; }
 
-    /* content grid: single col */
-    .content-grid { grid-template-columns: 1fr; }
-    .book-grid { grid-template-columns: 1fr; }
-    .right-panel { display: flex; flex-direction: column; }
-
-    /* slot grid: smaller cells */
-    .slot-grid { grid-template-columns: repeat(auto-fill, 58px); gap: 7px; padding: 10px 8px; }
-    .slot-box { height: 60px; }
-
-    /* floor tabs: scrollable */
-    .floor-tabs { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
-    .floor-tab { flex-shrink: 0; }
-
-    /* cards */
-    .card { padding: 14px 12px; }
-
-    /* form in booking mode */
-    .book-grid > div:last-child > div:first-child { grid-template-columns: 1fr; }
-  }
-
-  /* ─── BOTTOM NAV BAR (mobile only) ─── */
-  .bottom-nav {
-    display: none;
-  }
-  @media (max-width: 768px) {
+    /* bottom nav */
+    /* ── Bottom Nav: Dark Glass ── */
     .bottom-nav {
-      display: flex;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      height: 68px;
-      background: rgba(12,12,20,0.96);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 0.5px solid rgba(255,255,255,0.08);
-      z-index: 200;
-      padding: 0 8px;
-      padding-bottom: env(safe-area-inset-bottom);
-      gap: 2px;
-      align-items: center;
+      display:flex!important;
+      position:fixed!important;
+      bottom:0!important; left:0!important; right:0!important;
+      background:#0d0d18!important;
+      border-radius:24px 24px 0 0!important;
+      padding:12px 8px env(safe-area-inset-bottom,0)!important;
+      justify-content:space-around!important;
+      align-items:center!important;
+      box-shadow:0 -8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)!important;
+      z-index:200!important;
+      height:auto!important;
+      border-top:0.5px solid rgba(255,255,255,0.06)!important;
     }
     .bn-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      padding: 8px 4px 6px;
-      border-radius: 14px;
-      transition: all 0.2s cubic-bezier(.34,1.56,.64,1);
-      position: relative;
-      color: rgba(255,255,255,0.4);
-      min-height: 52px;
+      display:flex!important;
+      flex-direction:column!important;
+      align-items:center!important;
+      gap:5px!important;
+      color:#5a5a7a!important;
+      background:transparent!important;
+      border:none!important;
+      cursor:pointer!important;
+      padding:6px 10px!important;
+      border-radius:16px!important;
+      transition:all 0.25s cubic-bezier(.34,1.56,.64,1)!important;
+      position:relative!important;
+      min-width:44px!important;
     }
-    .bn-item:active {
-      transform: scale(0.92);
+    .bn-item::before {
+      content:''!important;
+      position:absolute!important;
+      top:-2px!important;
+      left:20%!important; right:20%!important;
+      height:3px!important;
+      background:#5ea1ff!important;
+      border-radius:0 0 6px 6px!important;
+      opacity:0!important;
+      transform:scaleX(0)!important;
+      transition:all 0.25s cubic-bezier(.34,1.56,.64,1)!important;
     }
-    .bn-item.active {
-      color: #fff;
+    .bn-item.active::before {
+      opacity:1!important;
+      transform:scaleX(1)!important;
     }
-    .bn-item.active .bn-pill {
-      opacity: 1;
-      transform: scaleX(1);
-    }
-    .bn-pill {
-      position: absolute;
-      top: 4px; left: 8px; right: 8px;
-      height: 3px;
-      border-radius: 2px;
-      background: var(--accent, #7C3AED);
-      opacity: 0;
-      transform: scaleX(0.4);
-      transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
-    }
-    .bn-icon-wrap {
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      transition: background 0.2s;
-      font-size: 18px;
-    }
-    .bn-item.active .bn-icon-wrap {
-      background: rgba(124,58,237,0.18);
-    }
-    .bn-icon {
-      font-size: 18px;
-      line-height: 1;
-      transition: transform 0.2s;
-    }
-    .bn-item.active .bn-icon {
-      transform: scale(1.1);
+    .bn-item.active { color:#5ea1ff!important; transform:translateY(-2px)!important; }
+    .bn-item:active { transform:scale(0.9)!important; }
+    .bn-ico {
+      font-size:22px!important;
+      line-height:1!important;
+      transition:all 0.2s!important;
     }
     .bn-label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.2px;
-      white-space: nowrap;
-      transition: color 0.2s;
+      font-size:9px!important;
+      font-weight:600!important;
+      color:inherit!important;
+      letter-spacing:0.2px!important;
     }
-    .bn-item.active .bn-label {
-      color: rgba(255,255,255,0.9);
+    #bn-booking.active { color:#fbbf24!important; }
+    #bn-booking.active::before { background:#fbbf24!important; }
+    #bn-notify.active { color:#06C755!important; }
+    #bn-notify.active::before { background:#06C755!important; }
+    #bn-ari.active { color:#a78bfa!important; }
+    #bn-ari.active::before { background:#a78bfa!important; }
+    #bn-bts.active { color:#34d399!important; }
+    #bn-bts.active::before { background:#34d399!important; }
+    #bn-ksl.active { color:#fb923c!important; }
+    #bn-ksl.active::before { background:#fb923c!important; }
+    /* hover glow */
+    .bn-item:hover { color:#fff!important; }
+
+    /* main */
+    .main { background:var(--m-bg)!important; padding:0!important; gap:0!important; padding-bottom:88px!important; overflow:auto!important; }
+
+    /* ── DASHBOARD ── */
+    #view-all { background:var(--m-bg)!important; padding:0!important; gap:0!important; }
+    .dash-hero { background:linear-gradient(135deg,#7C3AED 0%,#5B3FD8 60%,#4338CA 100%)!important; border-radius:0 0 28px 28px!important; padding:16px 18px 28px!important; box-shadow:0 8px 32px rgba(124,58,237,0.3)!important; position:relative!important; overflow:hidden!important; }
+    .dash-hero-title,.dash-hero-num,.dash-hero-big,.dash-hero-desc { color:#fff!important; }
+    .dash-hero-num,.dash-hero-big { font-size:34px!important; font-weight:800!important; }
+    .dash-bottom { display:flex!important; flex-direction:row!important; overflow-x:auto!important; padding:16px 14px 12px!important; gap:10px!important; scrollbar-width:none!important; background:transparent!important; flex-wrap:nowrap!important; }
+    .dash-bottom::-webkit-scrollbar { display:none; }
+    .dash-sc,.dash-stat { flex-shrink:0!important; background:var(--m-card)!important; border-radius:var(--m-radius-sm)!important; border:1px solid var(--m-border)!important; box-shadow:var(--m-shadow)!important; padding:12px 14px!important; min-width:100px!important; }
+    .dash-sc-label,.dash-stat-label { color:var(--m-sub)!important; font-size:10px!important; font-weight:500!important; }
+    .dash-sc-val,.dash-stat-val,.dash-sc-val.t { color:var(--m-text)!important; font-size:20px!important; font-weight:700!important; }
+    .ov-cards-row,.ov-grid { display:grid!important; grid-template-columns:1fr 1fr!important; gap:10px!important; padding:4px 14px 14px!important; }
+    .ov-card { background:var(--m-card)!important; border:1px solid var(--m-border)!important; border-radius:var(--m-radius)!important; box-shadow:var(--m-shadow)!important; padding:14px!important; }
+    .ov-label { color:var(--m-sub)!important; font-size:11px!important; font-weight:500!important; }
+    .ov-sub { color:var(--m-muted)!important; font-size:10px!important; }
+    .ov-num { font-size:28px!important; font-weight:800!important; }
+    .ov-card:nth-child(1) { border-top:3px solid var(--m-purple)!important; } .ov-card:nth-child(1) .ov-num { color:var(--m-purple)!important; }
+    .ov-card:nth-child(2) { border-top:3px solid var(--m-teal)!important; }   .ov-card:nth-child(2) .ov-num { color:var(--m-teal)!important; }
+    .ov-card:nth-child(3) { border-top:3px solid var(--m-amber)!important; }  .ov-card:nth-child(3) .ov-num { color:var(--m-amber)!important; }
+    .ov-card:nth-child(4) { border-top:3px solid #94a3b8!important; }         .ov-card:nth-child(4) .ov-num { color:var(--m-text)!important; }
+    .gc { background:var(--m-card)!important; border:1px solid var(--m-border)!important; border-radius:var(--m-radius)!important; box-shadow:var(--m-shadow)!important; }
+    .gc *,.bld-gc *,.dash-card * { color:var(--m-text)!important; }
+
+    /* ── BOOKING ── */
+    #view-booking { background:var(--m-bg)!important; padding:0!important; overflow-y:auto!important; flex-direction:column!important; }
+    .book-grid { flex-direction:column!important; overflow-y:visible!important; gap:0!important; }
+    .book-left-half,.bk-left { width:100%!important; padding:14px!important; overflow:visible!important; flex-shrink:0!important; background:transparent!important; }
+    .bk-kpi-row { display:flex!important; flex-direction:row!important; overflow-x:auto!important; gap:8px!important; padding-bottom:4px!important; scrollbar-width:none!important; }
+    .bk-kpi-row::-webkit-scrollbar { display:none; }
+    .bk-kpi-chip { flex-shrink:0!important; background:var(--m-card)!important; border:1px solid var(--m-border)!important; border-radius:var(--m-radius-sm)!important; box-shadow:var(--m-shadow)!important; padding:10px 14px!important; min-width:84px!important; text-align:center!important; }
+    #daily-common-num { color:var(--m-purple)!important; font-size:28px!important; font-weight:800!important; }
+    #daily-sub-num    { color:var(--m-teal)!important;   font-size:28px!important; font-weight:800!important; }
+    #daily-other-num  { color:var(--m-amber)!important;  font-size:28px!important; font-weight:800!important; }
+    #daily-total-num  { color:var(--m-text)!important;   font-size:28px!important; font-weight:800!important; }
+    .bk-kpi-chip * { color:inherit!important; }
+    .bk-kpi-label { color:var(--m-sub)!important; font-size:10px!important; }
+    #ari-calendar { background:var(--m-card)!important; border-radius:var(--m-radius)!important; border:1px solid var(--m-border)!important; box-shadow:var(--m-shadow)!important; padding:12px!important; margin-top:12px!important; }
+    #view-booking .cal-day { color:var(--m-text)!important; border-radius:10px!important; font-size:12px!important; }
+    #view-booking .cal-day:hover { background:var(--m-lavender)!important; }
+    #view-booking .cal-day.other-month { color:var(--m-muted)!important; }
+    #view-booking .cal-day.today { background:var(--m-purple)!important; color:#fff!important; box-shadow:0 4px 12px rgba(124,58,237,0.35)!important; }
+    #view-booking .cal-day.selected { background:linear-gradient(135deg,#7C3AED,#5B3FD8)!important; color:#fff!important; }
+    #view-booking .cal-day-label { color:var(--m-sub)!important; font-size:10px!important; }
+    .book-right-half,.bk-right { width:100%!important; padding:0 14px 14px!important; border-left:none!important; background:transparent!important; overflow-y:visible!important; flex-shrink:0!important; }
+    .bk-tc { background:var(--m-card)!important; border-radius:var(--m-radius)!important; border:1px solid var(--m-border)!important; box-shadow:var(--m-shadow)!important; overflow:hidden!important; overflow-x:auto!important; }
+    .tbl-th { background:var(--m-lavender)!important; color:var(--m-purple)!important; font-size:10px!important; font-weight:700!important; padding:8px!important; }
+    .tbl-td { color:var(--m-text)!important; font-size:11px!important; padding:8px!important; border-bottom:1px solid var(--m-border)!important; }
+    th,td { color:var(--m-text)!important; }
+    .tag-long   { background:#FEF3C7!important; color:#92400E!important; border-radius:20px!important; font-size:10px!important; font-weight:600!important; }
+    .tag-daily  { background:#EDE9FE!important; color:#5B21B6!important; border-radius:20px!important; font-size:10px!important; font-weight:600!important; }
+    .bk-print-btn { background:var(--m-card)!important; border:1px solid var(--m-border)!important; color:var(--m-purple)!important; border-radius:10px!important; box-shadow:var(--m-shadow)!important; }
+
+    /* ── BUILDING VIEWS ── */
+    .main:has(#view-ari.active),.main:has(#view-bts.active),.main:has(#view-ksl.active) { overflow-y:auto!important; }
+    #view-ari.active,#view-bts.active,#view-ksl.active { flex-direction:column!important; overflow:visible!important; flex:none!important; background:var(--m-bg)!important; }
+    #view-ari>div:first-child,#view-bts>div:first-child,#view-ksl>div:first-child { width:100%!important; background:var(--m-card)!important; border-radius:0 0 24px 24px!important; box-shadow:0 4px 20px rgba(100,80,200,0.1)!important; border-right:none!important; padding:14px!important; overflow:visible!important; }
+    #view-ari>div:first-child *,#view-bts>div:first-child *,#view-ksl>div:first-child * { color:var(--m-text)!important; }
+    .bts-counter .value,.ksl-counter .value { color:var(--m-text)!important; font-size:26px!important; font-weight:800!important; }
+    .bts-counter .label,.ksl-counter .label { color:var(--m-sub)!important; font-size:11px!important; }
+    #ari-ov-avail { color:var(--m-green)!important; } #ari-ov-occ { color:var(--m-red)!important; } #ari-ov-booked { color:var(--m-amber)!important; }
+    .floor-tab { background:var(--m-lavender)!important; color:var(--m-purple)!important; border:none!important; border-radius:20px!important; font-size:11px!important; font-weight:600!important; padding:5px 14px!important; }
+    .floor-tab.active { background:var(--m-purple)!important; color:#fff!important; box-shadow:0 4px 12px rgba(124,58,237,0.3)!important; }
+    #view-ari>div:nth-child(2),#view-bts>div:nth-child(2),#view-ksl>div:nth-child(2) { width:100%!important; border-left:none!important; background:var(--m-bg)!important; padding:14px 14px 88px!important; overflow-x:auto!important; overflow-y:visible!important; height:auto!important; flex:none!important; }
+    div[style*="width:180px"] { display:none!important; }
+    .ari-slot { width:44px!important; height:44px!important; border-radius:12px!important; font-size:9px!important; font-weight:700!important; box-shadow:0 2px 8px rgba(0,0,0,0.08)!important; }
+    .bts-slot,.ksl-slot { width:40px!important; height:40px!important; border-radius:10px!important; font-size:8px!important; font-weight:700!important; box-shadow:0 2px 6px rgba(0,0,0,0.08)!important; }
+    .bts-grid { gap:5px!important; }
+    .legend-item { background:var(--m-card)!important; border:1px solid var(--m-border)!important; border-radius:20px!important; padding:3px 10px!important; font-size:10px!important; color:var(--m-sub)!important; }
+    .fs-fill { background:linear-gradient(90deg,var(--m-purple),var(--m-blue))!important; border-radius:4px!important; }
+    .fs-bar { background:var(--m-lavender)!important; border-radius:4px!important; }
+    .fs-floor { color:var(--m-text)!important; font-weight:600!important; }
+    .fs-nums { color:var(--m-sub)!important; }
+
+    /* ── MODAL ── */
+    #booking-modal-overlay { padding:0!important; align-items:flex-end!important; }
+    #booking-modal-overlay>div { width:100%!important; max-width:100%!important; border-radius:24px 24px 0 0!important; max-height:92vh!important; background:#fff!important; border:none!important; }
+    #booking-modal-overlay>div>div:first-child { background:linear-gradient(135deg,#7C3AED,#5B21B6)!important; border-radius:24px 24px 0 0!important; padding:16px 20px!important; }
+    #booking-modal-overlay>div>div:first-child * { color:#fff!important; }
+    .form-input,.form-select,input[type="text"],input[type="date"],select { background:var(--m-lavender)!important; border:1.5px solid transparent!important; border-radius:12px!important; color:var(--m-text)!important; font-size:13px!important; padding:10px 14px!important; }
+    .form-input:focus,.form-select:focus { border-color:var(--m-purple)!important; background:#fff!important; }
+    .form-label { color:var(--m-sub)!important; font-size:11px!important; font-weight:600!important; }
+    .bm-type-btn.active { background:var(--m-purple)!important; color:#fff!important; border-radius:12px!important; box-shadow:0 4px 12px rgba(124,58,237,0.3)!important; }
+
+    /* ── SLOT POPUP ── */
+    #slot-mobile-popup .smp-sheet { background:#fff!important; border-radius:24px 24px 0 0!important; padding:8px 22px 44px!important; box-shadow:0 -12px 48px rgba(100,80,200,0.18)!important; }
+    #slot-mobile-popup .smp-handle { background:#E8EAF2!important; width:44px!important; height:4px!important; border-radius:2px!important; margin:10px auto 18px!important; }
+    #slot-mobile-popup .smp-slot { font-size:30px!important; font-weight:800!important; color:var(--m-purple)!important; }
+    #slot-mobile-popup .smp-type { color:var(--m-sub)!important; font-size:13px!important; }
+    #slot-mobile-popup .smp-divider { background:var(--m-border)!important; margin:14px 0!important; }
+    #slot-mobile-popup .smp-row { padding:10px 0!important; font-size:14px!important; border-bottom:1px solid var(--m-border)!important; }
+    #slot-mobile-popup .smp-lbl { color:var(--m-sub)!important; }
+    #slot-mobile-popup .smp-val { color:var(--m-text)!important; font-weight:700!important; }
+    #slot-mobile-popup .smp-status-free { color:var(--m-green)!important; font-weight:700!important; }
+    #slot-mobile-popup .smp-status-occ  { color:var(--m-red)!important;   font-weight:700!important; }
+    #slot-mobile-popup .smp-close { background:var(--m-lavender)!important; color:var(--m-purple)!important; border-radius:14px!important; font-weight:700!important; font-size:15px!important; padding:14px!important; border:none!important; margin-top:16px!important; }
+
+    /* ── LINE NOTIFY ── */
+    #view-notify .nv2-page { grid-template-columns:1fr!important; }
+    #view-notify .nv2-sb { border-right:none!important; border-bottom:1px solid rgba(255,255,255,0.08)!important; }
+    #view-notify .nv2-main { border-left:none!important; }
+    #view-notify .nv2-rp { border-left:none!important; border-top:1px solid rgba(255,255,255,0.08)!important; }
+    #view-notify .nv2-body { flex-direction:column!important; align-items:center!important; padding:14px!important; gap:14px!important; }
+    #view-notify .nv2-phone { width:220px!important; }
+    #view-notify .nv2-txt-pre { width:100%!important; max-height:200px!important; }
+    /* ══ DASHBOARD MOBILE FIXES ══ */
+
+    /* Hero: compact, no huge text overflow */
+    .dash-hero { padding:0!important; border-radius:0 0 28px 28px!important; }
+    .dash-hero-top { padding:16px 18px 14px!important; flex-direction:column!important; gap:8px!important; }
+    .dash-hero-topright { display:none!important; }
+    .dash-hero-lg { font-size:22px!important; letter-spacing:0!important; font-weight:700!important; line-height:1.2!important; color:#fff!important; }
+    .dash-hero-date { font-size:11px!important; color:rgba(255,255,255,0.6)!important; margin-top:2px!important; }
+
+    /* Big number: compact */
+    #hero-grand-total { font-size:64px!important; letter-spacing:-2px!important; line-height:1!important; color:#fff!important; }
+
+    /* Available / occupied sub-row */
+    .dash-hero-top > div > div[style*="font-size:26px"] { font-size:18px!important; }
+    .dash-hero-top > div > div[style*="font-size:20px"] { font-size:12px!important; }
+
+    /* Action button: compact pill */
+    .dash-hero-bottom { padding:10px 18px 20px!important; }
+    .dash-action-main { font-size:15px!important; padding:14px 32px!important; border-radius:40px!important; width:100%!important; text-align:center!important; }
+
+    /* STAT CARDS: 3x2 grid (not 6x1 scroll) */
+    .dash-bottom {
+      display:grid!important;
+      grid-template-columns:repeat(3,1fr)!important;
+      grid-template-rows:repeat(2,auto)!important;
+      gap:8px!important;
+      padding:14px!important;
+      overflow-x:visible!important;
+      flex-wrap:wrap!important;
+      background:var(--m-bg)!important;
+      border-top:none!important;
     }
-    .bn-badge {
-      position: absolute;
-      top: 3px;
-      right: calc(50% - 20px);
-      background: #f59e0b;
-      color: #fff;
-      font-size: 9px;
-      font-weight: 700;
-      padding: 1px 5px;
-      border-radius: 99px;
-      min-width: 16px;
-      text-align: center;
-      border: 1.5px solid rgba(12,12,20,0.9);
+    .dash-stat-card {
+      background:var(--m-card)!important;
+      border:1px solid var(--m-border)!important;
+      border-radius:16px!important;
+      box-shadow:var(--m-shadow)!important;
+      padding:12px 8px!important;
+      backdrop-filter:none!important;
+      -webkit-backdrop-filter:none!important;
     }
-    /* notify icon สีเขียว LINE */
-    #bn-notify.active .bn-icon-wrap { background: rgba(6,199,85,0.15); }
-    #bn-notify.active .bn-pill { background: #06C755; }
-    #bn-notify.active .bn-icon { filter: none; }
-    /* booking icon สีทอง */
-    #bn-booking.active .bn-icon-wrap { background: rgba(245,158,11,0.15); }
-    #bn-booking.active .bn-pill { background: #f59e0b; }
+    .dash-stat-card::before { display:none!important; }
+    .dash-sc-label { color:var(--m-sub)!important; font-size:10px!important; font-weight:600!important; letter-spacing:0!important; text-transform:none!important; }
+    .dash-sc-val { color:var(--m-text)!important; font-size:24px!important; text-shadow:none!important; }
+    .dash-sc-val.g { color:#22C55E!important; text-shadow:none!important; }
+    .dash-sc-val.r { color:#EF4444!important; text-shadow:none!important; }
+    .dash-sc-val.a { color:#F59E0B!important; text-shadow:none!important; }
+    .dash-sc-val.p { color:#7C3AED!important; text-shadow:none!important; }
+    .dash-sc-val.t { color:var(--m-sub)!important; font-size:14px!important; text-shadow:none!important; }
+    /* Fix SVG icon stroke colors on white background */
+    .dash-sc-icon [stroke="white"] { stroke:var(--m-sub)!important; }
+    .dash-sc-icon { width:24px!important; height:24px!important; }
+
+    /* ov-cards after bottom: 2x2 if they exist */
+    .ov-cards-row,.ov-grid {
+      display:grid!important;
+      grid-template-columns:1fr 1fr!important;
+      gap:10px!important;
+      padding:0 14px 80px!important;
+    }
+    .ov-card { background:var(--m-card)!important; border:1px solid var(--m-border)!important; border-radius:16px!important; box-shadow:var(--m-shadow)!important; padding:14px!important; }
+    .ov-label { color:var(--m-sub)!important; font-size:11px!important; }
+    .ov-sub { color:var(--m-muted)!important; font-size:10px!important; }
+    .ov-num { font-size:26px!important; font-weight:800!important; }
+    .ov-card:nth-child(1) { border-top:3px solid var(--m-purple)!important; } .ov-card:nth-child(1) .ov-num { color:var(--m-purple)!important; }
+    .ov-card:nth-child(2) { border-top:3px solid var(--m-teal)!important; }   .ov-card:nth-child(2) .ov-num { color:var(--m-teal)!important; }
+    .ov-card:nth-child(3) { border-top:3px solid var(--m-amber)!important; }  .ov-card:nth-child(3) .ov-num { color:var(--m-amber)!important; }
+    .ov-card:nth-child(4) { border-top:3px solid #94a3b8!important; }         .ov-card:nth-child(4) .ov-num { color:var(--m-text)!important; }
+
+    /* hero grand total avail/occ readability */
+    #hero-grand-avail { color:#22C55E!important; font-weight:700!important; }
+    #hero-grand-occ   { color:#EF4444!important; font-weight:700!important; }
+
   }
-    /* more menu drawer */
-    .bn-more-drawer {
-      display: none;
-      position: fixed;
-      bottom: 60px; left: 0; right: 0;
-      background: var(--card);
-      border-top: 1px solid var(--border);
-      border-radius: 20px 20px 0 0;
-      padding: 16px 16px 8px;
-      z-index: 199;
-      box-shadow: 0 -8px 24px rgba(0,0,0,0.10);
-    }
-    .bn-more-drawer.open { display: block; }
-    .bn-more-title { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
-    .bn-more-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
-    .bn-more-item {
-      display: flex; flex-direction: column; align-items: center; gap: 5px;
-      padding: 10px 4px; border-radius: 12px; border: none;
-      background: var(--surface); cursor: pointer; font-size: 11px;
-      font-weight: 600; color: var(--text); font-family: 'DM Sans',sans-serif;
-    }
-    .bn-more-item:active { background: var(--border); }
-    .bn-more-item .bmi-icon { font-size: 22px; }
-    .bn-overlay {
-      display: none; position: fixed; inset: 0; z-index: 198; background: rgba(0,0,0,0.3);
-    }
-    .bn-overlay.open { display: block; }
-  }
-
-  /* ─── RESPONSIVE — มือถือ (430px และต่ำกว่า: iPhone/Android ทั่วไป) ─── */
-  @media (max-width: 430px) {
-
-    /* topnav: ซ่อน links เหลือแค่ logo + right */
-    .topnav-links { display: none; }
-    .topnav { padding: 0 10px; height: 48px; }
-    .topnav-brand-main { font-size: 10px; }
-    .topnav-clock { display: none; }
-    .topnav-user-name, .topnav-user-role { display: none; }
-    .topnav-avatar { width: 28px; height: 28px; font-size: 10px; }
-
-    /* booking: stack ซ้าย-ขวาเป็น column เต็มจอ */
-    #view-booking {
-      flex-direction: column !important;
-      overflow-y: auto !important;
-    }
-    .book-left-half {
-      flex: none !important;
-      width: 100%;
-      padding: 12px 12px 0 12px;
-      overflow: visible !important;
-    }
-    .book-right-half {
-      width: 100% !important;
-      border-left: none !important;
-      border-top: 0.5px solid rgba(255,255,255,0.07);
-      padding: 12px;
-      overflow-y: visible !important;
-    }
-    #view-booking {
-      overflow-y: auto !important;
-    }
-
-    /* KPI: 2×2 grid เล็กลง */
-    #daily-common-num, #daily-sub-num,
-    #daily-other-num,  #daily-total-num {
-      font-size: 24px !important;
-    }
-    .bk-kpi-chip { padding: 8px 4px !important; }
-    .bk-kpi-chip svg { width: 18px !important; height: 18px !important; }
-    .bk-gc { padding: 10px !important; }
-
-    /* ปุ่มแจ้งจอง: เต็มความกว้าง */
-    #view-booking button[style*="font-size:22px"] {
-      font-size: 15px !important;
-      padding: 12px 24px !important;
-      width: 100% !important;
-      border-radius: 14px !important;
-    }
-
-    /* ตาราง: scroll horizontal */
-    .bk-tc { overflow-x: auto; }
-    .bk-tc table { min-width: 520px; }
-    .tbl-th { font-size: 10px !important; padding: 5px 5px !important; }
-    .tbl-td { font-size: 10px !important; padding: 5px 5px !important; }
-
-    /* ปฏิทิน: เล็กลง */
-    .cal-day { font-size: 10px !important; }
-    #ari-cal-label { font-size: 12px !important; }
-
-    /* slot grid มือถือ */
-    .slot-grid { grid-template-columns: repeat(auto-fill, 52px) !important; }
-    .slot-box { height: 54px !important; }
-
-    /* dashboard hero */
-    #hero-grand-total { font-size: 64px !important; letter-spacing: -4px !important; }
-    .dash-bottom { grid-template-columns: repeat(3, 1fr) !important; gap: 5px !important; }
-    .dash-sc-val { font-size: 20px !important; }
-    .dash-sc-icon { width: 20px !important; height: 20px !important; }
-    .dash-action-main { font-size: 15px !important; padding: 14px 28px !important; }
-  }
-@keyframes bm-in {
-  from { opacity:0; transform:scale(0.96) translateY(10px); }
-  to   { opacity:1; transform:scale(1)    translateY(0); }
-}
-@keyframes gsPulse {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50%     { opacity: 0.5; transform: scale(0.85); }
-}
-/* ── ปฏิทินใหญ่ (side calendar in booking view) ── */
-#ari-calendar .cal-grid { gap: 4px; margin-top: 8px; }
-#ari-calendar .cal-day  { font-size: 13px; font-weight: 600; border-radius: 8px; min-height: 36px; }
-#ari-calendar .cal-day-label { font-size: 11px; padding: 4px 0; }
-#ari-calendar .cal-day.has-booking::after { background: var(--accent-pink) !important; width: 6px; height: 6px; bottom: 4px; }
-/* ── ปฏิทินใน modal ── */
-#multi-cal-grid > div, #range-cal-grid > div {
-  text-align:center; padding:5px 2px; border-radius:7px; cursor:pointer; transition:all 0.1s;
-}
-#multi-cal-grid > div:hover, #range-cal-grid > div:hover { background:var(--surface); }
 
 </style>
 </head>
@@ -2483,6 +2537,7 @@
               รายการแจ้งจอด — <span id="ari-selected-date-label" style="color:#fbbf24;">วันนี้</span>
             </div>
             <button onclick="printAriReport()" class="bk-print-btn">🖨️ พิมพ์/ส่งฝ่ายอาคาร</button>
+            <button onclick="exportAriReportXlsx()" class="bk-print-btn" style="background:rgba(34,197,94,0.25);border-color:rgba(34,197,94,0.5);">📊 ดาวน์โหลด Excel</button>
           </div>
 
           <!-- ส่วนกลาง -->
@@ -2899,7 +2954,193 @@
       </div>
     </div>
 
-    <!-- ════════════════ NOTIFY VIEW v4 ════════════════ -->
+    <!-- ════════════════ ADMIN PANEL ════════════════ -->
+    <div id="view-admin" class="building-view" style="flex-direction:column;overflow:hidden;background:#0a0c14;">
+
+      <!-- Admin Header -->
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:#111420;border-bottom:0.5px solid rgba(255,255,255,0.07);flex-shrink:0;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#7C3AED,#5B21B6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">⚙️</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff;">Admin Panel</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">PARKING MANAGEMENT SYSTEM</div>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+          <div id="admin-gs-status" style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;background:rgba(34,197,94,0.12);border:0.5px solid rgba(34,197,94,0.3);font-size:10px;color:#4ade80;">
+            <span style="width:5px;height:5px;border-radius:50%;background:#22C55E;display:inline-block;"></span>
+            <span id="admin-gs-label">เชื่อมต่อแล้ว</span>
+          </div>
+          <div id="admin-user-badge" style="padding:4px 10px;border-radius:20px;background:rgba(124,58,237,0.15);border:0.5px solid rgba(124,58,237,0.3);font-size:10px;color:#a78bfa;">Admin</div>
+        </div>
+      </div>
+
+      <!-- Admin Tabs -->
+      <div style="display:flex;gap:0;border-bottom:0.5px solid rgba(255,255,255,0.07);flex-shrink:0;overflow-x:auto;scrollbar-width:none;">
+        <button class="adm-tab active" id="atab-system"  onclick="switchAdminTab('system')" >🔗 ระบบ</button>
+        <button class="adm-tab" id="atab-line"    onclick="switchAdminTab('line')"   >💬 LINE Notify</button>
+        <button class="adm-tab" id="atab-settings" onclick="switchAdminTab('settings')">⚙️ ตั้งค่า</button>
+        <button class="adm-tab" id="atab-users"   onclick="switchAdminTab('users')"  >👥 สิทธิ์ผู้ใช้</button>
+      </div>
+
+      <!-- Admin Content -->
+      <div style="flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent;">
+
+        <!-- TAB: ระบบ -->
+        <div id="apane-system">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+
+            <!-- Google Sheet Card -->
+            <div class="adm-card" style="grid-column:1/-1;">
+              <div class="adm-card-hdr">
+                <span class="adm-card-ico" style="background:rgba(34,197,94,0.15);color:#22C55E;">📊</span>
+                <div>
+                  <div class="adm-card-title">Google Sheets Database</div>
+                  <div class="adm-card-sub">เชื่อมต่อและจัดการฐานข้อมูลหลักของระบบ</div>
+                </div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px;font-family:monospace;font-size:10px;color:rgba(255,255,255,0.5);word-break:break-all;margin:10px 0;">
+                https://docs.google.com/spreadsheets/d/1HkEUnWXoFQVsCrwB72X-1eL7zo5i1xnPCgH9EM4FJUA
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <a href="https://docs.google.com/spreadsheets/d/1HkEUnWXoFQVsCrwB72X-1eL7zo5i1xnPCgH9EM4FJUA/edit?usp=sharing"
+                   target="_blank" class="adm-btn adm-btn-green">
+                  <i class="ti ti-external-link" style="font-size:13px"></i> เปิด Google Sheet
+                </a>
+                <button class="adm-btn adm-btn-ghost" onclick="gsRefreshFromSheet()">
+                  <i class="ti ti-refresh" style="font-size:13px"></i> ซิงค์ข้อมูล
+                </button>
+              </div>
+            </div>
+
+            <!-- Apps Script Card -->
+            <div class="adm-card">
+              <div class="adm-card-hdr">
+                <span class="adm-card-ico" style="background:rgba(251,191,36,0.15);color:#fbbf24;">🔧</span>
+                <div>
+                  <div class="adm-card-title">Apps Script (GAS)</div>
+                  <div class="adm-card-sub">Backend API สำหรับระบบ</div>
+                </div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 10px;font-family:monospace;font-size:10px;color:rgba(255,255,255,0.4);word-break:break-all;margin:10px 0;">
+                <div id="adm-gas-url" style="max-height:48px;overflow:hidden;"></div>
+              </div>
+              <button class="adm-btn adm-btn-ghost" onclick="document.getElementById('adm-gas-url').textContent=GS_URL" style="font-size:10px">
+                แสดง URL
+              </button>
+            </div>
+
+            <!-- Status Card -->
+            <div class="adm-card">
+              <div class="adm-card-hdr">
+                <span class="adm-card-ico" style="background:rgba(96,165,250,0.15);color:#60a5fa;">📡</span>
+                <div>
+                  <div class="adm-card-title">สถานะการเชื่อมต่อ</div>
+                  <div class="adm-card-sub">ตรวจสอบ GS connection</div>
+                </div>
+              </div>
+              <div style="margin:10px 0;">
+                <div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+                  <span style="color:rgba(255,255,255,0.5)">Google Sheets</span>
+                  <span id="adm-gs-conn" style="color:#4ade80;font-weight:600">✓ เชื่อมต่อ</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+                  <span style="color:rgba(255,255,255,0.5)">LINE Messaging API</span>
+                  <span id="adm-line-conn" style="color:#fbbf24;font-weight:600">⏳ ยังไม่ทดสอบ</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;">
+                  <span style="color:rgba(255,255,255,0.5)">อัพเดตล่าสุด</span>
+                  <span id="adm-last-sync" style="color:rgba(255,255,255,0.6);font-size:10px">—</span>
+                </div>
+              </div>
+              <button class="adm-btn adm-btn-ghost" style="width:100%;" onclick="admTestAll()">
+                <i class="ti ti-plug" style="font-size:13px"></i> ทดสอบทั้งหมด
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- TAB: LINE Notify (hidden by default) -->
+        <div id="apane-line" style="display:none;">
+          <!-- เอา view-notify มาแสดงใน iframe-style -->
+          <div class="adm-card" style="padding:0;overflow:hidden;border-radius:12px;">
+            <div style="padding:12px 16px;background:rgba(6,199,85,0.08);border-bottom:0.5px solid rgba(6,199,85,0.2);display:flex;align-items:center;gap:8px;">
+              <span style="font-size:16px">💬</span>
+              <span style="font-size:13px;font-weight:600;color:#fff;">Parking Management LINE Notify</span>
+              <button class="adm-btn adm-btn-ghost" style="margin-left:auto;font-size:10px;" onclick="switchView('notify')">เปิดเต็มหน้า →</button>
+            </div>
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:12px;">
+              <!-- LINE token status -->
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#1D9E75;flex-shrink:0;"></div>
+                <span style="font-size:11px;color:rgba(255,255,255,0.6);">ใช้ Token/Group ID จาก Apps Script</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <button class="adm-btn adm-btn-ghost" onclick="switchView('notify');nvTest()">
+                  <i class="ti ti-plug" style="font-size:12px"></i> ทดสอบ LINE
+                </button>
+                <button class="adm-btn adm-btn-green" onclick="switchView('notify')">
+                  <i class="ti ti-send" style="font-size:12px"></i> ไปหน้า Notify
+                </button>
+              </div>
+              <!-- Schedule summary -->
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);border-top:0.5px solid rgba(255,255,255,0.06);padding-top:10px;">
+                <div style="font-weight:600;color:rgba(255,255,255,0.6);margin-bottom:6px;">รอบส่งอัตโนมัติ:</div>
+                <div id="adm-sched-summary" style="color:rgba(255,255,255,0.4)">โหลด...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: ตั้งค่า (hidden) -->
+        <div id="apane-settings" style="display:none;">
+          <div class="adm-card">
+            <div class="adm-card-hdr">
+              <span class="adm-card-ico" style="background:rgba(167,139,250,0.15);color:#a78bfa;">⚙️</span>
+              <div>
+                <div class="adm-card-title">การตั้งค่าระบบ</div>
+                <div class="adm-card-sub">จัดการช่องจอด ทะเบียน และกฎการจอด</div>
+              </div>
+            </div>
+            <button class="adm-btn adm-btn-ghost" style="width:100%;margin-top:10px;" onclick="switchView('settings')">
+              <i class="ti ti-external-link" style="font-size:13px"></i> เปิดหน้าตั้งค่า
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB: สิทธิ์ผู้ใช้ (hidden) -->
+        <div id="apane-users" style="display:none;">
+          <div class="adm-card" style="grid-column:1/-1;">
+            <div class="adm-card-hdr">
+              <span class="adm-card-ico" style="background:rgba(248,113,113,0.15);color:#f87171;">👥</span>
+              <div>
+                <div class="adm-card-title">จัดการสิทธิ์ผู้ใช้</div>
+                <div class="adm-card-sub">เพิ่ม/ลด สิทธิ์การเข้าถึงระบบ</div>
+              </div>
+            </div>
+            <div style="margin:12px 0;">
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:8px;">สิทธิ์ที่มีในระบบ:</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
+                <span class="adm-role-badge" style="background:rgba(124,58,237,0.2);border-color:rgba(124,58,237,0.4);color:#a78bfa;">👑 Admin</span>
+                <span class="adm-role-badge" style="background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#4ade80;">📋 Staff</span>
+                <span class="adm-role-badge" style="background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.3);color:#fbbf24;">👁 Viewer</span>
+              </div>
+              <div style="background:rgba(255,255,255,0.03);border-radius:8px;border:0.5px solid rgba(255,255,255,0.07);">
+                <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+                  <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#5B21B6);display:flex;align-items:center;justify-content:center;font-size:14px;">👤</div>
+                  <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#fff;">Admin</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">ผู้ดูแลระบบ</div></div>
+                  <span class="adm-role-badge" style="background:rgba(124,58,237,0.2);border-color:rgba(124,58,237,0.4);color:#a78bfa;">Admin</span>
+                </div>
+              </div>
+            </div>
+            <div style="background:rgba(251,191,36,0.08);border:0.5px solid rgba(251,191,36,0.2);border-radius:8px;padding:10px 12px;font-size:11px;color:#fbbf24;">
+              ⚠️ ระบบสิทธิ์เต็มรูปแบบจัดการผ่าน Google Sheet<br>
+              <a href="https://docs.google.com/spreadsheets/d/1HkEUnWXoFQVsCrwB72X-1eL7zo5i1xnPCgH9EM4FJUA/edit?usp=sharing" target="_blank" style="color:#fbbf24;text-decoration:underline;">คลิกเพื่อจัดการสิทธิ์ใน Sheet →</a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /admin content -->
+    </div><!-- /view-admin -->
     <div id="view-notify" class="building-view" style="flex-direction:column;overflow:hidden;">
       <div class="nv2-page">
 
@@ -3110,40 +3351,42 @@
 <!-- ─── MODAL ─── -->
 <!-- ─── BOTTOM NAV (mobile) ─── -->
 
+<!-- ─── SLOT MOBILE POPUP ─── -->
+<div id="slot-mobile-popup" onclick="if(event.target===this)closeSmp()">
+  <div class="smp-sheet">
+    <div class="smp-handle"></div>
+    <div id="smp-content"></div>
+    <button class="smp-close" onclick="closeSmp()">ปิด</button>
+  </div>
+</div>
+
 <nav class="bottom-nav" id="bottom-nav">
   <button class="bn-item active" id="bn-all" onclick="bnNav('all')">
-    <div class="bn-pill"></div>
-    <div class="bn-icon-wrap"><span class="bn-icon">📊</span></div>
-    <span class="bn-label">Dashboard</span>
+    <i class="ti ti-layout-dashboard bn-ico"></i>
+    <span class="bn-label">หน้าหลัก</span>
   </button>
   <button class="bn-item" id="bn-booking" onclick="bnNav('booking')">
-    <div class="bn-pill"></div>
-    <div class="bn-icon-wrap"><span class="bn-icon">📅</span></div>
+    <i class="ti ti-calendar-event bn-ico"></i>
     <span class="bn-label">แจ้งจอด</span>
   </button>
   <button class="bn-item" id="bn-ari" onclick="bnNav('ari')">
-    <div class="bn-pill"></div>
-    <div class="bn-icon-wrap"><span class="bn-icon">🏢</span></div>
+    <i class="ti ti-building-skyscraper bn-ico"></i>
     <span class="bn-label">Ari Hills</span>
   </button>
   <button class="bn-item" id="bn-bts" onclick="bnNav('bts')">
-    <div class="bn-pill"></div>
-    <div class="bn-icon-wrap"><span class="bn-icon">🚇</span></div>
+    <i class="ti ti-train bn-ico"></i>
     <span class="bn-label">BTS</span>
   </button>
   <button class="bn-item" id="bn-ksl" onclick="bnNav('ksl')">
-    <div class="bn-pill"></div>
-    <div class="bn-icon-wrap"><span class="bn-icon">🏬</span></div>
+    <i class="ti ti-building bn-ico"></i>
     <span class="bn-label">KSL</span>
   </button>
   <button class="bn-item" id="bn-notify" onclick="bnNav('notify')">
-    <div class="bn-pill"></div>
-    <div class="bn-icon-wrap"><span class="bn-icon">💬</span></div>
+    <i class="ti ti-brand-line bn-ico"></i>
     <span class="bn-label">LINE</span>
   </button>
   <button class="bn-item" id="bn-admin" onclick="bnNav('admin')">
-    <div class="bn-pill"></div>
-    <div class="bn-icon-wrap"><span class="bn-icon">⚙️</span></div>
+    <i class="ti ti-settings bn-ico"></i>
     <span class="bn-label">ตั้งค่า</span>
   </button>
 </nav>
@@ -3642,31 +3885,55 @@ function renderAriGrid() {
   });
 }
 
+// ── Mobile slot popup ──
+function openSmp(html) {
+  document.getElementById('smp-content').innerHTML = html;
+  document.getElementById('slot-mobile-popup').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSmp() {
+  document.getElementById('slot-mobile-popup').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 function selectAriSlot(num, type, occupied, el) {
   document.querySelectorAll('#ari-slot-grid .slot-wrap').forEach(s => s.classList.remove('selected'));
   el.classList.add('selected');
-
-  const detail = document.getElementById('ari-slot-detail');
-  const empty = document.getElementById('ari-empty-state');
-  const content = document.getElementById('ari-sd-content');
 
   const typeLabel = type === 'fixed'  ? '🔒 ประจำ (กำหนดทะเบียน)' :
                     type === 'common' ? '🔵 ส่วนกลาง (จองได้)' :
                     type === 'moto'   ? '🏍️ มอเตอร์ไซค์' : '🟢 ไม่กำหนดช่อง';
   const floorLabel = selectedAriFloor;
+  const statusHtml = occupied
+    ? '<span class="smp-status-occ">🔴 มีรถจอด</span>'
+    : '<span class="smp-status-free">🟢 ว่าง</span>';
 
-  content.innerHTML = `
-    <div class="sd-slot">ช่อง ${num}</div>
-    <div class="sd-type">${typeLabel}</div>
-    <div class="sd-divider"></div>
-    <div class="sd-row"><span class="sd-label">ชั้น</span><span class="sd-val">${floorLabel}</span></div>
-    <div class="sd-row"><span class="sd-label">สถานะ</span><span class="sd-val">${occupied ? '🔴 มีรถจอด' : '🟢 ว่าง'}</span></div>
-    ${type === 'fixed' ? '<div class="sd-row"><span class="sd-label">ทะเบียน</span><span class="sd-val">'+(occupied?'XXXX XXXX':'–')+'</span></div>' : ''}
-    ''
+  const html = `
+    <div class="smp-slot">ช่อง ${num}</div>
+    <div class="smp-type">${typeLabel}</div>
+    <div class="smp-divider"></div>
+    <div class="smp-row"><span class="smp-lbl">ชั้น</span><span class="smp-val">${floorLabel}</span></div>
+    <div class="smp-row"><span class="smp-lbl">สถานะ</span><span class="smp-val">${statusHtml}</span></div>
+    ${type === 'fixed' ? `<div class="smp-row"><span class="smp-lbl">ทะเบียน</span><span class="smp-val">${occupied ? 'มีรถจอดอยู่' : '–'}</span></div>` : ''}
   `;
 
-  detail.classList.add('visible');
-  empty.style.display = 'none';
+  if (window.innerWidth <= 768) {
+    openSmp(html);
+  } else {
+    const detail = document.getElementById('ari-slot-detail');
+    const empty = document.getElementById('ari-empty-state');
+    const content = document.getElementById('ari-sd-content');
+    content.innerHTML = `
+      <div class="sd-slot">ช่อง ${num}</div>
+      <div class="sd-type">${typeLabel}</div>
+      <div class="sd-divider"></div>
+      <div class="sd-row"><span class="sd-label">ชั้น</span><span class="sd-val">${floorLabel}</span></div>
+      <div class="sd-row"><span class="sd-label">สถานะ</span><span class="sd-val">${occupied ? '🔴 มีรถจอด' : '🟢 ว่าง'}</span></div>
+      ${type === 'fixed' ? '<div class="sd-row"><span class="sd-label">ทะเบียน</span><span class="sd-val">'+(occupied?'มีรถจอดอยู่':'–')+'</span></div>' : ''}
+    `;
+    detail.classList.add('visible');
+    empty.style.display = 'none';
+  }
 }
 
 function buildAriFloorSummary() {
@@ -3738,22 +4005,25 @@ function renderKslGrid() {
 function selectKslSlot(num, occupied, el) {
   document.querySelectorAll('#ksl-slot-grid .slot-wrap').forEach(s => s.classList.remove('selected'));
   el.classList.add('selected');
-
-  const detail = document.getElementById('ksl-slot-detail');
-  const empty = document.getElementById('ksl-empty-state');
-  const content = document.getElementById('ksl-sd-content');
-
-  content.innerHTML = `
-    <div class="sd-slot">ช่อง ${num}</div>
-    <div class="sd-type">🔒 ประจำ (กำหนดทะเบียน)</div>
-    <div class="sd-divider"></div>
-    <div class="sd-row"><span class="sd-label">ชั้น</span><span class="sd-val">${selectedKslFloor}</span></div>
-    <div class="sd-row"><span class="sd-label">สถานะ</span><span class="sd-val">${occupied ? '🔴 มีรถจอด' : '🟢 ว่าง'}</span></div>
-    <div class="sd-row"><span class="sd-label">ทะเบียน</span><span class="sd-val">${occupied ? 'XXXX XXXX' : '–'}</span></div>
+  const statusHtml = occupied ? '<span class="smp-status-occ">🔴 มีรถจอด</span>' : '<span class="smp-status-free">🟢 ว่าง</span>';
+  const html = `
+    <div class="smp-slot">ช่อง ${num}</div>
+    <div class="smp-type">🔒 ประจำ (กำหนดทะเบียน)</div>
+    <div class="smp-divider"></div>
+    <div class="smp-row"><span class="smp-lbl">ชั้น</span><span class="smp-val">${selectedKslFloor}</span></div>
+    <div class="smp-row"><span class="smp-lbl">สถานะ</span><span class="smp-val">${statusHtml}</span></div>
+    <div class="smp-row"><span class="smp-lbl">ทะเบียน</span><span class="smp-val">${occupied ? 'มีรถจอดอยู่' : '–'}</span></div>
   `;
-
-  detail.classList.add('visible');
-  empty.style.display = 'none';
+  if (window.innerWidth <= 768) {
+    openSmp(html);
+  } else {
+    const detail = document.getElementById('ksl-slot-detail');
+    const empty = document.getElementById('ksl-empty-state');
+    const content = document.getElementById('ksl-sd-content');
+    content.innerHTML = html.replace(/smp-/g, 'sd-').replace(/smp-status-occ/g,'').replace(/smp-status-free/g,'');
+    detail.classList.add('visible');
+    empty.style.display = 'none';
+  }
 }
 
 function buildKslFloorSummary() {
@@ -3853,25 +4123,33 @@ function renderBtsGrid() {
 function selectBtsSlot(num, type, occupied, el) {
   document.querySelectorAll('#bts-slot-grid .slot-wrap').forEach(s => s.classList.remove('selected'));
   el.classList.add('selected');
-
-  const detail = document.getElementById('bts-slot-detail');
-  const empty  = document.getElementById('bts-empty-state');
-  const content = document.getElementById('bts-sd-content');
-
   const typeLabel = type === 'visitor' ? '🟡 ผู้มาติดต่อ' :
                     type === 'moto'    ? '🏍️ มอเตอร์ไซค์' :
                     type === 'van'     ? '🚐 รถตู้ (≤2.1m)' : '🟢 ทั่วไป (ไม่กำหนดช่อง)';
-  content.innerHTML = `
-    <div class="sd-slot">ช่อง ${num}</div>
-    <div class="sd-type">${typeLabel}</div>
-    <div class="sd-divider"></div>
-    <div class="sd-row"><span class="sd-label">อาคาร</span><span class="sd-val">BTS</span></div>
-    <div class="sd-row"><span class="sd-label">ชั้น</span><span class="sd-val">ไม่กำหนด</span></div>
-    <div class="sd-row"><span class="sd-label">สถานะ</span><span class="sd-val">${occupied ? '🔴 มีรถจอด' : '🟢 ว่าง'}</span></div>
-    ${type==='visitor'?'<div class="sd-row"><span class="sd-label">ประเภท</span><span class="sd-val">สำรองผู้มาติดต่อ</span></div>':''}
+  const statusHtml = occupied ? '<span class="smp-status-occ">🔴 มีรถจอด</span>' : '<span class="smp-status-free">🟢 ว่าง</span>';
+  const html = `
+    <div class="smp-slot">ช่อง ${num}</div>
+    <div class="smp-type">${typeLabel}</div>
+    <div class="smp-divider"></div>
+    <div class="smp-row"><span class="smp-lbl">อาคาร</span><span class="smp-val">BTS</span></div>
+    <div class="smp-row"><span class="smp-lbl">สถานะ</span><span class="smp-val">${statusHtml}</span></div>
+    ${type==='visitor'?'<div class="smp-row"><span class="smp-lbl">ประเภท</span><span class="smp-val">สำรองผู้มาติดต่อ</span></div>':''}
   `;
-  detail.classList.add('visible');
-  empty.style.display = 'none';
+  if (window.innerWidth <= 768) {
+    openSmp(html);
+  } else {
+    const detail = document.getElementById('bts-slot-detail');
+    const empty  = document.getElementById('bts-empty-state');
+    const content = document.getElementById('bts-sd-content');
+    content.innerHTML = `
+      <div class="sd-slot">ช่อง ${num}</div><div class="sd-type">${typeLabel}</div>
+      <div class="sd-divider"></div>
+      <div class="sd-row"><span class="sd-label">อาคาร</span><span class="sd-val">BTS</span></div>
+      <div class="sd-row"><span class="sd-label">สถานะ</span><span class="sd-val">${occupied ? '🔴 มีรถจอด' : '🟢 ว่าง'}</span></div>
+    `;
+    detail.classList.add('visible');
+    empty.style.display = 'none';
+  }
 }
 
 function buildBtsCounters() {
@@ -4111,7 +4389,7 @@ function closeModal() {
 // ═══════════════════════════════════════════════
 //  NAVIGATION — VIEW SWITCHER
 // ═══════════════════════════════════════════════
-const ALL_VIEWS = ['all','ari','bts','ksl','booking','report','notify','settings'];
+const ALL_VIEWS = ['all','ari','bts','ksl','booking','report','notify','settings','admin'];
 
 // ── Per-view background images ─────────────────────────────
 const VIEW_BG = {
@@ -4148,6 +4426,7 @@ function switchView(view) {
     booking: 'การแจ้งจอด / Ari Hills',
     report: 'รายงาน / สรุปการใช้งาน',
     notify: '',
+    admin: '',
     settings: 'ตั้งค่าระบบ',
   };
   const tt = document.getElementById('topbar-title-text');
@@ -4165,6 +4444,12 @@ function switchView(view) {
   if (view === 'ksl') { buildKslFloorTabs(); renderKslGrid(); buildKslFloorSummary(); }
   if (view === 'ari') { renderAriGrid(); buildAriFloorSummary(); }
   if (view === 'booking') initBookMode();
+
+  // reset main overflow when not a building view
+  if (window.innerWidth <= 768 && !['ari','bts','ksl'].includes(view)) {
+    const mainEl = document.querySelector('.main');
+    if (mainEl) mainEl.style.overflow = '';
+  }
 }
 
 function switchBuilding(bld) {
@@ -4175,6 +4460,33 @@ function switchBuilding(bld) {
     if (tab) tab.classList.toggle('active', b === bld);
   });
   currentBuilding = bld;
+
+  // Mobile: override inline overflow:hidden so map panel can scroll
+  if (window.innerWidth <= 768) {
+    const el = document.getElementById('view-' + bld);
+    if (el) {
+      el.style.overflow = 'visible';
+      el.style.flexDirection = 'column';
+      el.style.flex = 'none';
+      el.style.height = 'auto';
+      // right panel (map)
+      const mapPanel = el.children[1];
+      if (mapPanel) {
+        mapPanel.style.overflowX = 'auto';
+        mapPanel.style.overflowY = 'visible';
+        mapPanel.style.width = '100%';
+        mapPanel.style.flexShrink = '0';
+        mapPanel.style.height = 'auto';
+        mapPanel.style.borderLeft = 'none';
+      }
+      // main: allow scroll
+      const mainEl = document.querySelector('.main');
+      if (mainEl) {
+        mainEl.style.overflowY = 'auto';
+        mainEl.style.overflowX = 'hidden';
+      }
+    }
+  }
 }
 
 // ─── keep switchAriMode as no-op (mode removed from Ari Hills) ───
@@ -5283,9 +5595,133 @@ function printAriReport() {
   w.print();
 }
 
-// ═══════════════════════════════════════════════
-//  BOTTOM NAV (mobile)
-// ═══════════════════════════════════════════════
+function exportAriReportXlsx() {
+  const now = new Date();
+  const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const today   = now.toISOString().slice(0,10);
+  const printDs = ariSelectedDate || today;
+  const [py,pm,pd] = printDs.split('-').map(Number);
+  const dateThai = `${pd} ${months[pm-1]} ${py+543}`;
+  const nowStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()+543} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} น.`;
+
+  // กรองข้อมูล
+  const filteredCommon = ARI_COMMON_BOOKINGS.filter(r => {
+    if (r.status === 'ว่าง') return false;
+    if (r.dates && r.dates.length > 0) return r.dates.includes(printDs);
+    return printDs === today;
+  });
+  const filteredSub = ARI_SUB_BOOKINGS.filter(r => {
+    if (r.dates && r.dates.length > 0) return r.dates.includes(printDs);
+    return printDs === today;
+  });
+  const filteredOther = ARI_OTHER_BOOKINGS.filter(r => {
+    if (r.dates && r.dates.length > 0) return r.dates.includes(printDs);
+    return printDs === today;
+  });
+
+  // โหลด SheetJS แล้วสร้างไฟล์
+  function buildAndDownload(XLSX) {
+    const wb = XLSX.utils.book_new();
+
+    // ── Sheet 1: ส่วนกลาง ชั้น 5 ──
+    const commonData = [
+      [`รายงานการจอดรถ Ari Hills — วันที่ ${dateThai}`],
+      [`พิมพ์เมื่อ: ${nowStr}`],
+      [],
+      ['แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ'],
+      ['ลำดับ','ชื่อผู้ขอ','ฝ่าย','ทะเบียน','ประเภทรถ','ประเภทการจอด','ค้างคืน','ชั้น','หมายเหตุ'],
+      ...filteredCommon.map((r,i) => [
+        i+1, r.name, r.dept||'–', r.plate,
+        r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim()||'–',
+        r.parkType==='long'?'จอดยาว':'รายวัน',
+        (r.overnight===true||r.overnight==='ค้างคืน')?'ค้างคืน':'ไม่ค้างคืน',
+        'ชั้น 5 ส่วนกลางขวามือ', r.note||'–'
+      ])
+    ];
+    if (!filteredCommon.length) commonData.push(['','ไม่มีรายการ','','','','','','','']);
+
+    // ── Sheet 2: จอดแทน ──
+    const subData = [
+      [`รายงานการจอดรถ Ari Hills — วันที่ ${dateThai}`],
+      [`พิมพ์เมื่อ: ${nowStr}`],
+      [],
+      ['แจ้งจอดแทน'],
+      ['ลำดับ','ชื่อผู้ขอ','ฝ่าย','ทะเบียนผู้ขอ','ประเภทรถ','ทะเบียนสิทธิ์','ประเภทการจอด','ชั้น','หมายเหตุ'],
+      ...filteredSub.map((r,i) => [
+        i+1, r.name, r.dept||'–', r.plateReq,
+        r.carTypeReq ? r.carTypeReq.replace(/[^a-zA-Zก-๙ ]/g,'').trim() : '–',
+        r.plateOwner||'–', r.timeType||'–', r.floor||'–', r.note||'–'
+      ])
+    ];
+    if (!filteredSub.length) subData.push(['','ไม่มีรายการ','','','','','','','']);
+
+    // ── Sheet 3: รถอื่นๆ ──
+    const otherData = [
+      [`รายงานการจอดรถ Ari Hills — วันที่ ${dateThai}`],
+      [`พิมพ์เมื่อ: ${nowStr}`],
+      [],
+      ['แจ้งจอดรถอื่นๆ (รถตู้ / รถส่งของ / รถ Vendor / รถบัส / รถพยาบาล)'],
+      ['ลำดับ','ชื่อผู้ขอ','ฝ่าย','ทะเบียน','ประเภทรถ','ประเภทการจอด','ชั้น','หมายเหตุ'],
+      ...filteredOther.map((r,i) => [
+        i+1, r.name, r.dept||'–', r.plate,
+        r.carType ? r.carType.replace(/[^a-zA-Zก-๙ ]/g,'').trim() : '–',
+        r.timeType||'–', 'หน้าอาคาร', r.note||'–'
+      ])
+    ];
+    if (!filteredOther.length) otherData.push(['','ไม่มีรายการ','','','','','','']);
+
+    const ws1 = XLSX.utils.aoa_to_sheet([
+      [`รายงานการจอดรถ Ari Hills — วันที่ ${dateThai}`],
+      [`พิมพ์เมื่อ: ${nowStr}`],
+      [],
+      ['แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ'],
+      ['ลำดับ','ชื่อผู้ขอ','ฝ่าย','ทะเบียน','ประเภทรถ','ประเภทการจอด','ค้างคืน','ชั้น','หมายเหตุ'],
+      ...commonData.slice(5),
+      [],
+      ['แจ้งจอดแทน'],
+      ['ลำดับ','ชื่อผู้ขอ','ฝ่าย','ทะเบียนผู้ขอ','ประเภทรถ','ทะเบียนสิทธิ์','ประเภทการจอด','ชั้น','หมายเหตุ'],
+      ...subData.slice(5),
+      [],
+      ['แจ้งจอดรถอื่นๆ (รถตู้ / รถส่งของ / รถ Vendor / รถบัส / รถพยาบาล)'],
+      ['ลำดับ','ชื่อผู้ขอ','ฝ่าย','ทะเบียน','ประเภทรถ','ประเภทการจอด','ชั้น','หมายเหตุ'],
+      ...otherData.slice(5),
+    ]);
+    ws1['!cols'] = [{wch:6},{wch:22},{wch:14},{wch:12},{wch:12},{wch:14},{wch:10},{wch:20},{wch:18}];
+
+    XLSX.utils.book_append_sheet(wb, ws1, 'รายงานจอดรถ');
+
+    XLSX.writeFile(wb, `รายงานการจอดรถ — Ari Hills ${pd}-${months[pm-1]}-${py+543}.xlsx`);
+  }
+
+  // โหลด SheetJS ถ้ายังไม่มี
+  if (window.XLSX) {
+    buildAndDownload(window.XLSX);
+  } else {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload = () => buildAndDownload(window.XLSX);
+    s.onerror = () => alert('โหลด SheetJS ไม่ได้ — กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต');
+    document.head.appendChild(s);
+  }
+}
+
+  // กรองข้อมูล (logic เดียวกับ printAriReport)
+  const filteredCommon = ARI_COMMON_BOOKINGS.filter(r => {
+    if (r.status === 'ว่าง') return false;
+    if (r.dates && r.dates.length > 0) return r.dates.includes(printDs);
+    return printDs === today;
+  });
+  const filteredSub = ARI_SUB_BOOKINGS.filter(r => {
+    if (r.dates && r.dates.length > 0) return r.dates.includes(printDs);
+    return printDs === today;
+  });
+  const filteredOther = ARI_OTHER_BOOKINGS.filter(r => {
+    if (r.dates && r.dates.length > 0) return r.dates.includes(printDs);
+    return printDs === today;
+  });
+
+  // ── สร้าง HTML Table ที่ Excel เปิดได้ตรง (.xls format) ──
+
 const BN_MAIN_ITEMS = ['all','booking','ari','bts','ksl','notify','admin'];
 
 function bnNav(view) {
@@ -6242,7 +6678,52 @@ function toggleTheme() {
 // โหลดข้อมูลใหม่ทุก 60 วินาทีแบบ silent (ไม่ reset ปฏิทิน)
 setInterval(gsRefreshFromSheet, 60000);
 
-// ══ LINE NOTIFY VIEW ══
+// ══ ADMIN PANEL ══
+function switchAdminTab(tab) {
+  ['system','line','settings','users'].forEach(t => {
+    document.getElementById('atab-'+t)?.classList.toggle('active', t===tab);
+    const p = document.getElementById('apane-'+t);
+    if(p) p.style.display = t===tab ? '' : 'none';
+  });
+  // update sched summary when LINE tab opens
+  if(tab==='line') admUpdateSchedSummary();
+  // update last sync time
+  if(tab==='system'){
+    const el=document.getElementById('adm-last-sync');
+    const gs=document.getElementById('gs-status-label');
+    if(el&&gs)el.textContent=gs.textContent||'—';
+  }
+}
+function admUpdateSchedSummary(){
+  const el=document.getElementById('adm-sched-summary');
+  if(!el)return;
+  if(!_nvScheds||!_nvScheds.length){el.textContent='ยังไม่มีรอบส่ง';return;}
+  el.innerHTML=_nvScheds.map(s=>`<div style="display:flex;justify-content:space-between;padding:3px 0;">
+    <span>${s.time} — ${s.name}</span>
+    <span style="color:${s.enabled?'#4ade80':'#f87171'}">${s.enabled?'เปิด':'ปิด'}</span>
+  </div>`).join('');
+}
+async function admTestAll(){
+  const gsConn=document.getElementById('adm-gs-conn');
+  const lineConn=document.getElementById('adm-line-conn');
+  if(gsConn) gsConn.innerHTML='⏳ กำลังทดสอบ…';
+  if(lineConn) lineConn.innerHTML='⏳ กำลังทดสอบ…';
+  // test GS
+  try{
+    const r=await fetch(`${GS_URL}?action=ping`,{mode:'cors',credentials:'omit'});
+    const d=await r.json();
+    if(gsConn) gsConn.innerHTML=d.ok?'<span style="color:#4ade80">✓ เชื่อมต่อ</span>':'<span style="color:#f87171">✗ ล้มเหลว</span>';
+  }catch(e){if(gsConn)gsConn.innerHTML='<span style="color:#f87171">✗ Error</span>';}
+  // test LINE
+  const nvGs=document.getElementById('nv-gs')?.value.trim()||GS_URL;
+  try{
+    const p=new URLSearchParams({action:'sendLine',message:'🔌 Admin test — ParkZone connection OK'});
+    const r=await fetch(`${nvGs}?${p}`,{mode:'cors',credentials:'omit'});
+    const d=await r.json();
+    if(lineConn) lineConn.innerHTML=d.ok?'<span style="color:#4ade80">✓ เชื่อมต่อ</span>':'<span style="color:#f87171">✗ '+d.msg+'</span>';
+  }catch(e){if(lineConn)lineConn.innerHTML='<span style="color:#f87171">✗ Error</span>';}
+}
+// ══ END ADMIN ══
 let _nvScheds=[{id:1,time:'16:30',name:'บ่ายสี่โมงครึ่ง',type:'tomorrow',enabled:true}];
 let _nvData={common:[],sub:[],other:[],date:''};
 let _nvLogs=[];
