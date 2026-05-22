@@ -1263,7 +1263,40 @@
   .form-input:focus, .form-select:focus { outline: none; border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
 
   /* ─── TABLE HEADERS ─── */
-  .tbl-th {
+  /* ── booking table: readable in both themes ── */
+  .tbl-td {
+    padding: 7px 10px;
+    border-bottom: 0.5px solid var(--row-border);
+    font-size: 12px;
+    color: var(--sys-text);
+    background: transparent;
+  }
+
+  /* dark mode: row alternating on semi-transparent dark bg */
+  #view-booking tr:nth-child(even) td,
+  #view-booking tr.bk-tr-even td {
+    background: rgba(255,255,255,0.04);
+  }
+  #view-booking tr:nth-child(odd) td,
+  #view-booking tr.bk-tr-odd td {
+    background: transparent;
+  }
+  /* light mode: row alternating on white bg */
+  html[data-theme="light"] #view-booking tr.bk-tr-even td {
+    background: rgba(0,0,0,0.025);
+  }
+  html[data-theme="light"] #view-booking tr.bk-tr-odd td {
+    background: transparent;
+  }
+  html[data-theme="light"] .tbl-td {
+    color: #1a1a2e !important;
+    border-bottom-color: rgba(0,0,0,0.06);
+  }
+  html[data-theme="light"] #view-booking table th {
+    background: rgba(124,58,237,0.08) !important;
+    color: #5B21B6 !important;
+    border-bottom: 1.5px solid rgba(124,58,237,0.15) !important;
+  }
     padding: 8px 10px;
     text-align: left;
     font-size: 11px;
@@ -1284,6 +1317,10 @@
     padding: 7px 10px;
     border-bottom: 0.5px solid var(--border);
     font-size: 12px;
+    color: var(--text, #1a1a2e);
+  }
+  html[data-theme="light"] .tbl-td {
+    color: #1a1a2e;
   }
 
   /* ─── CALENDAR ─── */
@@ -1513,7 +1550,11 @@
 
   /* building views */
   .building-view { display: none; }
-  .building-view.active { display: flex; flex-direction: column; gap: 16px; }
+  .building-view.active { display: flex !important; flex-direction: column; gap: 16px; }
+  #view-admin.building-view.active { flex-direction: column !important; gap: 0 !important; }
+  /* keep settings/notify hidden even when .active is toggled */
+  #view-settings { display: none !important; }
+  #view-notify   { display: none !important; }
 
   .modal-overlay {
     position: fixed; inset: 0;
@@ -1555,7 +1596,101 @@
   .btn-confirm { flex: 1; padding: 12px; border-radius: 10px; border: none; background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.15s; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
   .btn-confirm:hover { opacity: 0.88; }
 
-  /* ── Admin Panel ── */
+  /* ── apane-line: mirrors view-notify layout inside admin ── */
+  #apane-line .nv2-page { display:grid; grid-template-columns:260px 1fr 270px; height:calc(100vh - 160px); overflow:hidden; min-height:500px; }
+  #apane-line .nv2-sb { background:#161b25; border-right:0.5px solid rgba(255,255,255,.06); display:flex; flex-direction:column; overflow:hidden; }
+  #apane-line .nv2-sb-hdr { padding:13px 14px 10px; border-bottom:0.5px solid rgba(255,255,255,.06); flex-shrink:0; }
+  #apane-line .nv2-sb-title { font-size:12px; font-weight:700; color:#fff; }
+  #apane-line .nv2-sb-sub { font-size:9px; color:rgba(255,255,255,.3); letter-spacing:.5px; text-transform:uppercase; }
+  #apane-line .nv2-sb-status { display:inline-flex; align-items:center; gap:5px; margin-top:7px; padding:3px 8px; background:rgba(29,158,117,.12); border:0.5px solid rgba(29,158,117,.3); border-radius:20px; font-size:10px; color:#5DCAA5; }
+  #apane-line .nv2-sb-dot { width:5px; height:5px; border-radius:50%; background:#1D9E75; flex-shrink:0; }
+  #apane-line .nv2-sb-body { flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:12px; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.08) transparent; }
+  #apane-line .nv2-sec-lbl { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:5px; }
+  #apane-line .nv2-block { background:rgba(255,255,255,.04); border:0.5px solid rgba(255,255,255,.07); border-radius:8px; padding:10px; }
+  #apane-line .nv2-date-disp { font-size:12px; font-weight:600; color:#fff; display:flex; align-items:center; gap:5px; margin-bottom:7px; }
+  #apane-line .nv2-cal-nav-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+  #apane-line .nv2-cnav { background:rgba(255,255,255,.07); border:0.5px solid rgba(255,255,255,.12); border-radius:4px; color:rgba(255,255,255,.7); font-size:13px; width:22px; height:22px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  #apane-line .nv2-cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; text-align:center; }
+  #apane-line .nv2-ch { font-size:9px; font-weight:600; color:rgba(255,255,255,.3); padding:1px 0; }
+  #apane-line .nv2-cd { font-size:10px; color:rgba(255,255,255,.6); padding:3px 1px; border-radius:4px; cursor:pointer; }
+  #apane-line .nv2-cd:hover { background:rgba(255,255,255,.08); }
+  #apane-line .nv2-cd.sel { background:#1D9E75; color:#fff; font-weight:700; }
+  #apane-line .nv2-cd.tod { background:rgba(29,158,117,.2); color:#5DCAA5; font-weight:600; }
+  #apane-line .nv2-date-btns { display:flex; gap:5px; margin-top:6px; }
+  #apane-line .nv2-dbtn { flex:1; font-size:10px; padding:5px 0; text-align:center; border:0.5px solid rgba(255,255,255,.12); border-radius:6px; background:transparent; cursor:pointer; color:rgba(255,255,255,.6); }
+  #apane-line .nv2-dbtn:hover { background:rgba(255,255,255,.07); color:#fff; }
+  #apane-line .nv2-send-btn { width:100%; margin-top:5px; padding:7px; border-radius:7px; border:none; background:#185FA5; color:#fff; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; }
+  #apane-line .nv2-send-btn:disabled { opacity:.4; cursor:not-allowed; }
+  #apane-line .nv2-test-btn { width:100%; padding:6px; border:0.5px solid rgba(29,158,117,.4); border-radius:7px; background:rgba(29,158,117,.1); color:#5DCAA5; font-size:11px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; }
+  #apane-line .nv2-main { display:flex; flex-direction:column; overflow:hidden; background:#fff; }
+  html[data-theme="dark"] #apane-line .nv2-main { background:rgba(10,12,22,.95); }
+  #apane-line .nv2-mh { padding:11px 14px; border-bottom:0.5px solid rgba(0,0,0,.08); display:flex; align-items:center; gap:7px; flex-shrink:0; }
+  html[data-theme="dark"] #apane-line .nv2-mh { border-bottom-color:rgba(255,255,255,.06); }
+  #apane-line .nv2-mh-title { font-size:13px; font-weight:700; color:#1a1a2e; }
+  html[data-theme="dark"] #apane-line .nv2-mh-title { color:#fff; }
+  #apane-line .nv2-mh-date { font-size:10px; color:#6b7280; }
+  #apane-line .nv2-mh-cnt { font-size:10px; background:#f3f4f6; border:0.5px solid #e5e7eb; border-radius:999px; padding:2px 8px; color:#6b7280; }
+  #apane-line .nv2-mh-r { margin-left:auto; display:flex; gap:5px; }
+  #apane-line .nv2-mh-btn { display:flex; align-items:center; gap:4px; font-size:10px; padding:5px 10px; border:0.5px solid #e5e7eb; border-radius:7px; background:#fff; cursor:pointer; color:#374151; font-weight:500; }
+  html[data-theme="dark"] #apane-line .nv2-mh-btn { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.12); color:rgba(255,255,255,.7); }
+  #apane-line .nv2-mh-send { background:#185FA5; color:#fff!important; border-color:#185FA5; }
+  #apane-line .nv2-body { flex:1; overflow-y:auto; padding:12px 14px; display:flex; gap:12px; align-items:flex-start; scrollbar-width:thin; }
+  #apane-line .nv2-phone { width:185px; background:#1a1a2e; border-radius:20px; overflow:hidden; border:4px solid #2a2a3e; box-shadow:0 8px 28px rgba(0,0,0,.4); flex-shrink:0; }
+  #apane-line .nv2-phone-bar { background:#111; padding:4px 12px; display:flex; justify-content:space-between; font-size:9px; color:rgba(255,255,255,.4); font-family:monospace; }
+  #apane-line .nv2-chat { background:#1a242e; padding:8px; min-height:280px; display:flex; flex-direction:column; gap:4px; }
+  #apane-line .nv2-chat-date { text-align:center; font-size:8px; color:rgba(255,255,255,.3); background:rgba(255,255,255,.05); padding:2px 8px; border-radius:5px; display:table; margin:0 auto 4px; }
+  #apane-line .nv2-bubble { background:#2a2a2a; border-radius:3px 10px 10px 10px; padding:8px 9px; font-size:9px; line-height:1.65; color:#d0d0d0; white-space:pre-wrap; word-break:break-word; }
+  #apane-line .nv2-bh { font-size:10px; font-weight:700; color:#06C755; margin-bottom:3px; }
+  #apane-line .nv2-ct { font-size:8px; color:rgba(255,255,255,.2); margin:2px 0 0 2px; }
+  #apane-line .nv2-txt-pre { flex:1; font-family:monospace; font-size:11px; line-height:1.7; color:#1a1a2e; background:#f9fafb; border:0.5px solid #e5e7eb; border-radius:8px; padding:10px 12px; white-space:pre-wrap; word-break:break-word; max-height:320px; overflow-y:auto; margin:0; }
+  html[data-theme="dark"] #apane-line .nv2-txt-pre { color:rgba(255,255,255,.8); background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.08); }
+  #apane-line .nv2-log { border-top:0.5px solid #f3f4f6; background:#f9fafb; padding:6px 14px; height:62px; overflow-y:auto; flex-shrink:0; display:flex; flex-direction:column; gap:2px; scrollbar-width:thin; }
+  html[data-theme="dark"] #apane-line .nv2-log { background:rgba(10,12,22,.98); border-top-color:rgba(255,255,255,.05); }
+  #apane-line .nv2-log-row { display:flex; gap:6px; font-size:10px; font-family:monospace; }
+  #apane-line .nv2-log-ts { color:#9ca3af; min-width:52px; }
+  #apane-line .nv2-log-ok { color:#1D9E75; }
+  #apane-line .nv2-log-err { color:#E24B4A; }
+  #apane-line .nv2-log-info { color:#185FA5; }
+  #apane-line .nv2-rp { border-left:0.5px solid rgba(255,255,255,.06); display:flex; flex-direction:column; overflow:hidden; background:#1a1f2e; }
+  #apane-line .nv2-rp-hdr { padding:11px 13px 9px; border-bottom:0.5px solid rgba(255,255,255,.08); flex-shrink:0; background:#141824; }
+  #apane-line .nv2-rp-title { font-size:12px; font-weight:700; color:#f0f4ff; }
+  #apane-line .nv2-rp-sub { font-size:10px; color:rgba(255,255,255,.45); margin-top:1px; }
+  #apane-line .nv2-rp-body { flex:1; overflow-y:auto; padding:10px 12px; display:flex; flex-direction:column; gap:9px; scrollbar-width:thin; }
+  #apane-line .nv2-acc { border:0.5px solid rgba(255,255,255,.08); border-radius:9px; overflow:hidden; }
+  #apane-line .nv2-acc-hdr { display:flex; align-items:center; gap:7px; padding:8px 11px; cursor:pointer; background:rgba(255,255,255,.05); user-select:none; }
+  #apane-line .nv2-acc-name { font-size:11px; font-weight:600; flex:1; color:#e0e8ff; }
+  #apane-line .nv2-acc-cnt { font-size:10px; font-weight:600; padding:1px 7px; border-radius:999px; }
+  #apane-line .nv2-acc-arr { font-size:12px; color:rgba(255,255,255,.4); transition:transform .2s; display:inline-block; }
+  #apane-line .nv2-acc-arr.open { transform:rotate(90deg); }
+  #apane-line .nv2-acc-body { padding:9px 11px; border-top:0.5px solid rgba(255,255,255,.07); background:rgba(0,0,0,.15); }
+  #apane-line .nv2-chip { font-size:10px; padding:3px 9px; border-radius:6px; border:0.5px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06); cursor:pointer; color:rgba(255,255,255,.65); transition:all .15s; user-select:none; }
+  #apane-line .nv2-chip.on { background:#185FA5; color:#fff; border-color:#185FA5; }
+  #apane-line .nv2-col-lbl { font-size:10px; font-weight:600; color:rgba(255,255,255,.5); margin-bottom:5px; display:flex; align-items:center; justify-content:space-between; }
+  #apane-line .nv2-sched-sec { border:0.5px solid rgba(255,255,255,.08); border-radius:9px; overflow:hidden; }
+  #apane-line .nv2-sched-hdr { display:flex; align-items:center; gap:7px; padding:8px 11px; cursor:pointer; background:rgba(255,255,255,.05); user-select:none; }
+  #apane-line .nv2-sched-title { font-size:11px; font-weight:600; flex:1; color:#e0e8ff; }
+  #apane-line .nv2-sched-body { padding:9px 11px; border-top:0.5px solid rgba(255,255,255,.07); background:rgba(0,0,0,.15); }
+  #apane-line .nv2-sched-card { display:flex; align-items:center; background:rgba(255,255,255,.05); border:0.5px solid rgba(255,255,255,.1); border-radius:8px; padding:7px 10px; margin-bottom:5px; gap:7px; }
+  #apane-line .nv2-sched-time { font-size:14px; font-weight:700; color:#1D9E75; font-family:monospace; min-width:40px; }
+  #apane-line .nv2-sched-name { font-size:11px; font-weight:500; color:#e0e8ff; }
+  #apane-line .nv2-sched-type { font-size:10px; color:rgba(255,255,255,.4); }
+  #apane-line .nv2-stg { width:28px; height:16px; border-radius:999px; background:#1D9E75; border:none; position:relative; cursor:pointer; flex-shrink:0; margin-left:auto; transition:background .2s; }
+  #apane-line .nv2-stg.off { background:rgba(255,255,255,.15); }
+  #apane-line .nv2-stg::after { content:''; position:absolute; top:2px; right:2px; width:12px; height:12px; background:#fff; border-radius:50%; transition:right .2s; }
+  #apane-line .nv2-stg.off::after { right:auto; left:2px; }
+  #apane-line .nv2-del-btn { background:none; border:none; cursor:pointer; color:rgba(255,255,255,.3); font-size:13px; padding:2px 4px; }
+  #apane-line .nv2-add-sched { width:100%; padding:6px; border:0.5px dashed rgba(255,255,255,.2); border-radius:7px; background:transparent; font-size:11px; cursor:pointer; color:rgba(255,255,255,.45); }
+  #apane-line .nv2-cd-box { margin-top:7px; background:rgba(186,117,23,.06); border:0.5px solid rgba(186,117,23,.2); border-radius:8px; padding:7px; text-align:center; }
+  #apane-line .nv2-cd-lbl { font-size:10px; color:rgba(255,255,255,.4); margin-bottom:1px; }
+  #apane-line .nv2-cd-val { font-size:17px; font-weight:700; color:#BA7517; font-family:monospace; }
+  #apane-line .nv2-fi { width:100%; font-size:11px; padding:6px 9px; border:0.5px solid rgba(255,255,255,.15); border-radius:7px; background:rgba(255,255,255,.06); color:#e0e8ff; }
+  @media (max-width:768px) {
+    #apane-line .nv2-page { grid-template-columns:1fr!important; height:auto!important; }
+    #apane-line .nv2-sb { border-right:none!important; border-bottom:0.5px solid rgba(255,255,255,.08)!important; }
+    #apane-line .nv2-rp { border-left:none!important; border-top:0.5px solid rgba(255,255,255,.08)!important; }
+    #apane-line .nv2-body { flex-direction:column!important; align-items:center!important; }
+    #apane-line .nv2-phone { width:220px!important; }
+  }
   #view-admin { background:#0a0c14 !important; overflow:hidden; flex:1; min-height:0; }
   .adm-tab { padding:10px 16px; font-size:12px; font-weight:600; color:rgba(255,255,255,0.4); background:transparent; border:none; cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; transition:all 0.15s; }
   .adm-tab:hover { color:rgba(255,255,255,0.7); }
@@ -2018,9 +2153,9 @@
     #view-booking .cal-day-label { color:var(--m-sub)!important; font-size:10px!important; }
     .book-right-half,.bk-right { width:100%!important; padding:0 14px 14px!important; border-left:none!important; background:transparent!important; overflow-y:visible!important; flex-shrink:0!important; }
     .bk-tc { background:var(--m-card)!important; border-radius:var(--m-radius)!important; border:1px solid var(--m-border)!important; box-shadow:var(--m-shadow)!important; overflow:hidden!important; overflow-x:auto!important; }
-    .tbl-th { background:var(--m-lavender)!important; color:var(--m-purple)!important; font-size:10px!important; font-weight:700!important; padding:8px!important; }
-    .tbl-td { color:var(--m-text)!important; font-size:11px!important; padding:8px!important; border-bottom:1px solid var(--m-border)!important; }
-    th,td { color:var(--m-text)!important; }
+    .tbl-th { background:#EEF0FF!important; color:#374151!important; font-size:10px!important; font-weight:700!important; padding:8px!important; }
+    .tbl-td { color:#1E1B3A!important; font-size:11px!important; padding:8px!important; border-bottom:1px solid #EEF0F8!important; }
+    th,td { color:#1E1B3A!important; }
     .tag-long   { background:#FEF3C7!important; color:#92400E!important; border-radius:20px!important; font-size:10px!important; font-weight:600!important; }
     .tag-daily  { background:#EDE9FE!important; color:#5B21B6!important; border-radius:20px!important; font-size:10px!important; font-weight:600!important; }
     .bk-print-btn { background:var(--m-card)!important; border:1px solid var(--m-border)!important; color:var(--m-purple)!important; border-radius:10px!important; box-shadow:var(--m-shadow)!important; }
@@ -2190,7 +2325,7 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         KSL
       </button>
-      <button class="topnav-btn ghost" onclick="openAdminLogin()">
+      <button class="topnav-btn ghost" onclick="desktopAdminNav()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         <span id="admin-badge">Admin</span>
       </button>
@@ -2212,12 +2347,8 @@
         </div>
         <span id="theme-label" style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.7);">กลางคืน</span>
       </button>
-      <div class="topnav-icon-btn" title="LINE Notify" onclick="tnav(null,'notify')" style="cursor:pointer;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      </div>
-      <div class="topnav-icon-btn" title="ตั้งค่า" onclick="tnav(null,'settings')">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </div>
+
+
       <div style="display:flex;align-items:center;gap:7px;">
         <div class="topnav-avatar">AD</div>
         <div style="display:flex;flex-direction:column;">
@@ -2982,7 +3113,7 @@
       </div>
 
       <!-- Admin Content -->
-      <div style="flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent;">
+      <div style="flex:1;overflow-y:auto;padding:16px 18px;padding-bottom:80px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent;">
 
         <!-- TAB: ระบบ -->
         <div id="apane-system">
@@ -3061,50 +3192,290 @@
 
         <!-- TAB: LINE Notify (hidden by default) -->
         <div id="apane-line" style="display:none;">
-          <!-- เอา view-notify มาแสดงใน iframe-style -->
-          <div class="adm-card" style="padding:0;overflow:hidden;border-radius:12px;">
-            <div style="padding:12px 16px;background:rgba(6,199,85,0.08);border-bottom:0.5px solid rgba(6,199,85,0.2);display:flex;align-items:center;gap:8px;">
-              <span style="font-size:16px">💬</span>
-              <span style="font-size:13px;font-weight:600;color:#fff;">Parking Management LINE Notify</span>
-              <button class="adm-btn adm-btn-ghost" style="margin-left:auto;font-size:10px;" onclick="switchView('notify')">เปิดเต็มหน้า →</button>
-            </div>
-            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:12px;">
-              <!-- LINE token status -->
-              <div style="display:flex;align-items:center;gap:8px;">
-                <div style="width:8px;height:8px;border-radius:50%;background:#1D9E75;flex-shrink:0;"></div>
-                <span style="font-size:11px;color:rgba(255,255,255,0.6);">ใช้ Token/Group ID จาก Apps Script</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                <button class="adm-btn adm-btn-ghost" onclick="switchView('notify');nvTest()">
-                  <i class="ti ti-plug" style="font-size:12px"></i> ทดสอบ LINE
-                </button>
-                <button class="adm-btn adm-btn-green" onclick="switchView('notify')">
-                  <i class="ti ti-send" style="font-size:12px"></i> ไปหน้า Notify
-                </button>
-              </div>
-              <!-- Schedule summary -->
-              <div style="font-size:11px;color:rgba(255,255,255,0.4);border-top:0.5px solid rgba(255,255,255,0.06);padding-top:10px;">
-                <div style="font-weight:600;color:rgba(255,255,255,0.6);margin-bottom:6px;">รอบส่งอัตโนมัติ:</div>
-                <div id="adm-sched-summary" style="color:rgba(255,255,255,0.4)">โหลด...</div>
+          <div style="min-height:500px;position:relative;display:flex;flex-direction:column;">
+            <div class="nv2-page">
+
+        <!-- SIDEBAR: LINE API + calendar + send -->
+        <div class="nv2-sb">
+          <div class="nv2-sb-hdr">
+            <div class="nv2-sb-title">LINE Notify</div>
+            <div class="nv2-sb-sub">PARKING MANAGEMENT</div>
+            <div class="nv2-sb-status"><div class="nv2-sb-dot"></div><span id="nv-status-txt">ยังไม่เชื่อมต่อ</span></div>
+          </div>
+          <div class="nv2-sb-body">
+
+            <div>
+              <div class="nv2-sec-lbl">LINE Messaging API</div>
+              <div class="nv2-block">
+                <div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:7px;display:flex;align-items:center;gap:5px;"><div class="nv2-sb-dot"></div>ใช้ Token/Group จาก Apps Script</div>
+                <button class="nv2-test-btn" onclick="nvTest()"><i class="ti ti-plug" style="font-size:12px"></i>ทดสอบการเชื่อมต่อ</button>
               </div>
             </div>
+
+            <div>
+              <div class="nv2-sec-lbl">เลือกวันที่</div>
+              <div class="nv2-block">
+                <div class="nv2-date-disp"><i class="ti ti-calendar" style="font-size:13px;color:rgba(255,255,255,.3)"></i><span id="nv2-date-show">เลือกวันจากปฏิทิน</span></div>
+                <div class="nv2-cal-nav-row">
+                  <div class="nv2-cnav" onclick="nvCalNav(-1)">‹</div>
+                  <span id="nv-cal-label" style="font-size:11px;font-weight:600;color:#fff;"></span>
+                  <div class="nv2-cnav" onclick="nvCalNav(1)">›</div>
+                </div>
+                <div class="nv2-cal-grid" id="nv-cal-grid"></div>
+                <input type="hidden" id="nv-date-pick">
+                <div class="nv2-date-btns">
+                  <button class="nv2-dbtn" onclick="nvSetDate(0)">วันนี้</button>
+                  <button class="nv2-dbtn" onclick="nvSetDate(1)">พรุ่งนี้</button>
+                </div>
+                <button class="nv2-send-btn" id="nv-send-btn" onclick="nvSendNow()" disabled>
+                  <i class="ti ti-brand-line" style="font-size:13px"></i>ส่ง LINE ตอนนี้เลย
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /sidebar -->
+
+        <!-- MAIN: preview -->
+        <div class="nv2-main">
+          <div class="nv2-mh">
+            <div class="nv2-mh-title">Preview ข้อความ LINE</div>
+            <span class="nv2-mh-date" id="nv2-date-lbl">เลือกวันจากปฏิทิน</span>
+            <span class="nv2-mh-cnt" id="nv2-cnt-total">0 รายการ</span>
+            <div class="nv2-mh-r">
+              <button class="nv2-mh-btn" onclick="nvCopy()"><i class="ti ti-copy" style="font-size:12px"></i>คัดลอก</button>
+              <button class="nv2-mh-btn nv2-mh-send" onclick="nvSendNow()"><i class="ti ti-brand-line" style="font-size:12px"></i>ส่ง LINE</button>
+            </div>
+          </div>
+          <div class="nv2-body">
+            <div style="flex-shrink:0;">
+              <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9ca3af;margin-bottom:6px">จำลองข้อความ</div>
+              <div class="nv2-phone">
+                <div class="nv2-phone-bar"><span id="nv-pt">16:30</span><span>LINE</span></div>
+                <div class="nv2-chat">
+                  <div class="nv2-chat-date" id="nv-cd">เลือกวันที่</div>
+                  <div id="nv-bw" style="display:none">
+                    <div class="nv2-bubble"><div class="nv2-bh">Parking Management Notify</div><div id="nv-bc"></div></div>
+                    <div class="nv2-ct" id="nv-ct">16:30</div>
+                  </div>
+                  <div id="nv-ce" style="text-align:center;padding:40px 8px;font-size:10px;color:rgba(255,255,255,.2)">เลือกวันในปฏิทิน<br>เพื่อดูข้อความ</div>
+                </div>
+              </div>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9ca3af;margin-bottom:6px">ข้อความ</div>
+              <pre id="nv-text-preview" class="nv2-txt-pre">เลือกวันที่จากปฏิทินเพื่อดูข้อความ</pre>
+            </div>
+          </div>
+          <div class="nv2-log">
+            <div style="display:flex;justify-content:space-between;padding-bottom:3px;border-bottom:0.5px solid #e5e7eb;margin-bottom:3px;">
+              <span style="font-size:10px;font-weight:600;color:#9ca3af">Activity Log</span>
+              <span style="font-size:10px;color:#9ca3af;cursor:pointer" onclick="nvClearLog()">ล้าง</span>
+            </div>
+            <div id="nv-log"></div>
+          </div>
+        </div><!-- /main -->
+
+        <!-- RIGHT PANEL: column selector + schedule -->
+        <div class="nv2-rp">
+          <div class="nv2-rp-hdr">
+            <div class="nv2-rp-title">ตัวเลือกการส่งข้อมูล</div>
+            <div class="nv2-rp-sub">เลือก column + ตั้งเวลาส่งอัตโนมัติ</div>
+          </div>
+          <div class="nv2-rp-body">
+
+            <!-- ส่วนกลาง -->
+            <div class="nv2-acc">
+              <div class="nv2-acc-hdr" onclick="nvTogAcc(this)">
+                <div style="width:7px;height:7px;border-radius:50%;background:#185FA5;flex-shrink:0"></div>
+                <span class="nv2-acc-name">ส่วนกลาง ชั้น 5</span>
+                <span class="nv2-acc-cnt nv2-acc-cnt-c" style="background:#E6F1FB;color:#185FA5" id="nv-rp-cnt-c">0</span>
+                <span class="nv2-acc-arr open">›</span>
+              </div>
+              <div class="nv2-acc-body">
+                <div class="nv2-col-lbl"><span>แสดงใน LINE</span><span style="font-size:9px;cursor:pointer;color:#185FA5" onclick="nvSelAll(this)">เลือกทั้งหมด</span></div>
+                <div class="nv2-chips" id="nv-chips-c">
+                  <div class="nv2-chip on" data-col="name">ชื่อผู้ขอ</div>
+                  <div class="nv2-chip on" data-col="dept">ฝ่าย</div>
+                  <div class="nv2-chip on" data-col="plate">ทะเบียน</div>
+                  <div class="nv2-chip" data-col="carType">ประเภทรถ</div>
+                  <div class="nv2-chip on" data-col="parkType">ประเภทการจอด</div>
+                  <div class="nv2-chip" data-col="floor">ชั้น</div>
+                  <div class="nv2-chip" data-col="note">หมายเหตุ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- จอดแทน -->
+            <div class="nv2-acc">
+              <div class="nv2-acc-hdr" onclick="nvTogAcc(this)">
+                <div style="width:7px;height:7px;border-radius:50%;background:#1D9E75;flex-shrink:0"></div>
+                <span class="nv2-acc-name">แจ้งจอดแทน</span>
+                <span class="nv2-acc-cnt" style="background:#E1F5EE;color:#0F6E56" id="nv-rp-cnt-s">0</span>
+                <span class="nv2-acc-arr">›</span>
+              </div>
+              <div class="nv2-acc-body" style="display:none">
+                <div class="nv2-chips" id="nv-chips-s">
+                  <div class="nv2-chip on" data-col="name">ชื่อผู้ขอ</div>
+                  <div class="nv2-chip on" data-col="dept">ฝ่าย</div>
+                  <div class="nv2-chip on" data-col="plateReq">ทะเบียน</div>
+                  <div class="nv2-chip" data-col="carType">ประเภทรถ</div>
+                  <div class="nv2-chip on" data-col="plateOwner">ทะเบียนสิทธิ์</div>
+                  <div class="nv2-chip on" data-col="floor">ชั้น</div>
+                  <div class="nv2-chip" data-col="note">หมายเหตุ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- รถอื่นๆ -->
+            <div class="nv2-acc">
+              <div class="nv2-acc-hdr" onclick="nvTogAcc(this)">
+                <div style="width:7px;height:7px;border-radius:50%;background:#BA7517;flex-shrink:0"></div>
+                <span class="nv2-acc-name">รถอื่นๆ</span>
+                <span class="nv2-acc-cnt" style="background:#FAEEDA;color:#854F0B" id="nv-rp-cnt-o">0</span>
+                <span class="nv2-acc-arr">›</span>
+              </div>
+              <div class="nv2-acc-body" style="display:none">
+                <div class="nv2-chips" id="nv-chips-o">
+                  <div class="nv2-chip on" data-col="name">ชื่อผู้ขอ</div>
+                  <div class="nv2-chip on" data-col="dept">ฝ่าย</div>
+                  <div class="nv2-chip on" data-col="plate">ทะเบียน</div>
+                  <div class="nv2-chip on" data-col="carType">ประเภทรถ</div>
+                  <div class="nv2-chip" data-col="parkType">ประเภทการจอด</div>
+                  <div class="nv2-chip" data-col="floor">ชั้น</div>
+                  <div class="nv2-chip" data-col="note">หมายเหตุ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ตั้งเวลา (ย้ายมาขวา) -->
+            <div class="nv2-sched-sec">
+              <div class="nv2-sched-hdr" onclick="nvTogSchedPanel(this)">
+                <i class="ti ti-clock" style="font-size:13px;color:var(--color-text-secondary)"></i>
+                <span class="nv2-sched-title">ตั้งเวลาส่งอัตโนมัติ</span>
+                <span class="nv2-acc-arr open">›</span>
+              </div>
+              <div class="nv2-sched-body" id="nv-sched-panel">
+                <div id="nv-sched-list"></div>
+                <button class="nv2-add-sched" onclick="nvOpenSched()">+ เพิ่มเวลาส่ง</button>
+                <div class="nv2-cd-box">
+                  <div class="nv2-cd-lbl">ส่งครั้งถัดไปใน</div>
+                  <div class="nv2-cd-val" id="nv-countdown">—</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ข้อความท้าย -->
+            <div>
+              <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:5px">ข้อความท้าย</div>
+              <input type="text" id="nv-footer" class="nv2-fi" value="— ระบบจัดการลานจอด Ari Hills" oninput="nvBuildAndPreview()">
+            </div>
+
+          </div>
+        </div><!-- /rp -->
+
+      </div><!-- /nv2-page -->
+
+      <!-- hidden inputs -->
+      <input type="hidden" id="nv-gs">
+      <input type="hidden" id="nv-token">
+      <input type="hidden" id="nv-target">
+
+      <!-- Add Schedule Modal -->
+      <div id="nv-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);z-index:900;align-items:center;justify-content:center;">
+        <div style="background:#141E30;border:0.5px solid rgba(255,255,255,0.12);border-radius:12px;padding:22px;width:340px;max-width:90vw;">
+          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:14px;">เพิ่มเวลาส่งอัตโนมัติ</div>
+          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">เวลา (HH:MM)</div><input type="time" id="nv-m-time" class="nv2-fi" value="16:30" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"></div>
+          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ชื่อรอบ</div><input type="text" id="nv-m-name" class="nv2-fi" placeholder="ชื่อรอบนี้…" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"></div>
+          <div style="margin-bottom:16px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ประเภทข้อมูล</div><select id="nv-m-type" class="nv2-fi" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"><option value="tomorrow">รายการวันพรุ่งนี้</option><option value="today">รายการวันนี้</option></select></div>
+          <div style="display:flex;justify-content:flex-end;gap:7px;">
+            <button class="nv2-dbtn" style="padding:7px 14px;" onclick="document.getElementById('nv-modal').style.display='none'">ยกเลิก</button>
+            <button class="nv2-send-btn" style="width:auto;padding:7px 14px;" onclick="nvAddSched()">บันทึก</button>
+          </div>
+        </div>
+      </div>
           </div>
         </div>
 
         <!-- TAB: ตั้งค่า (hidden) -->
         <div id="apane-settings" style="display:none;">
-          <div class="adm-card">
-            <div class="adm-card-hdr">
-              <span class="adm-card-ico" style="background:rgba(167,139,250,0.15);color:#a78bfa;">⚙️</span>
-              <div>
-                <div class="adm-card-title">การตั้งค่าระบบ</div>
-                <div class="adm-card-sub">จัดการช่องจอด ทะเบียน และกฎการจอด</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div>
+          <div style="font-size:18px;font-weight:700;">⚙️ ตั้งค่าระบบ</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">จัดการช่องจอด ทะเบียน และสิทธิ์ผู้ใช้งานแต่ละอาคาร</div>
+        </div>
+      </div>
+
+      <!-- Settings tabs -->
+      <div style="display:flex;gap:4px;background:var(--surface);padding:4px;border-radius:12px;width:fit-content;border:1px solid var(--border);">
+        <button id="stab-rules"  class="ari-mode-btn active" onclick="switchSettingsTab('rules')">📋 กฎระบบ</button>
+        <button id="stab-slots"  class="ari-mode-btn" onclick="switchSettingsTab('slots')">🅿️ จัดการช่องจอด</button>
+        <button id="stab-plates" class="ari-mode-btn" onclick="switchSettingsTab('plates')">🔑 ทะเบียนผู้มีสิทธิ์</button>
+      </div>
+
+      <!-- TAB: กฎระบบ -->
+      <div id="spane-rules">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> กฎสิทธิ์การจอดรถพนักงาน</div>
+            <div style="background:#F5F5F2;border-radius:10px;padding:14px;margin-bottom:12px;">
+              <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">📋 กฎปัจจุบัน</div>
+              <div style="font-size:12px;color:var(--text-muted);line-height:1.9;">
+                • พนักงาน 1 คน ได้สิทธิ์ <strong style="color:var(--text);">1 อาคาร</strong> เท่านั้น<br>
+                • แจ้งทะเบียนได้สูงสุด <strong style="color:var(--text);">3 ทะเบียน</strong> ต่อคน<br>
+                • จอดได้ <strong style="color:var(--text);">1 ช่อง</strong> ต่อครั้ง (ทีละ 1 คัน)<br>
+                • ต้องแจ้งก่อนเข้าจอดทุกครั้ง
               </div>
             </div>
-            <button class="adm-btn adm-btn-ghost" style="width:100%;margin-top:10px;" onclick="switchView('settings')">
-              <i class="ti ti-external-link" style="font-size:13px"></i> เปิดหน้าตั้งค่า
-            </button>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+              <div class="form-field"><label class="form-label">ทะเบียนสูงสุด/คน</label>
+                <select class="form-select" id="setting-max-plates">
+                  <option value="1">1 ทะเบียน</option>
+                  <option value="2">2 ทะเบียน</option>
+                  <option selected value="3">3 ทะเบียน</option>
+                </select>
+              </div>
+              <div class="form-field"><label class="form-label">ช่องจอดสูงสุด/ครั้ง</label>
+                <select class="form-select" id="setting-max-slots">
+                  <option selected value="1">1 ช่อง</option>
+                  <option value="2">2 ช่อง</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field" style="margin-bottom:12px;"><label class="form-label">อนุญาตจองข้ามอาคาร</label>
+              <select class="form-select" id="setting-cross-bld">
+                <option selected value="no">❌ ไม่อนุญาต (1 คน 1 อาคาร)</option>
+                <option value="yes">✅ อนุญาต</option>
+              </select>
+            </div>
+            <button onclick="saveSettings()" style="width:100%;padding:10px;border-radius:10px;border:none;background:var(--gold);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">✓ บันทึกกฎระบบ</button>
           </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> สรุปสถิติช่องจอด</div>
+            <div id="settings-stats"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: จัดการช่องจอด -->
+      <div id="spane-slots" style="display:none;">
+        <div style="display:flex;gap:8px;margin-bottom:4px;">
+          <button id="sbld-ari" class="floor-tab active" onclick="switchSettingsBld('ari')">🏢 Ari Hills</button>
+          <button id="sbld-bts" class="floor-tab" onclick="switchSettingsBld('bts')">🚇 BTS</button>
+          <button id="sbld-ksl" class="floor-tab" onclick="switchSettingsBld('ksl')">🏬 KSL</button>
+        </div>
+        <div id="settings-slots-content"></div>
+      </div>
+
+      <!-- TAB: ทะเบียนผู้มีสิทธิ์ -->
+      <div id="spane-plates" style="display:none;">
+        <div style="display:flex;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
+          <button id="spbld-ari" class="floor-tab active" onclick="switchSettingsPlatesBld('ari')">🏢 Ari Hills</button>
+          <button id="spbld-bts" class="floor-tab" onclick="switchSettingsPlatesBld('bts')">🚇 BTS</button>
+          <button id="spbld-ksl" class="floor-tab" onclick="switchSettingsPlatesBld('ksl')">🏬 KSL</button>
+        </div>
+        <div id="settings-plates-content"></div>
+      </div>
         </div>
 
         <!-- TAB: สิทธิ์ผู้ใช้ (hidden) -->
@@ -3381,13 +3752,9 @@
     <i class="ti ti-building bn-ico"></i>
     <span class="bn-label">KSL</span>
   </button>
-  <button class="bn-item" id="bn-notify" onclick="bnNav('notify')">
-    <i class="ti ti-brand-line bn-ico"></i>
-    <span class="bn-label">LINE</span>
-  </button>
   <button class="bn-item" id="bn-admin" onclick="bnNav('admin')">
     <i class="ti ti-settings bn-ico"></i>
-    <span class="bn-label">ตั้งค่า</span>
+    <span class="bn-label">Admin</span>
   </button>
 </nav>
 
@@ -4683,7 +5050,7 @@ function renderBookingTable(dateStr) {
   // แสดง booked rows ก่อน ตามด้วย empty rows ให้ครบ 18 ช่อง
   const bookedHtml = bookedRows.map((r, i) => {
     // ประเภทการจอด tag
-    let parkTypeTag = `<span style="color:var(--text-light)">–</span>`;
+    let parkTypeTag = `<span style="color:#6b7280">–</span>`;
     if (r.parkType === 'daily' || r.parkType === 'long' || r.parkType) {
       if (r.parkType === 'long') {
         parkTypeTag = `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#F3E8FF;color:#7C3AED;white-space:nowrap;">📆 จอดยาว</span>`;
@@ -4697,20 +5064,20 @@ function renderBookingTable(dateStr) {
       parkTypeTag += `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;margin-left:3px;">🌙 ค้างคืน</span>`;
     }
     const floorCell = `<span style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;background:#F0F9FF;color:#0369A1;padding:2px 8px;border-radius:6px;">ชั้น 5 ขวามือ</span>`;
-    return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
-      <td class="tbl-td" style="text-align:center;"><span style="font-weight:700;color:var(--text-muted);">${i+1}</span></td>
-      <td class="tbl-td" style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
-      <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.dept||'–'}</td>
+    return `<tr style="class='bk-tr-${i%2===0?"odd":"even"}'">
+      <td class="tbl-td" style="text-align:center;"><span style="font-weight:700;">${i+1}</span></td>
+      <td class="tbl-td" style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
+      <td class="tbl-td" style="font-size:11px;white-space:nowrap;">${r.dept||'–'}</td>
       <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.plate}</td>
-      <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.carType}</td>
+      <td class="tbl-td" style="font-size:11px;white-space:nowrap;">${r.carType}</td>
       <td class="tbl-td">${parkTypeTag}</td>
       <td class="tbl-td" style="text-align:center;">${floorCell}</td>
-      <td class="tbl-td" style="font-size:11px;color:${(r.note==='–'||!r.note)?'var(--text-light)':'var(--text-muted)'};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note||'–'}</td>
+      <td class="tbl-td" style="font-size:11px;color:${(r.note==='–'||!r.note)?'#9ca3af':'#374151'};overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note||'–'}</td>
     </tr>`;
   }).join('');
 
   const emptyHtml = bookedRows.length === 0
-    ? `<tr><td colspan="7" class="tbl-td" style="text-align:center;color:var(--text-light);padding:20px 0;">ไม่มีการแจ้งจอด</td></tr>`
+    ? `<tr><td colspan="7" class="tbl-td" style="text-align:center;color:#9ca3af;padding:20px 0;">ไม่มีการแจ้งจอด</td></tr>`
     : '';
 
   cTbody.innerHTML = bookedHtml + emptyHtml;
@@ -4727,20 +5094,20 @@ function renderBookingTable(dateStr) {
         const parkTypeTag = r.timeType === 'ค้างคืน'
           ? `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;">🌙 ค้างคืน</span>`
           : `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">🌅 ไม่ค้างคืน</span>`;
-        const floorBadge = `<span style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;background:#F5F5F2;color:var(--text-muted);padding:2px 8px;border-radius:6px;">${r.floor}</span>`;
-        return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
-          <td class="tbl-td" style="text-align:center;font-weight:700;color:var(--text-muted);">${i+1}</td>
-          <td class="tbl-td" style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
-          <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.dept||'–'}</td>
-          <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.plateReq}</td>
-          <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.carTypeReq}</td>
-          <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${r.plateOwner}</td>
+        const floorBadge = `<span style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;background:#F5F5F2;color:#374151;padding:2px 8px;border-radius:6px;">${r.floor}</span>`;
+        return `<tr style="class='bk-tr-${i%2===0?"odd":"even"}'">
+          <td class="tbl-td" style="text-align:center;font-weight:700;">${i+1}</td>
+          <td class="tbl-td" style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
+          <td class="tbl-td" style="font-size:11px;white-space:nowrap;">${r.dept||'–'}</td>
+          <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;color:#111827;">${r.plateReq}</td>
+          <td class="tbl-td" style="font-size:11px;white-space:nowrap;">${r.carTypeReq}</td>
+          <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;color:#374151;">${r.plateOwner}</td>
           <td class="tbl-td" style="text-align:center;">${parkTypeTag}</td>
           <td class="tbl-td" style="text-align:center;">${floorBadge}</td>
-          <td class="tbl-td" style="font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note||'–'}</td>
+          <td class="tbl-td" style="font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note||'–'}</td>
         </tr>`;
       }).join('')
-    : `<tr><td colspan="9" class="tbl-td" style="text-align:center;color:var(--text-light);padding:16px;">ไม่มีรายการ</td></tr>`;
+    : `<tr><td colspan="9" class="tbl-td" style="text-align:center;color:#9ca3af;padding:16px;">ไม่มีรายการ</td></tr>`;
 
   // ── รถอื่นๆ: กรองเฉพาะวันที่เลือก ──
   const others = ARI_OTHER_BOOKINGS.filter(r => {
@@ -4755,18 +5122,18 @@ function renderBookingTable(dateStr) {
             ? `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;">🌙 ค้างคืน</span>`
             : `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">🌅 ไม่ค้างคืน</span>`;
           const floorBadge = `<span style="font-size:11px;font-weight:700;background:#EDE9FE;color:#7C3AED;padding:2px 8px;border-radius:6px;white-space:nowrap;">หน้าอาคาร</span>`;
-          return `<tr style="background:${i%2===0?'transparent':'#FAFAF8'}">
-            <td class="tbl-td" style="text-align:center;font-weight:700;color:var(--text-muted);">${i+1}</td>
-            <td class="tbl-td" style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
-            <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.dept||'–'}</td>
+          return `<tr style="class='bk-tr-${i%2===0?"odd":"even"}'">
+            <td class="tbl-td" style="text-align:center;font-weight:700;">${i+1}</td>
+            <td class="tbl-td" style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
+            <td class="tbl-td" style="font-size:11px;white-space:nowrap;">${r.dept||'–'}</td>
             <td class="tbl-td" style="font-family:'DM Mono',monospace;font-size:11px;">${r.plate}</td>
-            <td class="tbl-td" style="font-size:11px;color:var(--text-muted);white-space:nowrap;">${r.carType}</td>
+            <td class="tbl-td" style="font-size:11px;white-space:nowrap;">${r.carType}</td>
             <td class="tbl-td" style="text-align:center;">${parkTypeTag}</td>
             <td class="tbl-td" style="text-align:center;">${floorBadge}</td>
-            <td class="tbl-td" style="font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note}</td>
+            <td class="tbl-td" style="font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.note||'–'}</td>
           </tr>`;
         }).join('')
-      : `<tr><td colspan="8" class="tbl-td" style="text-align:center;color:var(--text-light);padding:14px;">ไม่มีรายการ</td></tr>`;
+      : `<tr><td colspan="8" class="tbl-td" style="text-align:center;color:#9ca3af;padding:14px;">ไม่มีรายการ</td></tr>`;
     const otherEl = document.getElementById('other-count');
     if (otherEl) otherEl.textContent = others.length + ' รายการ';
   }
@@ -5587,7 +5954,9 @@ function printAriReport() {
   <table><thead><tr><th>ลำดับ</th><th>ชื่อผู้ขอ</th><th>ทะเบียนผู้ขอ</th><th>ประเภทรถ</th><th>ประเภทการจอด</th><th>ชั้น (จอดหน้าอาคาร)</th><th>หมายเหตุ</th></tr></thead>
   <tbody>${otherRows}</tbody></table>` : ''}
   <div class="footer">เอกสารนี้ออกจากระบบจัดการลานจอดโดยอัตโนมัติ — ไม่ต้องลงนาม &nbsp;|&nbsp; รายงานเฉพาะวันที่ ${printDateThai}</div>
-  </body></html>`;
+  <div class="footer">เอกสารนี้ออกจากระบบจัดการลานจอดโดยอัตโนมัติ</div>
+
+</body></html>`;
 
   const w = window.open('','_blank');
   w.document.write(html);
@@ -5722,7 +6091,7 @@ function exportAriReportXlsx() {
 
   // ── สร้าง HTML Table ที่ Excel เปิดได้ตรง (.xls format) ──
 
-const BN_MAIN_ITEMS = ['all','booking','ari','bts','ksl','notify','admin'];
+const BN_MAIN_ITEMS = ['all','booking','ari','bts','ksl','admin'];
 
 function bnNav(view) {
   BN_MAIN_ITEMS.forEach(v => {
@@ -5732,7 +6101,16 @@ function bnNav(view) {
   if (['ari','bts','ksl'].includes(view)) {
     switchBuilding(view);
   } else if (view === 'admin') {
-    tnav(null, 'admin');
+    if (adminLoggedIn) {
+      switchView('admin');
+    } else {
+      // Show login popup then go to admin
+      openAdminLogin();
+      document.getElementById('admin-user').value = '';
+      document.getElementById('admin-pass').value = '';
+      // After login success, switchView('admin') will be called
+      pendingAdminView = 'admin';
+    }
   } else {
     switchView(view);
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -5829,7 +6207,8 @@ function doInlineLogin(target) {
     updateAdminBadge();
     if (target === 'booking') initBookMode();
     if (target === 'queue')   openAddQueue();
-    if (target === 'settings') switchView('settings');
+    if (target === 'settings') { switchView('admin'); setTimeout(()=>switchAdminTab('settings'),50); return; }
+    if (target === 'notify')   { switchView('admin'); setTimeout(()=>switchAdminTab('line'),50); return; }
   } else {
     const err = document.getElementById('il-error-'+target);
     if (err) err.style.display = '';
@@ -5859,6 +6238,15 @@ function doAdminLogin() {
     adminLoggedIn = true;
     document.getElementById('admin-login-overlay').style.display = 'none';
     updateAdminBadge();
+    // ถ้ามาจากปุ่ม admin → ไปหน้า admin panel
+    if (pendingAdminView === 'admin') {
+      pendingAdminView = null;
+      switchView('admin');
+      // sync bottom nav active state
+      BN_MAIN_ITEMS.forEach(v => {
+        document.getElementById('bn-'+v)?.classList.toggle('active', v==='admin');
+      });
+    }
   } else {
     document.getElementById('admin-error').style.display = 'block';
     document.getElementById('admin-pass').value = '';
@@ -6685,9 +7073,13 @@ function switchAdminTab(tab) {
     const p = document.getElementById('apane-'+t);
     if(p) p.style.display = t===tab ? '' : 'none';
   });
-  // update sched summary when LINE tab opens
-  if(tab==='line') admUpdateSchedSummary();
-  // update last sync time
+  if(tab==='line'){
+    admUpdateSchedSummary();
+    // init calendar if not done
+    if(!_nvCalYear) nvInitCalendar();
+    setTimeout(()=>{ nvRenderScheds(); nvSetDate(0); }, 100);
+  }
+  if(tab==='settings') switchSettingsTab('rules');
   if(tab==='system'){
     const el=document.getElementById('adm-last-sync');
     const gs=document.getElementById('gs-status-label');
@@ -6723,6 +7115,16 @@ async function admTestAll(){
     if(lineConn) lineConn.innerHTML=d.ok?'<span style="color:#4ade80">✓ เชื่อมต่อ</span>':'<span style="color:#f87171">✗ '+d.msg+'</span>';
   }catch(e){if(lineConn)lineConn.innerHTML='<span style="color:#f87171">✗ Error</span>';}
 }
+
+function desktopAdminNav() {
+  if (adminLoggedIn) {
+    switchView('admin');
+  } else {
+    pendingAdminView = 'admin';
+    openAdminLogin();
+  }
+}
+
 // ══ END ADMIN ══
 let _nvScheds=[{id:1,time:'16:30',name:'บ่ายสี่โมงครึ่ง',type:'tomorrow',enabled:true}];
 let _nvData={common:[],sub:[],other:[],date:''};
@@ -7272,5 +7674,36 @@ function switchDashBg() {
 
 initDashSlideshow();
 </script>
+
+<!-- ─── ADMIN LOGIN OVERLAY ─── -->
+<div id="admin-login-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);z-index:900;align-items:center;justify-content:center;">
+  <div style="background:#1a1a2e;border:0.5px solid rgba(255,255,255,0.12);border-radius:18px;padding:28px 32px;width:360px;max-width:92vw;box-shadow:0 24px 64px rgba(0,0,0,0.5);">
+    <div style="text-align:center;margin-bottom:22px;">
+      <div style="width:52px;height:52px;background:linear-gradient(135deg,#7C3AED,#5B21B6);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px;">⚙️</div>
+      <div style="font-size:18px;font-weight:700;color:#fff;">Admin Panel</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;">กรอก username และ password</div>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);display:block;margin-bottom:5px;">Username</label>
+      <input id="admin-user" type="text" placeholder="admin" onkeydown="if(event.key==='Enter')document.getElementById('admin-pass').focus()"
+        style="width:100%;padding:10px 14px;border-radius:10px;border:0.5px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.07);color:#fff;font-size:14px;box-sizing:border-box;outline:none;">
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);display:block;margin-bottom:5px;">Password</label>
+      <input id="admin-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doAdminLogin()"
+        style="width:100%;padding:10px 14px;border-radius:10px;border:0.5px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.07);color:#fff;font-size:14px;box-sizing:border-box;outline:none;">
+    </div>
+    <div id="admin-error" style="display:none;font-size:11px;color:#f87171;margin-bottom:12px;text-align:center;">❌ Username หรือ Password ไม่ถูกต้อง</div>
+    <button onclick="doAdminLogin()"
+      style="width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(124,58,237,0.4);">
+      เข้าสู่ระบบ
+    </button>
+    <button onclick="closeAdminLogin()"
+      style="width:100%;padding:10px;margin-top:8px;border-radius:12px;border:0.5px solid rgba(255,255,255,0.12);background:transparent;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;">
+      ยกเลิก
+    </button>
+    <div style="text-align:center;margin-top:14px;font-size:10px;color:rgba(255,255,255,0.25);">admin / admin123</div>
+  </div>
+</div>
 </body>
 </html>
