@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ระบบจัดการลานจอด — Parking Management System</title>
+<title>ระบบจัดการลานจอด — Parking Management System v16</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.8.0/dist/tabler-icons.min.css">
 <style>
@@ -2036,23 +2036,47 @@
     /* booking: desktop grid hidden on mobile, mbk-root shown */
     #view-booking.active .book-grid { display:none!important; }
     #view-booking.active .book-left-half, #view-booking.active .book-right-half { display:none!important; }
-    #view-booking.active #mbk-root { display:flex!important; flex-direction:column!important; }
+    #view-booking.active #mbk-root { display:flex!important; flex-direction:column!important; min-height:0; }
     #view-booking:not(.active) #mbk-root { display:none!important; }
     #mbk-root { display:none; }
+
+    /* ── Mobile booking calendar card ── */
+    #mbk-cal-card { display:flex!important; flex-direction:column!important; flex-shrink:0; background:#fff!important; border-radius:20px!important; border:1px solid #E0ECF8!important; overflow:hidden!important; margin:12px 14px 0!important; }
+    #mbk-cal-card>div:first-child { padding:11px 14px!important; border-bottom:1px solid #EEF4FF!important; background:#F5F9FF!important; }
+    #mbk-cal-month { font-size:14px!important; font-weight:700!important; color:#0F1C38!important; }
+    #mbk-cal-grid { display:grid!important; grid-template-columns:repeat(7,1fr)!important; gap:2px!important; padding:8px 10px 10px!important; min-height:160px; }
+    #mbk-sel-date-bar { background:#E6F7FA!important; border-top:1px solid #D0DDF0!important; padding:8px 14px!important; }
+    #mbk-sel-date-txt { color:#0F1C38!important; font-size:13px!important; font-weight:600!important; }
+
+    /* ── Mobile KPI strip ── */
+    #mbk-kpi { background:transparent!important; padding:10px 14px!important; }
+    .mbk-kpi { background:#fff!important; border:1px solid #D0DDF0!important; border-radius:14px!important; }
+    .mbk-kpi.p::before { background:#0097B2!important; } .mbk-kpi.p .mbk-kn { color:#0097B2!important; }
+    .mbk-kpi.t::before { background:#059669!important; } .mbk-kpi.t .mbk-kn { color:#059669!important; }
+    .mbk-kpi.a::before { background:#D97706!important; } .mbk-kpi.a .mbk-kn { color:#D97706!important; }
+
+    /* ── Mobile list ── */
+    #mbk-list { flex:1; display:flex!important; flex-direction:column!important; gap:10px!important; padding:0 14px 88px!important; min-height:40px; }
+
+    /* ── Calendar nav buttons ── */
+    #mbk-cal-card .cal-nav-btn, #mbk-cal-card [onclick*="mbkCalNav"] {
+      background:#F0F4FA!important; border:1px solid #D0DDF0!important;
+      border-radius:9px!important; color:#0F1C38!important;
+    }
 
     /* date strip */
     #mbk-dates { display:flex; gap:8px; padding:12px 14px 8px; overflow-x:auto; scrollbar-width:none; background:#fff; border-bottom:1px solid #EEEEF5; flex-shrink:0; }
     #mbk-dates::-webkit-scrollbar { display:none; }
     .mbk-date { flex-shrink:0; display:flex; flex-direction:column; align-items:center; padding:9px 12px; border-radius:16px; cursor:pointer; min-width:52px; border:1.5px solid #EEF0F8; background:#F7F8FC; transition:all .2s; }
-    .mbk-date.active { background:#7C3AED; border-color:#7C3AED; box-shadow:0 6px 16px rgba(124,58,237,0.3); }
-    .mbk-date.has-today { border-color:#7C3AED; background:#F5F3FF; }
+    .mbk-date.active { background:#0097B2; border-color:#006F85; box-shadow:0 6px 16px rgba(0,151,178,0.3); }
+    .mbk-date.has-today { border-color:#0097B2; background:#E0F5F9; }
     .mbk-date .d-dow { font-size:10px; font-weight:600; color:#9ca3af; }
     .mbk-date .d-num { font-size:20px; font-weight:800; color:#1E1B3A; line-height:1; margin:1px 0; }
     .mbk-date .d-mon { font-size:9px; color:#9ca3af; }
-    .mbk-date .d-dot { width:5px; height:5px; border-radius:50%; background:#7C3AED; margin-top:3px; }
+    .mbk-date .d-dot { width:5px; height:5px; border-radius:50%; background:#0097B2; margin-top:3px; }
     .mbk-date.active .d-dow,.mbk-date.active .d-num,.mbk-date.active .d-mon { color:#fff; }
     .mbk-date.active .d-dot { background:rgba(255,255,255,0.6); }
-    .mbk-date.has-today .d-dow,.mbk-date.has-today .d-num { color:#7C3AED; }
+    .mbk-date.has-today .d-dow,.mbk-date.has-today .d-num { color:#0097B2; }
 
     /* kpi */
     #mbk-kpi { display:flex; gap:8px; padding:12px 14px; }
@@ -2066,7 +2090,7 @@
 
     /* CTA */
     #mbk-cta-wrap { padding:6px 14px 12px; }
-    #mbk-cta { width:100%; padding:15px; border-radius:18px; border:none; background:linear-gradient(135deg,#7C3AED,#5B21B6); color:#fff; font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 8px 24px rgba(124,58,237,0.4); font-family:'Sarabun','DM Sans',sans-serif; }
+    #mbk-cta { width:100%; padding:15px; border-radius:18px; border:2px solid #006F85; background:#0097B2; color:#fff; font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; font-family:'Sarabun','DM Sans',sans-serif; transition:all .2s; }
     #mbk-cta i { font-size:20px; }
 
     /* list */
@@ -2095,23 +2119,23 @@
     /* popup */
     #mbk-popup-overlay { display:none; position:fixed; inset:0; background:rgba(10,8,30,0.55); backdrop-filter:blur(6px); z-index:500; align-items:flex-end; }
     #mbk-popup-overlay.open { display:flex!important; }
-    #mbk-popup-sheet { background:#fff; border-radius:28px 28px 0 0; width:100%; max-height:93vh; display:flex; flex-direction:column; animation:mbkUp .28s cubic-bezier(.34,1.2,.64,1); }
+    #mbk-popup-sheet { background:#EEF4FF; border-radius:28px 28px 0 0; width:100%; max-height:93vh; display:flex; flex-direction:column; animation:mbkUp .28s cubic-bezier(.34,1.2,.64,1); }
     @keyframes mbkUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
     .mbk-drag { width:44px; height:4px; background:rgba(0,0,0,0.08); border-radius:2px; margin:12px auto 0; flex-shrink:0; }
-    .mbk-phdr { padding:12px 18px 12px; border-bottom:1px solid #F0EFF8; display:flex; align-items:center; gap:10px; flex-shrink:0; }
-    .mbk-pico { width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,#7C3AED,#5B21B6); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .mbk-phdr { padding:12px 18px 12px; background:#0F1C38; border-bottom:none; display:flex; align-items:center; gap:10px; flex-shrink:0; border-radius:28px 28px 0 0; }
+    .mbk-pico { width:40px; height:40px; border-radius:12px; background:#0F1C38; border:1.5px solid rgba(65,150,255,0.25); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
     .mbk-pico i { font-size:22px; color:#fff; }
-    .mbk-ptitle { font-size:16px; font-weight:700; color:#1E1B3A; }
-    .mbk-psub { font-size:11px; color:#9ca3af; }
-    .mbk-pclose { width:32px; height:32px; border-radius:10px; background:#F5F6FA; border:1px solid #E8EAF2; display:flex; align-items:center; justify-content:center; cursor:pointer; margin-left:auto; flex-shrink:0; }
-    .mbk-pclose i { font-size:16px; color:#6b7280; }
-    .mbk-pbody { flex:1; overflow-y:auto; padding:14px 18px; scrollbar-width:none; }
+    .mbk-ptitle { font-size:16px; font-weight:700; color:#fff; }
+    .mbk-psub { font-size:11px; color:rgba(255,255,255,.5); }
+    .mbk-pclose { width:32px; height:32px; border-radius:10px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; cursor:pointer; margin-left:auto; flex-shrink:0; }
+    .mbk-pclose i { font-size:16px; color:rgba(255,255,255,.8); }
+    .mbk-pbody { flex:1; overflow-y:auto; padding:14px 18px; scrollbar-width:none; background:#EEF4FF; }
     .mbk-pbody::-webkit-scrollbar { display:none; }
 
     /* type tabs */
     .mbk-type-tabs { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:14px; }
     .mbk-ttab { padding:10px 6px; border-radius:14px; border:1.5px solid #E8EAF2; background:#F7F8FC; cursor:pointer; text-align:center; transition:all .2s; }
-    .mbk-ttab.active { background:#7C3AED; border-color:#7C3AED; box-shadow:0 6px 16px rgba(124,58,237,0.3); }
+    .mbk-ttab.active { background:#0097B2; border-color:#006F85; box-shadow:0 6px 16px rgba(0,151,178,0.3); }
     .mbk-ttab .tt-ico { font-size:22px; display:block; margin-bottom:2px; }
     .mbk-ttab .tt-lbl { font-size:11px; font-weight:700; color:#374151; display:block; }
     .mbk-ttab .tt-sub { font-size:9px; color:#9ca3af; }
@@ -2122,22 +2146,22 @@
     .mbk-field { margin-bottom:12px; }
     .mbk-field label { font-size:11px; font-weight:700; color:#374151; display:block; margin-bottom:5px; text-transform:uppercase; letter-spacing:.3px; }
     .mbk-field input,.mbk-field select,.mbk-field textarea { width:100%; padding:12px 14px; border-radius:14px; border:1.5px solid #E8EAF2; background:#F7F8FC; font-size:14px; font-family:'Sarabun',sans-serif; color:#1E1B3A; outline:none; transition:all .2s; box-sizing:border-box; }
-    .mbk-field input:focus,.mbk-field select:focus,.mbk-field textarea:focus { border-color:#7C3AED; background:#fff; box-shadow:0 0 0 3px rgba(124,58,237,0.1); }
+    .mbk-field input:focus,.mbk-field select:focus,.mbk-field textarea:focus { border-color:#0097B2; background:#fff; box-shadow:0 0 0 3px rgba(0,151,178,0.1); }
     .mbk-field textarea { resize:none; min-height:70px; }
     .mbk-field-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
     .mbk-chips { display:flex; gap:5px; flex-wrap:wrap; }
     .mbk-chip { padding:7px 13px; border-radius:20px; border:1.5px solid #E8EAF2; background:#F7F8FC; font-size:12px; font-weight:600; color:#374151; cursor:pointer; transition:all .2s; white-space:nowrap; }
-    .mbk-chip.active { background:#1E1B3A; border-color:#1E1B3A; color:#fff; }
+    .mbk-chip.active { background:#0F1C38; border-color:#0F1C38; color:#fff; }
     .mbk-toggle-row { display:flex; align-items:center; justify-content:space-between; padding:11px 14px; background:#F7F8FC; border-radius:14px; border:1.5px solid #E8EAF2; }
     .mbk-toggle-lbl { font-size:13px; font-weight:600; color:#1E1B3A; }
     .mbk-toggle-sub { font-size:11px; color:#9ca3af; }
     .mbk-sw { width:44px; height:26px; border-radius:999px; background:#E8EAF2; position:relative; cursor:pointer; transition:background .2s; flex-shrink:0; }
-    .mbk-sw.on { background:#7C3AED; }
+    .mbk-sw.on { background:#0097B2; }
     .mbk-sw::after { content:''; position:absolute; width:20px; height:20px; border-radius:50%; background:#fff; top:3px; left:3px; transition:left .2s; box-shadow:0 2px 6px rgba(0,0,0,0.15); }
     .mbk-sw.on::after { left:21px; }
-    .mbk-pfooter { padding:10px 18px 22px; background:#fff; border-top:1px solid #F0EFF8; display:flex; gap:8px; flex-shrink:0; }
-    .mbk-bcancel { flex:1; padding:13px; border-radius:16px; border:1.5px solid #E8EAF2; background:#F7F8FC; font-size:14px; font-weight:700; color:#6b7280; cursor:pointer; font-family:'Sarabun',sans-serif; }
-    .mbk-bsubmit { flex:2; padding:13px; border-radius:16px; border:none; background:linear-gradient(135deg,#7C3AED,#5B21B6); color:#fff; font-size:14px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 6px 20px rgba(124,58,237,0.4); font-family:'Sarabun',sans-serif; }
+    .mbk-pfooter { padding:10px 18px 22px; background:#EEF4FF; border-top:1px solid #D0DDF0; display:flex; gap:8px; flex-shrink:0; }
+    .mbk-bcancel { flex:1; padding:13px; border-radius:16px; border:1.5px solid #D0DDF0; background:#fff; font-size:14px; font-weight:600; color:#4A6580; cursor:pointer; font-family:'Sarabun',sans-serif; transition:all .15s; }
+    .mbk-bsubmit { flex:2; padding:13px; border-radius:16px; border:2px solid #006F85; background:#0097B2; color:#fff; font-size:14px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; font-family:'Sarabun',sans-serif; transition:all .2s; }
 
     /* success */
     #mbk-success-overlay { display:none; position:fixed; inset:0; background:rgba(10,8,30,0.65); backdrop-filter:blur(8px); z-index:600; align-items:flex-end; }
@@ -2152,7 +2176,7 @@
     .mbks-row:last-child { border-bottom:none; }
     .mbks-lbl { color:#9ca3af; }
     .mbks-val { font-weight:700; color:#1E1B3A; }
-    .mbks-btn { width:100%; padding:15px; border-radius:16px; border:none; background:linear-gradient(135deg,#7C3AED,#5B21B6); color:#fff; font-size:15px; font-weight:700; cursor:pointer; font-family:'Sarabun',sans-serif; box-shadow:0 6px 20px rgba(124,58,237,0.35); }
+    .mbks-btn { width:100%; padding:15px; border-radius:16px; border:2px solid #006F85; background:#0097B2; color:#fff; font-size:15px; font-weight:700; cursor:pointer; font-family:'Sarabun',sans-serif; }
   }
 
   /* ═══════════════════════════════════════════════════════
@@ -2373,15 +2397,81 @@
     .fs-floor { color:var(--m-text)!important; font-weight:600!important; }
     .fs-nums { color:var(--m-sub)!important; }
 
-    /* ── MODAL ── */
+    /* ── BOOKING MODAL v3 on mobile — single-column bottom sheet ── */
     #booking-modal-overlay { padding:0!important; align-items:flex-end!important; }
-    #booking-modal-overlay>div { width:100%!important; max-width:100%!important; border-radius:24px 24px 0 0!important; max-height:92vh!important; background:#fff!important; border:none!important; }
-    #booking-modal-overlay>div>div:first-child { background:linear-gradient(135deg,#7C3AED,#5B21B6)!important; border-radius:24px 24px 0 0!important; padding:16px 20px!important; }
-    #booking-modal-overlay>div>div:first-child * { color:#fff!important; }
-    .form-input,.form-select,input[type="text"],input[type="date"],select { background:var(--m-lavender)!important; border:1.5px solid transparent!important; border-radius:12px!important; color:var(--m-text)!important; font-size:13px!important; padding:10px 14px!important; }
-    .form-input:focus,.form-select:focus { border-color:var(--m-purple)!important; background:#fff!important; }
+
+    /* bm2-shell: full-width bottom sheet */
+    #booking-modal-overlay .bm2-shell {
+      width:100%!important; max-width:100%!important; border-radius:22px 22px 0 0!important;
+      max-height:94vh!important; background:#EEF4FF!important; border:none!important;
+      animation:none!important;
+    }
+    /* Header keeps v3 navy */
+    #booking-modal-overlay .bm2-head { border-radius:22px 22px 0 0!important; }
+
+    /* Body: stack single column */
+    #booking-modal-overlay .bm2-body {
+      grid-template-columns:1fr!important; overflow-y:auto!important;
+      max-height:calc(94vh - 74px)!important;
+    }
+    /* Left panel: no border-right, no fixed height */
+    #booking-modal-overlay .bm2-left {
+      border-right:none!important; border-bottom:1px solid #D0DDF0!important;
+      overflow:visible!important;
+    }
+    /* Hide left calendar panel on mobile (use date input instead) */
+    #booking-modal-overlay .bm2-left { display:none!important; }
+
+    /* Right panel: full scroll */
+    #booking-modal-overlay .bm2-right {
+      overflow-y:auto!important; padding-bottom:16px!important;
+    }
+
+    /* Fix form inputs — DO NOT override globally, scope to bm2 only */
+    #booking-modal-overlay .bm2-fi {
+      background:#fff!important; border:1.5px solid #D0DDF0!important;
+      border-radius:11px!important; color:#0F1C38!important;
+      font-size:14px!important; padding:11px 13px!important;
+    }
+    #booking-modal-overlay .bm2-fi:focus {
+      border-color:#4196FF!important; box-shadow:0 0 0 3px rgba(65,150,255,0.12)!important;
+    }
+    #booking-modal-overlay .bm2-flbl { font-size:12px!important; color:#4A6580!important; }
+    #booking-modal-overlay .bm2-fg {
+      background:#fff!important; border-radius:14px!important;
+      padding:12px!important; border:1px solid #D0DDF0!important;
+    }
+    #booking-modal-overlay .bm2-bsave {
+      padding:13px!important; font-size:14px!important;
+    }
+    #booking-modal-overlay .bm2-bcanc {
+      padding:13px!important; font-size:14px!important;
+    }
+
+    /* Fix type cards on mobile */
+    #booking-modal-overlay .bm2-tcrow { gap:8px!important; }
+    #booking-modal-overlay .bm2-tc { padding:13px 8px!important; border-radius:14px!important; }
+
+    /* Overnight buttons */
+    #booking-modal-overlay .bm2-ovbtn { padding:12px!important; font-size:13px!important; border-radius:12px!important; }
+
+    /* OLD form classes (backward compat) - scoped properly */
+    #booking-modal-overlay .form-input,
+    #booking-modal-overlay .form-select {
+      background:#fff!important; border:1.5px solid #D0DDF0!important;
+      border-radius:11px!important; color:#0F1C38!important;
+    }
     .form-label { color:var(--m-sub)!important; font-size:11px!important; font-weight:600!important; }
     .bm-type-btn.active { background:var(--m-purple)!important; color:#fff!important; border-radius:12px!important; box-shadow:0 4px 12px rgba(124,58,237,0.3)!important; }
+
+    /* Fix mbk popup inputs (mobile booking form) */
+    #mbk-popup-overlay .mbk-field input,
+    #mbk-popup-overlay .mbk-field select,
+    #mbk-popup-overlay .mbk-field textarea {
+      background:#F7F8FC!important; border:1.5px solid #E8EAF2!important;
+      border-radius:14px!important; color:#1E1B3A!important;
+      font-size:14px!important;
+    }
 
     /* ── SLOT POPUP ── */
     #slot-mobile-popup .smp-sheet { background:#fff!important; border-radius:24px 24px 0 0!important; padding:8px 22px 44px!important; box-shadow:0 -12px 48px rgba(100,80,200,0.18)!important; }
@@ -2483,158 +2573,228 @@
 
   }
 
+
   /* ═══════════════════════════════════════════════
-     BOOKING MODAL v2 — Clean Light Design
+     BOOKING MODAL v3 — Light Premium (White + Dark Navy)
   ═══════════════════════════════════════════════ */
   @keyframes bm2-in {
-    from { opacity:0; transform:translateY(10px) scale(0.98); }
+    from { opacity:0; transform:translateY(12px) scale(0.97); }
     to   { opacity:1; transform:translateY(0)    scale(1); }
   }
+  @keyframes bm2-spin { to { transform:rotate(360deg); } }
+  @keyframes bm2-boing {
+    0%{transform:scale(1)} 18%{transform:scale(.9)} 50%{transform:scale(1.08)}
+    70%{transform:scale(.97)} 85%{transform:scale(1.03)} 100%{transform:scale(1)}
+  }
+  .bm2-spin { animation:bm2-spin 0.7s linear infinite; display:inline-block; }
+
+  /* Shell */
   .bm2-shell {
-    background:#fff; border-radius:22px; width:820px;
+    background:#EEF4FF; border-radius:24px; width:840px;
     max-width:96vw; max-height:calc(100vh - 40px);
     display:flex; flex-direction:column;
-    border:1px solid #DDE5F0; overflow:hidden;
-    animation:bm2-in 0.24s ease;
+    border:1px solid #C8DCF0; overflow:hidden;
+    animation:bm2-in 0.3s cubic-bezier(.34,1.1,.64,1);
   }
+
+  /* Header — Dark Navy */
   .bm2-head {
-    background:#0097B2; padding:15px 22px;
+    background:#0F1C38;
+    padding:15px 22px;
     display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
+    position:relative; overflow:hidden;
   }
-  .bm2-hl { display:flex; align-items:center; gap:12px; }
+  .bm2-head::before {
+    content:''; position:absolute; right:-40px; top:-40px;
+    width:150px; height:150px; border-radius:50%;
+    background:rgba(65,150,255,0.07); pointer-events:none;
+  }
+  .bm2-head::after {
+    content:''; position:absolute; right:30px; bottom:-25px;
+    width:80px; height:80px; border-radius:50%;
+    background:rgba(65,150,255,0.04); pointer-events:none;
+  }
+  .bm2-hl { display:flex; align-items:center; gap:12px; position:relative; }
   .bm2-hico {
     width:40px; height:40px; border-radius:13px;
-    background:rgba(255,255,255,0.2); border:1.5px solid rgba(255,255,255,0.35);
+    background:rgba(65,150,255,0.15); border:1.5px solid rgba(65,150,255,0.28);
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
   }
-  .bm2-hico i { color:#fff; font-size:20px; }
-  .bm2-htop { font-size:15px; font-weight:600; color:#fff; letter-spacing:-0.3px; }
-  .bm2-hsub { font-size:11px; color:rgba(255,255,255,0.65); margin-top:2px; }
+  .bm2-hico i { color:#4196FF; font-size:20px; }
+  .bm2-htop { font-size:15px; font-weight:600; color:#fff; letter-spacing:-.3px; }
+  .bm2-hsub { font-size:11px; color:rgba(255,255,255,.4); margin-top:2px; }
   .bm2-badge {
-    background:rgba(255,255,255,0.22); color:#fff; font-size:11px; font-weight:500;
-    padding:4px 13px; border-radius:99px; border:1px solid rgba(255,255,255,0.3);
+    background:#4196FF; color:#fff; border:none;
+    font-size:11px; font-weight:600; padding:4px 13px;
+    border-radius:99px; position:relative;
   }
   .bm2-xcl {
-    width:32px; height:32px; border-radius:99px;
-    background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);
+    width:31px; height:31px; border-radius:99px;
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14);
     cursor:pointer; display:flex; align-items:center; justify-content:center;
-    color:rgba(255,255,255,0.85); font-size:14px; transition:background 0.15s;
+    color:rgba(255,255,255,.5); transition:all .15s; position:relative;
   }
-  .bm2-xcl:hover { background:rgba(255,255,255,0.28); }
-  .bm2-body {
-    display:grid; grid-template-columns:1fr 1fr;
-    flex:1; overflow:hidden; border-radius:0 0 22px 22px;
-  }
+  .bm2-xcl:hover { background:rgba(255,255,255,.16); color:#fff; }
+
+  /* Body grid */
+  .bm2-body { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); flex:1; overflow:hidden; }
   .bm2-left {
-    padding:16px; background:#F7F9FC; border-right:1px solid #DDE5F0;
-    overflow-y:auto; display:flex; flex-direction:column; gap:12px;
+    padding:16px; background:#F5F9FF; border-right:1px solid #D0DDF0;
+    overflow-y:auto; display:flex; flex-direction:column; gap:13px;
   }
   .bm2-right {
-    padding:16px 20px; background:#fff;
+    padding:16px 20px; background:#EEF4FF;
     overflow-y:auto; display:flex; flex-direction:column; gap:11px;
   }
+
+  /* Section label */
   .bm2-slbl {
-    font-size:10px; font-weight:500; color:#94A3B8;
+    font-size:10px; font-weight:600; color:#7A96B5;
     letter-spacing:0.9px; text-transform:uppercase;
     display:flex; align-items:center; gap:5px; margin-bottom:8px;
   }
   .bm2-slbl i { font-size:12px; }
-  .bm2-req { color:#0097B2; margin-left:1px; }
+  .bm2-req { color:#4196FF; margin-left:1px; }
+
+  /* Mode toggle — segmented */
   .bm2-tog {
-    display:flex; gap:5px; padding:4px;
-    background:#EEF2F7; border-radius:99px; border:1.5px solid #DDE5F0;
+    display:flex; gap:4px; background:#E0ECF8;
+    border-radius:14px; padding:4px; border:1px solid #C8DCF0;
   }
   .bm2-tbtn {
-    flex:1; padding:9px 10px; border-radius:99px; border:1.5px solid transparent;
-    font-size:11px; font-weight:500; color:#94A3B8; background:transparent;
+    flex:1; padding:9px 8px; border-radius:11px; border:none;
+    font-size:11px; font-weight:500; color:#7A96B5; background:transparent;
     cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px;
-    transition:all 0.2s; font-family:'DM Sans',sans-serif; user-select:none;
+    transition:all .22s; font-family:'DM Sans',sans-serif; user-select:none;
   }
   .bm2-tbtn i { font-size:14px; }
-  .bm2-tbsub { font-size:9px; font-weight:400; opacity:0.7; }
-  .bm2-tbtn-on {
-    background:#0097B2 !important; color:#fff !important;
-    border-color:#006F85 !important; font-weight:600 !important;
+  .bm2-tbsub { font-size:9px; opacity:.7; font-weight:400; }
+  .bm2-tbtn-on { background:#0F1C38 !important; color:#fff !important; }
+  .bm2-tbtn-on i { color:#4196FF !important; }
+  .bm2-tbtn-on .bm2-tbsub { opacity:.6; color:#A8C8FF; }
+
+  /* Calendar */
+  .bm2-calcard {
+    background:#fff; border-radius:16px; border:1px solid #D0DDF0;
+    overflow:hidden; box-shadow:0 2px 10px rgba(0,30,80,0.06);
   }
-  .bm2-calcard { background:#fff; border-radius:16px; border:1.5px solid #DDE5F0; overflow:hidden; }
   .bm2-caltop {
-    padding:11px 14px; border-bottom:1px solid #EEF2F7;
+    padding:11px 14px; border-bottom:1px solid #EEF4FF;
     display:flex; align-items:center; justify-content:space-between;
   }
-  .bm2-calmo { font-size:13px; font-weight:600; color:#1A2233; }
+  .bm2-calmo { font-size:13px; font-weight:700; color:#0F1C38; }
   .bm2-cnb {
-    width:28px; height:28px; border-radius:99px;
-    border:1.5px solid #DDE5F0; background:#F7F9FC;
-    cursor:pointer; display:flex; align-items:center;
-    justify-content:center; color:#4A5568; font-size:13px; transition:all 0.12s;
-  }
-  .bm2-cnb:hover { background:#E6F7FA; border-color:#80CFD9; color:#0097B2; }
-  .bm2-cg { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; padding:10px 12px 12px; font-size:11px; }
-  .bm2-cal-hint {
-    margin:0 12px 10px; font-size:10px; color:#0097B2;
-    background:#E6F7FA; border-radius:99px; padding:5px 12px;
-    border:1px solid #80CFD9; min-height:14px;
-  }
-  .bm2-occ { background:#0097B2; border-radius:16px; padding:13px 15px; }
-  .bm2-occh { font-size:11px; font-weight:500; color:rgba(255,255,255,0.75); display:flex; align-items:center; gap:5px; margin-bottom:9px; }
-  .bm2-occbar { height:5px; background:rgba(255,255,255,0.25); border-radius:99px; overflow:hidden; margin-bottom:12px; }
-  .bm2-occf { height:100%; background:#fff; border-radius:99px; transition:width 0.5s; }
-  .bm2-sts { display:grid; grid-template-columns:1fr 1px 1fr 1px 1fr; text-align:center; }
-  .bm2-sv { font-size:22px; font-weight:600; line-height:1; }
-  .bm2-sv.bk { color:#fff; } .bm2-sv.av { color:#B2F0E8; } .bm2-sv.tot { color:rgba(255,255,255,0.65); }
-  .bm2-sl { font-size:10px; color:rgba(255,255,255,0.5); margin-top:2px; }
-  .bm2-sdi { background:rgba(255,255,255,0.2); }
-  .bm2-tc {
-    flex:1; padding:12px 8px; border-radius:14px; border:2px solid #DDE5F0;
-    background:#F7F9FC; text-align:center; cursor:pointer; transition:all 0.2s; user-select:none;
-  }
-  .bm2-tc i { font-size:17px; display:block; margin-bottom:5px; color:#94A3B8; transition:all 0.2s; }
-  .bm2-tcn { font-size:11px; font-weight:500; color:#4A5568; transition:all 0.2s; }
-  .bm2-tcs { font-size:10px; color:#94A3B8; margin-top:2px; transition:all 0.2s; }
-  .bm2-tc-a.bm2-tc-sel { background:#0097B2 !important; border-color:#006F85 !important; }
-  .bm2-tc-a.bm2-tc-sel i,.bm2-tc-a.bm2-tc-sel .bm2-tcn { color:#fff !important; }
-  .bm2-tc-a.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,.75) !important; }
-  .bm2-tc-b.bm2-tc-sel { background:#6B4EAF !important; border-color:#4D3680 !important; }
-  .bm2-tc-b.bm2-tc-sel i,.bm2-tc-b.bm2-tc-sel .bm2-tcn { color:#fff !important; }
-  .bm2-tc-b.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,.75) !important; }
-  .bm2-tc-c.bm2-tc-sel { background:#D97706 !important; border-color:#B45309 !important; }
-  .bm2-tc-c.bm2-tc-sel i,.bm2-tc-c.bm2-tc-sel .bm2-tcn { color:#fff !important; }
-  .bm2-tc-c.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,.8) !important; }
-  .bm2-flbl { font-size:12px; font-weight:500; color:#1A2233; display:block; margin-bottom:5px; }
-  .bm2-fi {
-    width:100%; padding:10px 13px; border:1.5px solid #C5D0E0; border-radius:12px;
-    font-size:13px; color:#1A2233; background:#FAFBFD;
-    outline:none; font-family:'DM Sans',sans-serif; transition:all 0.15s; box-sizing:border-box;
-  }
-  .bm2-fi::placeholder { color:#94A3B8; }
-  .bm2-fi:focus { border-color:#0097B2; background:#fff; box-shadow:0 0 0 3px #E6F7FA; }
-  .bm2-ovbtn {
-    flex:1; padding:10px 8px; border-radius:12px; border:2px solid #DDE5F0; background:#F7F9FC;
-    font-size:12px; font-weight:500; color:#94A3B8;
+    width:28px; height:28px; border-radius:9px;
+    border:1px solid #D0DDF0; background:#F5F9FF;
     cursor:pointer; display:flex; align-items:center; justify-content:center;
-    gap:6px; transition:all 0.2s; user-select:none;
+    color:#7A96B5; font-size:13px; transition:all .12s;
   }
-  .bm2-ovbtn:hover:not(.bm2-ov-a):not(.bm2-ov-b) { border-color:#C5D0E0; color:#4A5568; }
-  .bm2-ov-a { background:#0097B2 !important; border-color:#006F85 !important; color:#fff !important; font-weight:600 !important; }
-  .bm2-ov-b { background:#6B4EAF !important; border-color:#4D3680 !important; color:#fff !important; font-weight:600 !important; }
+  .bm2-cnb:hover { background:#0F1C38; border-color:#0F1C38; color:#fff; }
+  .bm2-cg { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; padding:8px 10px 10px; }
+  .bm2-cal-hint {
+    margin:0 12px 10px; font-size:10px; color:#0F1C38;
+    background:#EEF4FF; border-radius:99px; padding:5px 12px;
+    border:1px solid #C8DCF0; display:none; align-items:center; gap:5px;
+  }
+
+  /* Occupancy — dark */
+  .bm2-occ {
+    background:#0F1C38; border-radius:16px; padding:14px 15px;
+    position:relative; overflow:hidden;
+  }
+  .bm2-occ::before {
+    content:''; position:absolute; right:-20px; top:-20px;
+    width:80px; height:80px; border-radius:50%;
+    background:rgba(65,150,255,0.08); pointer-events:none;
+  }
+  .bm2-occh { font-size:11px; font-weight:500; color:rgba(255,255,255,.45); display:flex; align-items:center; gap:5px; margin-bottom:10px; }
+  .bm2-occbar { height:4px; background:rgba(255,255,255,.12); border-radius:99px; overflow:hidden; margin-bottom:12px; }
+  .bm2-occf { height:100%; background:linear-gradient(90deg,#4196FF,#80C4FF); border-radius:99px; transition:width 0.5s; }
+  .bm2-sts { display:grid; grid-template-columns:1fr 1px 1fr 1px 1fr; text-align:center; }
+  .bm2-sv { font-size:23px; font-weight:700; line-height:1; font-family:'DM Sans',sans-serif; }
+  .bm2-sv.bk { color:#fff; }
+  .bm2-sv.av { color:#4196FF; }
+  .bm2-sv.tot { color:rgba(255,255,255,.3); }
+  .bm2-sl { font-size:10px; color:rgba(255,255,255,.3); margin-top:2px; }
+  .bm2-sdi { background:rgba(255,255,255,.1); }
+
+  /* Type cards */
+  .bm2-tcrow { display:flex; gap:6px; }
+  .bm2-tc {
+    flex:1; padding:12px 6px; border-radius:14px; border:1.5px solid #D0DDF0;
+    background:#fff; text-align:center; cursor:pointer; transition:all .2s;
+    user-select:none; box-shadow:0 1px 5px rgba(0,30,80,0.06);
+  }
+  .bm2-tc:hover:not(.bm2-tc-a.bm2-tc-sel):not(.bm2-tc-b.bm2-tc-sel):not(.bm2-tc-c.bm2-tc-sel) {
+    border-color:#9DB8D8; box-shadow:0 4px 14px rgba(0,30,80,0.1);
+  }
+  .bm2-tc i { font-size:17px; display:block; margin-bottom:5px; color:#A8C0D8; transition:all .2s; }
+  .bm2-tcn { font-size:11px; font-weight:500; color:#4A6580; transition:all .2s; }
+  .bm2-tcs { font-size:10px; color:#A8C0D8; margin-top:1px; transition:all .2s; }
+  /* selected states */
+  .bm2-tc-a.bm2-tc-sel { background:#0F1C38 !important; border-color:#0F1C38 !important; border-width:2px !important; }
+  .bm2-tc-a.bm2-tc-sel i { color:#4196FF !important; }
+  .bm2-tc-a.bm2-tc-sel .bm2-tcn { color:#fff !important; font-weight:600 !important; }
+  .bm2-tc-a.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,.6) !important; }
+  .bm2-tc-b.bm2-tc-sel { background:#7C3AED !important; border-color:#5B21B6 !important; border-width:2px !important; }
+  .bm2-tc-b.bm2-tc-sel i { color:#C4B5FD !important; }
+  .bm2-tc-b.bm2-tc-sel .bm2-tcn { color:#fff !important; font-weight:600 !important; }
+  .bm2-tc-b.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,.7) !important; }
+  .bm2-tc-c.bm2-tc-sel { background:#FF6B35 !important; border-color:#CC4400 !important; border-width:2px !important; }
+  .bm2-tc-c.bm2-tc-sel i { color:#FFD0BC !important; }
+  .bm2-tc-c.bm2-tc-sel .bm2-tcn { color:#fff !important; font-weight:600 !important; }
+  .bm2-tc-c.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,.75) !important; }
+
+  /* Form group card */
+  .bm2-fg {
+    background:#fff; border-radius:14px; padding:12px;
+    border:1px solid #D0DDF0; display:flex; flex-direction:column; gap:10px;
+    box-shadow:0 1px 6px rgba(0,30,80,0.05);
+  }
+  .bm2-flbl { font-size:11px; font-weight:600; color:#4A6580; display:block; margin-bottom:4px; }
+
+  /* Inputs */
+  .bm2-fi {
+    width:100%; padding:10px 13px; border:1.5px solid #D0DDF0; border-radius:11px;
+    font-size:13px; color:#0F1C38; background:#F5F9FF;
+    outline:none; font-family:'DM Sans',sans-serif; transition:all .15s; box-sizing:border-box;
+  }
+  .bm2-fi::placeholder { color:#A8C0D8; }
+  .bm2-fi:focus { border-color:#4196FF; background:#fff; box-shadow:0 0 0 3px rgba(65,150,255,0.1); }
+
+  /* Overnight toggle */
+  .bm2-ovbtn {
+    flex:1; padding:10px 8px; border-radius:12px;
+    border:1.5px solid #D0DDF0; background:#fff;
+    font-size:12px; font-weight:500; color:#7A96B5;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    gap:6px; transition:all .2s; user-select:none; font-family:'DM Sans',sans-serif;
+  }
+  .bm2-ovbtn:hover:not(.bm2-ov-a):not(.bm2-ov-b) { border-color:#9DB8D8; color:#4A6580; }
+  .bm2-ov-a { background:#059669 !important; border-color:#047857 !important; color:#fff !important; font-weight:600 !important; }
+  .bm2-ov-b { background:#7C3AED !important; border-color:#5B21B6 !important; color:#fff !important; font-weight:600 !important; }
+
+  /* Footer buttons */
   .bm2-bcanc {
-    flex:1; padding:12px 16px; border-radius:99px; border:2px solid #C5D0E0; background:#F7F9FC;
-    font-size:13px; font-weight:500; color:#4A5568;
-    cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s;
+    flex:1; padding:12px 16px; border-radius:99px;
+    border:1.5px solid #D0DDF0; background:#fff;
+    font-size:13px; font-weight:500; color:#4A6580;
+    cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s;
   }
-  .bm2-bcanc:hover { border-color:#0097B2; color:#0097B2; background:#E6F7FA; }
+  .bm2-bcanc:hover { border-color:#0F1C38; color:#0F1C38; }
   .bm2-bsave {
-    flex:2; padding:12px 20px; border-radius:99px; border:2px solid #006F85; background:#0097B2;
-    color:#fff; font-size:13px; font-weight:600; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; gap:7px;
-    font-family:'DM Sans',sans-serif; transition:all 0.18s; user-select:none;
+    flex:2; padding:12px 20px; border-radius:99px;
+    background:#0F1C38; border:2px solid #1A2D50;
+    color:#fff; font-size:13px; font-weight:700;
+    cursor:pointer; display:flex; align-items:center; justify-content:center; gap:7px;
+    font-family:'DM Sans',sans-serif; transition:all .18s; user-select:none;
   }
-  .bm2-bsave:hover { background:#006F85; }
-  .bm2-bsave i { font-size:15px; }
-  .bm2-bsave.bm2-loading { background:#6B4EAF; border-color:#4D3680; cursor:wait; }
-  .bm2-bsave.bm2-success { background:#0B9E6C; border-color:#065F46; }
-  @keyframes bm2-spin { to { transform:rotate(360deg); } }
-  .bm2-spin { animation:bm2-spin 0.7s linear infinite; display:inline-block; }
+  .bm2-bsave:hover { background:#1A2D50; box-shadow:0 4px 20px rgba(15,28,56,0.3); }
+  .bm2-bsave i { font-size:15px; color:#4196FF; }
+  .bm2-bsave.bm2-loading { background:#7C3AED; border-color:#5B21B6; cursor:wait; }
+  .bm2-bsave.bm2-loading i { color:#C4B5FD; }
+  .bm2-bsave.bm2-success { background:#059669; border-color:#047857; }
+  .bm2-bsave.bm2-success i { color:#A7F3D0; }
 
 </style>
 </head>
@@ -3093,16 +3253,16 @@
       <!-- ══ MOBILE BOOKING UI (≤768px only) ══ -->
       <div id="mbk-root" style="display:none;">
         <!-- Full Month Calendar -->
-        <div id="mbk-cal-card" style="margin:14px 14px 0;background:#fff;border-radius:20px;border:1px solid #EEF0F8;overflow:hidden;box-shadow:0 2px 12px rgba(100,80,200,0.07);">
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #EEF0F8;">
-            <div onclick="mbkCalNav(-1)" style="width:32px;height:32px;border-radius:10px;background:#F5F6FA;border:1px solid #E8EAF2;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:#6b7280;">‹</div>
-            <div id="mbk-cal-month" style="font-size:15px;font-weight:700;color:#1E1B3A;"></div>
-            <div onclick="mbkCalNav(1)" style="width:32px;height:32px;border-radius:10px;background:#F5F6FA;border:1px solid #E8EAF2;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:#6b7280;">›</div>
+        <div id="mbk-cal-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;">
+            <div onclick="mbkCalNav(-1)" style="width:30px;height:30px;border-radius:9px;background:#F0F4FA;border:1px solid #D0DDF0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:#0F1C38;">‹</div>
+            <div id="mbk-cal-month" style="font-size:14px;font-weight:700;color:#0F1C38;"></div>
+            <div onclick="mbkCalNav(1)" style="width:30px;height:30px;border-radius:9px;background:#F0F4FA;border:1px solid #D0DDF0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:#0F1C38;">›</div>
           </div>
-          <div id="mbk-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:10px 10px 12px;"></div>
-          <div id="mbk-sel-date-bar" style="padding:8px 14px 12px;background:#F5F3FF;display:flex;align-items:center;gap:8px;border-top:1px solid #EEF0F8;">
-            <span style="font-size:16px;">📅</span>
-            <span id="mbk-sel-date-txt" style="font-size:13px;font-weight:600;color:#3B0764;">เลือกวันในปฏิทิน</span>
+          <div id="mbk-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:6px 10px 10px;min-height:160px;"></div>
+          <div id="mbk-sel-date-bar" style="padding:8px 14px 11px;background:#E6F7FA;display:flex;align-items:center;gap:8px;border-top:1px solid #D0DDF0;">
+            <span style="font-size:15px;">📅</span>
+            <span id="mbk-sel-date-txt" style="font-size:13px;font-weight:600;color:#0F1C38;">เลือกวันในปฏิทิน</span>
           </div>
         </div>
         <div id="mbk-kpi">
@@ -4147,113 +4307,142 @@
 </div>
 
 
-<!-- ════ BOOKING MODAL POPUP v2 — Clean Light Design ════ -->
+
+<!-- ════ BOOKING MODAL POPUP v3 — Light Premium (White + Dark Navy) ════ -->
 <div id="booking-modal-overlay"
-  style="display:none;position:fixed;inset:0;background:rgba(10,15,30,0.55);backdrop-filter:blur(8px);z-index:400;align-items:center;justify-content:center;padding:20px;">
+  style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.55);backdrop-filter:blur(8px);z-index:400;align-items:center;justify-content:center;padding:20px;">
   <div class="bm2-shell">
 
-    <!-- Header -->
+    <!-- ── Header: Dark Navy ── -->
     <div class="bm2-head">
       <div class="bm2-hl">
-        <div class="bm2-hico"><i class="ti ti-parking" aria-hidden="true"></i></div>
-        <div>
-          <div class="bm2-htop">แจ้งจองที่จอดรถ</div>
-          <div class="bm2-hsub">Ari Hills — เลือกวันด้านซ้าย กรอกข้อมูลด้านขวา</div>
+        <div class="bm2-hico">
+          <i class="ti ti-parking" aria-hidden="true"></i>
         </div>
-        <span class="bm2-badge">Ari Hills</span>
+        <div>
+          <div class="bm2-htop">🚘 แจ้งจองที่จอดรถ</div>
+          <div class="bm2-hsub">Ari Hills — เลือกวันด้านซ้าย · กรอกข้อมูลด้านขวา</div>
+        </div>
+        <span class="bm2-badge">📍 Ari Hills</span>
       </div>
       <button onclick="closeBookingModal()" class="bm2-xcl" aria-label="ปิด">
-        <i class="ti ti-x" aria-hidden="true"></i>
+        <i class="ti ti-x" style="font-size:13px" aria-hidden="true"></i>
       </button>
     </div>
 
-    <!-- Body 2-col -->
+    <!-- ── Body 2-col ── -->
     <div class="bm2-body">
 
-      <!-- LEFT: ปฏิทิน -->
-      <div class="bm2-left">
-        <div id="book-park-mode-row" style="display:flex;flex-direction:column;gap:12px;">
+      <!-- ══ LEFT: ปฏิทิน ══ -->
+      <div class="bm2-left" id="book-park-mode-row">
 
-          <!-- Mode toggle -->
-          <div>
-            <div class="bm2-slbl"><i class="ti ti-layout-grid" aria-hidden="true"></i>รูปแบบการจอด</div>
-            <div class="bm2-tog">
-              <button type="button" id="parkmode-daily" onclick="setParkMode('daily')" class="bm2-tbtn bm2-tbtn-on" aria-pressed="true">
-                <i class="ti ti-calendar-event" aria-hidden="true"></i>
-                รายวัน
-                <span class="bm2-tbsub">เลือกหลายวันได้</span>
-              </button>
-              <button type="button" id="parkmode-long" onclick="setParkMode('long')" class="bm2-tbtn" aria-pressed="false">
-                <i class="ti ti-calendar-stats" aria-hidden="true"></i>
-                จอดยาว
-                <span class="bm2-tbsub">เลือกช่วงวัน</span>
-              </button>
-            </div>
+        <!-- Mode toggle segmented -->
+        <div>
+          <div class="bm2-slbl">
+            <i class="ti ti-layout-grid" aria-hidden="true"></i>รูปแบบการจอด
           </div>
-
-          <!-- ปฏิทินรายวัน -->
-          <div id="park-daily-cal" class="bm2-calcard">
-            <div class="bm2-caltop">
-              <button onclick="multiCalNav(-1)" class="bm2-cnb" aria-label="เดือนก่อน">‹</button>
-              <span id="multi-cal-label" class="bm2-calmo"></span>
-              <button onclick="multiCalNav(1)" class="bm2-cnb" aria-label="เดือนถัดไป">›</button>
-            </div>
-            <div id="multi-cal-grid" class="bm2-cg"></div>
-            <div id="multi-cal-selected" class="bm2-cal-hint"></div>
+          <div class="bm2-tog">
+            <button type="button" id="parkmode-daily" onclick="setParkMode('daily')"
+              class="bm2-tbtn bm2-tbtn-on" aria-pressed="true">
+              <i class="ti ti-calendar-event" aria-hidden="true"></i>
+              📅 รายวัน
+              <span class="bm2-tbsub">เลือกหลายวันได้</span>
+            </button>
+            <button type="button" id="parkmode-long" onclick="setParkMode('long')"
+              class="bm2-tbtn" aria-pressed="false">
+              <i class="ti ti-calendar-stats" aria-hidden="true"></i>
+              🗓️ จอดยาว
+              <span class="bm2-tbsub">เลือกช่วงวัน</span>
+            </button>
           </div>
-
-          <!-- ปฏิทินจอดยาว -->
-          <div id="park-long-cal" style="display:none;" class="bm2-calcard">
-            <div class="bm2-caltop">
-              <button onclick="rangeCalNav(-1)" class="bm2-cnb" aria-label="เดือนก่อน">‹</button>
-              <span id="range-cal-label" class="bm2-calmo"></span>
-              <button onclick="rangeCalNav(1)" class="bm2-cnb" aria-label="เดือนถัดไป">›</button>
-            </div>
-            <div id="range-cal-grid" class="bm2-cg"></div>
-            <div id="range-cal-selected" class="bm2-cal-hint"></div>
-          </div>
-
-          <!-- Occupancy card -->
-          <div id="bm-occ-card" class="bm2-occ">
-            <div class="bm2-occh">
-              <i class="ti ti-chart-donut" style="font-size:14px" aria-hidden="true"></i>ส่วนกลาง ชั้น 5 ขวามือ
-            </div>
-            <div class="bm2-occbar"><div id="bm-occ-bar" class="bm2-occf" style="width:11%"></div></div>
-            <div class="bm2-sts">
-              <div><div id="bm-occ-booked" class="bm2-sv bk">–</div><div class="bm2-sl">จองแล้ว</div></div>
-              <div class="bm2-sdi"></div>
-              <div><div id="bm-occ-avail" class="bm2-sv av">–</div><div class="bm2-sl">ว่างอยู่</div></div>
-              <div class="bm2-sdi"></div>
-              <div><div class="bm2-sv tot">18</div><div class="bm2-sl">ทั้งหมด</div></div>
-            </div>
-          </div>
-
         </div>
-      </div>
 
-      <!-- RIGHT: ฟอร์ม -->
+        <!-- ปฏิทินรายวัน -->
+        <div id="park-daily-cal" class="bm2-calcard">
+          <div class="bm2-caltop">
+            <button onclick="multiCalNav(-1)" class="bm2-cnb" aria-label="เดือนก่อน">‹</button>
+            <span id="multi-cal-label" class="bm2-calmo"></span>
+            <button onclick="multiCalNav(1)"  class="bm2-cnb" aria-label="เดือนถัดไป">›</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:10px;color:#A8C0D8;padding:7px 10px 4px;border-bottom:1px solid #EEF4FF">
+            <span>อา</span><span>จ</span><span>อ</span><span>พ</span><span>พฤ</span><span>ศ</span><span>ส</span>
+          </div>
+          <div id="multi-cal-grid" class="bm2-cg"></div>
+          <div id="multi-cal-selected" class="bm2-cal-hint"></div>
+        </div>
+
+        <!-- ปฏิทินจอดยาว -->
+        <div id="park-long-cal" style="display:none;" class="bm2-calcard">
+          <div class="bm2-caltop">
+            <button onclick="rangeCalNav(-1)" class="bm2-cnb" aria-label="เดือนก่อน">‹</button>
+            <span id="range-cal-label" class="bm2-calmo"></span>
+            <button onclick="rangeCalNav(1)"  class="bm2-cnb" aria-label="เดือนถัดไป">›</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:10px;color:#A8C0D8;padding:7px 10px 4px;border-bottom:1px solid #EEF4FF">
+            <span>อา</span><span>จ</span><span>อ</span><span>พ</span><span>พฤ</span><span>ศ</span><span>ส</span>
+          </div>
+          <div id="range-cal-grid" class="bm2-cg"></div>
+          <div id="range-cal-selected" class="bm2-cal-hint"></div>
+        </div>
+
+        <!-- Occupancy card — dark navy -->
+        <div id="bm-occ-card" class="bm2-occ">
+          <div class="bm2-occh">
+            <i class="ti ti-chart-donut" style="font-size:14px" aria-hidden="true"></i>
+            🅿️ ส่วนกลาง ชั้น 5 ขวามือ
+          </div>
+          <div class="bm2-occbar">
+            <div id="bm-occ-bar" class="bm2-occf" style="width:11%"></div>
+          </div>
+          <div class="bm2-sts">
+            <div>
+              <div id="bm-occ-booked" class="bm2-sv bk">–</div>
+              <div class="bm2-sl">🔴 จองแล้ว</div>
+            </div>
+            <div class="bm2-sdi"></div>
+            <div>
+              <div id="bm-occ-avail" class="bm2-sv av">–</div>
+              <div class="bm2-sl">🟢 ว่างอยู่</div>
+            </div>
+            <div class="bm2-sdi"></div>
+            <div>
+              <div class="bm2-sv tot">18</div>
+              <div class="bm2-sl">⬜ ทั้งหมด</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /left -->
+
+      <!-- ══ RIGHT: ฟอร์ม ══ -->
       <div class="bm2-right">
 
         <!-- ประเภทการจอด -->
         <div>
-          <div class="bm2-slbl"><i class="ti ti-grid-dots" aria-hidden="true"></i>ประเภทการจอด <span class="bm2-req">*</span></div>
-          <div style="display:flex;gap:6px;margin-bottom:8px;">
-            <div id="bm-tc-common" onclick="setBmType('common')" class="bm2-tc bm2-tc-a bm2-tc-sel" role="radio" aria-checked="true" tabindex="0">
+          <div class="bm2-slbl">
+            <i class="ti ti-grid-dots" aria-hidden="true"></i>ประเภทการจอด<span class="bm2-req">*</span>
+          </div>
+          <div class="bm2-tcrow">
+            <div id="bm-tc-common" onclick="setBmType('common')"
+              class="bm2-tc bm2-tc-a bm2-tc-sel" role="radio" aria-checked="true" tabindex="0">
               <i class="ti ti-building-community" aria-hidden="true"></i>
-              <div class="bm2-tcn">ส่วนกลาง</div>
+              <div class="bm2-tcn">🏢 ส่วนกลาง</div>
               <div class="bm2-tcs">ชั้น 5 ขวามือ</div>
             </div>
-            <div id="bm-tc-sub" onclick="setBmType('sub')" class="bm2-tc bm2-tc-b" role="radio" aria-checked="false" tabindex="0">
+            <div id="bm-tc-sub" onclick="setBmType('sub')"
+              class="bm2-tc bm2-tc-b" role="radio" aria-checked="false" tabindex="0">
               <i class="ti ti-replace" aria-hidden="true"></i>
-              <div class="bm2-tcn">จอดแทน</div>
+              <div class="bm2-tcn">🔄 จอดแทน</div>
               <div class="bm2-tcs">ใช้สิทธิ์แทน</div>
             </div>
-            <div id="bm-tc-other" onclick="setBmType('other')" class="bm2-tc bm2-tc-c" role="radio" aria-checked="false" tabindex="0">
+            <div id="bm-tc-other" onclick="setBmType('other')"
+              class="bm2-tc bm2-tc-c" role="radio" aria-checked="false" tabindex="0">
               <i class="ti ti-truck-delivery" aria-hidden="true"></i>
-              <div class="bm2-tcn">รถอื่นๆ</div>
+              <div class="bm2-tcn">🚐 รถอื่นๆ</div>
               <div class="bm2-tcs">Vendor / บัส</div>
             </div>
           </div>
+          <!-- hidden sync -->
           <select id="book-type" onchange="onBookTypeChange()" style="display:none;">
             <option value="common">ส่วนกลาง</option>
             <option value="sub">จอดแทน</option>
@@ -4261,22 +4450,42 @@
           </select>
         </div>
 
-        <!-- ประเภทรถ -->
-        <div>
-          <label class="bm2-flbl" for="book-car-type">ประเภทรถ <span class="bm2-req">*</span></label>
-          <select class="bm2-fi" id="book-car-type" onchange="onCarTypeChange()">
-            <option value="sedan" class="opt-normal">🚗 รถเก๋ง</option>
-            <option value="suv"   class="opt-normal">🚙 รถ SUV / PPV</option>
-            <option value="ev"    class="opt-normal">⚡ รถไฟฟ้า</option>
-            <option value="truck" class="opt-normal">🚚 รถกระบะ</option>
-            <option value="van"      class="opt-other" style="display:none;">🚐 รถตู้</option>
-            <option value="delivery" class="opt-other" style="display:none;">📦 รถส่งของ</option>
-            <option value="vendor"   class="opt-other" style="display:none;">🏪 รถ Vendor</option>
-            <option value="bus"      class="opt-other" style="display:none;">🚌 รถบัส</option>
-            <option value="ambulance" class="opt-other" style="display:none;">🚑 รถพยาบาล</option>
-          </select>
-          <div id="book-special-note" style="display:none;font-size:10px;color:#B45309;margin-top:4px;padding:5px 8px;background:#FEF3C7;border-radius:7px;">
-            ⚠️ รถประเภทนี้บันทึกในตาราง <strong>แจ้งจอดรถอื่นๆ</strong> (หน้าอาคาร) โดยอัตโนมัติ
+        <!-- Group 1: ประเภทรถ + ชื่อ -->
+        <div class="bm2-fg">
+          <div>
+            <label class="bm2-flbl" for="book-car-type">🚗 ประเภทรถ<span class="bm2-req">*</span></label>
+            <select class="bm2-fi" id="book-car-type" onchange="onCarTypeChange()">
+              <option value="sedan"    class="opt-normal">🚗  รถเก๋ง</option>
+              <option value="suv"      class="opt-normal">🚙  รถ SUV / PPV</option>
+              <option value="ev"       class="opt-normal">⚡  รถไฟฟ้า (EV)</option>
+              <option value="truck"    class="opt-normal">🚚  รถกระบะ</option>
+              <option value="van"      class="opt-other" style="display:none;">🚐  รถตู้</option>
+              <option value="delivery" class="opt-other" style="display:none;">📦  รถส่งของ</option>
+              <option value="vendor"   class="opt-other" style="display:none;">🏪  รถ Vendor</option>
+              <option value="bus"      class="opt-other" style="display:none;">🚌  รถบัส</option>
+              <option value="ambulance" class="opt-other" style="display:none;">🚑  รถพยาบาล</option>
+            </select>
+            <div id="book-special-note" style="display:none;font-size:10px;color:#D97706;margin-top:5px;padding:5px 9px;background:#FEF3C7;border-radius:8px;border:1px solid #FDE68A;">
+              ⚠️ รถประเภทนี้บันทึกในตาราง <strong>แจ้งจอดรถอื่นๆ</strong> โดยอัตโนมัติ
+            </div>
+          </div>
+          <div>
+            <label class="bm2-flbl" for="book-name">👤 ชื่อผู้แจ้งจอง<span class="bm2-req">*</span></label>
+            <input type="text" class="bm2-fi" id="book-name" placeholder="ชื่อ-นามสกุล">
+          </div>
+        </div>
+
+        <!-- Group 2: ทะเบียน + ฝ่าย -->
+        <div class="bm2-fg">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div>
+              <label class="bm2-flbl" for="book-plate">🔢 ทะเบียนรถ<span class="bm2-req">*</span></label>
+              <input type="text" class="bm2-fi" id="book-plate" placeholder="เช่น กข 1234">
+            </div>
+            <div>
+              <label class="bm2-flbl" for="book-dept">🏢 ฝ่าย<span class="bm2-req">*</span></label>
+              <input type="text" class="bm2-fi" id="book-dept" placeholder="เช่น IT, HR, บัญชี">
+            </div>
           </div>
         </div>
 
@@ -4286,34 +4495,17 @@
         <input type="hidden" id="book-date-from-display">
         <input type="hidden" id="book-date-to-display">
 
-        <!-- ชื่อผู้แจ้งจอง -->
-        <div>
-          <label class="bm2-flbl" for="book-name">ชื่อผู้แจ้งจอง <span class="bm2-req">*</span></label>
-          <input type="text" class="bm2-fi" id="book-name" placeholder="ชื่อ-นามสกุล">
-        </div>
-
-        <!-- ทะเบียน + ฝ่าย -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div>
-            <label class="bm2-flbl" for="book-plate">ทะเบียนรถ <span class="bm2-req">*</span></label>
-            <input type="text" class="bm2-fi" id="book-plate" placeholder="เช่น กข 1234">
-          </div>
-          <div>
-            <label class="bm2-flbl" for="book-dept">ฝ่าย <span class="bm2-req">*</span></label>
-            <input type="text" class="bm2-fi" id="book-dept" placeholder="เช่น IT, HR, บัญชี">
-          </div>
-        </div>
-
         <!-- ทะเบียนสิทธิ์ (จอดแทน) -->
-        <div id="book-owner-row" style="display:none;">
-          <label class="bm2-flbl" for="book-plate-owner">ทะเบียนสิทธิ์จอดแทน <span class="bm2-req">*</span></label>
-          <input type="text" class="bm2-fi" id="book-plate-owner" placeholder="ทะเบียนเจ้าของช่อง" oninput="checkOwnerPlate()">
-          <div id="book-owner-result" style="display:none;margin-top:4px;font-size:11px;padding:6px 10px;border-radius:8px;"></div>
+        <div id="book-owner-row" style="display:none;" class="bm2-fg">
+          <label class="bm2-flbl" for="book-plate-owner">🔑 ทะเบียนสิทธิ์จอดแทน<span class="bm2-req">*</span></label>
+          <input type="text" class="bm2-fi" id="book-plate-owner"
+            placeholder="ทะเบียนเจ้าของช่อง" oninput="checkOwnerPlate()">
+          <div id="book-owner-result" style="display:none;margin-top:4px;font-size:11px;padding:6px 10px;border-radius:9px;"></div>
         </div>
 
         <!-- ชั้นที่จอดแทน -->
-        <div id="book-sub-floor-row" style="display:none;">
-          <label class="bm2-flbl" for="book-sub-floor">ชั้นที่จอดแทน <span class="bm2-req">*</span></label>
+        <div id="book-sub-floor-row" style="display:none;" class="bm2-fg">
+          <label class="bm2-flbl" for="book-sub-floor">🅿️ ชั้นที่จอดแทน<span class="bm2-req">*</span></label>
           <select class="bm2-fi" id="book-sub-floor">
             <option value="P3A">🅿️ ชั้น P3A</option>
             <option value="P4">🅿️ ชั้น P4</option>
@@ -4321,52 +4513,54 @@
             <option value="P5">🅿️ ชั้น P5</option>
             <option value="P5A">🅿️ ชั้น P5A</option>
             <option value="P6">🅿️ ชั้น P6</option>
-            <option value="P3A,P4,P4A,P5,P5A,P6">🅿️ P3A,P4,P4A,P5,P5A,P6</option>
+            <option value="P3A,P4,P4A,P5,P5A,P6">🅿️ ทุกชั้น (P3A–P6)</option>
           </select>
         </div>
 
         <!-- ค้างคืน -->
         <div>
           <div class="bm2-slbl" style="margin-bottom:7px;">
-            <i class="ti ti-moon" aria-hidden="true"></i>ค้างคืน <span class="bm2-req">*</span>
+            <i class="ti ti-moon" aria-hidden="true"></i>ค้างคืน<span class="bm2-req">*</span>
           </div>
           <div style="display:flex;gap:8px;">
             <div id="bm-ov-no" onclick="setBmOvernight('no')" class="bm2-ovbtn bm2-ov-a">
-              <i class="ti ti-sun" style="font-size:15px" aria-hidden="true"></i>ไม่ค้างคืน
+              <i class="ti ti-sun" style="font-size:15px" aria-hidden="true"></i>
+              ☀️ ไม่ค้างคืน
             </div>
             <div id="bm-ov-yes" onclick="setBmOvernight('yes')" class="bm2-ovbtn">
-              <i class="ti ti-moon" style="font-size:15px" aria-hidden="true"></i>ค้างคืน
+              <i class="ti ti-moon" style="font-size:15px" aria-hidden="true"></i>
+              🌙 ค้างคืน
             </div>
           </div>
           <input type="hidden" id="bm-overnight-val" value="no">
         </div>
 
         <!-- หมายเหตุ -->
-        <div id="book-note-row">
+        <div id="book-note-row" class="bm2-fg">
           <label class="bm2-flbl" for="book-note">
-            หมายเหตุ <span style="font-size:10px;font-weight:400;color:#94A3B8;">(ไม่บังคับ)</span>
+            📝 หมายเหตุ
+            <span style="font-size:10px;font-weight:400;color:#A8C0D8;">(ไม่บังคับ)</span>
           </label>
           <input type="text" class="bm2-fi" id="book-note" placeholder="ระบุเพิ่มเติม...">
         </div>
 
         <div style="flex:1;min-height:8px;"></div>
 
-        <!-- ปุ่ม Footer -->
-        <div style="display:flex;gap:8px;margin-top:4px;">
-          <button onclick="closeBookingModal()" class="bm2-bcanc">ยกเลิก</button>
+        <!-- ── Footer buttons ── -->
+        <div style="display:flex;gap:8px;">
+          <button onclick="closeBookingModal()" class="bm2-bcanc">
+            ✕ ยกเลิก
+          </button>
           <button onclick="submitBooking()" class="bm2-bsave" id="bm2-submit-btn">
             <i class="ti ti-check" id="bm2-submit-icon" aria-hidden="true"></i>
-            <span id="bm2-submit-txt">บันทึกการจอง</span>
+            <span id="bm2-submit-txt">✅ บันทึกการจอง</span>
           </button>
         </div>
 
-      </div><!-- /RIGHT -->
+      </div><!-- /right -->
     </div><!-- /bm2-body -->
   </div><!-- /bm2-shell -->
 </div><!-- /booking-modal-overlay -->
-
-
-
 
 
 <!-- ════ CUSTOM ALERT PORTAL ════ -->
@@ -5316,7 +5510,7 @@ function switchView(view) {
   if (view === 'bts') renderBtsGrid();
   if (view === 'ksl') { buildKslFloorTabs(); renderKslGrid(); buildKslFloorSummary(); }
   if (view === 'ari') { renderAriGrid(); buildAriFloorSummary(); }
-  if (view === 'booking') { initBookMode(); if(window.innerWidth<=768) setTimeout(mbkInit,50); }
+  if (view === 'booking') { try { initBookMode(); } catch(e) { console.warn('initBookMode error:', e); } setTimeout(mbkInit,80); }
 
   // reset main overflow when not a building view
   if (window.innerWidth <= 768 && !['ari','bts','ksl'].includes(view)) {
@@ -5864,14 +6058,14 @@ function onBookTypeChange() {
   const parkmodeLong  = document.getElementById('parkmode-long');
 
   // owner plate field — only for sub
-  ownerRow.style.display    = type === 'sub' ? '' : 'none';
+  if (ownerRow) ownerRow.style.display    = type === 'sub' ? '' : 'none';
   // sub floor dropdown — only for sub
   const subFloorRow = document.getElementById('book-sub-floor-row');
   if (subFloorRow) subFloorRow.style.display = type === 'sub' ? '' : 'none';
   // note — always visible
-  noteRow.style.display     = '';
+  if (noteRow) noteRow.style.display     = '';
   // calendar/park-mode — always visible for all types
-  parkModeRow.style.display = '';
+  if (parkModeRow) parkModeRow.style.display = '';
   // long-park button — only for common
   if (parkmodeLong) parkmodeLong.style.display = type === 'common' ? '' : 'none';
   // overnight toggle ปุ่มอยู่ฝั่งขวาตลอด ทุก type ใช้ร่วมกัน
@@ -6095,9 +6289,9 @@ function renderMultiCal() {
     const ds = `${multiCalYear}-${String(multiCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const isToday = ds === today;
     const isSel   = selectedDays.has(ds);
-    let bg='transparent', col='#374151', fw='400', border='none';
-    if (isSel)   { bg='#0097B2'; col='#fff'; fw='700'; }
-    else if (isToday) { bg='#D97706'; col='#fff'; fw='700'; }
+    let bg='transparent', col='#4A6580', fw='400', border='none';
+    if (isSel)   { bg='#0F1C38'; col='#fff'; fw='700'; }
+    else if (isToday) { bg='#FF6B35'; col='#fff'; fw='700'; }
     html += `<div onclick="toggleDay('${ds}')" style="text-align:center;font-size:11px;font-weight:${fw};padding:5px 2px;border-radius:6px;cursor:pointer;background:${bg};color:${col};transition:all 0.1s;">${d}</div>`;
   }
   grid.innerHTML = html;
@@ -6475,87 +6669,6 @@ function printAriReport() {
   <tbody>${otherRows}</tbody></table>` : ''}
   <div class="footer">เอกสารนี้ออกจากระบบจัดการลานจอดโดยอัตโนมัติ — ไม่ต้องลงนาม &nbsp;|&nbsp; รายงานเฉพาะวันที่ ${printDateThai}</div>
   <div class="footer">เอกสารนี้ออกจากระบบจัดการลานจอดโดยอัตโนมัติ</div>
-<!-- ── MOBILE BOOKING POPUP ── -->
-<div id="mbk-popup-overlay" onclick="if(event.target===this)mbkClosePopup()">
-  <div id="mbk-popup-sheet">
-    <div class="mbk-drag"></div>
-    <div class="mbk-phdr">
-      <div class="mbk-pico"><i class="ti ti-parking"></i></div>
-      <div><div class="mbk-ptitle">แจ้งจองที่จอดรถ</div><div class="mbk-psub">Ari Hills · กรอกข้อมูลให้ครบ</div></div>
-      <div class="mbk-pclose" onclick="mbkClosePopup()"><i class="ti ti-x"></i></div>
-    </div>
-    <div class="mbk-pbody">
-      <!-- type tabs -->
-      <div class="mbk-type-tabs" id="mbk-type-tabs">
-        <div class="mbk-ttab active" onclick="mbkSetType('common',this)"><span class="tt-ico">🏢</span><span class="tt-lbl">ส่วนกลาง</span><span class="tt-sub">ชั้น 5</span></div>
-        <div class="mbk-ttab" onclick="mbkSetType('sub',this)"><span class="tt-ico">🔄</span><span class="tt-lbl">จอดแทน</span><span class="tt-sub">ใช้สิทธิ์แทน</span></div>
-        <div class="mbk-ttab" onclick="mbkSetType('other',this)"><span class="tt-ico">🚌</span><span class="tt-lbl">รถอื่นๆ</span><span class="tt-sub">หน้าอาคาร</span></div>
-      </div>
-      <!-- form -->
-      <div class="mbk-field">
-        <label>ชื่อ-นามสกุล *</label>
-        <input type="text" id="mbk-name" placeholder="ชื่อ นามสกุล">
-      </div>
-      <div class="mbk-field-row">
-        <div class="mbk-field"><label>ฝ่าย / แผนก</label><input type="text" id="mbk-dept" placeholder="ฝ่าย"></div>
-        <div class="mbk-field"><label>ทะเบียน *</label><input type="text" id="mbk-plate" placeholder="กข 1234" style="font-family:'DM Mono',monospace;"></div>
-      </div>
-      <!-- sub-specific: plateOwner, floor -->
-      <div id="mbk-sub-fields" style="display:none;">
-        <div class="mbk-field"><label>ทะเบียนสิทธิ์ (ที่ขอจอดแทน)</label><input type="text" id="mbk-plate-owner" placeholder="ทะเบียนสิทธิ์" style="font-family:'DM Mono',monospace;"></div>
-        <div class="mbk-field"><label>ชั้น / Zone</label>
-          <select id="mbk-floor"><option value="">เลือกชั้น</option><option>B1</option><option>B2</option><option>ชั้น 5 ส่วนกลาง</option></select>
-        </div>
-      </div>
-      <div class="mbk-field">
-        <label>ประเภทรถ</label>
-        <div class="mbk-chips" id="mbk-car-chips">
-          <div class="mbk-chip active" onclick="mbkToggleChip(this,'car')">🚗 รถยนต์</div>
-          <div class="mbk-chip" onclick="mbkToggleChip(this,'car')">🏍️ มอเตอร์ไซค์</div>
-          <div class="mbk-chip" onclick="mbkToggleChip(this,'car')">🚐 รถตู้</div>
-          <div class="mbk-chip" onclick="mbkToggleChip(this,'car')">🚌 รถบัส</div>
-        </div>
-      </div>
-      <div class="mbk-field" id="mbk-parktype-field">
-        <label>ประเภทการจอด</label>
-        <div class="mbk-chips">
-          <div class="mbk-chip active" onclick="mbkToggleChip(this,'park')">📅 รายวัน</div>
-          <div class="mbk-chip" onclick="mbkToggleChip(this,'park')">📆 จอดยาว</div>
-        </div>
-      </div>
-      <div class="mbk-field">
-        <label>วันที่จอง *</label>
-        <input type="date" id="mbk-date-input">
-      </div>
-      <div class="mbk-field">
-        <div class="mbk-toggle-row">
-          <div><div class="mbk-toggle-lbl">ค้างคืน 🌙</div><div class="mbk-toggle-sub">จอดข้ามคืนถึงวันถัดไป</div></div>
-          <div class="mbk-sw" id="mbk-overnight-sw" onclick="this.classList.toggle('on')"></div>
-        </div>
-      </div>
-      <div class="mbk-field">
-        <label>หมายเหตุ</label>
-        <textarea id="mbk-note" placeholder="ข้อมูลเพิ่มเติม..."></textarea>
-      </div>
-    </div>
-    <div class="mbk-pfooter">
-      <button class="mbk-bcancel" onclick="mbkClosePopup()">ยกเลิก</button>
-      <button class="mbk-bsubmit" onclick="mbkSubmit()"><i class="ti ti-check"></i>บันทึกการจอง</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── MOBILE SUCCESS OVERLAY ── -->
-<div id="mbk-success-overlay" onclick="if(event.target===this)mbkCloseSuccess()">
-  <div id="mbk-success-sheet">
-    <div class="mbks-ico"><i class="ti ti-check"></i></div>
-    <div class="mbks-title">บันทึกสำเร็จ! 🎉</div>
-    <div class="mbks-sub">แจ้งจองที่จอดรถเรียบร้อยแล้ว<br>ระบบได้บันทึกข้อมูลเข้า Google Sheets</div>
-    <div class="mbks-card" id="mbks-summary"></div>
-    <button class="mbks-btn" onclick="mbkCloseSuccess()">กลับสู่หน้าแจ้งจอด</button>
-  </div>
-</div>
-
 </body></html>`;
 
   const w = window.open('','_blank');
@@ -6712,8 +6825,10 @@ function bnNav(view) {
       pendingAdminView = 'admin';
     }
   } else {
-    switchView(view);
+    try { switchView(view); } catch(e) { console.warn('switchView error:', e); }
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    // ensure mobile booking initializes
+    if (view === 'booking') setTimeout(mbkInit, 150);
   }
 }
 
@@ -7677,12 +7792,23 @@ let _mbkCalY = new Date().getFullYear();
 let _mbkCalM = new Date().getMonth();
 
 function mbkInit() {
-  if (window.innerWidth > 768) return;
+  // Always init mobile booking — element existence check (not width-gated)
+  const calGrid = document.getElementById('mbk-cal-grid');
+  if (!calGrid) return;
+  // Force layout reflow so #mbk-root is visible before rendering
+  const root = document.getElementById('mbk-root');
+  if (root) void root.offsetHeight;
   const di = document.getElementById('mbk-date-input');
   if (di) di.value = _mbkDateSel;
   mbkRenderCal();
   mbkUpdateSelBar();
-  mbkRenderList(_mbkDateSel);
+  const dateToLoad = _mbkDateSel || new Date().toISOString().slice(0,10);
+  mbkRenderList(dateToLoad);
+  // Self-retry: if grid still empty after 400ms, re-render
+  setTimeout(function() {
+    const g = document.getElementById('mbk-cal-grid');
+    if (g && !g.children.length) { mbkRenderCal(); mbkRenderList(dateToLoad); }
+  }, 400);
 }
 
 function mbkCalNav(dir) {
@@ -7712,10 +7838,10 @@ function mbkRenderCal() {
     const bkg = typeof getBookingsForDate === 'function' ? getBookingsForDate(iso) : null;
     const hasDot  = bkg && (bkg.common.length + bkg.sub.length + bkg.other.length) > 0;
     let bg = 'transparent', clr = '#374151', fw = '500', shadow = '';
-    if (isSel)    { bg = '#7C3AED'; clr = '#fff'; fw = '700'; shadow = 'box-shadow:0 4px 12px rgba(124,58,237,.35);'; }
-    else if (isToday) { bg = '#EDE9FE'; clr = '#7C3AED'; fw = '700'; }
+    if (isSel)    { bg = '#0097B2'; clr = '#fff'; fw = '700'; shadow = 'box-shadow:0 4px 12px rgba(0,151,178,.35);'; }
+    else if (isToday) { bg = '#FF6B35'; clr = '#fff'; fw = '700'; }
     const dot = hasDot && !isSel
-      ? `<div style="width:4px;height:4px;border-radius:50%;background:${isToday?'#7C3AED':'#F59E0B'};margin:1px auto 0;"></div>` : '';
+      ? `<div style="width:4px;height:4px;border-radius:50%;background:${isToday?'#FF6B35':'#0097B2'};margin:1px auto 0;"></div>` : '';
     html += `<div onclick="mbkSelectDate('${iso}')" style="text-align:center;padding:6px 2px 3px;border-radius:10px;cursor:pointer;background:${bg};${shadow}"><div style="font-size:13px;font-weight:${fw};color:${clr};line-height:1;">${d}</div>${dot}</div>`;
   }
   gridEl.innerHTML = html;
@@ -7727,6 +7853,8 @@ function mbkSelectDate(iso) {
   _mbkCalM = parseInt(iso.slice(5,7)) - 1;
   const di = document.getElementById('mbk-date-input');
   if (di) di.value = iso;
+  // Sync popup date display if visible
+  if (typeof mbkSyncPopupDate === 'function') mbkSyncPopupDate();
   mbkRenderCal();
   mbkUpdateSelBar();
   mbkRenderList(iso);
@@ -7836,10 +7964,227 @@ function mbkRenderList(dateStr) {
 function mbkOpenPopup() {
   document.getElementById('mbk-popup-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Detect current park mode from chip
+  const parkChip = document.querySelector('#mbk-parktype-field .mbk-chip.active');
+  _mbkPopupParkMode = (parkChip && parkChip.textContent.includes('ยาว')) ? 'long' : 'daily';
+
+  // Reset selections — pre-populate daily with current selected date
+  _mbkPopupSelDays    = new Set();
+  _mbkPopupRangeStart = null;
+  _mbkPopupRangeEnd   = null;
+  if (_mbkPopupParkMode === 'daily' && _mbkDateSel) {
+    _mbkPopupSelDays.add(_mbkDateSel);
+  } else if (_mbkPopupParkMode === 'long' && _mbkDateSel) {
+    _mbkPopupRangeStart = _mbkDateSel;
+  }
+
+  // Init mini-cal to current month
+  _mbkMiniCalY = _mbkCalY;
+  _mbkMiniCalM = _mbkCalM;
+
+  // Sync date display
+  mbkSyncPopupDate();
+}
+
+function mbkSyncPopupDate() {
+  const txt = document.getElementById('mbk-popup-date-txt');
+  if (!txt) return;
+
+  const thMon = MBK_TH_MON_S;
+  const dow   = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+
+  if (_mbkPopupParkMode === 'daily') {
+    const days = [..._mbkPopupSelDays].sort();
+    if (days.length === 0) {
+      // fallback: show _mbkDateSel
+      const iso = _mbkDateSel || new Date().toISOString().slice(0,10);
+      const [y,m,d] = iso.split('-').map(Number);
+      txt.textContent = `${dow[new Date(iso).getDay()]}ที่ ${d} ${thMon[m-1]} ${y+543}`;
+      const hi = document.getElementById('mbk-date-input');
+      if (hi) hi.value = iso;
+    } else if (days.length === 1) {
+      const [y,m,d] = days[0].split('-').map(Number);
+      txt.textContent = `${dow[new Date(days[0]).getDay()]}ที่ ${d} ${thMon[m-1]} ${y+543}`;
+      const hi = document.getElementById('mbk-date-input');
+      if (hi) hi.value = days[0];
+    } else {
+      txt.textContent = `เลือกแล้ว ${days.length} วัน`;
+      const hi = document.getElementById('mbk-date-input');
+      if (hi) hi.value = days[0];
+    }
+  } else {
+    // Long / range mode
+    if (_mbkPopupRangeStart && _mbkPopupRangeEnd) {
+      const [sy,sm,sd] = _mbkPopupRangeStart.split('-').map(Number);
+      const [ey,em,ed] = _mbkPopupRangeEnd.split('-').map(Number);
+      const rangeLen   = mbkDateRange(_mbkPopupRangeStart, _mbkPopupRangeEnd).length;
+      txt.textContent  = `${sd} ${thMon[sm-1]} – ${ed} ${thMon[em-1]} ${ey+543} (${rangeLen} วัน)`;
+      const hi = document.getElementById('mbk-date-input');
+      if (hi) hi.value = _mbkPopupRangeStart;
+    } else if (_mbkPopupRangeStart) {
+      const [y,m,d] = _mbkPopupRangeStart.split('-').map(Number);
+      txt.textContent = `เริ่ม ${d} ${thMon[m-1]} ${y+543} — เลือกวันสิ้นสุด`;
+      const hi = document.getElementById('mbk-date-input');
+      if (hi) hi.value = _mbkPopupRangeStart;
+    } else {
+      txt.textContent = 'แตะวันเริ่มต้นในปฏิทิน';
+    }
+  }
+}
+
+// ══ Mini-cal state ══
+let _mbkMiniCalY        = new Date().getFullYear();
+let _mbkMiniCalM        = new Date().getMonth();
+let _mbkPopupParkMode   = 'daily';       // 'daily' | 'long'
+let _mbkPopupSelDays    = new Set();     // daily: set of ISO dates
+let _mbkPopupRangeStart = null;          // long: range start ISO
+let _mbkPopupRangeEnd   = null;          // long: range end ISO
+
+// ── Open / close mini-cal panel ──
+function mbkPopupChangeDate() {
+  const mini = document.getElementById('mbk-popup-mini-cal');
+  if (!mini) return;
+  const isHidden = mini.style.display === 'none' || !mini.style.display;
+  mini.style.display = isHidden ? 'block' : 'none';
+  if (isHidden) mbkRenderMiniCal();
+}
+
+function mbkMiniCalNav(dir) {
+  _mbkMiniCalM += dir;
+  if (_mbkMiniCalM > 11) { _mbkMiniCalM = 0; _mbkMiniCalY++; }
+  if (_mbkMiniCalM < 0)  { _mbkMiniCalM = 11; _mbkMiniCalY--; }
+  mbkRenderMiniCal();
+}
+
+// ── Compute all ISO dates between two ISO strings (inclusive) ──
+function mbkDateRange(start, end) {
+  const dates = [];
+  let cur = new Date(start + 'T00:00:00');
+  const last = new Date(end   + 'T00:00:00');
+  while (cur <= last) {
+    dates.push(cur.toISOString().slice(0,10));
+    cur.setDate(cur.getDate() + 1);
+  }
+  return dates;
+}
+
+// ── Render mini-calendar (supports daily multi-select & range) ──
+function mbkRenderMiniCal() {
+  const lbl  = document.getElementById('mbk-mini-cal-month');
+  const grid = document.getElementById('mbk-mini-cal-grid');
+  if (!lbl || !grid) return;
+  lbl.textContent = MBK_TH_MON_FULL[_mbkMiniCalM] + ' ' + (_mbkMiniCalY + 543);
+
+  const today = new Date().toISOString().slice(0,10);
+  const fd    = new Date(_mbkMiniCalY, _mbkMiniCalM, 1).getDay(); // 0=Sun
+  const dim   = new Date(_mbkMiniCalY, _mbkMiniCalM+1, 0).getDate();
+
+  // Build range set for highlight
+  let rangeSet = new Set();
+  if (_mbkPopupParkMode === 'long' && _mbkPopupRangeStart && _mbkPopupRangeEnd) {
+    const [s,e] = _mbkPopupRangeStart <= _mbkPopupRangeEnd
+      ? [_mbkPopupRangeStart, _mbkPopupRangeEnd]
+      : [_mbkPopupRangeEnd,   _mbkPopupRangeStart];
+    mbkDateRange(s,e).forEach(d => rangeSet.add(d));
+  }
+
+  let html = '';
+  for (let i = 0; i < fd; i++) html += '<div></div>';
+  for (let d = 1; d <= dim; d++) {
+    const iso = `${_mbkMiniCalY}-${String(_mbkMiniCalM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday   = iso === today;
+    const isSel     = _mbkPopupParkMode === 'daily'
+                        ? _mbkPopupSelDays.has(iso)
+                        : iso === _mbkPopupRangeStart || iso === _mbkPopupRangeEnd;
+    const isInRange = _mbkPopupParkMode === 'long' && rangeSet.has(iso) && !isSel;
+    const isStart   = _mbkPopupParkMode === 'long' && iso === _mbkPopupRangeStart;
+    const isEnd     = _mbkPopupParkMode === 'long' && iso === _mbkPopupRangeEnd;
+
+    let bg='transparent', col='#374151', fw='500', br='8px', extra='';
+    if (isSel)       { bg='#0097B2'; col='#fff'; fw='700'; br='99px'; extra='box-shadow:0 2px 8px rgba(0,151,178,.3);'; }
+    else if (isInRange) { bg='#E0F5F9'; col='#0097B2'; fw='600';
+      br = isStart ? '99px 0 0 99px' : isEnd ? '0 99px 99px 0' : '0'; }
+    else if (isToday)  { bg='#FF6B35'; col='#fff'; fw='700'; br='99px'; }
+
+    // dot for bookings
+    const bkg = typeof getBookingsForDate === 'function' ? getBookingsForDate(iso) : null;
+    const hasDot = bkg && (bkg.common.length + bkg.sub.length + bkg.other.length) > 0 && !isSel;
+    const dot = hasDot ? `<div style="width:4px;height:4px;border-radius:50%;background:#0097B2;margin:1px auto 0;"></div>` : '';
+
+    html += `<div onclick="mbkMiniCalSelect('${iso}')"
+      style="text-align:center;padding:6px 2px 4px;border-radius:${br};cursor:pointer;
+             background:${bg};color:${col};font-weight:${fw};font-size:12px;
+             ${extra}transition:all .1s;">${d}${dot}</div>`;
+  }
+  grid.innerHTML = html;
+
+  // Update hint text
+  const hint = document.getElementById('mbk-mini-cal-hint');
+  if (hint) {
+    if (_mbkPopupParkMode === 'daily') {
+      const n = _mbkPopupSelDays.size;
+      hint.textContent = n > 0 ? `✅ เลือกแล้ว ${n} วัน — แตะวันอื่นเพื่อเพิ่ม/ลบ` : '📅 แตะวันที่ต้องการจอด (หลายวันได้)';
+    } else {
+      if (!_mbkPopupRangeStart) hint.textContent = '📅 แตะวันเริ่มต้น';
+      else if (!_mbkPopupRangeEnd) hint.textContent = '🏁 แตะวันสิ้นสุด';
+      else {
+        const n = mbkDateRange(_mbkPopupRangeStart, _mbkPopupRangeEnd).length;
+        hint.textContent = `✅ ช่วง ${n} วัน — แตะวันใหม่เพื่อรีเซ็ต`;
+      }
+    }
+  }
+}
+function mbkMiniCalSelect(iso) {
+  if (_mbkPopupParkMode === 'daily') {
+    // Toggle this date
+    if (_mbkPopupSelDays.has(iso)) _mbkPopupSelDays.delete(iso);
+    else _mbkPopupSelDays.add(iso);
+    // Set _mbkDateSel to latest selected (for list refresh)
+    _mbkDateSel = iso;
+  } else {
+    // Range mode
+    if (!_mbkPopupRangeStart || (_mbkPopupRangeStart && _mbkPopupRangeEnd)) {
+      // Fresh start
+      _mbkPopupRangeStart = iso;
+      _mbkPopupRangeEnd   = null;
+    } else {
+      // Second tap — set end (allow reorder)
+      _mbkPopupRangeEnd = iso;
+      if (_mbkPopupRangeEnd < _mbkPopupRangeStart) {
+        [_mbkPopupRangeStart, _mbkPopupRangeEnd] = [_mbkPopupRangeEnd, _mbkPopupRangeStart];
+      }
+    }
+    _mbkDateSel = _mbkPopupRangeStart;
+  }
+  _mbkCalY = parseInt(_mbkDateSel.slice(0,4));
+  _mbkCalM = parseInt(_mbkDateSel.slice(5,7)) - 1;
+
+  mbkRenderMiniCal();
+  mbkSyncPopupDate();
+  mbkRenderCal();
+  mbkUpdateSelBar();
+  // Don't auto-close — let user confirm by tapping elsewhere
+}
+
+// ── Helper: get all selected dates for submit ──
+function mbkGetSelectedDates() {
+  if (_mbkPopupParkMode === 'daily') {
+    const days = [..._mbkPopupSelDays].sort();
+    return days.length > 0 ? days : [_mbkDateSel];
+  } else {
+    if (_mbkPopupRangeStart && _mbkPopupRangeEnd)
+      return mbkDateRange(_mbkPopupRangeStart, _mbkPopupRangeEnd);
+    if (_mbkPopupRangeStart) return [_mbkPopupRangeStart];
+    return [_mbkDateSel];
+  }
 }
 function mbkClosePopup() {
   document.getElementById('mbk-popup-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  // Close mini-cal if open
+  const mini = document.getElementById('mbk-popup-mini-cal');
+  if (mini) mini.style.display = 'none';
 }
 function mbkSetType(type, el) {
   _mbkType = type;
@@ -7852,38 +8197,67 @@ function mbkToggleChip(el, group) {
   const parent = el.closest('.mbk-chips');
   parent.querySelectorAll('.mbk-chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
+  // When park-mode chip changes, reset calendar and re-render
+  if (group === 'park') {
+    const isLong = el.textContent.includes('ยาว');
+    _mbkPopupParkMode = isLong ? 'long' : 'daily';
+    _mbkPopupSelDays  = new Set();
+    _mbkPopupRangeStart = null;
+    _mbkPopupRangeEnd   = null;
+    mbkSyncPopupDate();
+    if (document.getElementById('mbk-popup-mini-cal')?.style.display !== 'none') {
+      mbkRenderMiniCal();
+    }
+  }
 }
 function mbkSubmit() {
-  const name = document.getElementById('mbk-name')?.value.trim();
+  const name  = document.getElementById('mbk-name')?.value.trim();
   const plate = document.getElementById('mbk-plate')?.value.trim();
   if (!name || !plate) { pzAlert('กรุณากรอกชื่อและทะเบียน','warning','กรอกข้อมูลไม่ครบ'); return; }
-  const dept = document.getElementById('mbk-dept')?.value.trim() || '–';
-  const dateVal = document.getElementById('mbk-date-input')?.value || _mbkDateSel;
-  const carType = document.querySelector('.mbk-chips .mbk-chip.active')?.textContent.replace(/[^\u0E00-\u0E7F\w ]/g,'').trim() || 'รถยนต์';
-  const parkType = document.querySelector('#mbk-parktype-field .mbk-chip.active')?.textContent.includes('ยาว') ? 'long' : 'daily';
-  const overnight = document.getElementById('mbk-overnight-sw')?.classList.contains('on') || false;
-  const note = document.getElementById('mbk-note')?.value.trim() || '';
 
-  // Build entry same as desktop submitBooking
+  const dept    = document.getElementById('mbk-dept')?.value.trim() || '–';
+  const carType = document.querySelector('.mbk-chips .mbk-chip.active')?.textContent.replace(/[^\u0E00-\u0E7F\w ]/g,'').trim() || 'รถยนต์';
+  const overnight = document.getElementById('mbk-overnight-sw')?.classList.contains('on') || false;
+  const note    = document.getElementById('mbk-note')?.value.trim() || '';
+  const parkType = _mbkPopupParkMode;
+
+  // Get all selected dates (multi or range)
+  const dates  = mbkGetSelectedDates();
+  if (!dates || dates.length === 0) {
+    pzAlert('กรุณาเลือกวันที่จอด','warning','ยังไม่ได้เลือกวัน'); return;
+  }
+  const dateVal = dates[0];
+
+  // Validate range mode: need both start + end
+  if (_mbkPopupParkMode === 'long' && !_mbkPopupRangeEnd) {
+    pzAlert('กรุณาเลือกวันสิ้นสุดด้วย','warning','เลือกวันไม่ครบ'); return;
+  }
+
   const thMon = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   const [y,m,d] = dateVal.split('-').map(Number);
-  const dateThai = `${d} ${thMon[m-1]} ${y+543}`;
+  const dateThai = dates.length === 1
+    ? `${d} ${thMon[m-1]} ${y+543}`
+    : dates.length <= 3
+      ? dates.map(dt => { const [,dm,dd]=dt.split('-').map(Number); return `${dd} ${thMon[dm-1]}`; }).join(', ')
+      : `${d} ${thMon[m-1]} – ${(()=>{const l=dates[dates.length-1].split('-').map(Number);return `${l[2]} ${thMon[l[1]-1]} ${l[0]+543}`;})()}  (${dates.length} วัน)`;
 
   // Push to system
   if (_mbkType === 'common') {
-    ARI_COMMON_BOOKINGS.push({ name, dept, plate, carType, parkType, overnight, status:'จอง', statusCls:'tag-purple', note, dates:[dateVal] });
+    ARI_COMMON_BOOKINGS.push({ name, dept, plate, carType, parkType, overnight, status:'จอง', statusCls:'tag-purple', note, dates });
   } else if (_mbkType === 'sub') {
     const plateOwner = document.getElementById('mbk-plate-owner')?.value.trim() || '';
-    const floor = document.getElementById('mbk-floor')?.value || 'ชั้น 5';
-    ARI_SUB_BOOKINGS.push({ name, dept, plateReq:plate, plateOwner, carTypeReq:carType, floor, overnight, timeType:overnight?'ค้างคืน':'ไม่ค้างคืน', note, dates:[dateVal] });
+    const floor      = document.getElementById('mbk-floor')?.value || 'ชั้น 5';
+    ARI_SUB_BOOKINGS.push({ name, dept, plateReq:plate, plateOwner, carTypeReq:carType, floor, overnight, timeType:overnight?'ค้างคืน':'ไม่ค้างคืน', note, dates });
   } else {
-    ARI_OTHER_BOOKINGS.push({ name, dept, plate, carType, overnight, timeType:overnight?'ค้างคืน':'ไม่ค้างคืน', note, dates:[dateVal] });
+    ARI_OTHER_BOOKINGS.push({ name, dept, plate, carType, overnight, timeType:overnight?'ค้างคืน':'ไม่ค้างคืน', note, dates });
   }
 
-  // sync to GS
-  if (typeof gsAddBooking === 'function') gsAddBooking({ name, dept, plate, carType, parkType, overnight, type:_mbkType, date:dateVal, note });
+  // Sync to GS (send all dates)
+  if (typeof gsAddBooking === 'function') {
+    dates.forEach(dt => gsAddBooking({ name, dept, plate, carType, parkType, overnight, type:_mbkType, date:dt, note }));
+  }
 
-  // show success
+  // Summary
   const typeLabel = _mbkType==='common'?'ส่วนกลาง ชั้น 5':_mbkType==='sub'?'แจ้งจอดแทน':'รถอื่นๆ';
   const sumEl = document.getElementById('mbks-summary');
   if (sumEl) sumEl.innerHTML = `
@@ -7891,11 +8265,11 @@ function mbkSubmit() {
     <div class="mbks-row"><span class="mbks-lbl">ทะเบียน</span><span class="mbks-val" style="font-family:'DM Mono',monospace;">${plate}</span></div>
     <div class="mbks-row"><span class="mbks-lbl">ประเภท</span><span class="mbks-val">${typeLabel}</span></div>
     <div class="mbks-row"><span class="mbks-lbl">วันที่</span><span class="mbks-val">${dateThai}</span></div>
+    <div class="mbks-row"><span class="mbks-lbl">จำนวน</span><span class="mbks-val">${dates.length} วัน</span></div>
     <div class="mbks-row" style="border-bottom:none;"><span class="mbks-lbl">สถานะ</span><span class="mbks-val" style="color:#16A34A;">✓ บันทึกแล้ว</span></div>`;
 
   mbkClosePopup();
   document.getElementById('mbk-success-overlay').classList.add('open');
-  // Refresh table
   if (typeof renderBookingTable === 'function') renderBookingTable(dateVal);
 }
 function mbkCloseSuccess() {
@@ -8511,6 +8885,198 @@ function switchDashBg() {
 
 initDashSlideshow();
 </script>
+
+<!-- ── MOBILE BOOKING POPUP (Real DOM) ── -->
+<div id="mbk-popup-overlay" onclick="if(event.target===this)mbkClosePopup()">
+  <div id="mbk-popup-sheet">
+    <div class="mbk-drag"></div>
+    <div class="mbk-phdr">
+      <div class="mbk-pico"><i class="ti ti-parking" aria-hidden="true"></i></div>
+      <div>
+        <div class="mbk-ptitle">🚘 แจ้งจองที่จอดรถ</div>
+        <div class="mbk-psub">Ari Hills · กรอกข้อมูลให้ครบ</div>
+      </div>
+      <div class="mbk-pclose" onclick="mbkClosePopup()"><i class="ti ti-x" aria-hidden="true"></i></div>
+    </div>
+    <div class="mbk-pbody">
+
+      <!-- ประเภทการจอด -->
+      <div class="mbk-type-tabs" id="mbk-type-tabs">
+        <div class="mbk-ttab active" onclick="mbkSetType('common',this)">
+          <span class="tt-ico">🏢</span>
+          <span class="tt-lbl">ส่วนกลาง</span>
+          <span class="tt-sub">ชั้น 5 ขวามือ</span>
+        </div>
+        <div class="mbk-ttab" onclick="mbkSetType('sub',this)">
+          <span class="tt-ico">🔄</span>
+          <span class="tt-lbl">จอดแทน</span>
+          <span class="tt-sub">ใช้สิทธิ์แทน</span>
+        </div>
+        <div class="mbk-ttab" onclick="mbkSetType('other',this)">
+          <span class="tt-ico">🚐</span>
+          <span class="tt-lbl">รถอื่นๆ</span>
+          <span class="tt-sub">หน้าอาคาร</span>
+        </div>
+      </div>
+
+      <!-- ชื่อ -->
+      <div class="mbk-field">
+        <label>👤 ชื่อ-นามสกุล <span style="color:#7C3AED">*</span></label>
+        <input type="text" id="mbk-name" placeholder="ชื่อ นามสกุล">
+      </div>
+
+      <!-- ฝ่าย + ทะเบียน -->
+      <div class="mbk-field-row">
+        <div class="mbk-field">
+          <label>🏢 ฝ่าย / แผนก</label>
+          <input type="text" id="mbk-dept" placeholder="IT, HR…">
+        </div>
+        <div class="mbk-field">
+          <label>🔢 ทะเบียน <span style="color:#7C3AED">*</span></label>
+          <input type="text" id="mbk-plate" placeholder="กข 1234" style="font-family:'DM Mono',monospace;">
+        </div>
+      </div>
+
+      <!-- จอดแทน: ทะเบียนสิทธิ์ + ชั้น -->
+      <div id="mbk-sub-fields" style="display:none;">
+        <div class="mbk-field">
+          <label>🔑 ทะเบียนสิทธิ์จอดแทน <span style="color:#7C3AED">*</span></label>
+          <input type="text" id="mbk-plate-owner" placeholder="ทะเบียนเจ้าของช่อง" style="font-family:'DM Mono',monospace;">
+        </div>
+        <div class="mbk-field">
+          <label>🅿️ ชั้นที่จอดแทน</label>
+          <select id="mbk-floor">
+            <option value="">เลือกชั้น</option>
+            <option>P3A</option><option>P4</option><option>P4A</option>
+            <option>P5</option><option>P5A</option><option>P6</option>
+            <option>ชั้น 5 ส่วนกลาง</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ประเภทรถ -->
+      <div class="mbk-field">
+        <label>🚗 ประเภทรถ</label>
+        <div class="mbk-chips" id="mbk-car-chips">
+          <div class="mbk-chip active" onclick="mbkToggleChip(this,'car')">🚗 รถเก๋ง</div>
+          <div class="mbk-chip" onclick="mbkToggleChip(this,'car')">🚙 SUV/PPV</div>
+          <div class="mbk-chip" onclick="mbkToggleChip(this,'car')">⚡ EV</div>
+          <div class="mbk-chip" onclick="mbkToggleChip(this,'car')">🚚 กระบะ</div>
+          <div class="mbk-chip" onclick="mbkToggleChip(this,'car')">🚐 รถตู้</div>
+          <div class="mbk-chip" onclick="mbkToggleChip(this,'car')">🚌 รถบัส</div>
+        </div>
+      </div>
+
+      <!-- ประเภทการจอด -->
+      <div class="mbk-field" id="mbk-parktype-field">
+        <label>📅 รูปแบบการจอด</label>
+        <div class="mbk-chips">
+          <div class="mbk-chip active" onclick="mbkToggleChip(this,'park')">📅 รายวัน</div>
+          <div class="mbk-chip" onclick="mbkToggleChip(this,'park')">📆 จอดยาว</div>
+        </div>
+      </div>
+
+      <!-- วันที่จอง — ดึงจาก custom calendar หน้าหลัก -->
+      <div class="mbk-field">
+        <label>📆 วันที่จอง <span style="color:#0097B2">*</span></label>
+        <!-- hidden value for mbkSubmit() -->
+        <input type="hidden" id="mbk-date-input">
+        <!-- styled date display -->
+        <div id="mbk-popup-date-display"
+          style="display:flex;align-items:center;justify-content:space-between;
+                 padding:12px 14px;border-radius:14px;border:2px solid #0097B2;
+                 background:#E6F7FA;cursor:pointer;"
+          onclick="mbkPopupChangeDate()">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-size:20px;">📅</span>
+            <div>
+              <div id="mbk-popup-date-txt"
+                style="font-size:15px;font-weight:700;color:#0F1C38;"></div>
+              <div style="font-size:11px;color:#0097B2;margin-top:1px;">
+                แตะเพื่อเปลี่ยนวัน
+              </div>
+            </div>
+          </div>
+          <div style="width:28px;height:28px;border-radius:8px;background:#0097B2;
+                      display:flex;align-items:center;justify-content:center;">
+            <i class="ti ti-calendar-event" style="font-size:15px;color:#fff;"></i>
+          </div>
+        </div>
+        <!-- inline mini-calendar (hidden by default, shown on tap) -->
+        <div id="mbk-popup-mini-cal"
+          style="display:none;margin-top:8px;background:#fff;border-radius:14px;
+                 border:1.5px solid #D0DDF0;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;
+                      padding:10px 14px;background:#F5F9FF;border-bottom:1px solid #D0DDF0;">
+            <div onclick="mbkMiniCalNav(-1)"
+              style="width:28px;height:28px;border-radius:8px;background:#E6F7FA;
+                     border:1px solid #D0DDF0;display:flex;align-items:center;
+                     justify-content:center;cursor:pointer;font-size:14px;color:#0097B2;">‹</div>
+            <span id="mbk-mini-cal-month"
+              style="font-size:13px;font-weight:700;color:#0F1C38;"></span>
+            <div onclick="mbkMiniCalNav(1)"
+              style="width:28px;height:28px;border-radius:8px;background:#E6F7FA;
+                     border:1px solid #D0DDF0;display:flex;align-items:center;
+                     justify-content:center;cursor:pointer;font-size:14px;color:#0097B2;">›</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);
+                      text-align:center;font-size:10px;font-weight:600;
+                      color:#9BAABB;padding:6px 10px 2px;">
+            <span>อา</span><span>จ</span><span>อ</span><span>พ</span>
+            <span>พฤ</span><span>ศ</span><span>ส</span>
+          </div>
+          <div id="mbk-mini-cal-grid"
+            style="display:grid;grid-template-columns:repeat(7,1fr);
+                   gap:2px;padding:4px 10px 10px;"></div>
+          <!-- hint text -->
+          <div id="mbk-mini-cal-hint"
+            style="text-align:center;padding:0 12px 10px;font-size:11px;color:#7A96B5;"></div>
+        </div>
+      </div>
+
+      <!-- ค้างคืน toggle -->
+      <div class="mbk-field">
+        <div class="mbk-toggle-row">
+          <div>
+            <div class="mbk-toggle-lbl">🌙 ค้างคืน</div>
+            <div class="mbk-toggle-sub">จอดข้ามคืนถึงวันถัดไป</div>
+          </div>
+          <div class="mbk-sw" id="mbk-overnight-sw" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+
+      <!-- หมายเหตุ -->
+      <div class="mbk-field">
+        <label>📝 หมายเหตุ <span style="font-size:11px;font-weight:400;color:#9ca3af;">(ไม่บังคับ)</span></label>
+        <textarea id="mbk-note" placeholder="ข้อมูลเพิ่มเติม..."></textarea>
+      </div>
+
+    </div><!-- /mbk-pbody -->
+
+    <div class="mbk-pfooter">
+      <button class="mbk-bcancel" onclick="mbkClosePopup()">✕ ยกเลิก</button>
+      <button class="mbk-bsubmit" onclick="mbkSubmit()">
+        <i class="ti ti-check" aria-hidden="true"></i>✅ บันทึกการจอง
+      </button>
+    </div>
+
+  </div><!-- /mbk-popup-sheet -->
+</div><!-- /mbk-popup-overlay -->
+
+<!-- ── MOBILE SUCCESS OVERLAY ── -->
+<div id="mbk-success-overlay" onclick="if(event.target===this)mbkCloseSuccess()">
+  <div id="mbk-success-sheet">
+    <div class="mbks-ico"><i class="ti ti-check" aria-hidden="true"></i></div>
+    <div class="mbks-title">บันทึกสำเร็จ! 🎉</div>
+    <div class="mbks-sub">
+      แจ้งจองที่จอดรถเรียบร้อยแล้ว<br>
+      ระบบได้บันทึกข้อมูลเข้า Google Sheets
+    </div>
+    <div class="mbks-card" id="mbks-summary"></div>
+    <button class="mbks-btn" onclick="mbkCloseSuccess()">✓ กลับสู่หน้าแจ้งจอด</button>
+  </div>
+</div>
+
 
 <!-- ─── ADMIN LOGIN OVERLAY ─── -->
 <div id="admin-login-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);z-index:900;align-items:center;justify-content:center;">
