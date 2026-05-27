@@ -8887,7 +8887,7 @@ initDashSlideshow();
 </script>
 
 <!-- ── MOBILE BOOKING POPUP (Real DOM) ── -->
-<div id="mbk-popup-overlay" onclick="if(event.target===this)mbkClosePopup()">
+<div id="mbk-popup-overlay" style="display:none;" onclick="if(event.target===this)mbkClosePopup()">
   <div id="mbk-popup-sheet">
     <div class="mbk-drag"></div>
     <div class="mbk-phdr">
@@ -9064,7 +9064,7 @@ initDashSlideshow();
 </div><!-- /mbk-popup-overlay -->
 
 <!-- ── MOBILE SUCCESS OVERLAY ── -->
-<div id="mbk-success-overlay" onclick="if(event.target===this)mbkCloseSuccess()">
+<div id="mbk-success-overlay" style="display:none;" onclick="if(event.target===this)mbkCloseSuccess()">
   <div id="mbk-success-sheet">
     <div class="mbks-ico"><i class="ti ti-check" aria-hidden="true"></i></div>
     <div class="mbks-title">บันทึกสำเร็จ! 🎉</div>
