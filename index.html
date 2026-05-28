@@ -141,6 +141,38 @@
   .topnav-btn.ghost   { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); border: 0.5px solid rgba(255,255,255,0.1); }
   .topnav-btn.ghost:hover { background: rgba(255,255,255,0.09); color: #fff; border-color: rgba(255,255,255,0.22); }
   .topnav-btn.active-amber { background: rgba(217,119,6,0.18); color: #fbbf24; border: 0.5px solid rgba(217,119,6,0.4); box-shadow: 0 0 14px rgba(251,191,36,0.22), 0 0 0 1px rgba(217,119,6,0.15); }
+
+  /* Admin button states */
+  .topnav-btn.admin-locked {
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.38);
+    border: 0.5px solid rgba(255,255,255,0.1);
+  }
+  .topnav-btn.admin-locked:hover {
+    background: rgba(255,255,255,0.09);
+    color: rgba(255,255,255,0.65);
+    border-color: rgba(255,255,255,0.2);
+  }
+  .topnav-btn.admin-active {
+    background: linear-gradient(135deg, rgba(16,185,129,0.22), rgba(5,150,105,0.18));
+    color: #34d399;
+    border: 0.5px solid rgba(52,211,153,0.45);
+    box-shadow: 0 0 12px rgba(52,211,153,0.18), 0 0 0 1px rgba(16,185,129,0.12);
+  }
+  .topnav-btn.admin-active:hover {
+    background: linear-gradient(135deg, rgba(16,185,129,0.32), rgba(5,150,105,0.26));
+    box-shadow: 0 0 18px rgba(52,211,153,0.28), 0 0 0 1px rgba(16,185,129,0.2);
+  }
+  .admin-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #34d399; flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(52,211,153,0.8);
+    animation: adminPulse 2s ease-in-out infinite;
+  }
+  @keyframes adminPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.6; transform: scale(0.8); }
+  }
   .topnav-badge { background: #E8519A; color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 10px; }
   .topnav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
   .topnav-gs-wrap {
@@ -2777,6 +2809,34 @@
   .bm2-fi::placeholder { color:#A8C0D8; }
   .bm2-fi:focus { border-color:#4196FF; background:#fff; box-shadow:0 0 0 3px rgba(65,150,255,0.1); }
 
+  /* Plate chip tags */
+  #plate-chip-box:focus-within {
+    border-color: #4196FF;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(65,150,255,0.1);
+  }
+  .plate-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #0F1C38; color: #fff;
+    border-radius: 7px; padding: 3px 8px 3px 10px;
+    font-size: 12px; font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap; user-select: none;
+    animation: chipIn .18s cubic-bezier(.34,1.4,.64,1) both;
+  }
+  @keyframes chipIn {
+    from { opacity:0; transform:scale(.7); }
+    to   { opacity:1; transform:scale(1); }
+  }
+  .plate-chip-x {
+    width: 15px; height: 15px; border-radius: 50%;
+    background: rgba(255,255,255,0.18); border: none;
+    color: rgba(255,255,255,0.75); font-size: 10px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .12s; padding: 0; line-height: 1;
+  }
+  .plate-chip-x:hover { background: rgba(255,255,255,0.35); color: #fff; }
+
   /* Overnight toggle */
   .bm2-ovbtn {
     flex:1; padding:10px 8px; border-radius:12px;
@@ -2849,8 +2909,8 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         KSL
       </button>
-      <button class="topnav-btn ghost" onclick="desktopAdminNav()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <button class="topnav-btn admin-locked" id="topnav-admin-btn" onclick="desktopAdminNav()">
+        <svg id="admin-btn-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         <span id="admin-badge">Admin</span>
       </button>
     </div>
@@ -4495,15 +4555,43 @@
 
         <!-- Group 2: ทะเบียน + ฝ่าย -->
         <div class="bm2-fg">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            <div>
-              <label class="bm2-flbl" for="book-plate">🔢 ทะเบียนรถ<span class="bm2-req">*</span></label>
-              <input type="text" class="bm2-fi" id="book-plate" placeholder="เช่น กข 1234">
+          <!-- ทะเบียน chip input -->
+          <div>
+            <label class="bm2-flbl">🔢 ทะเบียนรถ<span class="bm2-req">*</span>
+              <span id="plate-count-badge" style="display:none;margin-left:6px;background:#0F1C38;color:#fff;
+                font-size:9px;font-weight:700;padding:1px 7px;border-radius:99px;vertical-align:middle;"></span>
+            </label>
+            <!-- chip container -->
+            <div id="plate-chip-box"
+              onclick="document.getElementById('plate-tag-input').focus()"
+              style="min-height:42px;padding:5px 8px;border:1.5px solid #D0DDF0;border-radius:11px;
+                     background:#F5F9FF;cursor:text;display:flex;flex-wrap:wrap;gap:5px;
+                     align-items:center;transition:border-color .15s,box-shadow .15s;">
+              <span id="plate-chips-wrap" style="display:contents;"></span>
+              <input id="plate-tag-input" type="text"
+                placeholder="พิมพ์หรือวางทะเบียน..."
+                style="border:none;outline:none;background:transparent;font-size:13px;
+                       color:#0F1C38;font-family:'DM Sans',sans-serif;min-width:140px;flex:1;padding:2px 4px;"
+                onkeydown="plateTagKeydown(event)"
+                onpaste="platePasteHandler(event)"
+                oninput="plateInputChange(this)">
             </div>
-            <div>
-              <label class="bm2-flbl" for="book-dept">🏢 ฝ่าย<span class="bm2-req">*</span></label>
-              <input type="text" class="bm2-fi" id="book-dept" placeholder="เช่น IT, HR, บัญชี">
+            <!-- hint -->
+            <div style="font-size:10px;color:#A8C0D8;margin-top:4px;display:flex;align-items:center;gap:4px;">
+              <i class="ti ti-info-circle" style="font-size:11px;"></i>
+              วางทีเดียวได้หลายทะเบียน คั่นด้วย , หรือขึ้นบรรทัดใหม่
             </div>
+            <!-- dup warning -->
+            <div id="plate-dup-warn" style="display:none;font-size:11px;color:#B45309;
+              background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;
+              padding:5px 10px;margin-top:5px;"></div>
+          </div>
+          <!-- hidden input เก็บค่าทะเบียนแรก (backward compat) -->
+          <input type="hidden" id="book-plate" value="">
+          <!-- ฝ่าย -->
+          <div>
+            <label class="bm2-flbl" for="book-dept">🏢 ฝ่าย<span class="bm2-req">*</span></label>
+            <input type="text" class="bm2-fi" id="book-dept" placeholder="เช่น IT, HR, บัญชี">
           </div>
         </div>
 
@@ -6131,6 +6219,7 @@ function closeBookingModal() {
   const overlay = document.getElementById('booking-modal-overlay');
   overlay.style.display = 'none';
   document.body.style.overflow = '';
+  clearPlateChips();
 }
 
 function onBookTypeChange() {
@@ -6486,6 +6575,117 @@ function updateRangeCalSummary() {
     <span class="bm2-date-chip range">🏁 ${fmt(rangeEnd)}</span>`;
 }
 
+// ═══════════════════════════════════════════════
+//  MULTI-PLATE CHIP INPUT
+// ═══════════════════════════════════════════════
+let _plateSet = []; // ordered array of plates
+
+function parsePlateText(raw) {
+  // split by comma, newline, slash, semicolon, tab, or multiple spaces
+  return raw
+    .split(/[,\n\/;|\t]+/)
+    .map(s => s.trim().replace(/\s+/g,' ').toUpperCase())
+    .filter(s => s.length >= 2);
+}
+
+function addPlates(rawArr) {
+  const dups = [];
+  rawArr.forEach(p => {
+    const norm = p.trim().replace(/\s+/g,' ').toUpperCase();
+    if (!norm || norm.length < 2) return;
+    if (_plateSet.includes(norm)) {
+      dups.push(norm);
+    } else {
+      _plateSet.push(norm);
+    }
+  });
+  renderPlateChips();
+  if (dups.length > 0) {
+    const warn = document.getElementById('plate-dup-warn');
+    warn.style.display = '';
+    warn.innerHTML = `⚠️ ทะเบียนซ้ำ ถูกนำออกอัตโนมัติ: ${dups.map(d=>`<strong>${d}</strong>`).join(', ')}`;
+    setTimeout(() => { warn.style.display = 'none'; }, 4000);
+  }
+  // sync hidden input
+  document.getElementById('book-plate').value = _plateSet[0] || '';
+}
+
+function removePlate(idx) {
+  _plateSet.splice(idx, 1);
+  renderPlateChips();
+  document.getElementById('book-plate').value = _plateSet[0] || '';
+}
+
+function renderPlateChips() {
+  const wrap  = document.getElementById('plate-chips-wrap');
+  const badge = document.getElementById('plate-count-badge');
+  if (!wrap) return;
+
+  wrap.innerHTML = _plateSet.map((p, i) =>
+    `<span class="plate-chip">
+       ${p}
+       <button class="plate-chip-x" onclick="removePlate(${i})" title="ลบ" type="button">✕</button>
+     </span>`
+  ).join('');
+
+  if (_plateSet.length > 1) {
+    badge.style.display = 'inline-block';
+    badge.textContent   = `${_plateSet.length} ทะเบียน`;
+  } else {
+    badge.style.display = 'none';
+  }
+
+  // update placeholder
+  const inp = document.getElementById('plate-tag-input');
+  if (inp) inp.placeholder = _plateSet.length > 0 ? 'เพิ่มทะเบียน...' : 'พิมพ์หรือวางทะเบียน...';
+}
+
+function plateTagKeydown(e) {
+  const inp = e.target;
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const val = inp.value.trim();
+    if (val) addPlates([val]);
+    inp.value = '';
+  } else if (e.key === 'Backspace' && inp.value === '' && _plateSet.length > 0) {
+    removePlate(_plateSet.length - 1);
+  }
+}
+
+function platePasteHandler(e) {
+  e.preventDefault();
+  const text = (e.clipboardData || window.clipboardData).getData('text');
+  const parsed = parsePlateText(text);
+  if (parsed.length > 0) {
+    addPlates(parsed);
+    document.getElementById('plate-tag-input').value = '';
+  } else {
+    // fallback: paste raw into input
+    document.getElementById('plate-tag-input').value = text;
+  }
+}
+
+function plateInputChange(inp) {
+  // auto-trigger split when comma or newline typed inline
+  if (inp.value.includes(',') || inp.value.includes('\n')) {
+    const parts = parsePlateText(inp.value);
+    if (parts.length > 0) {
+      addPlates(parts);
+      inp.value = '';
+    }
+  }
+}
+
+function clearPlateChips() {
+  _plateSet = [];
+  const inp = document.getElementById('plate-tag-input');
+  if (inp) inp.value = '';
+  renderPlateChips();
+  document.getElementById('book-plate').value = '';
+  const warn = document.getElementById('plate-dup-warn');
+  if (warn) warn.style.display = 'none';
+}
+
 // ─── Submit ───
 async function submitBooking() {
   const type  = document.getElementById('book-type').value;
@@ -6494,8 +6694,12 @@ async function submitBooking() {
   const deptVal = document.getElementById('book-dept')?.value.trim() || '';
 
   if (!name)  { pzAlert('กรุณากรอกชื่อผู้แจ้งจอง','warning','กรอกข้อมูลไม่ครบ'); return; }
-  if (!plate) { pzAlert('กรุณากรอกทะเบียนรถ','warning','กรอกข้อมูลไม่ครบ'); return; }
   if (!deptVal) { pzAlert('กรุณากรอกฝ่าย','warning','กรอกข้อมูลไม่ครบ'); return; }
+  // รวบรวมทะเบียนจาก chip list + input ที่ยังไม่ได้ confirm
+  const pendingInput = document.getElementById('plate-tag-input')?.value.trim() || '';
+  if (pendingInput) { addPlates([pendingInput]); document.getElementById('plate-tag-input').value = ''; }
+  if (_plateSet.length === 0 && !plate) { pzAlert('กรุณากรอกทะเบียนรถอย่างน้อย 1 คัน','warning','กรอกข้อมูลไม่ครบ'); return; }
+  const plates = _plateSet.length > 0 ? [..._plateSet] : [plate];
 
   // ── อ่านค่า form ทั้งหมดก่อน ──
   const carLabel      = document.getElementById('book-car-type')?.selectedOptions[0]?.text || '';
@@ -6561,7 +6765,7 @@ async function submitBooking() {
   const typeLabel = {common:'จอดส่วนกลาง ชั้น 5 ขวามือ', sub:'จอดแทน', other:'แจ้งจอดรถอื่นๆ (หน้าอาคาร)'}[type];
   const dayCount = bookedDates.length;
 
-  // ── Build confirm summary ──
+  // ── Build confirm summary (รองรับหลาย plate) ──
   const typeColors = { common:'#0F1C38', sub:'#7C3AED', other:'#D97706' };
   const typeBgs    = { common:'#EEF4FF', sub:'#F5F3FF', other:'#FEF3C7' };
   const dateChips  = (type === 'common' && currentParkMode === 'long')
@@ -6576,20 +6780,32 @@ async function submitBooking() {
         <span style="font-size:11px;color:#6B7280;width:90px;flex-shrink:0;">🏢 ชั้นที่จอดแทน</span>
         <span style="font-size:11px;font-weight:700;color:#1A2233;">${subFloorLabel}</span>
       </div>` : '';
+
+  // plate list rows
+  const plateListHtml = plates.length > 1
+    ? `<div style="padding:7px 0;border-top:1px solid #F0F0F5;">
+        <div style="font-size:11px;color:#6B7280;margin-bottom:6px;">🚗 ทะเบียน (${plates.length} คัน — บันทึกแยก ${plates.length} แถว)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">
+          ${plates.map((p,i)=>`<span style="background:#0F1C38;color:#fff;border-radius:7px;padding:3px 10px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;">${i+1}. ${p}</span>`).join('')}
+        </div>
+      </div>`
+    : `<div style="display:flex;gap:6px;padding:7px 0;border-top:1px solid #F0F0F5;">
+        <span style="font-size:11px;color:#6B7280;width:90px;flex-shrink:0;">🏷️ ทะเบียนรถ</span>
+        <span style="font-size:11px;font-weight:700;color:#1A2233;font-family:'DM Mono',monospace;">${plates[0]}</span>
+      </div>`;
+
   const summaryHtml = `<div style="text-align:left;margin-top:4px;">
     <div style="background:${typeBgs[type]};border:1.5px solid ${typeColors[type]}22;border-radius:10px;
                 padding:6px 12px;margin-bottom:10px;display:inline-flex;align-items:center;gap:6px;">
       <span style="font-size:12px;font-weight:700;color:${typeColors[type]};">🅿️ ${typeLabel}</span>
+      ${plates.length > 1 ? `<span style="font-size:10px;font-weight:700;background:#0F1C38;color:#fff;border-radius:99px;padding:1px 8px;">${plates.length} ทะเบียน</span>` : ''}
     </div>
     <div style="background:#F7F9FC;border-radius:12px;padding:4px 12px;border:1px solid #E5EAF2;">
       <div style="display:flex;gap:6px;padding:7px 0;border-bottom:1px solid #F0F0F5;">
         <span style="font-size:11px;color:#6B7280;width:90px;flex-shrink:0;">👤 ชื่อผู้แจ้ง</span>
         <span style="font-size:11px;font-weight:700;color:#1A2233;">${name}</span>
       </div>
-      <div style="display:flex;gap:6px;padding:7px 0;border-bottom:1px solid #F0F0F5;">
-        <span style="font-size:11px;color:#6B7280;width:90px;flex-shrink:0;">🏷️ ทะเบียนรถ</span>
-        <span style="font-size:11px;font-weight:700;color:#1A2233;font-family:'DM Mono',monospace;">${plate}</span>
-      </div>
+      ${plateListHtml}
       <div style="display:flex;gap:6px;padding:7px 0;border-bottom:1px solid #F0F0F5;">
         <span style="font-size:11px;color:#6B7280;width:90px;flex-shrink:0;">🏢 ฝ่าย</span>
         <span style="font-size:11px;font-weight:600;color:#1A2233;">${deptVal}</span>
@@ -6624,37 +6840,39 @@ async function submitBooking() {
     sico.className = 'ti ti-loader-2 bm2-spin'; stxt.textContent = 'กำลังบันทึก…';
   }
 
-  // ── อัพเดต local array ──
-  if (type === 'common') {
-    const freeIdx = ARI_COMMON_BOOKINGS.findIndex(r => r.status === 'ว่าง');
-    const entry = {
-      slot: freeIdx >= 0 ? ARI_COMMON_BOOKINGS[freeIdx].slot : 'ส่วนกลาง',
-      name, plate, carType: carLabel, dept: deptVal,
-      parkType: currentParkMode,
-      overnight: comOvernight,
-      status: 'จอง', statusCls: 'tag-blue', note: noteVal,
-      dates: bookedDates
-    };
-    if (freeIdx >= 0) ARI_COMMON_BOOKINGS[freeIdx] = entry;
-    else ARI_COMMON_BOOKINGS.push(entry);
-  } else if (type === 'sub') {
-    const found = PLATE_DB[subOwner] || {};
-    ARI_SUB_BOOKINGS.push({
-      slot: found.slot||'–', floor: subFloorLabel, name, plateReq: plate,
-      carTypeReq: carLabel, plateOwner: subOwner, dept: deptVal,
-      timeType: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
-      status: 'รออนุมัติ', statusCls: 'tag-orange', note: noteVal,
-      dates: bookedDates
-    });
-  } else if (type === 'other') {
-    const cleanCarLabel = carLabel.replace(/\s*\(จอดหน้าอาคาร\)/g,'').trim();
-    ARI_OTHER_BOOKINGS.push({
-      location: 'หน้าอาคาร', name, plate, carType: cleanCarLabel, dept: deptVal,
-      timeType: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
-      status: 'รออนุมัติ', statusCls: 'tag-orange', note: noteVal,
-      dates: bookedDates
-    });
-  }
+  // ── อัพเดต local array — loop ทุก plate ──
+  plates.forEach(pl => {
+    if (type === 'common') {
+      const freeIdx = ARI_COMMON_BOOKINGS.findIndex(r => r.status === 'ว่าง');
+      const entry = {
+        slot: freeIdx >= 0 ? ARI_COMMON_BOOKINGS[freeIdx].slot : 'ส่วนกลาง',
+        name, plate: pl, carType: carLabel, dept: deptVal,
+        parkType: currentParkMode,
+        overnight: comOvernight,
+        status: 'จอง', statusCls: 'tag-blue', note: noteVal,
+        dates: bookedDates
+      };
+      if (freeIdx >= 0) ARI_COMMON_BOOKINGS[freeIdx] = entry;
+      else ARI_COMMON_BOOKINGS.push(entry);
+    } else if (type === 'sub') {
+      const found = PLATE_DB[subOwner] || {};
+      ARI_SUB_BOOKINGS.push({
+        slot: found.slot||'–', floor: subFloorLabel, name, plateReq: pl,
+        carTypeReq: carLabel, plateOwner: subOwner, dept: deptVal,
+        timeType: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
+        status: 'รออนุมัติ', statusCls: 'tag-orange', note: noteVal,
+        dates: bookedDates
+      });
+    } else if (type === 'other') {
+      const cleanCarLabel = carLabel.replace(/\s*\(จอดหน้าอาคาร\)/g,'').trim();
+      ARI_OTHER_BOOKINGS.push({
+        location: 'หน้าอาคาร', name, plate: pl, carType: cleanCarLabel, dept: deptVal,
+        timeType: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
+        status: 'รออนุมัติ', statusCls: 'tag-orange', note: noteVal,
+        dates: bookedDates
+      });
+    }
+  });
 
   // ปิด modal
   closeBookingModal();
@@ -6669,7 +6887,7 @@ async function submitBooking() {
   renderBookingTable(currentDate);
   renderAriCalendar();
 
-  pzAlert(`จองสำเร็จ ${dayCount} วัน\nผู้แจ้ง: ${name}  ทะเบียน: ${plate}`, 'success', 'บันทึกการจองสำเร็จ!');
+  pzAlert(`จองสำเร็จ ${plates.length} ทะเบียน × ${dayCount} วัน\nผู้แจ้ง: ${name}`, 'success', 'บันทึกการจองสำเร็จ!');
 
   // ── ส่งไป Google Sheets ──
   // ✅ ส่งค่าทั้งหมดผ่าน sheetOpts เพราะ sendToSheet ถูกเรียกหลัง reset แล้ว
@@ -6682,18 +6900,28 @@ async function submitBooking() {
     note:      noteVal,
     owner:     subOwner,
   };
-  if (bookedDates.length > 0) {
-    bookedDates.forEach((ds, idx) => {
-      setTimeout(() => sendToSheet(type, name, plate, ds, sheetOpts), idx * 300);
-    });
-  } else {
-    sendToSheet(type, name, plate, null, sheetOpts);
-  }
+  // ── ส่งทุก plate × ทุก date ไป Google Sheets ──
+  let sheetDelay = 0;
+  plates.forEach(pl => {
+    if (bookedDates.length > 0) {
+      bookedDates.forEach(ds => {
+        const d = sheetDelay;
+        setTimeout(() => sendToSheet(type, name, pl, ds, sheetOpts), d);
+        sheetDelay += 280;
+      });
+    } else {
+      const d = sheetDelay;
+      setTimeout(() => sendToSheet(type, name, pl, null, sheetOpts), d);
+      sheetDelay += 280;
+    }
+  });
+  setTimeout(gsRefreshFromSheet, sheetDelay + 1500);
 
   // ── Reset form ──
-  ['book-plate','book-name','book-note','book-plate-owner','book-dept'].forEach(id => {
+  ['book-name','book-note','book-plate-owner','book-dept'].forEach(id => {
     const el = document.getElementById(id); if(el) el.value = '';
   });
+  clearPlateChips(); // reset multi-plate chips
   // reset overnight hidden input และ UI ปุ่ม
   setBmOvernight('no');
   const subFloorEl = document.getElementById('book-sub-floor');
@@ -7126,14 +7354,29 @@ function doAdminLogin() {
 }
 
 function updateAdminBadge() {
+  const btn   = document.getElementById('topnav-admin-btn');
   const badge = document.getElementById('admin-badge');
+  const icon  = document.getElementById('admin-btn-icon');
   if (!badge) return;
+
   if (adminLoggedIn) {
-    badge.textContent = '✅ Admin';
-    badge.style.background = '#DCFCE7'; badge.style.color = '#15803D'; badge.style.borderColor = '#BBF7D0';
+    // ── Logged in: green active state ──
+    if (btn) {
+      btn.classList.remove('admin-locked');
+      btn.classList.add('admin-active');
+    }
+    // เปลี่ยน icon เป็น unlock
+    if (icon) icon.innerHTML = '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/>';
+    // dot pulse + label
+    badge.innerHTML = '<span class="admin-dot"></span>Admin';
   } else {
-    badge.textContent = '🔐 Admin';
-    badge.style.background = '#F3F4F6'; badge.style.color = '#9CA3AF'; badge.style.borderColor = '#E5E7EB';
+    // ── Logged out: lock state ──
+    if (btn) {
+      btn.classList.remove('admin-active');
+      btn.classList.add('admin-locked');
+    }
+    if (icon) icon.innerHTML = '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>';
+    badge.textContent = 'Admin';
   }
 }
 
