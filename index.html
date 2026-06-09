@@ -5948,7 +5948,7 @@ function renderBookingTable(dateStr) {
   }).join('');
 
   const emptyHtml = bookedRows.length === 0
-    ? `<tr><td colspan="7" class="tbl-td" style="text-align:center;color:#9ca3af;padding:20px 0;">ไม่มีการแจ้งจอด</td></tr>`
+    ? `<tr><td colspan="9" class="tbl-td" style="text-align:center;color:#9ca3af;padding:20px 0;">ไม่มีการแจ้งจอด</td></tr>`
     : '';
 
   cTbody.innerHTML = bookedHtml + emptyHtml;
@@ -6013,7 +6013,7 @@ function renderBookingTable(dateStr) {
 
   // ── อัพเดต badge count ──
   const ccEl = document.getElementById('common-count');
-  if (ccEl) ccEl.textContent = `${bookedRows.length} จาก 18 ช่อง${bookedRows.length > 18 ? ' ⚠️ เกิน' : ''}`;
+  if (ccEl) ccEl.textContent = `${bookedRows.length} รายการ`;
   const scEl = document.getElementById('sub-count');
   if (scEl) scEl.textContent = subs.length + ' รายการ';
 
@@ -6900,22 +6900,17 @@ async function submitBooking() {
     note:      noteVal,
     owner:     subOwner,
   };
-  // ── ส่งทุก plate × ทุก date ไป Google Sheets ──
-  let sheetDelay = 0;
+  // ── ส่งทุก plate × ทุก date ไป Google Sheets แบบทีละรายการตามลำดับ ──
+  // (ป้องกันรายการหายเมื่อบันทึกจำนวนมาก — รองรับเท่าไหร่ก็ได้)
+  const sendItems = [];
   plates.forEach(pl => {
     if (bookedDates.length > 0) {
-      bookedDates.forEach(ds => {
-        const d = sheetDelay;
-        setTimeout(() => sendToSheet(type, name, pl, ds, sheetOpts), d);
-        sheetDelay += 280;
-      });
+      bookedDates.forEach(ds => sendItems.push({ name, plate: pl, dateISO: ds }));
     } else {
-      const d = sheetDelay;
-      setTimeout(() => sendToSheet(type, name, pl, null, sheetOpts), d);
-      sheetDelay += 280;
+      sendItems.push({ name, plate: pl, dateISO: null });
     }
   });
-  setTimeout(gsRefreshFromSheet, sheetDelay + 1500);
+  sendBookingsSequential(type, sendItems, sheetOpts);
 
   // ── Reset form ──
   ['book-name','book-note','book-plate-owner','book-dept'].forEach(id => {
@@ -7909,8 +7904,9 @@ function processGsData(data) {
     ARI_COMMON_BOOKINGS.length = 0;
     if (data.common && data.common.length) {
       // group ตาม name+plate+ประเภทการจอด เพื่อรวมหลายวันของจอดยาว (long)
-      // แต่ daily แต่ละ row = แต่ละการจอง (ไม่ merge)
+      // แต่ daily แต่ละ row = แต่ละการจอง (ไม่ merge — กันแถวหายตอนชื่อ/ทะเบียน/วันซ้ำกัน)
       const grouped = {};
+      let _dailySeq = 0;
       data.common.forEach(r => {
         const parkTypeStr  = r['ประเภทการจอด'] || '';
         const overnightStr = r['ค้างคืน'] || '';
@@ -7921,10 +7917,10 @@ function processGsData(data) {
         const dateISO  = parseThaiDate(dateRaw);
 
         // จอดยาว → merge หลายวันของ name+plate เดียวกันเป็น 1 entry
-        // รายวัน  → แต่ละ row คือ 1 การจอง แยก key ด้วย dateISO
+        // รายวัน  → ทุก row เป็น 1 การจองแยกกันเสมอ (ใส่ลำดับกันชนกัน)
         const key = isParkLong
           ? (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียน']||'') + '|long'
-          : (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียน']||'') + '|' + (dateISO||'');
+          : (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียน']||'') + '|' + (dateISO||'') + '|#' + (_dailySeq++);
 
         if (!grouped[key]) {
           grouped[key] = {
@@ -8052,7 +8048,10 @@ function processGsData(data) {
 
 // ── ส่งข้อมูลการจองใหม่ไป Sheet ──
 // signature ใหม่: รับ dateISO (YYYY-MM-DD) แยกชัดเจน
-function sendToSheet(type, name, plate, dateISO, extraOpts) {
+// ─────────────────────────────────────────────────────────────
+//  สร้าง row + ชื่อ sheet จากข้อมูล 1 การจอง (ใช้ร่วมกันทุกตัวส่ง)
+// ─────────────────────────────────────────────────────────────
+function buildSheetRow(type, name, plate, dateISO, extraOpts) {
   const now = new Date();
   const ts  = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()+543} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
@@ -8064,11 +8063,6 @@ function sendToSheet(type, name, plate, dateISO, extraOpts) {
     dateThai = `${d} ${thMonths[m-1]} ${y+543}`;
   }
 
-  let sheetName, row;
-
-  // ⚠️ sendToSheet ถูกเรียกผ่าน setTimeout หลัง modal ปิดและ reset แล้ว
-  // จึงต้องอ่านค่าทั้งหมดจาก extraOpts ที่ submitBooking อ่านไว้ก่อน reset
-  // ห้ามอ่านจาก DOM ที่นี่เด็ดขาด
   const _overnight = (extraOpts && extraOpts.overnight) || 'ไม่ค้างคืน';
   const _carLabel  = (extraOpts && extraOpts.carLabel)  || '';
   const _dept      = (extraOpts && extraOpts.dept)      || '–';
@@ -8077,49 +8071,78 @@ function sendToSheet(type, name, plate, dateISO, extraOpts) {
   const _floor     = (extraOpts && extraOpts.floor)     || '–';
   const _owner     = (extraOpts && extraOpts.owner)     || '';
 
+  let sheetName, row;
   if (type === 'common') {
-    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียน/ฝ่าย/ประเภทรถ/วันที่จอด/ประเภทการจอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
     sheetName = 'Bookings';
     row = ['auto', name, plate, _dept, _carLabel, dateThai, _parkMode, _overnight, 'ชั้น 5 ส่วนกลางขวามือ', _note, ts];
-
   } else if (type === 'sub') {
-    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
     sheetName = 'SubPark';
     row = ['auto', name, plate, _dept, _carLabel, _owner, dateThai, _overnight, _floor, _note, ts];
-
-  } else if (type === 'other') {
-    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/วันที่จอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
+  } else { // other
     sheetName = 'OtherCars';
     row = ['auto', name, plate, _dept, _carLabel, dateThai, _overnight, 'หน้าอาคาร', _note, ts];
   }
+  return { sheetName, row };
+}
 
-  gsSetStatus('loading');
+// ─────────────────────────────────────────────────────────────
+//  ส่ง 1 รายการแบบ "ยืนยันผลจริง" (อ่าน res.json ว่า ok หรือไม่)
+//  คืนค่า true เมื่อ Sheet ตอบกลับว่าบันทึกสำเร็จ — ลองซ้ำได้ 1 ครั้ง
+// ─────────────────────────────────────────────────────────────
+async function sendOneBookingVerified(type, name, plate, dateISO, extraOpts) {
+  const { sheetName, row } = buildSheetRow(type, name, plate, dateISO, extraOpts);
   const payload = JSON.stringify({ action: 'addBooking', sheet: sheetName, row });
+  const params  = new URLSearchParams({ action: 'addBooking', sheet: sheetName, data: payload });
+  const url     = `${GS_URL}?${params}`;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 15000);
+      const res = await fetch(url, { method: 'GET', redirect: 'follow', credentials: 'omit', signal: ctrl.signal });
+      clearTimeout(t);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.ok) return true;
+      }
+    } catch (e) { /* timeout/network → ลองใหม่ */ }
+    await new Promise(r => setTimeout(r, 600));
+  }
+  return false;
+}
 
-  fetch(GS_URL, {
-    method: 'POST',
-    mode:   'no-cors',
-    headers: { 'Content-Type': 'text/plain' },
-    body: payload,
-  })
-  .then(() => {
+// ─────────────────────────────────────────────────────────────
+//  ส่งหลายรายการ "ทีละรายการตามลำดับ" (ไม่ยิงพร้อมกัน)
+//  วิธีนี้ป้องกันรายการหายตอนบันทึกจำนวนมาก เพราะ Apps Script
+//  จะ append ทีละแถวโดยไม่ชนกัน — รองรับจำนวนเท่าไหร่ก็ได้
+//  items: [{ name, plate, dateISO }]
+// ─────────────────────────────────────────────────────────────
+async function sendBookingsSequential(type, items, extraOpts) {
+  if (!items || !items.length) return { ok: 0, failed: 0 };
+  gsSetStatus('loading');
+  let ok = 0, failed = 0, idx = 0;
+  for (const it of items) {
+    idx++;
+    const label = document.getElementById('gs-status-label');
+    if (label) label.textContent = `⏳ กำลังบันทึก ${idx}/${items.length}…`;
+    const done = await sendOneBookingVerified(type, it.name, it.plate, it.dateISO, extraOpts);
+    if (done) ok++; else failed++;
+  }
+  if (failed > 0) {
+    gsSetStatus('err');
+    pzAlert(`บันทึกไป Google Sheets ได้ ${ok}/${items.length} รายการ\nมี ${failed} รายการที่ส่งไม่สำเร็จ — กรุณากดสถานะเพื่อรีเฟรช แล้วบันทึกซ้ำเฉพาะที่ขาด`, 'warning', 'บันทึกไม่ครบ');
+  } else {
     gsSetStatus('ok');
-    setTimeout(gsRefreshFromSheet, 2500);
-  })
-  .catch(err => {
-    console.warn('GS POST failed, trying GET fallback:', err);
-    const params = new URLSearchParams({ action: 'addBooking', sheet: sheetName, data: payload });
-    fetch(`${GS_URL}?${params}`, { method: 'GET', mode: 'no-cors' })
-    .then(() => {
-      gsSetStatus('ok');
-      setTimeout(gsRefreshFromSheet, 2500);
-    })
-    .catch(err2 => {
-      console.warn('GS fallback failed:', err2);
-      gsSetStatus('err');
-      pzAlert('ไม่สามารถส่งข้อมูลไปยัง Google Sheets ได้\nกรุณาตรวจสอบการเชื่อมต่อ','error','ส่งข้อมูลไม่สำเร็จ');
-    });
-  });
+  }
+  // รีเฟรชครั้งเดียวหลังส่งครบ (ไม่ยิงรีเฟรชซ้ำต่อรายการ)
+  gsRefreshFromSheet();
+  return { ok, failed };
+}
+
+// ─────────────────────────────────────────────────────────────
+//  ส่ง 1 รายการ (ยังคงไว้เพื่อความเข้ากันได้กับโค้ดเดิม)
+// ─────────────────────────────────────────────────────────────
+function sendToSheet(type, name, plate, dateISO, extraOpts) {
+  sendBookingsSequential(type, [{ name, plate, dateISO }], extraOpts);
 }
 
 // ── คลิก status bar: ถ้า error = test connection, ถ้าอื่น = refresh ──
@@ -8653,9 +8676,19 @@ function mbkSubmit() {
     ARI_OTHER_BOOKINGS.push({ name, dept, plate, carType, overnight, timeType:overnight?'ค้างคืน':'ไม่ค้างคืน', note, dates });
   }
 
-  // Sync to GS (send all dates)
-  if (typeof gsAddBooking === 'function') {
-    dates.forEach(dt => gsAddBooking({ name, dept, plate, carType, parkType, overnight, type:_mbkType, date:dt, note }));
+  // Sync to GS (ส่งทุกวันแบบทีละรายการ — ยืนยันผลจริง)
+  const mbkOpts = {
+    parkMode:  parkType === 'long' ? 'จอดยาว' : 'รายวัน',
+    overnight: overnight ? 'ค้างคืน' : 'ไม่ค้างคืน',
+    floor:     _mbkType === 'sub' ? (document.getElementById('mbk-floor')?.value || 'ชั้น 5') : 'ชั้น 5 ส่วนกลางขวามือ',
+    dept,
+    carLabel:  carType,
+    note:      note || '–',
+    owner:     _mbkType === 'sub' ? (document.getElementById('mbk-plate-owner')?.value.trim() || '') : '',
+  };
+  const mbkItems = dates.map(dt => ({ name, plate, dateISO: dt }));
+  if (typeof sendBookingsSequential === 'function') {
+    sendBookingsSequential(_mbkType, mbkItems, mbkOpts);
   }
 
   // Summary
@@ -9944,9 +9977,8 @@ function submitExtendBooking() {
     note:      entry.note || '–',
     owner:     '',
   };
-  newDates.forEach((ds, idx) => {
-    setTimeout(() => sendToSheet('common', entry.name, entry.plate, ds, sheetOpts), idx * 300);
-  });
+  const extItems = newDates.map(ds => ({ name: entry.name, plate: entry.plate, dateISO: ds }));
+  sendBookingsSequential('common', extItems, sheetOpts);
 }
 </script>
 </body>
