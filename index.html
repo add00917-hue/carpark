@@ -125,7 +125,7 @@
     margin-right: 12px; flex-shrink: 0; cursor: default;
   }
   .topnav-brand-main { font-size: 11px; font-weight: 700; color: #fff; line-height: 1; }
-  .topnav-brand-sub  { font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+  .topnav-brand-sub  { font-size: 9px; color:rgba(255,255,255,0.55); margin-top: 2px; }
   .topnav-divider    { width: 0.5px; height: 28px; background: rgba(255,255,255,0.12); margin: 0 10px; flex-shrink:0; }
   .topnav-links      { display: flex; align-items: center; gap: 3px; flex: 1; overflow: hidden; }
   .topnav-btn {
@@ -136,32 +136,32 @@
     border: none; display: flex; align-items: center; gap: 5px;
     transition: all 0.15s;
   }
-  .topnav-btn.purple  { background: linear-gradient(135deg,#6D28D9,#7C3AED); color: #fff; box-shadow: 0 0 16px rgba(124,58,237,0.45), 0 1px 0 rgba(255,255,255,0.1) inset; }
-  .topnav-btn.purple:hover { box-shadow: 0 0 24px rgba(124,58,237,0.65), 0 1px 0 rgba(255,255,255,0.1) inset; }
-  .topnav-btn.ghost   { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); border: 0.5px solid rgba(255,255,255,0.1); }
-  .topnav-btn.ghost:hover { background: rgba(255,255,255,0.09); color: #fff; border-color: rgba(255,255,255,0.22); }
-  .topnav-btn.active-amber { background: rgba(217,119,6,0.18); color: #fbbf24; border: 0.5px solid rgba(217,119,6,0.4); box-shadow: 0 0 14px rgba(251,191,36,0.22), 0 0 0 1px rgba(217,119,6,0.15); }
+  .topnav-btn.purple  { background: linear-gradient(135deg,#6D28D9,#7C3AED); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.1) inset; }
+  .topnav-btn.purple:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.45), 0 1px 0 rgba(255,255,255,0.1) inset; }
+  .topnav-btn.ghost   { background: rgba(255,255,255,0.04); color:rgba(255,255,255,0.5); border: 0.5px solid rgba(255,255,255,0.1); }
+  .topnav-btn.ghost:hover { background: rgba(255,255,255,0.09); color: #fff; border-color:rgba(255,255,255,0.22); }
+  .topnav-btn.active-amber { background: rgba(217,119,6,0.18); color: #fbbf24; border: 0.5px solid rgba(217,119,6,0.4); box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 0 1px rgba(217,119,6,0.15); }
 
   /* Admin button states */
   .topnav-btn.admin-locked {
     background: rgba(255,255,255,0.04);
-    color: rgba(255,255,255,0.38);
+    color:rgba(255,255,255,0.38);
     border: 0.5px solid rgba(255,255,255,0.1);
   }
   .topnav-btn.admin-locked:hover {
     background: rgba(255,255,255,0.09);
-    color: rgba(255,255,255,0.65);
-    border-color: rgba(255,255,255,0.2);
+    color:rgba(255,255,255,0.65);
+    border-color:rgba(255,255,255,0.2);
   }
   .topnav-btn.admin-active {
     background: linear-gradient(135deg, rgba(16,185,129,0.22), rgba(5,150,105,0.18));
     color: #34d399;
     border: 0.5px solid rgba(52,211,153,0.45);
-    box-shadow: 0 0 12px rgba(52,211,153,0.18), 0 0 0 1px rgba(16,185,129,0.12);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 0 1px rgba(16,185,129,0.12);
   }
   .topnav-btn.admin-active:hover {
     background: linear-gradient(135deg, rgba(16,185,129,0.32), rgba(5,150,105,0.26));
-    box-shadow: 0 0 18px rgba(52,211,153,0.28), 0 0 0 1px rgba(16,185,129,0.2);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4), 0 0 0 1px rgba(16,185,129,0.2);
   }
   .admin-dot {
     width: 6px; height: 6px; border-radius: 50%;
@@ -183,19 +183,19 @@
     cursor: pointer; transition: all 0.15s;
   }
   .topnav-gs-dot { width: 7px; height: 7px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
-  .topnav-gs-label { font-size: 10px; color: rgba(255,255,255,0.45); white-space: nowrap; }
-  .topnav-clock { font-size: 11px; color: rgba(255,255,255,0.45); font-family: 'DM Mono', monospace; white-space: nowrap; }
+  .topnav-gs-label { font-size: 10px; color:rgba(255,255,255,0.45); white-space: nowrap; }
+  .topnav-clock { font-size: 11px; color:rgba(255,255,255,0.45); font-family: 'DM Mono', monospace; white-space: nowrap; }
   .topnav-clock strong { color: #fff; font-weight: 600; }
   .topnav-icon-btn {
     width: 32px; height: 32px; border-radius: 7px;
     border: 0.5px solid rgba(255,255,255,0.1);
     background: rgba(255,255,255,0.04);
     display: flex; align-items: center; justify-content: center;
-    color: rgba(255,255,255,0.4); font-size: 14px; cursor: pointer;
+    color:rgba(255,255,255,0.4); font-size: 14px; cursor: pointer;
   }
   .topnav-avatar { width: 32px; height: 32px; border-radius: 50%; background: #7C3AED; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; }
   .topnav-user-name { font-size: 11px; font-weight: 600; color: #fff; }
-  .topnav-user-role { font-size: 9px; color: rgba(255,255,255,0.3); }
+  .topnav-user-role { font-size: 9px; color:rgba(255,255,255,0.3); }
 
   /* ─── SIDEBAR (hidden – kept for reference) ─── */
   .sidebar { display: none; }
@@ -218,9 +218,9 @@
     box-shadow: var(--shadow);
   }
 
-  .ov-card.highlight { background: linear-gradient(145deg, #5B3FD8, #7C3AED); color: #fff; box-shadow: 0 8px 24px rgba(91,33,182,0.3); }
-  .ov-card.highlight .ov-label { color: rgba(255,255,255,0.55); }
-  .ov-card.highlight .ov-sub { color: rgba(255,255,255,0.6); }
+  .ov-card.highlight { background: linear-gradient(145deg, #5B3FD8, #7C3AED); color: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.3); }
+  .ov-card.highlight .ov-label { color:rgba(255,255,255,0.55); }
+  .ov-card.highlight .ov-sub { color:rgba(255,255,255,0.6); }
   .ov-card.highlight .ov-bar { background: rgba(255,255,255,0.15); }
   .ov-card.highlight .ov-bar-fill { background: rgba(255,255,255,0.8); }
 
@@ -250,7 +250,7 @@
     text-align: left;
   }
   .nav-item:hover { background: var(--surface); color: var(--text); }
-  .nav-item.active { background: linear-gradient(135deg, #5B3FD8, #7C3AED); color: #fff; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+  .nav-item.active { background: linear-gradient(135deg, #5B3FD8, #7C3AED); color: #fff; box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
   .nav-item .nav-icon { font-size: 15px; width: 20px; text-align: center; }
   .nav-item .nav-badge {
     margin-left: auto;
@@ -370,12 +370,12 @@
   }
 
   /* ── ปฏิทิน: ข้อความสีขาวใน booking view ── */
-  #view-booking .cal-day { color: rgba(255,255,255,0.75); }
+  #view-booking .cal-day { color:rgba(255,255,255,0.75); }
   #view-booking .cal-day:hover { background: rgba(255,255,255,0.1); }
-  #view-booking .cal-day.other-month { color: rgba(255,255,255,0.25); }
+  #view-booking .cal-day.other-month { color:rgba(255,255,255,0.25); }
   #view-booking .cal-day.today { background: #0ea5e9; color: #fff; font-weight: 700; box-shadow: 0 0 12px rgba(14,165,233,0.4); }
   #view-booking .cal-day.selected { background: linear-gradient(135deg,#7C3AED,#5B3FD8) !important; color: #fff !important; }
-  #view-booking .cal-day-label { color: rgba(255,255,255,0.35); }
+  #view-booking .cal-day-label { color:rgba(255,255,255,0.35); }
 
   /* ─── Per-view Background Images ─── */
   #view-all {
@@ -393,7 +393,7 @@
   }
   .dash-hero-bg {
     position: absolute; inset: 0;
-    background: transparent;
+    background: linear-gradient(105deg, rgba(8,8,18,0.72) 0%, rgba(8,8,18,0.45) 45%, transparent 78%);
     z-index: 0;
   }
   .dash-hero-overlay {
@@ -403,23 +403,23 @@
     z-index: 1;
   }
   .dash-hero-top { position: relative; z-index: 2; padding: 22px 28px 0; display: flex; justify-content: space-between; align-items: flex-start; }
-  .dash-hero-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.9); margin-bottom: 4px; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
+  .dash-hero-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color:rgba(255,255,255,0.9); margin-bottom: 4px; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
   .dash-hero-sm { font-size: 22px; font-weight: 400; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.5); }
-  .dash-hero-lg { font-size: 68px; font-weight: 700; letter-spacing: -3px; color: #fbbf24; line-height: 1.0; text-shadow: 0 2px 32px rgba(251,191,36,0.45), 0 0 60px rgba(0,0,0,0.4); }
-  .dash-hero-date { font-size: 11px; color: rgba(255,255,255,0.85); margin-top: 6px; text-shadow: 0 1px 6px rgba(0,0,0,0.4); }
+  .dash-hero-lg { font-size: 68px; font-weight: 700; letter-spacing: -3px; color: #FFC93D; line-height: 1.0; text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
+  .dash-hero-date { font-size: 11px; color:rgba(255,255,255,0.85); margin-top: 6px; text-shadow: 0 1px 6px rgba(0,0,0,0.4); }
   .dash-hero-topright { text-align: right; max-width: 240px; }
-  .dash-hero-desc { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.65; }
+  .dash-hero-desc { font-size: 12px; color:rgba(255,255,255,0.72); line-height: 1.65; }
   .dash-hero-link { font-size: 12px; color: #a78bfa; cursor: pointer; margin-top: 8px; display: inline-flex; align-items: center; gap: 4px; }
   .dash-hero-link:hover { color: #c4b5fd; }
   .dash-color-dots { display: flex; gap: 7px; align-items: center; justify-content: flex-end; margin-top: 10px; }
   .dash-color-dot { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.15); }
   .dash-hero-bottom { position: relative; z-index: 2; padding: 0 28px 22px; display: flex; justify-content: space-between; align-items: center; }
-  .dash-stat-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 4px; }
-  .dash-stat-num { font-size: 56px; font-weight: 700; letter-spacing: -4px; color: #fff; line-height: 1; font-family: 'DM Mono', monospace; text-shadow: 0 2px 24px rgba(255,255,255,0.2); }
+  .dash-stat-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color:rgba(255,255,255,0.62); margin-bottom: 4px; }
+  .dash-stat-num { font-size: 56px; font-weight: 700; letter-spacing: -4px; color: #fff; line-height: 1; font-family: 'DM Mono', monospace; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
   .dash-stat-sub { font-size: 13px; margin-top: 5px; }
   .dash-stat-sub .g { color: #4ade80; }
   .dash-stat-sub .r { color: #f87171; }
-  .dash-stat-sub .sep { color: rgba(255,255,255,0.2); margin: 0 5px; }
+  .dash-stat-sub .sep { color:rgba(255,255,255,0.5); margin: 0 5px; }
   .dash-actions { display: flex; align-items: center; padding-bottom: 0; }
   .dash-action-main {
     background: linear-gradient(135deg, #f59e0b, #d97706);
@@ -427,10 +427,10 @@
     font-size: 20px; font-weight: 700;
     padding: 20px 48px; border-radius: 50px;
     cursor: pointer; white-space: nowrap; border: none;
-    box-shadow: 0 6px 32px rgba(217,119,6,0.55), 0 1px 0 rgba(255,255,255,0.15) inset;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.15) inset;
     transition: all 0.2s; letter-spacing: -0.3px;
   }
-  .dash-action-main:hover { box-shadow: 0 10px 40px rgba(217,119,6,0.7); transform: translateY(-2px); }
+  .dash-action-main:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.45); transform: translateY(-2px); }
 
   /* ─── DASHBOARD BOTTOM BAR — Glass Cards ─── */
   .dash-bottom {
@@ -465,13 +465,13 @@
   }
   .dash-stat-card:hover { background: rgba(255,255,255,0.13); }
   .dash-sc-icon { width: 30px; height: 30px; flex-shrink: 0; }
-  .dash-sc-label { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); line-height: 1; }
+  .dash-sc-label { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color:rgba(255,255,255,0.62); line-height: 1; }
   .dash-sc-val { font-size: 30px; font-weight: 700; color: #fff; letter-spacing: -1px; line-height: 1; }
-  .dash-sc-val.g { color: #4ade80; text-shadow: 0 0 12px rgba(74,222,128,0.45); }
-  .dash-sc-val.r { color: #f87171; text-shadow: 0 0 12px rgba(248,113,113,0.45); }
-  .dash-sc-val.a { color: #fbbf24; text-shadow: 0 0 12px rgba(251,191,36,0.45); }
-  .dash-sc-val.p { color: #a78bfa; text-shadow: 0 0 12px rgba(167,139,250,0.45); }
-  .dash-sc-val.t { font-size: 16px; color: rgba(255,255,255,0.5); font-weight: 500; letter-spacing: 0; }
+  .dash-sc-val.g { color: #5DE695; text-shadow:0 1px 2px rgba(0,0,0,0.55); }
+  .dash-sc-val.r { color: #FF8F8F; text-shadow:0 1px 2px rgba(0,0,0,0.55); }
+  .dash-sc-val.a { color: #FFD160; text-shadow:0 1px 2px rgba(0,0,0,0.55); }
+  .dash-sc-val.p { color: #C3B0FF; text-shadow:0 1px 2px rgba(0,0,0,0.55); }
+  .dash-sc-val.t { font-size: 16px; color:rgba(255,255,255,0.65); font-weight: 500; letter-spacing: 0; }
 
   /* ─── TOP BAR ─── */
   .topbar {
@@ -911,7 +911,7 @@
   html:not([data-theme="light"]) #view-bts [style*="rgba(255,255,255,0.09"],
   html:not([data-theme="light"]) #view-ksl [style*="rgba(255,255,255,0.09"] {
     background: rgba(10,10,22,0.78) !important;
-    border-color: rgba(255,255,255,0.14) !important;
+    border-color:rgba(255,255,255,0.14) !important;
   }
   html:not([data-theme="light"]) #view-ari [style*="rgba(8,8,18"],
   html:not([data-theme="light"]) #view-bts [style*="rgba(8,8,18"],
@@ -1104,7 +1104,7 @@
   #view-ari .floor-tab, #view-bts .floor-tab, #view-ksl .floor-tab {
     background: rgba(255,255,255,0.07);
     border: 0.5px solid rgba(255,255,255,0.14);
-    color: rgba(255,255,255,0.55);
+    color:rgba(255,255,255,0.55);
     border-radius: 20px;
     padding: 4px 12px;
     font-size: 10px; font-weight: 600;
@@ -1117,21 +1117,21 @@
   }
   #view-ari .floor-tab:hover:not(.active), #view-bts .floor-tab:hover:not(.active), #view-ksl .floor-tab:hover:not(.active) {
     background: rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.8);
+    color:rgba(255,255,255,0.8);
   }
-  #view-ari .slot-detail, #view-bts .slot-detail, #view-ksl .slot-detail { color: rgba(255,255,255,0.8); }
-  #view-ari .empty-state p, #view-bts .empty-state p, #view-ksl .empty-state p { color: rgba(255,255,255,0.4); }
+  #view-ari .slot-detail, #view-bts .slot-detail, #view-ksl .slot-detail { color:rgba(255,255,255,0.8); }
+  #view-ari .empty-state p, #view-bts .empty-state p, #view-ksl .empty-state p { color:rgba(255,255,255,0.4); }
   /* floor summary dark */
   #view-ari .floor-summary-row { border-bottom: 0.5px solid rgba(255,255,255,0.07); }
-  #view-ari .fs-floor { color: rgba(255,255,255,0.8); font-size: 11px; }
+  #view-ari .fs-floor { color:rgba(255,255,255,0.8); font-size: 11px; }
   #view-ari .fs-bar   { background: rgba(255,255,255,0.1); }
   #view-ari .fs-fill  { background: #7C3AED; }
-  #view-ari .fs-nums  { color: rgba(255,255,255,0.45); }
+  #view-ari .fs-nums  { color:rgba(255,255,255,0.45); }
   #view-ksl .floor-summary-row { border-bottom: 0.5px solid rgba(255,255,255,0.07); }
-  #view-ksl .fs-floor { color: rgba(255,255,255,0.8); font-size: 11px; }
+  #view-ksl .fs-floor { color:rgba(255,255,255,0.8); font-size: 11px; }
   #view-ksl .fs-bar   { background: rgba(255,255,255,0.1); }
   #view-ksl .fs-fill  { background: #60a5fa; }
-  #view-ksl .fs-nums  { color: rgba(255,255,255,0.45); }
+  #view-ksl .fs-nums  { color:rgba(255,255,255,0.45); }
   /* slot grid dark */
   #view-ari .slot-wrap, #view-bts .slot-wrap, #view-ksl .slot-wrap { border-radius: 5px; }
   #view-ari .slot-grid, #view-bts .slot-grid, #view-ksl .slot-grid { gap: 4px; }
@@ -1145,7 +1145,7 @@
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     box-shadow: 0 2px 16px rgba(0,0,0,0.25), 0 0.5px 0 rgba(255,255,255,0.06) inset !important;
-    color: rgba(255,255,255,0.85);
+    color:rgba(255,255,255,0.85);
     position: relative;
   }
   #view-booking .card::before,
@@ -1160,20 +1160,20 @@
   }
   /* Text colors */
   #view-ari .card-title, #view-bts .card-title, #view-ksl .card-title,
-  #view-settings .card-title { color: rgba(255,255,255,0.85); }
-  #view-ari .ov-label, #view-bts .ov-label, #view-ksl .ov-label { color: rgba(255,255,255,0.5); font-size: 11px; }
+  #view-settings .card-title { color:rgba(255,255,255,0.85); }
+  #view-ari .ov-label, #view-bts .ov-label, #view-ksl .ov-label { color:rgba(255,255,255,0.5); font-size: 11px; }
   #view-ari .ov-value, #view-bts .ov-value, #view-ksl .ov-value { color: #fff; }
-  #view-ari .ov-sub, #view-bts .ov-sub, #view-ksl .ov-sub { color: rgba(255,255,255,0.4); }
+  #view-ari .ov-sub, #view-bts .ov-sub, #view-ksl .ov-sub { color:rgba(255,255,255,0.4); }
   #view-ari .ov-bar, #view-bts .ov-bar, #view-ksl .ov-bar { background: rgba(255,255,255,0.1); }
 
   /* nav section labels */
-  #view-ari .nav-section-label, #view-bts .nav-section-label, #view-ksl .nav-section-label { color: rgba(255,255,255,0.35); }
+  #view-ari .nav-section-label, #view-bts .nav-section-label, #view-ksl .nav-section-label { color:rgba(255,255,255,0.35); }
 
   /* floor tabs */
   #view-ari .floor-tab, #view-bts .floor-tab, #view-ksl .floor-tab {
     background: rgba(255,255,255,0.07);
     border: 0.5px solid rgba(255,255,255,0.14);
-    color: rgba(255,255,255,0.6);
+    color:rgba(255,255,255,0.6);
   }
   #view-ari .floor-tab.active, #view-bts .floor-tab.active, #view-ksl .floor-tab.active {
     background: rgba(124,58,237,0.3);
@@ -1198,25 +1198,25 @@
 
   /* empty state */
   #view-ari .empty-state p, #view-bts .empty-state p, #view-ksl .empty-state p {
-    color: rgba(255,255,255,0.4);
+    color:rgba(255,255,255,0.4);
   }
 
   /* legend */
-  #view-ari .legend-item, #view-bts .legend-item, #view-ksl .legend-item { color: rgba(255,255,255,0.6); }
+  #view-ari .legend-item, #view-bts .legend-item, #view-ksl .legend-item { color:rgba(255,255,255,0.6); }
 
   /* BTS/KSL counters */
   #view-bts .bts-counter, #view-ksl .bts-counter {
     background: rgba(255,255,255,0.07) !important;
-    border-color: rgba(255,255,255,0.12) !important;
+    border-color:rgba(255,255,255,0.12) !important;
   }
-  #view-bts .bts-counter .label, #view-ksl .bts-counter .label { color: rgba(255,255,255,0.5); }
+  #view-bts .bts-counter .label, #view-ksl .bts-counter .label { color:rgba(255,255,255,0.5); }
 
   /* sub-topbar title for non-dashboard views */
   #sub-topbar { background: transparent !important; }
-  #topbar-title-text { color: rgba(255,255,255,0.9) !important; }
+  #topbar-title-text { color:rgba(255,255,255,0.9) !important; }
   #view-booking .tbl-th {
     background: rgba(255,255,255,0.05);
-    color: rgba(255,255,255,0.4);
+    color:rgba(255,255,255,0.4);
     border-bottom: 0.5px solid rgba(255,255,255,0.1);
     font-size: 10px;
     padding: 6px 8px;
@@ -1226,7 +1226,7 @@
     table-layout: auto !important;
   }
   #view-booking table td {
-    color: rgba(255,255,255,0.75);
+    color:rgba(255,255,255,0.75);
     border-bottom: 0.5px solid rgba(255,255,255,0.05);
     font-size: 11px;
     padding: 7px 10px;
@@ -1244,7 +1244,7 @@
   #view-booking table tr { background: transparent !important; }
   #view-booking table tr:nth-child(even) { background: rgba(255,255,255,0.025) !important; }
   #view-booking table tr:hover { background: rgba(255,255,255,0.05) !important; }
-  #view-booking .card-title { color: rgba(255,255,255,0.8); }
+  #view-booking .card-title { color:rgba(255,255,255,0.8); }
   #view-booking .dot { background: #7C3AED; }
   .bk-kpi-chip {
     background: rgba(255,255,255,0.06);
@@ -1529,7 +1529,7 @@
     padding: 8px 0; font-size: 13px;
     border-bottom: 1px solid #f3f4f6;
   }
-  html[data-theme="dark"] #slot-mobile-popup .smp-row { border-bottom-color: rgba(255,255,255,0.06); }
+  html[data-theme="dark"] #slot-mobile-popup .smp-row { border-bottom-color:rgba(255,255,255,0.06); }
   #slot-mobile-popup .smp-row:last-of-type { border-bottom: none; }
   #slot-mobile-popup .smp-lbl { color: #9ca3af; }
   #slot-mobile-popup .smp-val { font-weight: 600; color: #1A1235; }
@@ -1542,7 +1542,7 @@
     background: #F5F6FA; font-size: 14px; font-weight: 600;
     color: #7C7A9A; cursor: pointer;
   }
-  html[data-theme="dark"] #slot-mobile-popup .smp-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+  html[data-theme="dark"] #slot-mobile-popup .smp-close { background: rgba(255,255,255,0.08); color:rgba(255,255,255,0.6); }
     background: #F5F3FF;
     border: 1.5px solid #DDD6FE;
     border-radius: var(--radius-sm);
@@ -1583,7 +1583,7 @@
     text-align: left;
   }
   .qa-btn:hover { border-color: var(--gold); background: #F5F3FF; }
-  .qa-btn.primary { background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; border-color: transparent; grid-column: 1/-1; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+  .qa-btn.primary { background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; border-color: transparent; grid-column: 1/-1; box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
   .qa-btn.primary:hover { opacity: 0.88; }
   .qa-icon { font-size: 16px; }
   .qa-label { font-size: 12px; line-height: 1.3; }
@@ -1626,7 +1626,7 @@
     padding: 28px;
     width: 400px;
     max-width: 90vw;
-    box-shadow: 0 24px 64px rgba(91,33,182,0.2);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.35);
     transform: translateY(12px);
     transition: transform 0.2s;
   }
@@ -1647,7 +1647,7 @@
   .modal-field input:focus, .modal-field select:focus { outline: none; border-color: var(--gold); }
   .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
   .btn-cancel { flex: 1; padding: 12px; border-radius: 10px; border: 1.5px solid var(--border); background: none; font-size: 14px; font-weight: 600; cursor: pointer; }
-  .btn-confirm { flex: 1; padding: 12px; border-radius: 10px; border: none; background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.15s; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+  .btn-confirm { flex: 1; padding: 12px; border-radius: 10px; border: none; background: linear-gradient(135deg,#7C3AED,#5B3FD8); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.15s; box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
   .btn-confirm:hover { opacity: 0.88; }
 
   /* ── apane-line: mirrors view-notify layout inside admin ── */
@@ -1655,23 +1655,23 @@
   #apane-line .nv2-sb { background:#161b25; border-right:0.5px solid rgba(255,255,255,.06); display:flex; flex-direction:column; overflow:hidden; }
   #apane-line .nv2-sb-hdr { padding:13px 14px 10px; border-bottom:0.5px solid rgba(255,255,255,.06); flex-shrink:0; }
   #apane-line .nv2-sb-title { font-size:12px; font-weight:700; color:#fff; }
-  #apane-line .nv2-sb-sub { font-size:9px; color:rgba(255,255,255,.3); letter-spacing:.5px; text-transform:uppercase; }
+  #apane-line .nv2-sb-sub { font-size:9px; color:rgba(255,255,255,0.3); letter-spacing:.5px; text-transform:uppercase; }
   #apane-line .nv2-sb-status { display:inline-flex; align-items:center; gap:5px; margin-top:7px; padding:3px 8px; background:rgba(29,158,117,.12); border:0.5px solid rgba(29,158,117,.3); border-radius:20px; font-size:10px; color:#5DCAA5; }
   #apane-line .nv2-sb-dot { width:5px; height:5px; border-radius:50%; background:#1D9E75; flex-shrink:0; }
-  #apane-line .nv2-sb-body { flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:12px; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.08) transparent; }
-  #apane-line .nv2-sec-lbl { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:5px; }
+  #apane-line .nv2-sb-body { flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:12px; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.08) transparent; }
+  #apane-line .nv2-sec-lbl { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:5px; }
   #apane-line .nv2-block { background:rgba(255,255,255,.04); border:0.5px solid rgba(255,255,255,.07); border-radius:8px; padding:10px; }
   #apane-line .nv2-date-disp { font-size:12px; font-weight:600; color:#fff; display:flex; align-items:center; gap:5px; margin-bottom:7px; }
   #apane-line .nv2-cal-nav-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
-  #apane-line .nv2-cnav { background:rgba(255,255,255,.07); border:0.5px solid rgba(255,255,255,.12); border-radius:4px; color:rgba(255,255,255,.7); font-size:13px; width:22px; height:22px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  #apane-line .nv2-cnav { background:rgba(255,255,255,.07); border:0.5px solid rgba(255,255,255,.12); border-radius:4px; color:rgba(255,255,255,0.7); font-size:13px; width:22px; height:22px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
   #apane-line .nv2-cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; text-align:center; }
-  #apane-line .nv2-ch { font-size:9px; font-weight:600; color:rgba(255,255,255,.3); padding:1px 0; }
-  #apane-line .nv2-cd { font-size:10px; color:rgba(255,255,255,.6); padding:3px 1px; border-radius:4px; cursor:pointer; }
+  #apane-line .nv2-ch { font-size:9px; font-weight:600; color:rgba(255,255,255,0.3); padding:1px 0; }
+  #apane-line .nv2-cd { font-size:10px; color:rgba(255,255,255,0.6); padding:3px 1px; border-radius:4px; cursor:pointer; }
   #apane-line .nv2-cd:hover { background:rgba(255,255,255,.08); }
   #apane-line .nv2-cd.sel { background:#1D9E75; color:#fff; font-weight:700; }
   #apane-line .nv2-cd.tod { background:rgba(29,158,117,.2); color:#5DCAA5; font-weight:600; }
   #apane-line .nv2-date-btns { display:flex; gap:5px; margin-top:6px; }
-  #apane-line .nv2-dbtn { flex:1; font-size:10px; padding:5px 0; text-align:center; border:0.5px solid rgba(255,255,255,.12); border-radius:6px; background:transparent; cursor:pointer; color:rgba(255,255,255,.6); }
+  #apane-line .nv2-dbtn { flex:1; font-size:10px; padding:5px 0; text-align:center; border:0.5px solid rgba(255,255,255,.12); border-radius:6px; background:transparent; cursor:pointer; color:rgba(255,255,255,0.6); }
   #apane-line .nv2-dbtn:hover { background:rgba(255,255,255,.07); color:#fff; }
   #apane-line .nv2-send-btn { width:100%; margin-top:5px; padding:7px; border-radius:7px; border:none; background:#185FA5; color:#fff; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; }
   #apane-line .nv2-send-btn:disabled { opacity:.4; cursor:not-allowed; }
@@ -1679,27 +1679,27 @@
   #apane-line .nv2-main { display:flex; flex-direction:column; overflow:hidden; background:#fff; }
   html[data-theme="dark"] #apane-line .nv2-main { background:rgba(10,12,22,.95); }
   #apane-line .nv2-mh { padding:11px 14px; border-bottom:0.5px solid rgba(0,0,0,.08); display:flex; align-items:center; gap:7px; flex-shrink:0; }
-  html[data-theme="dark"] #apane-line .nv2-mh { border-bottom-color:rgba(255,255,255,.06); }
+  html[data-theme="dark"] #apane-line .nv2-mh { border-bottom-color:rgba(255,255,255,0.06); }
   #apane-line .nv2-mh-title { font-size:13px; font-weight:700; color:#1a1a2e; }
   html[data-theme="dark"] #apane-line .nv2-mh-title { color:#fff; }
   #apane-line .nv2-mh-date { font-size:10px; color:#6b7280; }
   #apane-line .nv2-mh-cnt { font-size:10px; background:#f3f4f6; border:0.5px solid #e5e7eb; border-radius:999px; padding:2px 8px; color:#6b7280; }
   #apane-line .nv2-mh-r { margin-left:auto; display:flex; gap:5px; }
   #apane-line .nv2-mh-btn { display:flex; align-items:center; gap:4px; font-size:10px; padding:5px 10px; border:0.5px solid #e5e7eb; border-radius:7px; background:#fff; cursor:pointer; color:#374151; font-weight:500; }
-  html[data-theme="dark"] #apane-line .nv2-mh-btn { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.12); color:rgba(255,255,255,.7); }
+  html[data-theme="dark"] #apane-line .nv2-mh-btn { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,0.12); color:rgba(255,255,255,0.7); }
   #apane-line .nv2-mh-send { background:#185FA5; color:#fff!important; border-color:#185FA5; }
   #apane-line .nv2-body { flex:1; overflow-y:auto; padding:12px 14px; display:flex; gap:12px; align-items:flex-start; scrollbar-width:thin; }
   #apane-line .nv2-phone { width:185px; background:#1a1a2e; border-radius:20px; overflow:hidden; border:4px solid #2a2a3e; box-shadow:0 8px 28px rgba(0,0,0,.4); flex-shrink:0; }
-  #apane-line .nv2-phone-bar { background:#111; padding:4px 12px; display:flex; justify-content:space-between; font-size:9px; color:rgba(255,255,255,.4); font-family:monospace; }
+  #apane-line .nv2-phone-bar { background:#111; padding:4px 12px; display:flex; justify-content:space-between; font-size:9px; color:rgba(255,255,255,0.4); font-family:monospace; }
   #apane-line .nv2-chat { background:#1a242e; padding:8px; min-height:280px; display:flex; flex-direction:column; gap:4px; }
-  #apane-line .nv2-chat-date { text-align:center; font-size:8px; color:rgba(255,255,255,.3); background:rgba(255,255,255,.05); padding:2px 8px; border-radius:5px; display:table; margin:0 auto 4px; }
+  #apane-line .nv2-chat-date { text-align:center; font-size:8px; color:rgba(255,255,255,0.3); background:rgba(255,255,255,.05); padding:2px 8px; border-radius:5px; display:table; margin:0 auto 4px; }
   #apane-line .nv2-bubble { background:#2a2a2a; border-radius:3px 10px 10px 10px; padding:8px 9px; font-size:9px; line-height:1.65; color:#d0d0d0; white-space:pre-wrap; word-break:break-word; }
   #apane-line .nv2-bh { font-size:10px; font-weight:700; color:#06C755; margin-bottom:3px; }
-  #apane-line .nv2-ct { font-size:8px; color:rgba(255,255,255,.2); margin:2px 0 0 2px; }
+  #apane-line .nv2-ct { font-size:8px; color:rgba(255,255,255,0.2); margin:2px 0 0 2px; }
   #apane-line .nv2-txt-pre { flex:1; font-family:monospace; font-size:11px; line-height:1.7; color:#1a1a2e; background:#f9fafb; border:0.5px solid #e5e7eb; border-radius:8px; padding:10px 12px; white-space:pre-wrap; word-break:break-word; max-height:320px; overflow-y:auto; margin:0; }
-  html[data-theme="dark"] #apane-line .nv2-txt-pre { color:rgba(255,255,255,.8); background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.08); }
+  html[data-theme="dark"] #apane-line .nv2-txt-pre { color:rgba(255,255,255,0.8); background:rgba(255,255,255,.04); border-color:rgba(255,255,255,0.08); }
   #apane-line .nv2-log { border-top:0.5px solid #f3f4f6; background:#f9fafb; padding:6px 14px; height:62px; overflow-y:auto; flex-shrink:0; display:flex; flex-direction:column; gap:2px; scrollbar-width:thin; }
-  html[data-theme="dark"] #apane-line .nv2-log { background:rgba(10,12,22,.98); border-top-color:rgba(255,255,255,.05); }
+  html[data-theme="dark"] #apane-line .nv2-log { background:rgba(10,12,22,.98); border-top-color:rgba(255,255,255,0.05); }
   #apane-line .nv2-log-row { display:flex; gap:6px; font-size:10px; font-family:monospace; }
   #apane-line .nv2-log-ts { color:#9ca3af; min-width:52px; }
   #apane-line .nv2-log-ok { color:#1D9E75; }
@@ -1708,18 +1708,18 @@
   #apane-line .nv2-rp { border-left:0.5px solid rgba(255,255,255,.06); display:flex; flex-direction:column; overflow:hidden; background:#1a1f2e; }
   #apane-line .nv2-rp-hdr { padding:11px 13px 9px; border-bottom:0.5px solid rgba(255,255,255,.08); flex-shrink:0; background:#141824; }
   #apane-line .nv2-rp-title { font-size:12px; font-weight:700; color:#f0f4ff; }
-  #apane-line .nv2-rp-sub { font-size:10px; color:rgba(255,255,255,.45); margin-top:1px; }
+  #apane-line .nv2-rp-sub { font-size:10px; color:rgba(255,255,255,0.45); margin-top:1px; }
   #apane-line .nv2-rp-body { flex:1; overflow-y:auto; padding:10px 12px; display:flex; flex-direction:column; gap:9px; scrollbar-width:thin; }
   #apane-line .nv2-acc { border:0.5px solid rgba(255,255,255,.08); border-radius:9px; overflow:hidden; }
   #apane-line .nv2-acc-hdr { display:flex; align-items:center; gap:7px; padding:8px 11px; cursor:pointer; background:rgba(255,255,255,.05); user-select:none; }
   #apane-line .nv2-acc-name { font-size:11px; font-weight:600; flex:1; color:#e0e8ff; }
   #apane-line .nv2-acc-cnt { font-size:10px; font-weight:600; padding:1px 7px; border-radius:999px; }
-  #apane-line .nv2-acc-arr { font-size:12px; color:rgba(255,255,255,.4); transition:transform .2s; display:inline-block; }
+  #apane-line .nv2-acc-arr { font-size:12px; color:rgba(255,255,255,0.4); transition:transform .2s; display:inline-block; }
   #apane-line .nv2-acc-arr.open { transform:rotate(90deg); }
   #apane-line .nv2-acc-body { padding:9px 11px; border-top:0.5px solid rgba(255,255,255,.07); background:rgba(0,0,0,.15); }
-  #apane-line .nv2-chip { font-size:10px; padding:3px 9px; border-radius:6px; border:0.5px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06); cursor:pointer; color:rgba(255,255,255,.65); transition:all .15s; user-select:none; }
+  #apane-line .nv2-chip { font-size:10px; padding:3px 9px; border-radius:6px; border:0.5px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06); cursor:pointer; color:rgba(255,255,255,0.65); transition:all .15s; user-select:none; }
   #apane-line .nv2-chip.on { background:#185FA5; color:#fff; border-color:#185FA5; }
-  #apane-line .nv2-col-lbl { font-size:10px; font-weight:600; color:rgba(255,255,255,.5); margin-bottom:5px; display:flex; align-items:center; justify-content:space-between; }
+  #apane-line .nv2-col-lbl { font-size:10px; font-weight:600; color:rgba(255,255,255,0.5); margin-bottom:5px; display:flex; align-items:center; justify-content:space-between; }
   #apane-line .nv2-sched-sec { border:0.5px solid rgba(255,255,255,.08); border-radius:9px; overflow:hidden; }
   #apane-line .nv2-sched-hdr { display:flex; align-items:center; gap:7px; padding:8px 11px; cursor:pointer; background:rgba(255,255,255,.05); user-select:none; }
   #apane-line .nv2-sched-title { font-size:11px; font-weight:600; flex:1; color:#e0e8ff; }
@@ -1727,15 +1727,15 @@
   #apane-line .nv2-sched-card { display:flex; align-items:center; background:rgba(255,255,255,.05); border:0.5px solid rgba(255,255,255,.1); border-radius:8px; padding:7px 10px; margin-bottom:5px; gap:7px; }
   #apane-line .nv2-sched-time { font-size:14px; font-weight:700; color:#1D9E75; font-family:monospace; min-width:40px; }
   #apane-line .nv2-sched-name { font-size:11px; font-weight:500; color:#e0e8ff; }
-  #apane-line .nv2-sched-type { font-size:10px; color:rgba(255,255,255,.4); }
+  #apane-line .nv2-sched-type { font-size:10px; color:rgba(255,255,255,0.4); }
   #apane-line .nv2-stg { width:28px; height:16px; border-radius:999px; background:#1D9E75; border:none; position:relative; cursor:pointer; flex-shrink:0; margin-left:auto; transition:background .2s; }
   #apane-line .nv2-stg.off { background:rgba(255,255,255,.15); }
   #apane-line .nv2-stg::after { content:''; position:absolute; top:2px; right:2px; width:12px; height:12px; background:#fff; border-radius:50%; transition:right .2s; }
   #apane-line .nv2-stg.off::after { right:auto; left:2px; }
-  #apane-line .nv2-del-btn { background:none; border:none; cursor:pointer; color:rgba(255,255,255,.3); font-size:13px; padding:2px 4px; }
-  #apane-line .nv2-add-sched { width:100%; padding:6px; border:0.5px dashed rgba(255,255,255,.2); border-radius:7px; background:transparent; font-size:11px; cursor:pointer; color:rgba(255,255,255,.45); }
+  #apane-line .nv2-del-btn { background:none; border:none; cursor:pointer; color:rgba(255,255,255,0.3); font-size:13px; padding:2px 4px; }
+  #apane-line .nv2-add-sched { width:100%; padding:6px; border:0.5px dashed rgba(255,255,255,.2); border-radius:7px; background:transparent; font-size:11px; cursor:pointer; color:rgba(255,255,255,0.45); }
   #apane-line .nv2-cd-box { margin-top:7px; background:rgba(186,117,23,.06); border:0.5px solid rgba(186,117,23,.2); border-radius:8px; padding:7px; text-align:center; }
-  #apane-line .nv2-cd-lbl { font-size:10px; color:rgba(255,255,255,.4); margin-bottom:1px; }
+  #apane-line .nv2-cd-lbl { font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:1px; }
   #apane-line .nv2-cd-val { font-size:17px; font-weight:700; color:#BA7517; font-family:monospace; }
   #apane-line .nv2-fi { width:100%; font-size:11px; padding:6px 9px; border:0.5px solid rgba(255,255,255,.15); border-radius:7px; background:rgba(255,255,255,.06); color:#e0e8ff; }
   @media (max-width:768px) {
@@ -1851,23 +1851,23 @@
   #view-notify .nv2-sb{background:#161b25;border-right:0.5px solid rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden}
   #view-notify .nv2-sb-hdr{padding:13px 14px 10px;border-bottom:0.5px solid rgba(255,255,255,.06);flex-shrink:0}
   #view-notify .nv2-sb-title{font-size:12px;font-weight:700;color:#fff}
-  #view-notify .nv2-sb-sub{font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.5px;text-transform:uppercase}
+  #view-notify .nv2-sb-sub{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:.5px;text-transform:uppercase}
   #view-notify .nv2-sb-status{display:inline-flex;align-items:center;gap:5px;margin-top:7px;padding:3px 8px;background:rgba(29,158,117,.12);border:0.5px solid rgba(29,158,117,.3);border-radius:20px;font-size:10px;color:#5DCAA5}
   #view-notify .nv2-sb-dot{width:5px;height:5px;border-radius:50%;background:#1D9E75;flex-shrink:0}
-  #view-notify .nv2-sb-body{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent}
-  #view-notify .nv2-sec-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:5px}
+  #view-notify .nv2-sb-body{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}
+  #view-notify .nv2-sec-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:5px}
   #view-notify .nv2-block{background:rgba(255,255,255,.04);border:0.5px solid rgba(255,255,255,.07);border-radius:8px;padding:10px}
   #view-notify .nv2-date-disp{font-size:12px;font-weight:600;color:#fff;display:flex;align-items:center;gap:5px;margin-bottom:7px}
   #view-notify .nv2-cal-nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-  #view-notify .nv2-cnav{background:rgba(255,255,255,.07);border:0.5px solid rgba(255,255,255,.12);border-radius:4px;color:rgba(255,255,255,.7);font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  #view-notify .nv2-cnav{background:rgba(255,255,255,.07);border:0.5px solid rgba(255,255,255,.12);border-radius:4px;color:rgba(255,255,255,0.7);font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer}
   #view-notify .nv2-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
-  #view-notify .nv2-ch{font-size:9px;font-weight:600;color:rgba(255,255,255,.3);padding:1px 0}
-  #view-notify .nv2-cd{font-size:10px;color:rgba(255,255,255,.6);padding:3px 1px;border-radius:4px;cursor:pointer}
+  #view-notify .nv2-ch{font-size:9px;font-weight:600;color:rgba(255,255,255,0.3);padding:1px 0}
+  #view-notify .nv2-cd{font-size:10px;color:rgba(255,255,255,0.6);padding:3px 1px;border-radius:4px;cursor:pointer}
   #view-notify .nv2-cd:hover{background:rgba(255,255,255,.08)}
   #view-notify .nv2-cd.sel{background:#1D9E75;color:#fff;font-weight:700}
   #view-notify .nv2-cd.tod{background:rgba(29,158,117,.2);color:#5DCAA5;font-weight:600}
   #view-notify .nv2-date-btns{display:flex;gap:5px;margin-top:6px}
-  #view-notify .nv2-dbtn{flex:1;font-size:10px;padding:5px 0;text-align:center;border:0.5px solid rgba(255,255,255,.12);border-radius:6px;background:transparent;cursor:pointer;color:rgba(255,255,255,.6)}
+  #view-notify .nv2-dbtn{flex:1;font-size:10px;padding:5px 0;text-align:center;border:0.5px solid rgba(255,255,255,.12);border-radius:6px;background:transparent;cursor:pointer;color:rgba(255,255,255,0.6)}
   #view-notify .nv2-dbtn:hover{background:rgba(255,255,255,.07);color:#fff}
   #view-notify .nv2-send-btn{width:100%;margin-top:5px;padding:7px;border-radius:7px;border:none;background:#185FA5;color:#fff;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
   #view-notify .nv2-send-btn:disabled{opacity:.4;cursor:not-allowed}
@@ -1876,29 +1876,29 @@
   #view-notify .nv2-main{display:flex;flex-direction:column;overflow:hidden;background:#fff}
   html[data-theme="dark"] #view-notify .nv2-main{background:rgba(10,12,22,.95)}
   #view-notify .nv2-mh{padding:11px 14px;border-bottom:0.5px solid rgba(0,0,0,.08);display:flex;align-items:center;gap:7px;flex-shrink:0}
-  html[data-theme="dark"] #view-notify .nv2-mh{border-bottom-color:rgba(255,255,255,.06)}
+  html[data-theme="dark"] #view-notify .nv2-mh{border-bottom-color:rgba(255,255,255,0.06)}
   #view-notify .nv2-mh-title{font-size:13px;font-weight:700;color:#1a1a2e}
   html[data-theme="dark"] #view-notify .nv2-mh-title{color:#fff}
   #view-notify .nv2-mh-date{font-size:10px;color:#6b7280}
-  html[data-theme="dark"] #view-notify .nv2-mh-date{color:rgba(255,255,255,.4)}
+  html[data-theme="dark"] #view-notify .nv2-mh-date{color:rgba(255,255,255,0.4)}
   #view-notify .nv2-mh-cnt{font-size:10px;background:#f3f4f6;border:0.5px solid #e5e7eb;border-radius:999px;padding:2px 8px;color:#6b7280}
-  html[data-theme="dark"] #view-notify .nv2-mh-cnt{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.4)}
+  html[data-theme="dark"] #view-notify .nv2-mh-cnt{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.4)}
   #view-notify .nv2-mh-r{margin-left:auto;display:flex;gap:5px}
   #view-notify .nv2-mh-btn{display:flex;align-items:center;gap:4px;font-size:10px;padding:5px 10px;border:0.5px solid #e5e7eb;border-radius:7px;background:#fff;cursor:pointer;color:#374151;font-weight:500}
-  html[data-theme="dark"] #view-notify .nv2-mh-btn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+  html[data-theme="dark"] #view-notify .nv2-mh-btn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,0.12);color:rgba(255,255,255,0.7)}
   #view-notify .nv2-mh-send{background:#185FA5;color:#fff!important;border-color:#185FA5}
   #view-notify .nv2-body{flex:1;overflow-y:auto;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;scrollbar-width:thin}
   #view-notify .nv2-phone{width:185px;background:#1a1a2e;border-radius:20px;overflow:hidden;border:4px solid #2a2a3e;box-shadow:0 8px 28px rgba(0,0,0,.4);flex-shrink:0}
-  #view-notify .nv2-phone-bar{background:#111;padding:4px 12px;display:flex;justify-content:space-between;font-size:9px;color:rgba(255,255,255,.4);font-family:monospace}
+  #view-notify .nv2-phone-bar{background:#111;padding:4px 12px;display:flex;justify-content:space-between;font-size:9px;color:rgba(255,255,255,0.4);font-family:monospace}
   #view-notify .nv2-chat{background:#1a242e;padding:8px;min-height:280px;display:flex;flex-direction:column;gap:4px}
-  #view-notify .nv2-chat-date{text-align:center;font-size:8px;color:rgba(255,255,255,.3);background:rgba(255,255,255,.05);padding:2px 8px;border-radius:5px;display:table;margin:0 auto 4px}
+  #view-notify .nv2-chat-date{text-align:center;font-size:8px;color:rgba(255,255,255,0.3);background:rgba(255,255,255,.05);padding:2px 8px;border-radius:5px;display:table;margin:0 auto 4px}
   #view-notify .nv2-bubble{background:#2a2a2a;border-radius:3px 10px 10px 10px;padding:8px 9px;font-size:9px;line-height:1.65;color:#d0d0d0;white-space:pre-wrap;word-break:break-word}
   #view-notify .nv2-bh{font-size:10px;font-weight:700;color:#06C755;margin-bottom:3px}
-  #view-notify .nv2-ct{font-size:8px;color:rgba(255,255,255,.2);margin:2px 0 0 2px}
+  #view-notify .nv2-ct{font-size:8px;color:rgba(255,255,255,0.2);margin:2px 0 0 2px}
   #view-notify .nv2-txt-pre{flex:1;font-family:monospace;font-size:11px;line-height:1.7;color:#1a1a2e;background:#f9fafb;border:0.5px solid #e5e7eb;border-radius:8px;padding:10px 12px;white-space:pre-wrap;word-break:break-word;max-height:320px;overflow-y:auto;margin:0}
-  html[data-theme="dark"] #view-notify .nv2-txt-pre{color:rgba(255,255,255,.8);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+  html[data-theme="dark"] #view-notify .nv2-txt-pre{color:rgba(255,255,255,0.8);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,0.08)}
   #view-notify .nv2-log{border-top:0.5px solid #f3f4f6;background:#f9fafb;padding:6px 14px;height:62px;overflow-y:auto;flex-shrink:0;display:flex;flex-direction:column;gap:2px;scrollbar-width:thin}
-  html[data-theme="dark"] #view-notify .nv2-log{background:rgba(10,12,22,.98);border-top-color:rgba(255,255,255,.05)}
+  html[data-theme="dark"] #view-notify .nv2-log{background:rgba(10,12,22,.98);border-top-color:rgba(255,255,255,0.05)}
   #view-notify .nv2-log-row{display:flex;gap:6px;font-size:10px;font-family:monospace}
   #view-notify .nv2-log-ts{color:#9ca3af;min-width:52px}
   #view-notify .nv2-log-ok{color:#1D9E75}
@@ -1909,30 +1909,30 @@
   #view-notify .nv2-rp{border-left:0.5px solid rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden;background:#1a1f2e}
   #view-notify .nv2-rp-hdr{padding:11px 13px 9px;border-bottom:0.5px solid rgba(255,255,255,.08);flex-shrink:0;background:#141824}
   #view-notify .nv2-rp-title{font-size:12px;font-weight:700;color:#f0f4ff}
-  #view-notify .nv2-rp-sub{font-size:10px;color:rgba(255,255,255,.45);margin-top:1px}
-  #view-notify .nv2-rp-body{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:9px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent}
+  #view-notify .nv2-rp-sub{font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px}
+  #view-notify .nv2-rp-body{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:9px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent}
   /* accordion */
   #view-notify .nv2-acc{border:0.5px solid rgba(255,255,255,.08);border-radius:9px;overflow:hidden}
   #view-notify .nv2-acc-hdr{display:flex;align-items:center;gap:7px;padding:8px 11px;cursor:pointer;background:rgba(255,255,255,.05);user-select:none;transition:background .15s}
   #view-notify .nv2-acc-name{font-size:11px;font-weight:600;flex:1;color:#e0e8ff}
   #view-notify .nv2-acc-cnt{font-size:10px;font-weight:600;padding:1px 7px;border-radius:999px}
-  #view-notify .nv2-acc-arr{font-size:12px;color:rgba(255,255,255,.4);transition:transform .2s;display:inline-block}
+  #view-notify .nv2-acc-arr{font-size:12px;color:rgba(255,255,255,0.4);transition:transform .2s;display:inline-block}
   #view-notify .nv2-acc-arr.open{transform:rotate(90deg)}
   #view-notify .nv2-acc-body{padding:9px 11px;border-top:0.5px solid rgba(255,255,255,.07);background:rgba(0,0,0,.15)}
   /* chips */
-  #view-notify .nv2-col-lbl{font-size:10px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:5px;display:flex;align-items:center;justify-content:space-between}
+  #view-notify .nv2-col-lbl{font-size:10px;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:5px;display:flex;align-items:center;justify-content:space-between}
   #view-notify .nv2-chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:7px}
-  #view-notify .nv2-chip{font-size:10px;padding:3px 9px;border-radius:6px;border:0.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);cursor:pointer;color:rgba(255,255,255,.65);transition:all .15s;user-select:none}
+  #view-notify .nv2-chip{font-size:10px;padding:3px 9px;border-radius:6px;border:0.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);cursor:pointer;color:rgba(255,255,255,0.65);transition:all .15s;user-select:none}
   #view-notify .nv2-chip.on{background:#185FA5;color:#fff;border-color:#185FA5}
   /* mini table */
   #view-notify .nv2-mt{width:100%;border-collapse:collapse;font-size:10px}
-  #view-notify .nv2-mt th{font-size:9px;color:rgba(255,255,255,.4);text-align:left;padding:4px 6px;border-bottom:0.5px solid rgba(255,255,255,.07);background:rgba(255,255,255,.04);font-weight:500;white-space:nowrap}
-  #view-notify .nv2-mt td{font-size:10px;padding:4px 6px;border-bottom:0.5px solid rgba(255,255,255,.05);color:rgba(255,255,255,.8);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:80px}
+  #view-notify .nv2-mt th{font-size:9px;color:rgba(255,255,255,0.4);text-align:left;padding:4px 6px;border-bottom:0.5px solid rgba(255,255,255,.07);background:rgba(255,255,255,.04);font-weight:500;white-space:nowrap}
+  #view-notify .nv2-mt td{font-size:10px;padding:4px 6px;border-bottom:0.5px solid rgba(255,255,255,.05);color:rgba(255,255,255,0.8);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:80px}
   #view-notify .nv2-mt tr:last-child td{border-bottom:none}
   #view-notify .nv2-mp{font-family:monospace;font-size:9px;background:rgba(255,255,255,.08);border:0.5px solid rgba(255,255,255,.15);border-radius:3px;padding:1px 4px;color:#e0e8ff}
   #view-notify .nv2-tag-long{font-size:9px;padding:1px 5px;border-radius:999px;background:#FAEEDA;color:#854F0B}
   #view-notify .nv2-tag-daily{font-size:9px;padding:1px 5px;border-radius:999px;background:#E6F1FB;color:#185FA5}
-  #view-notify .nv2-no-data{text-align:center;padding:12px;font-size:11px;color:rgba(255,255,255,.3)}
+  #view-notify .nv2-no-data{text-align:center;padding:12px;font-size:11px;color:rgba(255,255,255,0.3)}
   /* sched in right panel */
   #view-notify .nv2-sched-sec{border:0.5px solid rgba(255,255,255,.08);border-radius:9px;overflow:hidden}
   #view-notify .nv2-sched-hdr{display:flex;align-items:center;gap:7px;padding:8px 11px;cursor:pointer;background:rgba(255,255,255,.05);user-select:none}
@@ -1941,14 +1941,14 @@
   #view-notify .nv2-sched-card{display:flex;align-items:center;background:rgba(255,255,255,.05);border:0.5px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 10px;margin-bottom:5px;gap:7px}
   #view-notify .nv2-sched-time{font-size:14px;font-weight:700;color:#1D9E75;font-family:monospace;min-width:40px}
   #view-notify .nv2-sched-name{font-size:11px;font-weight:500;color:#e0e8ff}
-  #view-notify .nv2-sched-type{font-size:10px;color:rgba(255,255,255,.4)}
+  #view-notify .nv2-sched-type{font-size:10px;color:rgba(255,255,255,0.4)}
   #view-notify .nv2-stg{width:28px;height:16px;border-radius:999px;background:#1D9E75;border:none;position:relative;cursor:pointer;flex-shrink:0;margin-left:auto;transition:background .2s}
   #view-notify .nv2-stg.off{background:rgba(255,255,255,.15)}
   #view-notify .nv2-stg::after{content:'';position:absolute;top:2px;right:2px;width:12px;height:12px;background:#fff;border-radius:50%;transition:right .2s}
   #view-notify .nv2-stg.off::after{right:auto;left:2px}
-  #view-notify .nv2-del-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.3);font-size:13px;padding:2px 4px}
-  #view-notify .nv2-add-sched{width:100%;padding:6px;border:0.5px dashed rgba(255,255,255,.2);border-radius:7px;background:transparent;font-size:11px;cursor:pointer;color:rgba(255,255,255,.45)}
-  #view-notify .nv2-add-sched:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.8)}
+  #view-notify .nv2-del-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:13px;padding:2px 4px}
+  #view-notify .nv2-add-sched{width:100%;padding:6px;border:0.5px dashed rgba(255,255,255,.2);border-radius:7px;background:transparent;font-size:11px;cursor:pointer;color:rgba(255,255,255,0.45)}
+  #view-notify .nv2-add-sched:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,0.8)}
   #view-notify .nv2-cd-box{margin-top:7px;background:rgba(186,117,23,.06);border:0.5px solid rgba(186,117,23,.2);border-radius:8px;padding:7px;text-align:center}
   #view-notify .nv2-cd-lbl{font-size:10px;color:var(--color-text-secondary);margin-bottom:1px}
   #view-notify .nv2-cd-val{font-size:17px;font-weight:700;color:#BA7517;font-family:monospace}
@@ -2100,7 +2100,7 @@
     #mbk-dates { display:flex; gap:8px; padding:12px 14px 8px; overflow-x:auto; scrollbar-width:none; background:#fff; border-bottom:1px solid #EEEEF5; flex-shrink:0; }
     #mbk-dates::-webkit-scrollbar { display:none; }
     .mbk-date { flex-shrink:0; display:flex; flex-direction:column; align-items:center; padding:9px 12px; border-radius:16px; cursor:pointer; min-width:52px; border:1.5px solid #EEF0F8; background:#F7F8FC; transition:all .2s; }
-    .mbk-date.active { background:#0097B2; border-color:#006F85; box-shadow:0 6px 16px rgba(0,151,178,0.3); }
+    .mbk-date.active { background:#0097B2; border-color:#006F85; box-shadow:0 4px 12px rgba(0,0,0,0.25); }
     .mbk-date.has-today { border-color:#0097B2; background:#E0F5F9; }
     .mbk-date .d-dow { font-size:10px; font-weight:600; color:#9ca3af; }
     .mbk-date .d-num { font-size:20px; font-weight:800; color:#1E1B3A; line-height:1; margin:1px 0; }
@@ -2158,16 +2158,16 @@
     .mbk-pico { width:40px; height:40px; border-radius:12px; background:#0F1C38; border:1.5px solid rgba(65,150,255,0.25); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
     .mbk-pico i { font-size:22px; color:#fff; }
     .mbk-ptitle { font-size:16px; font-weight:700; color:#fff; }
-    .mbk-psub { font-size:11px; color:rgba(255,255,255,.5); }
+    .mbk-psub { font-size:11px; color:rgba(255,255,255,0.5); }
     .mbk-pclose { width:32px; height:32px; border-radius:10px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; cursor:pointer; margin-left:auto; flex-shrink:0; }
-    .mbk-pclose i { font-size:16px; color:rgba(255,255,255,.8); }
+    .mbk-pclose i { font-size:16px; color:rgba(255,255,255,0.8); }
     .mbk-pbody { flex:1; overflow-y:auto; padding:14px 18px; scrollbar-width:none; background:#EEF4FF; }
     .mbk-pbody::-webkit-scrollbar { display:none; }
 
     /* type tabs */
     .mbk-type-tabs { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:14px; }
     .mbk-ttab { padding:10px 6px; border-radius:14px; border:1.5px solid #E8EAF2; background:#F7F8FC; cursor:pointer; text-align:center; transition:all .2s; }
-    .mbk-ttab.active { background:#0097B2; border-color:#006F85; box-shadow:0 6px 16px rgba(0,151,178,0.3); }
+    .mbk-ttab.active { background:#0097B2; border-color:#006F85; box-shadow:0 4px 12px rgba(0,0,0,0.25); }
     .mbk-ttab .tt-ico { font-size:22px; display:block; margin-bottom:2px; }
     .mbk-ttab .tt-lbl { font-size:11px; font-weight:700; color:#374151; display:block; }
     .mbk-ttab .tt-sub { font-size:9px; color:#9ca3af; }
@@ -2199,7 +2199,7 @@
     #mbk-success-overlay { display:none; position:fixed; inset:0; background:rgba(10,8,30,0.65); backdrop-filter:blur(8px); z-index:600; align-items:flex-end; }
     #mbk-success-overlay.open { display:flex!important; }
     #mbk-success-sheet { background:#fff; border-radius:28px 28px 0 0; width:100%; padding:26px 22px 38px; text-align:center; animation:mbkUp .3s cubic-bezier(.34,1.2,.64,1); }
-    .mbks-ico { width:66px; height:66px; border-radius:20px; background:linear-gradient(135deg,#22C55E,#16A34A); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 10px 24px rgba(34,197,94,0.4); }
+    .mbks-ico { width:66px; height:66px; border-radius:20px; background:linear-gradient(135deg,#22C55E,#16A34A); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 8px 18px rgba(0,0,0,0.25); }
     .mbks-ico i { font-size:36px; color:#fff; }
     .mbks-title { font-size:22px; font-weight:800; color:#1E1B3A; margin-bottom:4px; }
     .mbks-sub { font-size:13px; color:#6b7280; line-height:1.6; }
@@ -2361,7 +2361,7 @@
 
     /* ── DASHBOARD ── */
     #view-all { background:var(--m-bg)!important; padding:0!important; gap:0!important; }
-    .dash-hero { background:linear-gradient(135deg,#7C3AED 0%,#5B3FD8 60%,#4338CA 100%)!important; border-radius:0 0 28px 28px!important; padding:16px 18px 28px!important; box-shadow:0 8px 32px rgba(124,58,237,0.3)!important; position:relative!important; overflow:hidden!important; }
+    .dash-hero { background:linear-gradient(135deg,#7C3AED 0%,#5B3FD8 60%,#4338CA 100%)!important; border-radius:0 0 28px 28px!important; padding:16px 18px 28px!important; box-shadow:0 6px 18px rgba(0,0,0,0.3)!important; position:relative!important; overflow:hidden!important; }
     .dash-hero-title,.dash-hero-num,.dash-hero-big,.dash-hero-desc { color:#fff!important; }
     .dash-hero-num,.dash-hero-big { font-size:34px!important; font-weight:800!important; }
     .dash-bottom { display:flex!important; flex-direction:row!important; overflow-x:auto!important; padding:16px 14px 12px!important; gap:10px!important; scrollbar-width:none!important; background:transparent!important; flex-wrap:nowrap!important; }
@@ -2654,7 +2654,7 @@
   }
   .bm2-hico i { color:#4196FF; font-size:20px; }
   .bm2-htop { font-size:15px; font-weight:600; color:#fff; letter-spacing:-.3px; }
-  .bm2-hsub { font-size:11px; color:rgba(255,255,255,.4); margin-top:2px; }
+  .bm2-hsub { font-size:11px; color:rgba(255,255,255,0.4); margin-top:2px; }
   .bm2-badge {
     background:#4196FF; color:#fff; border:none;
     font-size:11px; font-weight:600; padding:4px 13px;
@@ -2664,7 +2664,7 @@
     width:31px; height:31px; border-radius:99px;
     background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14);
     cursor:pointer; display:flex; align-items:center; justify-content:center;
-    color:rgba(255,255,255,.5); transition:all .15s; position:relative;
+    color:rgba(255,255,255,0.5); transition:all .15s; position:relative;
   }
   .bm2-xcl:hover { background:rgba(255,255,255,.16); color:#fff; }
 
@@ -2754,15 +2754,15 @@
     width:80px; height:80px; border-radius:50%;
     background:rgba(65,150,255,0.08); pointer-events:none;
   }
-  .bm2-occh { font-size:11px; font-weight:500; color:rgba(255,255,255,.45); display:flex; align-items:center; gap:5px; margin-bottom:10px; }
+  .bm2-occh { font-size:11px; font-weight:500; color:rgba(255,255,255,0.45); display:flex; align-items:center; gap:5px; margin-bottom:10px; }
   .bm2-occbar { height:4px; background:rgba(255,255,255,.12); border-radius:99px; overflow:hidden; margin-bottom:12px; }
   .bm2-occf { height:100%; background:linear-gradient(90deg,#4196FF,#80C4FF); border-radius:99px; transition:width 0.5s; }
   .bm2-sts { display:grid; grid-template-columns:1fr 1px 1fr 1px 1fr; text-align:center; }
   .bm2-sv { font-size:23px; font-weight:700; line-height:1; font-family:'DM Sans',sans-serif; }
   .bm2-sv.bk { color:#fff; }
   .bm2-sv.av { color:#4196FF; }
-  .bm2-sv.tot { color:rgba(255,255,255,.3); }
-  .bm2-sl { font-size:10px; color:rgba(255,255,255,.3); margin-top:2px; }
+  .bm2-sv.tot { color:rgba(255,255,255,0.3); }
+  .bm2-sl { font-size:10px; color:rgba(255,255,255,0.3); margin-top:2px; }
   .bm2-sdi { background:rgba(255,255,255,.1); }
 
   /* Type cards */
@@ -2782,15 +2782,15 @@
   .bm2-tc-a.bm2-tc-sel { background:#0F1C38 !important; border-color:#0F1C38 !important; border-width:2px !important; }
   .bm2-tc-a.bm2-tc-sel i { color:#4196FF !important; }
   .bm2-tc-a.bm2-tc-sel .bm2-tcn { color:#fff !important; font-weight:600 !important; }
-  .bm2-tc-a.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,.6) !important; }
+  .bm2-tc-a.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,0.6) !important; }
   .bm2-tc-b.bm2-tc-sel { background:#7C3AED !important; border-color:#5B21B6 !important; border-width:2px !important; }
   .bm2-tc-b.bm2-tc-sel i { color:#C4B5FD !important; }
   .bm2-tc-b.bm2-tc-sel .bm2-tcn { color:#fff !important; font-weight:600 !important; }
-  .bm2-tc-b.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,.7) !important; }
+  .bm2-tc-b.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,0.7) !important; }
   .bm2-tc-c.bm2-tc-sel { background:#FF6B35 !important; border-color:#CC4400 !important; border-width:2px !important; }
   .bm2-tc-c.bm2-tc-sel i { color:#FFD0BC !important; }
   .bm2-tc-c.bm2-tc-sel .bm2-tcn { color:#fff !important; font-weight:600 !important; }
-  .bm2-tc-c.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,.75) !important; }
+  .bm2-tc-c.bm2-tc-sel .bm2-tcs { color:rgba(255,255,255,0.75) !important; }
 
   /* Form group card */
   .bm2-fg {
@@ -2831,7 +2831,7 @@
   .plate-chip-x {
     width: 15px; height: 15px; border-radius: 50%;
     background: rgba(255,255,255,0.18); border: none;
-    color: rgba(255,255,255,0.75); font-size: 10px; font-weight: 700;
+    color:rgba(255,255,255,0.75); font-size: 10px; font-weight: 700;
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     transition: background .12s; padding: 0; line-height: 1;
   }
@@ -2871,6 +2871,91 @@
   .bm2-bsave.bm2-success { background:#059669; border-color:#047857; }
   .bm2-bsave.bm2-success i { color:#A7F3D0; }
 
+</style>
+
+<style id="pz-admin-fixes">
+/* ══ apane-settings: บังคับโทนเข้มอ่านง่ายบนพื้น Admin (#0a0c14) ทุกธีม ══ */
+#apane-settings{ --text:#E8ECF4; --text-muted:rgba(232,236,244,.55); --text-light:rgba(232,236,244,.35);
+  --surface:rgba(255,255,255,.06); --border:rgba(255,255,255,.12); --card:#141A26; color:#E8ECF4; }
+#apane-settings .card{ background:#141A26 !important; border:1px solid rgba(255,255,255,.08) !important; box-shadow:none !important; }
+#apane-settings .card-title{ color:#fff !important; }
+#apane-settings .form-label{ color:rgba(232,236,244,.6) !important; }
+#apane-settings .form-input, #apane-settings .form-select{ background:rgba(255,255,255,.05) !important; border-color:rgba(255,255,255,0.16) !important; color:#E8ECF4 !important; }
+#apane-settings .form-select option{ background:#141A26; color:#E8ECF4; }
+#apane-settings .ari-mode-btn, #apane-settings .floor-tab{ background:transparent !important; color:rgba(232,236,244,.6) !important; border-color:rgba(255,255,255,0.14) !important; }
+#apane-settings .ari-mode-btn.active, #apane-settings .floor-tab.active{ background:#0097B2 !important; color:#fff !important; border-color:#0097B2 !important; }
+#apane-settings .tbl-th{ background:rgba(255,255,255,.05) !important; color:rgba(232,236,244,.65) !important; border-color:rgba(255,255,255,0.08) !important; }
+#apane-settings .tbl-td{ color:#E8ECF4 !important; border-color:rgba(255,255,255,0.07) !important; }
+#apane-settings table{ color:#E8ECF4; }
+/* override พื้นหลัง/สีอ่อนที่ฝัง inline มากับ markup เดิม */
+#apane-settings [style*="#F5F5F2"]{ background:rgba(255,255,255,.07) !important; }
+#apane-settings [style*="#FAFAF8"]{ background:rgba(255,255,255,.03) !important; }
+#apane-settings span[style*="background:#1A1A1A"]{ background:#9CA3AF !important; }
+#apane-settings button[style*="color:#1A1A1A"]{ color:#E8ECF4 !important; border-color:rgba(255,255,255,0.4) !important; }
+#apane-settings td[style*="color:#1A1A1A"]{ color:#E8ECF4 !important; }
+#apane-settings [style*="color:var(--gold)"]{ color:#33B7CC !important; }
+
+/* ══ apane-print: หน้าเลือกคอลัมน์พิมพ์/Excel ══ */
+#apane-print .pr-block{ background:rgba(255,255,255,.04); border:0.5px solid rgba(255,255,255,.09); border-radius:10px; padding:12px; }
+#apane-print .pr-sec-lbl{ font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:8px; }
+#apane-print .pr-fi{ width:100%; padding:8px 10px; border-radius:8px; border:0.5px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); color:#fff; font-size:12px; color-scheme:dark; }
+#apane-print .pr-dbtn{ flex:1; font-size:11px; padding:6px 0; text-align:center; border:0.5px solid rgba(255,255,255,.14); border-radius:7px; background:transparent; cursor:pointer; color:rgba(255,255,255,0.65); }
+#apane-print .pr-dbtn:hover{ background:rgba(255,255,255,.08); color:#fff; }
+#apane-print .pr-act-btn{ display:block; width:100%; padding:11px; border-radius:9px; border:none; background:#185FA5; color:#fff; font-size:12px; font-weight:700; cursor:pointer; margin-bottom:8px; }
+#apane-print .pr-act-btn:hover{ filter:brightness(1.12); }
+#apane-print .pr-act-xls{ background:#1D9E75; margin-bottom:0; }
+#apane-print .pr-acc{ background:rgba(255,255,255,.04); border:0.5px solid rgba(255,255,255,.09); border-radius:10px; overflow:hidden; }
+#apane-print .pr-acc-hdr{ display:flex; align-items:center; gap:8px; padding:11px 13px; cursor:pointer; user-select:none; }
+#apane-print .pr-acc-name{ font-size:12px; font-weight:700; color:#fff; flex:1; }
+#apane-print .pr-acc-arr{ color:rgba(255,255,255,0.4); font-size:15px; transform:rotate(0deg); transition:transform .15s; }
+#apane-print .pr-acc-arr.open{ transform:rotate(90deg); }
+#apane-print .pr-acc-body{ padding:0 13px 12px; }
+#apane-print .pr-col-lbl{ display:flex; justify-content:space-between; font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:6px; }
+#apane-print .pr-selall{ cursor:pointer; color:#33B7CC; font-size:10px; }
+#apane-print .pr-chips{ display:flex; flex-wrap:wrap; gap:5px; }
+#apane-print .pr-chip{ font-size:10px; padding:4px 10px; border-radius:6px; border:0.5px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06); cursor:pointer; color:rgba(255,255,255,0.6); transition:all .15s; user-select:none; }
+#apane-print .pr-chip.on{ background:#185FA5; color:#fff; border-color:#185FA5; }
+#apane-print .pr-sec-toggle{ flex:none; }
+#apane-print .pr-sec-toggle.on{ background:#1D9E75; border-color:#1D9E75; }
+@media (max-width:768px){ #apane-print > div > div[style*="grid-template-columns:280px"]{ grid-template-columns:1fr !important; } }
+</style>
+
+<style id="pz-contrast-fixes">
+/* ══════ UI AUDIT FIX: ความชัดข้อความรอง (เดสก์ท็อป โหมดมืด) ══════
+   ยกขั้นต่ำ inline ขาวโปร่ง: 0.2x→0.5 · 0.3x→0.58 · 0.4x→0.66 (WCAG ≥4.5) */
+@media (min-width: 769px) {
+  html:not([data-theme="light"]) #view-all     [style*="color:rgba(255,255,255,0.2"],
+  html:not([data-theme="light"]) #view-ari     [style*="color:rgba(255,255,255,0.2"],
+  html:not([data-theme="light"]) #view-bts     [style*="color:rgba(255,255,255,0.2"],
+  html:not([data-theme="light"]) #view-ksl     [style*="color:rgba(255,255,255,0.2"],
+  html:not([data-theme="light"]) #view-booking [style*="color:rgba(255,255,255,0.2"],
+  html:not([data-theme="light"]) #view-admin   [style*="color:rgba(255,255,255,0.2"] { color: rgba(255,255,255,0.5) !important; }
+
+  html:not([data-theme="light"]) #view-all     [style*="color:rgba(255,255,255,0.3"],
+  html:not([data-theme="light"]) #view-ari     [style*="color:rgba(255,255,255,0.3"],
+  html:not([data-theme="light"]) #view-bts     [style*="color:rgba(255,255,255,0.3"],
+  html:not([data-theme="light"]) #view-ksl     [style*="color:rgba(255,255,255,0.3"],
+  html:not([data-theme="light"]) #view-booking [style*="color:rgba(255,255,255,0.3"],
+  html:not([data-theme="light"]) #view-admin   [style*="color:rgba(255,255,255,0.3"] { color: rgba(255,255,255,0.58) !important; }
+
+  html:not([data-theme="light"]) #view-all     [style*="color:rgba(255,255,255,0.4"],
+  html:not([data-theme="light"]) #view-ari     [style*="color:rgba(255,255,255,0.4"],
+  html:not([data-theme="light"]) #view-bts     [style*="color:rgba(255,255,255,0.4"],
+  html:not([data-theme="light"]) #view-ksl     [style*="color:rgba(255,255,255,0.4"],
+  html:not([data-theme="light"]) #view-booking [style*="color:rgba(255,255,255,0.4"],
+  html:not([data-theme="light"]) #view-admin   [style*="color:rgba(255,255,255,0.4"] { color: rgba(255,255,255,0.66) !important; }
+}
+
+/* ══════ การ์ดสถิติแถวล่าง Dashboard: glass 8% → พื้นเข้มทึบ (สูตรเดียวกับ Ari/BTS/KSL) ══════ */
+html:not([data-theme="light"]) .dash-stat-card {
+  background: rgba(13,15,26,0.82);
+  border-color: rgba(255,255,255,0.14);
+}
+html:not([data-theme="light"]) .dash-stat-card:hover { background: rgba(22,26,42,0.86); }
+
+/* ══════ โหมดกลางวัน: label เทาจางเกิน → เข้มขึ้นถึงเกณฑ์ ══════ */
+html[data-theme="light"] .dash-sc-label { color: #5B6472 !important; }
+html[data-theme="light"] #view-booking .cal-day-label { color: #6b7280 !important; }
 </style>
 </head>
 <body>
@@ -2985,7 +3070,7 @@
             <!-- ย้ายมาจาก hero-bottom — ขนาด 2x -->
             <div style="margin-top:18px;">
               <div style="font-size:20px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:4px;">ช่องจอดรวม</div>
-              <div style="font-size:112px;font-weight:700;letter-spacing:-6px;color:#fff;line-height:0.9;font-family:'DM Mono',monospace;text-shadow:0 2px 32px rgba(255,255,255,0.2);" id="hero-grand-total">–</div>
+              <div style="font-size:112px;font-weight:700;letter-spacing:-6px;color:#fff;line-height:0.9;font-family:'DM Mono',monospace;text-shadow:0 2px 8px rgba(0,0,0,0.5);" id="hero-grand-total">–</div>
               <div style="font-size:26px;margin-top:8px;">
                 <span style="color:#4ade80;" id="hero-grand-avail">–</span>
                 <span style="color:rgba(255,255,255,0.2);margin:0 8px;">ว่าง ·</span>
@@ -3065,15 +3150,15 @@
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
             <div style="background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 10px;">
-              <div style="font-size:24px;font-weight:700;line-height:1;color:#4ade80;text-shadow:0 0 10px rgba(74,222,128,0.3);" id="ari-ov-avail">–</div>
+              <div style="font-size:24px;font-weight:700;line-height:1;color:#4ade80;text-shadow:0 1px 2px rgba(0,0,0,0.55);" id="ari-ov-avail">–</div>
               <div style="font-size:9px;color:rgba(255,255,255,0.38);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">ว่างอยู่</div>
             </div>
             <div style="background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 10px;">
-              <div style="font-size:24px;font-weight:700;line-height:1;color:#f87171;text-shadow:0 0 10px rgba(248,113,113,0.3);" id="ari-ov-occ">–</div>
+              <div style="font-size:24px;font-weight:700;line-height:1;color:#f87171;text-shadow:0 1px 2px rgba(0,0,0,0.55);" id="ari-ov-occ">–</div>
               <div style="font-size:9px;color:rgba(255,255,255,0.38);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">จอดอยู่</div>
             </div>
             <div style="background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 10px;">
-              <div style="font-size:24px;font-weight:700;line-height:1;color:#fbbf24;text-shadow:0 0 10px rgba(251,191,36,0.3);" id="ari-ov-booked">–</div>
+              <div style="font-size:24px;font-weight:700;line-height:1;color:#fbbf24;text-shadow:0 1px 2px rgba(0,0,0,0.55);" id="ari-ov-booked">–</div>
               <div style="font-size:9px;color:rgba(255,255,255,0.38);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">แจ้งจองวันนี้</div>
             </div>
             <div style="background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 10px;">
@@ -3233,7 +3318,7 @@
           <!-- ปุ่มแจ้งจอง — amber pill ด้านล่าง ชิดซ้าย -->
           <div style="display:flex;justify-content:flex-start;">
             <button onclick="openBookingModal()"
-              style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;padding:18px 48px;border-radius:50px;border:none;cursor:pointer;white-space:nowrap;box-shadow:0 6px 24px rgba(217,119,6,0.5),0 1px 0 rgba(255,255,255,0.15) inset;transition:all 0.2s;letter-spacing:-0.3px;"
+              style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;padding:18px 48px;border-radius:50px;border:none;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,0.35),0 1px 0 rgba(255,255,255,0.15) inset;transition:all 0.2s;letter-spacing:-0.3px;"
               onmouseover="this.style.outline='3px solid #fbbf24';this.style.outlineOffset='0px';this.style.transform='translateY(-2px)'"
               onmouseout="this.style.outline='none';this.style.transform='translateY(0)'">
               แจ้งจองที่จอดรถ
@@ -3477,87 +3562,7 @@
       </div>
     </div>
 
-    <!-- ════════════════ VIEW: ตั้งค่า ════════════════ -->
-    <div id="view-settings" class="building-view">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-        <div>
-          <div style="font-size:18px;font-weight:700;">⚙️ ตั้งค่าระบบ</div>
-          <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">จัดการช่องจอด ทะเบียน และสิทธิ์ผู้ใช้งานแต่ละอาคาร</div>
-        </div>
-      </div>
-
-      <!-- Settings tabs -->
-      <div style="display:flex;gap:4px;background:var(--surface);padding:4px;border-radius:12px;width:fit-content;border:1px solid var(--border);">
-        <button id="stab-rules"  class="ari-mode-btn active" onclick="switchSettingsTab('rules')">📋 กฎระบบ</button>
-        <button id="stab-slots"  class="ari-mode-btn" onclick="switchSettingsTab('slots')">🅿️ จัดการช่องจอด</button>
-        <button id="stab-plates" class="ari-mode-btn" onclick="switchSettingsTab('plates')">🔑 ทะเบียนผู้มีสิทธิ์</button>
-      </div>
-
-      <!-- TAB: กฎระบบ -->
-      <div id="spane-rules">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-          <div class="card">
-            <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> กฎสิทธิ์การจอดรถพนักงาน</div>
-            <div style="background:#F5F5F2;border-radius:10px;padding:14px;margin-bottom:12px;">
-              <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">📋 กฎปัจจุบัน</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.9;">
-                • พนักงาน 1 คน ได้สิทธิ์ <strong style="color:var(--text);">1 อาคาร</strong> เท่านั้น<br>
-                • แจ้งทะเบียนได้สูงสุด <strong style="color:var(--text);">3 ทะเบียน</strong> ต่อคน<br>
-                • จอดได้ <strong style="color:var(--text);">1 ช่อง</strong> ต่อครั้ง (ทีละ 1 คัน)<br>
-                • ต้องแจ้งก่อนเข้าจอดทุกครั้ง
-              </div>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
-              <div class="form-field"><label class="form-label">ทะเบียนสูงสุด/คน</label>
-                <select class="form-select" id="setting-max-plates">
-                  <option value="1">1 ทะเบียน</option>
-                  <option value="2">2 ทะเบียน</option>
-                  <option selected value="3">3 ทะเบียน</option>
-                </select>
-              </div>
-              <div class="form-field"><label class="form-label">ช่องจอดสูงสุด/ครั้ง</label>
-                <select class="form-select" id="setting-max-slots">
-                  <option selected value="1">1 ช่อง</option>
-                  <option value="2">2 ช่อง</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-field" style="margin-bottom:12px;"><label class="form-label">อนุญาตจองข้ามอาคาร</label>
-              <select class="form-select" id="setting-cross-bld">
-                <option selected value="no">❌ ไม่อนุญาต (1 คน 1 อาคาร)</option>
-                <option value="yes">✅ อนุญาต</option>
-              </select>
-            </div>
-            <button onclick="saveSettings()" style="width:100%;padding:10px;border-radius:10px;border:none;background:var(--gold);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">✓ บันทึกกฎระบบ</button>
-          </div>
-          <div class="card">
-            <div class="card-title" style="margin-bottom:14px;"><span class="dot"></span> สรุปสถิติช่องจอด</div>
-            <div id="settings-stats"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB: จัดการช่องจอด -->
-      <div id="spane-slots" style="display:none;">
-        <div style="display:flex;gap:8px;margin-bottom:4px;">
-          <button id="sbld-ari" class="floor-tab active" onclick="switchSettingsBld('ari')">🏢 Ari Hills</button>
-          <button id="sbld-bts" class="floor-tab" onclick="switchSettingsBld('bts')">🚇 BTS</button>
-          <button id="sbld-ksl" class="floor-tab" onclick="switchSettingsBld('ksl')">🏬 KSL</button>
-        </div>
-        <div id="settings-slots-content"></div>
-      </div>
-
-      <!-- TAB: ทะเบียนผู้มีสิทธิ์ -->
-      <div id="spane-plates" style="display:none;">
-        <div style="display:flex;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
-          <button id="spbld-ari" class="floor-tab active" onclick="switchSettingsPlatesBld('ari')">🏢 Ari Hills</button>
-          <button id="spbld-bts" class="floor-tab" onclick="switchSettingsPlatesBld('bts')">🚇 BTS</button>
-          <button id="spbld-ksl" class="floor-tab" onclick="switchSettingsPlatesBld('ksl')">🏬 KSL</button>
-        </div>
-        <div id="settings-plates-content"></div>
-      </div>
-
-    </div>
+    <!-- view-settings ถูกย้ายเข้า Admin > ตั้งค่า (apane-settings) เพื่อแก้ปัญหา ID ซ้ำ -->
 
     <!-- ════════════════ VIEW: รายงาน (hidden, redirect) ════════════════ -->
     <div id="view-report" class="building-view" style="display:none;"></div>
@@ -3700,6 +3705,8 @@
       </div>
     </div>
 
+    
+
     <!-- ════════════════ ADMIN PANEL ════════════════ -->
     <div id="view-admin" class="building-view" style="flex-direction:column;overflow:hidden;background:#0a0c14;">
 
@@ -3724,6 +3731,7 @@
         <button class="adm-tab active" id="atab-system"  onclick="switchAdminTab('system')" >🔗 ระบบ</button>
         <button class="adm-tab" id="atab-line"    onclick="switchAdminTab('line')"   >💬 LINE Notify</button>
         <button class="adm-tab" id="atab-settings" onclick="switchAdminTab('settings')">⚙️ ตั้งค่า</button>
+        <button class="adm-tab" id="atab-print"   onclick="switchAdminTab('print')"  >🖨️ พิมพ์/Excel</button>
         <button class="adm-tab" id="atab-users"   onclick="switchAdminTab('users')"  >👥 สิทธิ์ผู้ใช้</button>
       </div>
 
@@ -3822,7 +3830,7 @@
             <div>
               <div class="nv2-sec-lbl">LINE Messaging API</div>
               <div class="nv2-block">
-                <div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:7px;display:flex;align-items:center;gap:5px;"><div class="nv2-sb-dot"></div>ใช้ Token/Group จาก Apps Script</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:7px;display:flex;align-items:center;gap:5px;"><div class="nv2-sb-dot"></div>ใช้ Token/Group จาก Apps Script</div>
                 <button class="nv2-test-btn" onclick="nvTest()"><i class="ti ti-plug" style="font-size:12px"></i>ทดสอบการเชื่อมต่อ</button>
               </div>
             </div>
@@ -3830,7 +3838,7 @@
             <div>
               <div class="nv2-sec-lbl">เลือกวันที่</div>
               <div class="nv2-block">
-                <div class="nv2-date-disp"><i class="ti ti-calendar" style="font-size:13px;color:rgba(255,255,255,.3)"></i><span id="nv2-date-show">เลือกวันจากปฏิทิน</span></div>
+                <div class="nv2-date-disp"><i class="ti ti-calendar" style="font-size:13px;color:rgba(255,255,255,0.3)"></i><span id="nv2-date-show">เลือกวันจากปฏิทิน</span></div>
                 <div class="nv2-cal-nav-row">
                   <div class="nv2-cnav" onclick="nvCalNav(-1)">‹</div>
                   <span id="nv-cal-label" style="font-size:11px;font-weight:600;color:#fff;"></span>
@@ -3873,7 +3881,7 @@
                     <div class="nv2-bubble"><div class="nv2-bh">Parking Management Notify</div><div id="nv-bc"></div></div>
                     <div class="nv2-ct" id="nv-ct">16:30</div>
                   </div>
-                  <div id="nv-ce" style="text-align:center;padding:40px 8px;font-size:10px;color:rgba(255,255,255,.2)">เลือกวันในปฏิทิน<br>เพื่อดูข้อความ</div>
+                  <div id="nv-ce" style="text-align:center;padding:40px 8px;font-size:10px;color:rgba(255,255,255,0.2)">เลือกวันในปฏิทิน<br>เพื่อดูข้อความ</div>
                 </div>
               </div>
             </div>
@@ -3982,7 +3990,7 @@
 
             <!-- ข้อความท้าย -->
             <div>
-              <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:5px">ข้อความท้าย</div>
+              <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:5px">ข้อความท้าย</div>
               <input type="text" id="nv-footer" class="nv2-fi" value="— ระบบจัดการลานจอด Ari Hills" oninput="nvBuildAndPreview()">
             </div>
 
@@ -4000,9 +4008,9 @@
       <div id="nv-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);z-index:900;align-items:center;justify-content:center;">
         <div style="background:#141E30;border:0.5px solid rgba(255,255,255,0.12);border-radius:12px;padding:22px;width:340px;max-width:90vw;">
           <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:14px;">เพิ่มเวลาส่งอัตโนมัติ</div>
-          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">เวลา (HH:MM)</div><input type="time" id="nv-m-time" class="nv2-fi" value="16:30" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"></div>
-          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ชื่อรอบ</div><input type="text" id="nv-m-name" class="nv2-fi" placeholder="ชื่อรอบนี้…" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"></div>
-          <div style="margin-bottom:16px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ประเภทข้อมูล</div><select id="nv-m-type" class="nv2-fi" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"><option value="tomorrow">รายการวันพรุ่งนี้</option><option value="today">รายการวันนี้</option></select></div>
+          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">เวลา (HH:MM)</div><input type="time" id="nv-m-time" class="nv2-fi" value="16:30" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,0.1);color:#fff"></div>
+          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ชื่อรอบ</div><input type="text" id="nv-m-name" class="nv2-fi" placeholder="ชื่อรอบนี้…" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,0.1);color:#fff"></div>
+          <div style="margin-bottom:16px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ประเภทข้อมูล</div><select id="nv-m-type" class="nv2-fi" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,0.1);color:#fff"><option value="tomorrow">รายการวันพรุ่งนี้</option><option value="today">รายการวันนี้</option></select></div>
           <div style="display:flex;justify-content:flex-end;gap:7px;">
             <button class="nv2-dbtn" style="padding:7px 14px;" onclick="document.getElementById('nv-modal').style.display='none'">ยกเลิก</button>
             <button class="nv2-send-btn" style="width:auto;padding:7px 14px;" onclick="nvAddSched()">บันทึก</button>
@@ -4093,6 +4101,105 @@
       </div>
         </div>
 
+        <!-- TAB: พิมพ์/Excel (hidden) -->
+        <div id="apane-print" style="display:none;">
+          <div style="max-width:1040px;">
+            <div style="margin-bottom:14px;">
+              <div style="font-size:18px;font-weight:700;color:#fff;">🖨️ พิมพ์ / 📊 ดาวน์โหลด Excel</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:2px;">เลือกวันที่ และคอลัมน์ที่ต้องการแสดงในรายงาน ก่อนพิมพ์ส่งฝ่ายอาคารหรือดาวน์โหลดเป็น Excel</div>
+            </div>
+            <div style="display:grid;grid-template-columns:280px 1fr;gap:14px;align-items:start;">
+
+              <!-- ซ้าย: วันที่ + ปุ่มสั่งงาน -->
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div class="pr-block">
+                  <div class="pr-sec-lbl">📅 วันที่รายงาน</div>
+                  <input type="date" id="pr-date" class="pr-fi" onchange="prSave()">
+                  <div style="display:flex;gap:5px;margin-top:7px;">
+                    <button class="pr-dbtn" onclick="prSetDate(0)">วันนี้</button>
+                    <button class="pr-dbtn" onclick="prSetDate(1)">พรุ่งนี้</button>
+                  </div>
+                </div>
+                <div class="pr-block">
+                  <div class="pr-sec-lbl">⚡ สั่งงาน</div>
+                  <button class="pr-act-btn" onclick="printAriReportCustom()">🖨️ พิมพ์/ส่งฝ่ายอาคาร</button>
+                  <button class="pr-act-btn pr-act-xls" onclick="exportAriReportXlsxCustom()">📊 ดาวน์โหลด Excel</button>
+                  <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:8px;line-height:1.6;">รายงานจะใช้เฉพาะคอลัมน์ที่เลือกไว้ด้านขวา และจำค่าที่เลือกไว้ให้อัตโนมัติ</div>
+                </div>
+              </div>
+
+              <!-- ขวา: เลือกคอลัมน์ต่อประเภท -->
+              <div style="display:flex;flex-direction:column;gap:10px;">
+
+                <div class="pr-acc">
+                  <div class="pr-acc-hdr" onclick="prTogAcc(this)">
+                    <div style="width:7px;height:7px;border-radius:50%;background:#185FA5;flex-shrink:0"></div>
+                    <span class="pr-acc-name">ส่วนกลาง ชั้น 5</span>
+                    <span class="pr-chip pr-sec-toggle on" id="pr-sec-c" onclick="event.stopPropagation();this.classList.toggle('on');prSave();">รวมในรายงาน</span>
+                    <span class="pr-acc-arr open">›</span>
+                  </div>
+                  <div class="pr-acc-body">
+                    <div class="pr-col-lbl"><span>คอลัมน์ที่จะแสดง</span><span class="pr-selall" onclick="prSelAll(this)">เลือกทั้งหมด</span></div>
+                    <div class="pr-chips" id="pr-chips-c">
+                      <div class="pr-chip on" data-col="name">ชื่อผู้ขอ</div>
+                      <div class="pr-chip on" data-col="dept">ฝ่าย</div>
+                      <div class="pr-chip on" data-col="plate">ทะเบียน</div>
+                      <div class="pr-chip on" data-col="carType">ประเภทรถ</div>
+                      <div class="pr-chip on" data-col="parkType">ประเภทการจอด</div>
+                      <div class="pr-chip on" data-col="floor">ชั้น</div>
+                      <div class="pr-chip on" data-col="note">หมายเหตุ</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pr-acc">
+                  <div class="pr-acc-hdr" onclick="prTogAcc(this)">
+                    <div style="width:7px;height:7px;border-radius:50%;background:#1D9E75;flex-shrink:0"></div>
+                    <span class="pr-acc-name">แจ้งจอดแทน</span>
+                    <span class="pr-chip pr-sec-toggle on" id="pr-sec-s" onclick="event.stopPropagation();this.classList.toggle('on');prSave();">รวมในรายงาน</span>
+                    <span class="pr-acc-arr open">›</span>
+                  </div>
+                  <div class="pr-acc-body">
+                    <div class="pr-col-lbl"><span>คอลัมน์ที่จะแสดง</span><span class="pr-selall" onclick="prSelAll(this)">เลือกทั้งหมด</span></div>
+                    <div class="pr-chips" id="pr-chips-s">
+                      <div class="pr-chip on" data-col="name">ชื่อผู้ขอ</div>
+                      <div class="pr-chip on" data-col="dept">ฝ่าย</div>
+                      <div class="pr-chip on" data-col="plateReq">ทะเบียนผู้ขอ</div>
+                      <div class="pr-chip" data-col="carType">ประเภทรถ</div>
+                      <div class="pr-chip on" data-col="plateOwner">ทะเบียนสิทธิ์</div>
+                      <div class="pr-chip on" data-col="timeType">ประเภทการจอด</div>
+                      <div class="pr-chip on" data-col="floor">ชั้น</div>
+                      <div class="pr-chip on" data-col="note">หมายเหตุ</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pr-acc">
+                  <div class="pr-acc-hdr" onclick="prTogAcc(this)">
+                    <div style="width:7px;height:7px;border-radius:50%;background:#BA7517;flex-shrink:0"></div>
+                    <span class="pr-acc-name">รถอื่นๆ</span>
+                    <span class="pr-chip pr-sec-toggle on" id="pr-sec-o" onclick="event.stopPropagation();this.classList.toggle('on');prSave();">รวมในรายงาน</span>
+                    <span class="pr-acc-arr open">›</span>
+                  </div>
+                  <div class="pr-acc-body">
+                    <div class="pr-col-lbl"><span>คอลัมน์ที่จะแสดง</span><span class="pr-selall" onclick="prSelAll(this)">เลือกทั้งหมด</span></div>
+                    <div class="pr-chips" id="pr-chips-o">
+                      <div class="pr-chip on" data-col="name">ชื่อผู้ขอ</div>
+                      <div class="pr-chip on" data-col="dept">ฝ่าย</div>
+                      <div class="pr-chip on" data-col="plate">ทะเบียนผู้ขอ</div>
+                      <div class="pr-chip on" data-col="carType">ประเภทรถ</div>
+                      <div class="pr-chip on" data-col="timeType">ประเภทการจอด</div>
+                      <div class="pr-chip on" data-col="location">สถานที่</div>
+                      <div class="pr-chip on" data-col="note">หมายเหตุ</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- TAB: สิทธิ์ผู้ใช้ (hidden) -->
         <div id="apane-users" style="display:none;">
           <div class="adm-card" style="grid-column:1/-1;">
@@ -4113,13 +4220,18 @@
               <div style="background:rgba(255,255,255,0.03);border-radius:8px;border:0.5px solid rgba(255,255,255,0.07);">
                 <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
                   <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#5B21B6);display:flex;align-items:center;justify-content:center;font-size:14px;">👤</div>
-                  <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#fff;">Admin</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">ผู้ดูแลระบบ</div></div>
-                  <span class="adm-role-badge" style="background:rgba(124,58,237,0.2);border-color:rgba(124,58,237,0.4);color:#a78bfa;">Admin</span>
+                  <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#fff;" id="adm-cur-user">ยังไม่ได้เข้าสู่ระบบ</div><div style="font-size:10px;color:rgba(255,255,255,0.4);">ผู้ใช้ปัจจุบัน</div></div>
                 </div>
               </div>
             </div>
+            <div style="background:rgba(34,197,94,0.08);border:0.5px solid rgba(34,197,94,0.25);border-radius:8px;padding:10px 12px;font-size:11px;color:#4ade80;line-height:1.8;margin-bottom:10px;">
+              ✅ ระบบ login ตรวจสอบสิทธิ์จาก Sheet ชื่อ <strong>"Users"</strong> ใน Google Sheet (ผ่าน Apps Script)<br>
+              • คอลัมน์: Username | Password | Role (admin/staff) | ชื่อ | Status (active/inactive)<br>
+              • เพิ่ม/ลบ/ระงับผู้ใช้ได้โดยแก้ไขใน Sheet โดยตรง ไม่ต้องแก้โค้ด<br>
+              • หากเชื่อมต่อ GAS ไม่ได้ ระบบจะใช้รหัสสำรองในตัวชั่วคราว (มี log แจ้งใน console)
+            </div>
             <div style="background:rgba(251,191,36,0.08);border:0.5px solid rgba(251,191,36,0.2);border-radius:8px;padding:10px 12px;font-size:11px;color:#fbbf24;">
-              ⚠️ ระบบสิทธิ์เต็มรูปแบบจัดการผ่าน Google Sheet<br>
+              ⚠️ ต้อง deploy Apps Script เวอร์ชันที่รองรับ action=login ก่อน (ดูไฟล์ parkzone-gas-login.gs)<br>
               <a href="https://docs.google.com/spreadsheets/d/1HkEUnWXoFQVsCrwB72X-1eL7zo5i1xnPCgH9EM4FJUA/edit?usp=sharing" target="_blank" style="color:#fbbf24;text-decoration:underline;">คลิกเพื่อจัดการสิทธิ์ใน Sheet →</a>
             </div>
           </div>
@@ -4127,209 +4239,7 @@
 
       </div><!-- /admin content -->
     </div><!-- /view-admin -->
-    <div id="view-notify" class="building-view" style="flex-direction:column;overflow:hidden;">
-      <div class="nv2-page">
-
-        <!-- SIDEBAR: LINE API + calendar + send -->
-        <div class="nv2-sb">
-          <div class="nv2-sb-hdr">
-            <div class="nv2-sb-title">LINE Notify</div>
-            <div class="nv2-sb-sub">PARKING MANAGEMENT</div>
-            <div class="nv2-sb-status"><div class="nv2-sb-dot"></div><span id="nv-status-txt">ยังไม่เชื่อมต่อ</span></div>
-          </div>
-          <div class="nv2-sb-body">
-
-            <div>
-              <div class="nv2-sec-lbl">LINE Messaging API</div>
-              <div class="nv2-block">
-                <div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:7px;display:flex;align-items:center;gap:5px;"><div class="nv2-sb-dot"></div>ใช้ Token/Group จาก Apps Script</div>
-                <button class="nv2-test-btn" onclick="nvTest()"><i class="ti ti-plug" style="font-size:12px"></i>ทดสอบการเชื่อมต่อ</button>
-              </div>
-            </div>
-
-            <div>
-              <div class="nv2-sec-lbl">เลือกวันที่</div>
-              <div class="nv2-block">
-                <div class="nv2-date-disp"><i class="ti ti-calendar" style="font-size:13px;color:rgba(255,255,255,.3)"></i><span id="nv2-date-show">เลือกวันจากปฏิทิน</span></div>
-                <div class="nv2-cal-nav-row">
-                  <div class="nv2-cnav" onclick="nvCalNav(-1)">‹</div>
-                  <span id="nv-cal-label" style="font-size:11px;font-weight:600;color:#fff;"></span>
-                  <div class="nv2-cnav" onclick="nvCalNav(1)">›</div>
-                </div>
-                <div class="nv2-cal-grid" id="nv-cal-grid"></div>
-                <input type="hidden" id="nv-date-pick">
-                <div class="nv2-date-btns">
-                  <button class="nv2-dbtn" onclick="nvSetDate(0)">วันนี้</button>
-                  <button class="nv2-dbtn" onclick="nvSetDate(1)">พรุ่งนี้</button>
-                </div>
-                <button class="nv2-send-btn" id="nv-send-btn" onclick="nvSendNow()" disabled>
-                  <i class="ti ti-brand-line" style="font-size:13px"></i>ส่ง LINE ตอนนี้เลย
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div><!-- /sidebar -->
-
-        <!-- MAIN: preview -->
-        <div class="nv2-main">
-          <div class="nv2-mh">
-            <div class="nv2-mh-title">Preview ข้อความ LINE</div>
-            <span class="nv2-mh-date" id="nv2-date-lbl">เลือกวันจากปฏิทิน</span>
-            <span class="nv2-mh-cnt" id="nv2-cnt-total">0 รายการ</span>
-            <div class="nv2-mh-r">
-              <button class="nv2-mh-btn" onclick="nvCopy()"><i class="ti ti-copy" style="font-size:12px"></i>คัดลอก</button>
-              <button class="nv2-mh-btn nv2-mh-send" onclick="nvSendNow()"><i class="ti ti-brand-line" style="font-size:12px"></i>ส่ง LINE</button>
-            </div>
-          </div>
-          <div class="nv2-body">
-            <div style="flex-shrink:0;">
-              <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9ca3af;margin-bottom:6px">จำลองข้อความ</div>
-              <div class="nv2-phone">
-                <div class="nv2-phone-bar"><span id="nv-pt">16:30</span><span>LINE</span></div>
-                <div class="nv2-chat">
-                  <div class="nv2-chat-date" id="nv-cd">เลือกวันที่</div>
-                  <div id="nv-bw" style="display:none">
-                    <div class="nv2-bubble"><div class="nv2-bh">Parking Management Notify</div><div id="nv-bc"></div></div>
-                    <div class="nv2-ct" id="nv-ct">16:30</div>
-                  </div>
-                  <div id="nv-ce" style="text-align:center;padding:40px 8px;font-size:10px;color:rgba(255,255,255,.2)">เลือกวันในปฏิทิน<br>เพื่อดูข้อความ</div>
-                </div>
-              </div>
-            </div>
-            <div style="flex:1;min-width:0;">
-              <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9ca3af;margin-bottom:6px">ข้อความ</div>
-              <pre id="nv-text-preview" class="nv2-txt-pre">เลือกวันที่จากปฏิทินเพื่อดูข้อความ</pre>
-            </div>
-          </div>
-          <div class="nv2-log">
-            <div style="display:flex;justify-content:space-between;padding-bottom:3px;border-bottom:0.5px solid #e5e7eb;margin-bottom:3px;">
-              <span style="font-size:10px;font-weight:600;color:#9ca3af">Activity Log</span>
-              <span style="font-size:10px;color:#9ca3af;cursor:pointer" onclick="nvClearLog()">ล้าง</span>
-            </div>
-            <div id="nv-log"></div>
-          </div>
-        </div><!-- /main -->
-
-        <!-- RIGHT PANEL: column selector + schedule -->
-        <div class="nv2-rp">
-          <div class="nv2-rp-hdr">
-            <div class="nv2-rp-title">ตัวเลือกการส่งข้อมูล</div>
-            <div class="nv2-rp-sub">เลือก column + ตั้งเวลาส่งอัตโนมัติ</div>
-          </div>
-          <div class="nv2-rp-body">
-
-            <!-- ส่วนกลาง -->
-            <div class="nv2-acc">
-              <div class="nv2-acc-hdr" onclick="nvTogAcc(this)">
-                <div style="width:7px;height:7px;border-radius:50%;background:#185FA5;flex-shrink:0"></div>
-                <span class="nv2-acc-name">ส่วนกลาง ชั้น 5</span>
-                <span class="nv2-acc-cnt nv2-acc-cnt-c" style="background:#E6F1FB;color:#185FA5" id="nv-rp-cnt-c">0</span>
-                <span class="nv2-acc-arr open">›</span>
-              </div>
-              <div class="nv2-acc-body">
-                <div class="nv2-col-lbl"><span>แสดงใน LINE</span><span style="font-size:9px;cursor:pointer;color:#185FA5" onclick="nvSelAll(this)">เลือกทั้งหมด</span></div>
-                <div class="nv2-chips" id="nv-chips-c">
-                  <div class="nv2-chip on" data-col="name">ชื่อผู้ขอ</div>
-                  <div class="nv2-chip on" data-col="dept">ฝ่าย</div>
-                  <div class="nv2-chip on" data-col="plate">ทะเบียน</div>
-                  <div class="nv2-chip" data-col="carType">ประเภทรถ</div>
-                  <div class="nv2-chip on" data-col="parkType">ประเภทการจอด</div>
-                  <div class="nv2-chip" data-col="floor">ชั้น</div>
-                  <div class="nv2-chip" data-col="note">หมายเหตุ</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- จอดแทน -->
-            <div class="nv2-acc">
-              <div class="nv2-acc-hdr" onclick="nvTogAcc(this)">
-                <div style="width:7px;height:7px;border-radius:50%;background:#1D9E75;flex-shrink:0"></div>
-                <span class="nv2-acc-name">แจ้งจอดแทน</span>
-                <span class="nv2-acc-cnt" style="background:#E1F5EE;color:#0F6E56" id="nv-rp-cnt-s">0</span>
-                <span class="nv2-acc-arr">›</span>
-              </div>
-              <div class="nv2-acc-body" style="display:none">
-                <div class="nv2-chips" id="nv-chips-s">
-                  <div class="nv2-chip on" data-col="name">ชื่อผู้ขอ</div>
-                  <div class="nv2-chip on" data-col="dept">ฝ่าย</div>
-                  <div class="nv2-chip on" data-col="plateReq">ทะเบียน</div>
-                  <div class="nv2-chip" data-col="carType">ประเภทรถ</div>
-                  <div class="nv2-chip on" data-col="plateOwner">ทะเบียนสิทธิ์</div>
-                  <div class="nv2-chip on" data-col="floor">ชั้น</div>
-                  <div class="nv2-chip" data-col="note">หมายเหตุ</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- รถอื่นๆ -->
-            <div class="nv2-acc">
-              <div class="nv2-acc-hdr" onclick="nvTogAcc(this)">
-                <div style="width:7px;height:7px;border-radius:50%;background:#BA7517;flex-shrink:0"></div>
-                <span class="nv2-acc-name">รถอื่นๆ</span>
-                <span class="nv2-acc-cnt" style="background:#FAEEDA;color:#854F0B" id="nv-rp-cnt-o">0</span>
-                <span class="nv2-acc-arr">›</span>
-              </div>
-              <div class="nv2-acc-body" style="display:none">
-                <div class="nv2-chips" id="nv-chips-o">
-                  <div class="nv2-chip on" data-col="name">ชื่อผู้ขอ</div>
-                  <div class="nv2-chip on" data-col="dept">ฝ่าย</div>
-                  <div class="nv2-chip on" data-col="plate">ทะเบียน</div>
-                  <div class="nv2-chip on" data-col="carType">ประเภทรถ</div>
-                  <div class="nv2-chip" data-col="parkType">ประเภทการจอด</div>
-                  <div class="nv2-chip" data-col="floor">ชั้น</div>
-                  <div class="nv2-chip" data-col="note">หมายเหตุ</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ตั้งเวลา (ย้ายมาขวา) -->
-            <div class="nv2-sched-sec">
-              <div class="nv2-sched-hdr" onclick="nvTogSchedPanel(this)">
-                <i class="ti ti-clock" style="font-size:13px;color:var(--color-text-secondary)"></i>
-                <span class="nv2-sched-title">ตั้งเวลาส่งอัตโนมัติ</span>
-                <span class="nv2-acc-arr open">›</span>
-              </div>
-              <div class="nv2-sched-body" id="nv-sched-panel">
-                <div id="nv-sched-list"></div>
-                <button class="nv2-add-sched" onclick="nvOpenSched()">+ เพิ่มเวลาส่ง</button>
-                <div class="nv2-cd-box">
-                  <div class="nv2-cd-lbl">ส่งครั้งถัดไปใน</div>
-                  <div class="nv2-cd-val" id="nv-countdown">—</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ข้อความท้าย -->
-            <div>
-              <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:5px">ข้อความท้าย</div>
-              <input type="text" id="nv-footer" class="nv2-fi" value="— ระบบจัดการลานจอด Ari Hills" oninput="nvBuildAndPreview()">
-            </div>
-
-          </div>
-        </div><!-- /rp -->
-
-      </div><!-- /nv2-page -->
-
-      <!-- hidden inputs -->
-      <input type="hidden" id="nv-gs">
-      <input type="hidden" id="nv-token">
-      <input type="hidden" id="nv-target">
-
-      <!-- Add Schedule Modal -->
-      <div id="nv-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);z-index:900;align-items:center;justify-content:center;">
-        <div style="background:#141E30;border:0.5px solid rgba(255,255,255,0.12);border-radius:12px;padding:22px;width:340px;max-width:90vw;">
-          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:14px;">เพิ่มเวลาส่งอัตโนมัติ</div>
-          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">เวลา (HH:MM)</div><input type="time" id="nv-m-time" class="nv2-fi" value="16:30" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"></div>
-          <div style="margin-bottom:9px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ชื่อรอบ</div><input type="text" id="nv-m-name" class="nv2-fi" placeholder="ชื่อรอบนี้…" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"></div>
-          <div style="margin-bottom:16px;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px;">ประเภทข้อมูล</div><select id="nv-m-type" class="nv2-fi" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#fff"><option value="tomorrow">รายการวันพรุ่งนี้</option><option value="today">รายการวันนี้</option></select></div>
-          <div style="display:flex;justify-content:flex-end;gap:7px;">
-            <button class="nv2-dbtn" style="padding:7px 14px;" onclick="document.getElementById('nv-modal').style.display='none'">ยกเลิก</button>
-            <button class="nv2-send-btn" style="width:auto;padding:7px 14px;" onclick="nvAddSched()">บันทึก</button>
-          </div>
-        </div>
-      </div>
-    </div><!-- /view-notify -->
+    <!-- view-notify ถูกย้ายเข้า Admin > LINE Notify (apane-line) เพื่อแก้ปัญหา ID ซ้ำ -->
 
   </main>
 </div>
@@ -5948,7 +5858,7 @@ function renderBookingTable(dateStr) {
   }).join('');
 
   const emptyHtml = bookedRows.length === 0
-    ? `<tr><td colspan="9" class="tbl-td" style="text-align:center;color:#9ca3af;padding:20px 0;">ไม่มีการแจ้งจอด</td></tr>`
+    ? `<tr><td colspan="7" class="tbl-td" style="text-align:center;color:#9ca3af;padding:20px 0;">ไม่มีการแจ้งจอด</td></tr>`
     : '';
 
   cTbody.innerHTML = bookedHtml + emptyHtml;
@@ -6013,7 +5923,7 @@ function renderBookingTable(dateStr) {
 
   // ── อัพเดต badge count ──
   const ccEl = document.getElementById('common-count');
-  if (ccEl) ccEl.textContent = `${bookedRows.length} รายการ`;
+  if (ccEl) ccEl.textContent = `${bookedRows.length} จาก 18 ช่อง${bookedRows.length > 18 ? ' ⚠️ เกิน' : ''}`;
   const scEl = document.getElementById('sub-count');
   if (scEl) scEl.textContent = subs.length + ' รายการ';
 
@@ -6900,17 +6810,22 @@ async function submitBooking() {
     note:      noteVal,
     owner:     subOwner,
   };
-  // ── ส่งทุก plate × ทุก date ไป Google Sheets แบบทีละรายการตามลำดับ ──
-  // (ป้องกันรายการหายเมื่อบันทึกจำนวนมาก — รองรับเท่าไหร่ก็ได้)
-  const sendItems = [];
+  // ── ส่งทุก plate × ทุก date ไป Google Sheets ──
+  let sheetDelay = 0;
   plates.forEach(pl => {
     if (bookedDates.length > 0) {
-      bookedDates.forEach(ds => sendItems.push({ name, plate: pl, dateISO: ds }));
+      bookedDates.forEach(ds => {
+        const d = sheetDelay;
+        setTimeout(() => sendToSheet(type, name, pl, ds, sheetOpts), d);
+        sheetDelay += 280;
+      });
     } else {
-      sendItems.push({ name, plate: pl, dateISO: null });
+      const d = sheetDelay;
+      setTimeout(() => sendToSheet(type, name, pl, null, sheetOpts), d);
+      sheetDelay += 280;
     }
   });
-  sendBookingsSequential(type, sendItems, sheetOpts);
+  setTimeout(gsRefreshFromSheet, sheetDelay + 1500);
 
   // ── Reset form ──
   ['book-name','book-note','book-plate-owner','book-dept'].forEach(id => {
@@ -7261,12 +7176,12 @@ function showLoginWall(targetView) {
   setTimeout(() => { const el = document.getElementById('wall-user'); if(el) el.focus(); }, 100);
 }
 
-function doWallLogin() {
+async function doWallLogin() {
   const u = document.getElementById('wall-user')?.value.trim();
   const p = document.getElementById('wall-pass')?.value;
-  if (u === 'admin' && p === 'admin123') {
-    adminLoggedIn = true;
-    updateAdminBadge();
+  const lg = await pzLogin(u, p);
+  if (lg.ok) {
+    pzApplyLogin(lg);
     // Remove overlay
     const overlay = document.getElementById('login-wall-overlay');
     if (overlay) overlay.remove();
@@ -7290,12 +7205,12 @@ function showInlineLogin(target) {
   if (el) { el.style.display = ''; setTimeout(() => document.getElementById('il-user-'+target)?.focus(), 50); }
 }
 
-function doInlineLogin(target) {
+async function doInlineLogin(target) {
   const u = document.getElementById('il-user-'+target)?.value.trim();
   const p = document.getElementById('il-pass-'+target)?.value;
-  if (u === 'admin' && p === 'admin123') {
-    adminLoggedIn = true;
-    updateAdminBadge();
+  const lg = await pzLogin(u, p);
+  if (lg.ok) {
+    pzApplyLogin(lg);
     if (target === 'booking') initBookMode();
     if (target === 'queue')   openAddQueue();
     if (target === 'settings') { switchView('admin'); setTimeout(()=>switchAdminTab('settings'),50); return; }
@@ -7322,13 +7237,15 @@ function closeAdminLogin() {
   document.getElementById('admin-login-overlay').style.display = 'none';
 }
 
-function doAdminLogin() {
+async function doAdminLogin() {
   const u = document.getElementById('admin-user').value.trim();
   const p = document.getElementById('admin-pass').value;
-  if (u === 'admin' && p === 'admin123') {
-    adminLoggedIn = true;
+  const btnErr = document.getElementById('admin-error');
+  if (btnErr) btnErr.style.display = 'none';
+  const lg = await pzLogin(u, p);
+  if (lg.ok) {
+    pzApplyLogin(lg);
     document.getElementById('admin-login-overlay').style.display = 'none';
-    updateAdminBadge();
     // re-render ตารางแจ้งจอดเพื่อแสดงปุ่มจัดการ
     const ds = (typeof ariSelectedDate !== 'undefined' && ariSelectedDate)
       ? ariSelectedDate : new Date().toISOString().slice(0,10);
@@ -7904,9 +7821,8 @@ function processGsData(data) {
     ARI_COMMON_BOOKINGS.length = 0;
     if (data.common && data.common.length) {
       // group ตาม name+plate+ประเภทการจอด เพื่อรวมหลายวันของจอดยาว (long)
-      // แต่ daily แต่ละ row = แต่ละการจอง (ไม่ merge — กันแถวหายตอนชื่อ/ทะเบียน/วันซ้ำกัน)
+      // แต่ daily แต่ละ row = แต่ละการจอง (ไม่ merge)
       const grouped = {};
-      let _dailySeq = 0;
       data.common.forEach(r => {
         const parkTypeStr  = r['ประเภทการจอด'] || '';
         const overnightStr = r['ค้างคืน'] || '';
@@ -7917,10 +7833,10 @@ function processGsData(data) {
         const dateISO  = parseThaiDate(dateRaw);
 
         // จอดยาว → merge หลายวันของ name+plate เดียวกันเป็น 1 entry
-        // รายวัน  → ทุก row เป็น 1 การจองแยกกันเสมอ (ใส่ลำดับกันชนกัน)
+        // รายวัน  → แต่ละ row คือ 1 การจอง แยก key ด้วย dateISO
         const key = isParkLong
           ? (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียน']||'') + '|long'
-          : (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียน']||'') + '|' + (dateISO||'') + '|#' + (_dailySeq++);
+          : (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียน']||'') + '|' + (dateISO||'');
 
         if (!grouped[key]) {
           grouped[key] = {
@@ -7961,7 +7877,7 @@ function processGsData(data) {
       ARI_SUB_BOOKINGS.length = 0;
       const subGrouped = {};
       data.sub.forEach(r => {
-        const key = (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียนผู้ขอ']||'');
+        const key = (r['ชื่อผู้ขอ']||'') + '|' + (r['ทะเบียนผู้ขอ']||'') + '|' + (r['ทะเบียนสิทธิ์']||r['ทะเบียนสิทธิ์จอดแทน']||'');
         const timeType = (r['ค้างคืน']||'').trim() === 'ค้างคืน' ? 'ค้างคืน' : 'ไม่ค้างคืน';
         const dateRaw = r['วันที่จอด'] || r['วันที่บันทึก'] || '';
         const dateISO = parseThaiDate(dateRaw);
@@ -8048,10 +7964,7 @@ function processGsData(data) {
 
 // ── ส่งข้อมูลการจองใหม่ไป Sheet ──
 // signature ใหม่: รับ dateISO (YYYY-MM-DD) แยกชัดเจน
-// ─────────────────────────────────────────────────────────────
-//  สร้าง row + ชื่อ sheet จากข้อมูล 1 การจอง (ใช้ร่วมกันทุกตัวส่ง)
-// ─────────────────────────────────────────────────────────────
-function buildSheetRow(type, name, plate, dateISO, extraOpts) {
+function sendToSheet(type, name, plate, dateISO, extraOpts) {
   const now = new Date();
   const ts  = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()+543} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
@@ -8063,6 +7976,11 @@ function buildSheetRow(type, name, plate, dateISO, extraOpts) {
     dateThai = `${d} ${thMonths[m-1]} ${y+543}`;
   }
 
+  let sheetName, row;
+
+  // ⚠️ sendToSheet ถูกเรียกผ่าน setTimeout หลัง modal ปิดและ reset แล้ว
+  // จึงต้องอ่านค่าทั้งหมดจาก extraOpts ที่ submitBooking อ่านไว้ก่อน reset
+  // ห้ามอ่านจาก DOM ที่นี่เด็ดขาด
   const _overnight = (extraOpts && extraOpts.overnight) || 'ไม่ค้างคืน';
   const _carLabel  = (extraOpts && extraOpts.carLabel)  || '';
   const _dept      = (extraOpts && extraOpts.dept)      || '–';
@@ -8071,78 +7989,49 @@ function buildSheetRow(type, name, plate, dateISO, extraOpts) {
   const _floor     = (extraOpts && extraOpts.floor)     || '–';
   const _owner     = (extraOpts && extraOpts.owner)     || '';
 
-  let sheetName, row;
   if (type === 'common') {
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียน/ฝ่าย/ประเภทรถ/วันที่จอด/ประเภทการจอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
     sheetName = 'Bookings';
     row = ['auto', name, plate, _dept, _carLabel, dateThai, _parkMode, _overnight, 'ชั้น 5 ส่วนกลางขวามือ', _note, ts];
+
   } else if (type === 'sub') {
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
     sheetName = 'SubPark';
     row = ['auto', name, plate, _dept, _carLabel, _owner, dateThai, _overnight, _floor, _note, ts];
-  } else { // other
+
+  } else if (type === 'other') {
+    // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/วันที่จอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
     sheetName = 'OtherCars';
     row = ['auto', name, plate, _dept, _carLabel, dateThai, _overnight, 'หน้าอาคาร', _note, ts];
   }
-  return { sheetName, row };
-}
 
-// ─────────────────────────────────────────────────────────────
-//  ส่ง 1 รายการแบบ "ยืนยันผลจริง" (อ่าน res.json ว่า ok หรือไม่)
-//  คืนค่า true เมื่อ Sheet ตอบกลับว่าบันทึกสำเร็จ — ลองซ้ำได้ 1 ครั้ง
-// ─────────────────────────────────────────────────────────────
-async function sendOneBookingVerified(type, name, plate, dateISO, extraOpts) {
-  const { sheetName, row } = buildSheetRow(type, name, plate, dateISO, extraOpts);
-  const payload = JSON.stringify({ action: 'addBooking', sheet: sheetName, row });
-  const params  = new URLSearchParams({ action: 'addBooking', sheet: sheetName, data: payload });
-  const url     = `${GS_URL}?${params}`;
-  for (let attempt = 0; attempt < 2; attempt++) {
-    try {
-      const ctrl = new AbortController();
-      const t = setTimeout(() => ctrl.abort(), 15000);
-      const res = await fetch(url, { method: 'GET', redirect: 'follow', credentials: 'omit', signal: ctrl.signal });
-      clearTimeout(t);
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.ok) return true;
-      }
-    } catch (e) { /* timeout/network → ลองใหม่ */ }
-    await new Promise(r => setTimeout(r, 600));
-  }
-  return false;
-}
-
-// ─────────────────────────────────────────────────────────────
-//  ส่งหลายรายการ "ทีละรายการตามลำดับ" (ไม่ยิงพร้อมกัน)
-//  วิธีนี้ป้องกันรายการหายตอนบันทึกจำนวนมาก เพราะ Apps Script
-//  จะ append ทีละแถวโดยไม่ชนกัน — รองรับจำนวนเท่าไหร่ก็ได้
-//  items: [{ name, plate, dateISO }]
-// ─────────────────────────────────────────────────────────────
-async function sendBookingsSequential(type, items, extraOpts) {
-  if (!items || !items.length) return { ok: 0, failed: 0 };
   gsSetStatus('loading');
-  let ok = 0, failed = 0, idx = 0;
-  for (const it of items) {
-    idx++;
-    const label = document.getElementById('gs-status-label');
-    if (label) label.textContent = `⏳ กำลังบันทึก ${idx}/${items.length}…`;
-    const done = await sendOneBookingVerified(type, it.name, it.plate, it.dateISO, extraOpts);
-    if (done) ok++; else failed++;
-  }
-  if (failed > 0) {
-    gsSetStatus('err');
-    pzAlert(`บันทึกไป Google Sheets ได้ ${ok}/${items.length} รายการ\nมี ${failed} รายการที่ส่งไม่สำเร็จ — กรุณากดสถานะเพื่อรีเฟรช แล้วบันทึกซ้ำเฉพาะที่ขาด`, 'warning', 'บันทึกไม่ครบ');
-  } else {
-    gsSetStatus('ok');
-  }
-  // รีเฟรชครั้งเดียวหลังส่งครบ (ไม่ยิงรีเฟรชซ้ำต่อรายการ)
-  gsRefreshFromSheet();
-  return { ok, failed };
-}
+  const payload = JSON.stringify({ action: 'addBooking', sheet: sheetName, row });
 
-// ─────────────────────────────────────────────────────────────
-//  ส่ง 1 รายการ (ยังคงไว้เพื่อความเข้ากันได้กับโค้ดเดิม)
-// ─────────────────────────────────────────────────────────────
-function sendToSheet(type, name, plate, dateISO, extraOpts) {
-  sendBookingsSequential(type, [{ name, plate, dateISO }], extraOpts);
+  fetch(GS_URL, {
+    method: 'POST',
+    mode:   'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: payload,
+  })
+  .then(() => {
+    gsSetStatus('ok');
+    setTimeout(gsRefreshFromSheet, 2500);
+  })
+  .catch(err => {
+    console.warn('GS POST failed, trying GET fallback:', err);
+    const params = new URLSearchParams({ action: 'addBooking', sheet: sheetName, data: payload });
+    fetch(`${GS_URL}?${params}`, { method: 'GET', mode: 'no-cors' })
+    .then(() => {
+      gsSetStatus('ok');
+      setTimeout(gsRefreshFromSheet, 2500);
+    })
+    .catch(err2 => {
+      console.warn('GS fallback failed:', err2);
+      gsSetStatus('err');
+      pzAlert('ไม่สามารถส่งข้อมูลไปยัง Google Sheets ได้\nกรุณาตรวจสอบการเชื่อมต่อ','error','ส่งข้อมูลไม่สำเร็จ');
+    });
+  });
 }
 
 // ── คลิก status bar: ถ้า error = test connection, ถ้าอื่น = refresh ──
@@ -8676,19 +8565,9 @@ function mbkSubmit() {
     ARI_OTHER_BOOKINGS.push({ name, dept, plate, carType, overnight, timeType:overnight?'ค้างคืน':'ไม่ค้างคืน', note, dates });
   }
 
-  // Sync to GS (ส่งทุกวันแบบทีละรายการ — ยืนยันผลจริง)
-  const mbkOpts = {
-    parkMode:  parkType === 'long' ? 'จอดยาว' : 'รายวัน',
-    overnight: overnight ? 'ค้างคืน' : 'ไม่ค้างคืน',
-    floor:     _mbkType === 'sub' ? (document.getElementById('mbk-floor')?.value || 'ชั้น 5') : 'ชั้น 5 ส่วนกลางขวามือ',
-    dept,
-    carLabel:  carType,
-    note:      note || '–',
-    owner:     _mbkType === 'sub' ? (document.getElementById('mbk-plate-owner')?.value.trim() || '') : '',
-  };
-  const mbkItems = dates.map(dt => ({ name, plate, dateISO: dt }));
-  if (typeof sendBookingsSequential === 'function') {
-    sendBookingsSequential(_mbkType, mbkItems, mbkOpts);
+  // Sync to GS (send all dates)
+  if (typeof gsAddBooking === 'function') {
+    dates.forEach(dt => gsAddBooking({ name, dept, plate, carType, parkType, overnight, type:_mbkType, date:dt, note }));
   }
 
   // Summary
@@ -8713,11 +8592,12 @@ function mbkCloseSuccess() {
 }
 // ══ END MOBILE BOOKING ══
 function switchAdminTab(tab) {
-  ['system','line','settings','users'].forEach(t => {
+  ['system','line','settings','print','users'].forEach(t => {
     document.getElementById('atab-'+t)?.classList.toggle('active', t===tab);
     const p = document.getElementById('apane-'+t);
     if(p) p.style.display = t===tab ? '' : 'none';
   });
+  if(tab==='print') prInit();
   if(tab==='line'){
     admUpdateSchedSummary();
     // init calendar if not done
@@ -8918,7 +8798,7 @@ function nvProc(data,target){
   _nvData.date=target;
   const cg={};(data.common||[]).forEach(r=>{const isPL=(r['ประเภทการจอด']||'').includes('จอดยาว');const ov=(r['ค้างคืน']||'').trim()==='ค้างคืน';const di=nvParseDate(r['วันที่จอด']||'');const k=isPL?(r['ชื่อผู้ขอ']||'')+'|'+(r['ทะเบียน']||'')+'|long':(r['ชื่อผู้ขอ']||'')+'|'+(r['ทะเบียน']||'')+'|'+(di||'');if(!cg[k])cg[k]={name:r['ชื่อผู้ขอ']||'–',plate:r['ทะเบียน']||'–',carType:r['ประเภทรถ']||'–',parkType:isPL?'จอดยาว':'รายวัน',overnight:ov,note:r['หมายเหตุ']||'–',dates:di?[di]:[]};else if(di&&!cg[k].dates.includes(di))cg[k].dates.push(di);});
   _nvData.common=Object.values(cg).filter(e=>e.dates.includes(target)||e.dates.length===0);
-  const sg={};(data.sub||[]).forEach(r=>{const di=nvParseDate(r['วันที่จอด']||'');const k=(r['ชื่อผู้ขอ']||'')+'|'+(r['ทะเบียนผู้ขอ']||'');if(!sg[k])sg[k]={name:r['ชื่อผู้ขอ']||'–',plateReq:r['ทะเบียนผู้ขอ']||'–',plateOwner:r['ทะเบียนสิทธิ์']||'–',floor:r['ชั้น']||'–',timeType:(r['ค้างคืน']||'').trim()==='ค้างคืน'?'ค้างคืน':'ไม่ค้างคืน',note:r['หมายเหตุ']||'–',dates:di?[di]:[]};else if(di&&!sg[k].dates.includes(di))sg[k].dates.push(di);});
+  const sg={};(data.sub||[]).forEach(r=>{const di=nvParseDate(r['วันที่จอด']||'');const k=(r['ชื่อผู้ขอ']||'')+'|'+(r['ทะเบียนผู้ขอ']||'')+'|'+(r['ทะเบียนสิทธิ์']||'');if(!sg[k])sg[k]={name:r['ชื่อผู้ขอ']||'–',plateReq:r['ทะเบียนผู้ขอ']||'–',plateOwner:r['ทะเบียนสิทธิ์']||'–',floor:r['ชั้น']||'–',timeType:(r['ค้างคืน']||'').trim()==='ค้างคืน'?'ค้างคืน':'ไม่ค้างคืน',note:r['หมายเหตุ']||'–',dates:di?[di]:[]};else if(di&&!sg[k].dates.includes(di))sg[k].dates.push(di);});
   _nvData.sub=Object.values(sg).filter(e=>e.dates.includes(target)||e.dates.length===0);
   const og={};(data.other||[]).forEach(r=>{const di=nvParseDate(r['วันที่จอด']||'');const k=(r['ชื่อผู้ขอ']||r['ชื่อผู้แจ้ง']||'')+'|'+(r['ทะเบียนผู้ขอ']||r['ทะเบียน']||'');if(!og[k])og[k]={name:r['ชื่อผู้ขอ']||'–',plate:r['ทะเบียนผู้ขอ']||r['ทะเบียน']||'–',carType:r['ประเภทรถ']||'–',timeType:(r['ค้างคืน']||'').trim()==='ค้างคืน'?'ค้างคืน':'ไม่ค้างคืน',note:r['หมายเหตุ']||'–',dates:di?[di]:[]};else if(di&&!og[k].dates.includes(di))og[k].dates.push(di);});
   _nvData.other=Object.values(og).filter(e=>e.dates.includes(target)||e.dates.length===0);
@@ -9222,7 +9102,7 @@ function nvSelAll(btn){
   nvBuildAndPreview();
 }
 function nvInitChips(){
-  document.querySelectorAll('#view-notify .nv2-chip').forEach(c=>{
+  document.querySelectorAll('#apane-line .nv2-chip').forEach(c=>{
     c.onclick=()=>{ c.classList.toggle('on'); nvBuildAndPreview(); };
   });
 }
@@ -9977,9 +9857,257 @@ function submitExtendBooking() {
     note:      entry.note || '–',
     owner:     '',
   };
-  const extItems = newDates.map(ds => ({ name: entry.name, plate: entry.plate, dateISO: ds }));
-  sendBookingsSequential('common', extItems, sheetOpts);
+  newDates.forEach((ds, idx) => {
+    setTimeout(() => sendToSheet('common', entry.name, entry.plate, ds, sheetOpts), idx * 300);
+  });
 }
+
+// ═══════════════ PRINT/EXCEL CUSTOM (Admin > พิมพ์/Excel) ═══════════════
+const PR_MONTHS = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const PR_COLS = {
+  c: [
+    ['name','ชื่อผู้ขอ', r => r.name||'–'],
+    ['dept','ฝ่าย', r => r.dept||'–'],
+    ['plate','ทะเบียน', r => r.plate||'–'],
+    ['carType','ประเภทรถ', r => (r.carType||'–').replace(/[^a-zA-Zก-๙ ]/g,'').trim()||'–'],
+    ['parkType','ประเภทการจอด', r => (r.parkType==='long'?'จอดยาว':'รายวัน') + ((r.overnight===true||r.overnight==='ค้างคืน')?' (ค้างคืน)':'')],
+    ['floor','ชั้น (จอด)', () => 'ชั้น 5 ส่วนกลางขวามือ'],
+    ['note','หมายเหตุ', r => r.note||'–'],
+  ],
+  s: [
+    ['name','ชื่อผู้ขอ', r => r.name||'–'],
+    ['dept','ฝ่าย', r => r.dept||'–'],
+    ['plateReq','ทะเบียนผู้ขอ', r => r.plateReq||'–'],
+    ['carType','ประเภทรถ', r => (r.carTypeReq||'–').replace(/[^a-zA-Zก-๙ ]/g,'').trim()||'–'],
+    ['plateOwner','ทะเบียนสิทธิ์จอดแทน', r => r.plateOwner||'–'],
+    ['timeType','ประเภทการจอด', r => r.timeType||'–'],
+    ['floor','ชั้น', r => r.floor||'–'],
+    ['note','หมายเหตุ', r => r.note||'–'],
+  ],
+  o: [
+    ['name','ชื่อผู้ขอ', r => r.name||'–'],
+    ['dept','ฝ่าย', r => r.dept||'–'],
+    ['plate','ทะเบียนผู้ขอ', r => r.plate||'–'],
+    ['carType','ประเภทรถ', r => (r.carType||'–').replace(/[^a-zA-Zก-๙ ]/g,'').trim()||'–'],
+    ['timeType','ประเภทการจอด', r => r.timeType||'–'],
+    ['location','สถานที่', r => r.location||'หน้าอาคาร'],
+    ['note','หมายเหตุ', r => r.note||'–'],
+  ],
+};
+let _prInited = false;
+
+function prInit(){
+  const dp = document.getElementById('pr-date');
+  if (dp && !dp.value) dp.value = (typeof ariSelectedDate!=='undefined' && ariSelectedDate) ? ariSelectedDate : new Date().toISOString().slice(0,10);
+  if (_prInited) return;
+  _prInited = true;
+  prRestore();
+  document.querySelectorAll('#apane-print .pr-chips .pr-chip').forEach(c => {
+    c.onclick = () => { c.classList.toggle('on'); prSave(); };
+  });
+}
+function prTogAcc(hdr){
+  const body = hdr.nextElementSibling;
+  const arr  = hdr.querySelector('.pr-acc-arr');
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : '';
+  if (arr) arr.classList.toggle('open', !open);
+}
+function prSelAll(el){
+  el.closest('.pr-acc-body').querySelectorAll('.pr-chip').forEach(c => c.classList.add('on'));
+  prSave();
+}
+function prSetDate(off){
+  const d = new Date(); d.setDate(d.getDate()+off);
+  const dp = document.getElementById('pr-date');
+  if (dp) dp.value = d.toISOString().slice(0,10);
+  prSave();
+}
+function prSave(){
+  try{
+    const state = { date: document.getElementById('pr-date')?.value || '' , secs:{}, cols:{} };
+    ['c','s','o'].forEach(g => {
+      state.secs[g] = document.getElementById('pr-sec-'+g)?.classList.contains('on') ?? true;
+      state.cols[g] = [...document.querySelectorAll('#pr-chips-'+g+' .pr-chip.on')].map(c => c.dataset.col);
+    });
+    localStorage.setItem('pz-print-cols', JSON.stringify(state));
+  }catch(e){}
+}
+function prRestore(){
+  try{
+    const raw = localStorage.getItem('pz-print-cols'); if(!raw) return;
+    const st = JSON.parse(raw);
+    ['c','s','o'].forEach(g => {
+      if (st.secs && st.secs[g] === false) document.getElementById('pr-sec-'+g)?.classList.remove('on');
+      if (st.cols && Array.isArray(st.cols[g])) {
+        document.querySelectorAll('#pr-chips-'+g+' .pr-chip').forEach(c => {
+          c.classList.toggle('on', st.cols[g].includes(c.dataset.col));
+        });
+      }
+    });
+  }catch(e){}
+}
+function prSelectedCols(group){
+  const on = [...document.querySelectorAll('#pr-chips-'+group+' .pr-chip.on')].map(c => c.dataset.col);
+  return PR_COLS[group].filter(([key]) => on.includes(key));
+}
+function prSecOn(group){ return document.getElementById('pr-sec-'+group)?.classList.contains('on') ?? true; }
+function prGetDate(){
+  return document.getElementById('pr-date')?.value || new Date().toISOString().slice(0,10);
+}
+function prFilterByDate(arr, ds, today, skipEmpty){
+  return arr.filter(r => {
+    if (skipEmpty && r.status === 'ว่าง') return false;
+    if (r.dates && r.dates.length > 0) return r.dates.includes(ds);
+    return ds === today;
+  });
+}
+function prGatherData(){
+  const today = new Date().toISOString().slice(0,10);
+  const ds = prGetDate();
+  const [py,pm,pd] = ds.split('-').map(Number);
+  return {
+    ds, dateThai: `${pd} ${PR_MONTHS[pm-1]} ${py+543}`,
+    common: prFilterByDate(ARI_COMMON_BOOKINGS, ds, today, true),
+    sub:    prFilterByDate(ARI_SUB_BOOKINGS,    ds, today, false),
+    other:  prFilterByDate(ARI_OTHER_BOOKINGS,  ds, today, false),
+  };
+}
+function prValidate(){
+  const groups = ['c','s','o'].filter(prSecOn);
+  if (!groups.length) { pzAlert('กรุณาเปิด "รวมในรายงาน" อย่างน้อย 1 ประเภท','warning','ยังไม่ได้เลือกข้อมูล'); return null; }
+  for (const g of groups) {
+    if (!prSelectedCols(g).length) {
+      const nm = {c:'ส่วนกลาง ชั้น 5', s:'แจ้งจอดแทน', o:'รถอื่นๆ'}[g];
+      pzAlert(`กรุณาเลือกคอลัมน์อย่างน้อย 1 คอลัมน์ ในส่วน "${nm}"`,'warning','คอลัมน์ไม่ครบ');
+      return null;
+    }
+  }
+  return groups;
+}
+function printAriReportCustom(){
+  const groups = prValidate(); if(!groups) return;
+  const d = prGatherData();
+  const now = new Date();
+  const nowStr = `${now.getDate()} ${PR_MONTHS[now.getMonth()]} ${now.getFullYear()+543}  ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} น.`;
+  const secMeta = {
+    c: { title:'แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ', rows:d.common },
+    s: { title:'แจ้งจอดแทน', rows:d.sub },
+    o: { title:'แจ้งจอดรถอื่นๆ (รถตู้ / รถส่งของ / รถ Vendor / รถบัส / รถพยาบาล)', rows:d.other },
+  };
+  const sections = groups.map(g => {
+    const cols = prSelectedCols(g);
+    const m = secMeta[g];
+    const head = '<th>ลำดับ</th>' + cols.map(c => `<th>${c[1]}</th>`).join('');
+    const body = m.rows.length
+      ? m.rows.map((r,i) => `<tr><td>${i+1}</td>` + cols.map(c => `<td>${c[2](r)}</td>`).join('') + '</tr>').join('')
+      : `<tr><td colspan="${cols.length+1}" style="text-align:center;color:#aaa;padding:12px;">ไม่มีรายการ</td></tr>`;
+    return `<h2>${m.title} <span style="font-weight:400;color:#888;">(${m.rows.length} รายการ)</span></h2>
+      <table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+  }).join('');
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <title>รายงานจอดรถ Ari Hills — ${d.dateThai}</title>
+  <style>
+    body{font-family:sans-serif;font-size:13px;color:#111;margin:24px;}
+    h1{font-size:16px;margin-bottom:2px;} .sub{font-size:12px;color:#666;margin-bottom:20px;}
+    h2{font-size:13px;font-weight:700;margin:20px 0 8px;border-left:4px solid #0097B2;padding-left:8px;}
+    table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px;}
+    th{background:#f5f5f2;padding:7px 10px;text-align:left;font-weight:600;border-bottom:2px solid #ddd;}
+    td{padding:7px 10px;border-bottom:1px solid #eee;}
+    .footer{margin-top:28px;font-size:11px;color:#aaa;border-top:1px solid #eee;padding-top:10px;}
+    @media print{body{margin:12px;}}
+  </style></head><body>
+  <h1>รายงานการจอดรถ — Ari Hills &nbsp;<span style="font-weight:400;color:#555;">วันที่ ${d.dateThai}</span></h1>
+  <div class="sub">พิมพ์เมื่อ: ${nowStr} &nbsp;|&nbsp; จัดทำโดย: ระบบจัดการลานจอด</div>
+  ${sections}
+  <div class="footer">เอกสารนี้ออกจากระบบจัดการลานจอดโดยอัตโนมัติ — ไม่ต้องลงนาม &nbsp;|&nbsp; รายงานเฉพาะวันที่ ${d.dateThai}</div>
+</body></html>`;
+  const w = window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+  w.print();
+}
+function exportAriReportXlsxCustom(){
+  const groups = prValidate(); if(!groups) return;
+  const d = prGatherData();
+  const now = new Date();
+  const nowStr = `${now.getDate()} ${PR_MONTHS[now.getMonth()]} ${now.getFullYear()+543} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} น.`;
+  const secMeta = {
+    c: { title:'แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ', rows:d.common },
+    s: { title:'แจ้งจอดแทน', rows:d.sub },
+    o: { title:'แจ้งจอดรถอื่นๆ', rows:d.other },
+  };
+  function build(XLSX){
+    const aoa = [
+      [`รายงานการจอดรถ — Ari Hills  วันที่ ${d.dateThai}`],
+      [`พิมพ์เมื่อ: ${nowStr}`],
+      [],
+    ];
+    groups.forEach(g => {
+      const cols = prSelectedCols(g);
+      const m = secMeta[g];
+      aoa.push([`${m.title} (${m.rows.length} รายการ)`]);
+      aoa.push(['ลำดับ', ...cols.map(c => c[1])]);
+      if (m.rows.length) m.rows.forEach((r,i) => aoa.push([i+1, ...cols.map(c => c[2](r))]));
+      else aoa.push(['', 'ไม่มีรายการ']);
+      aoa.push([]);
+    });
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    ws['!cols'] = [{wch:6},{wch:22},{wch:16},{wch:16},{wch:16},{wch:18},{wch:16},{wch:14},{wch:24}];
+    XLSX.utils.book_append_sheet(wb, ws, 'รายงานจอดรถ');
+    const [py,pm,pd] = d.ds.split('-').map(Number);
+    XLSX.writeFile(wb, `รายงานการจอดรถ — Ari Hills ${pd}-${PR_MONTHS[pm-1]}-${py+543}.xlsx`);
+  }
+  if (window.XLSX) { build(window.XLSX); }
+  else {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload = () => build(window.XLSX);
+    document.head.appendChild(s);
+  }
+}
+// ═══════════════ END PRINT/EXCEL CUSTOM ═══════════════
+
+// ═══════════════ LOGIN ผ่าน Google Sheet (Users) ═══════════════
+let adminRole = null;   // 'admin' | 'staff'
+let adminName = '';
+
+// ตรวจสิทธิ์กับ GAS (sheet "Users") — ถ้า GAS ยังไม่ได้อัพเดต/ออฟไลน์ จะ fallback เป็นรหัสในตัวชั่วคราว
+async function pzLogin(u, p){
+  if (!u || !p) return { ok:false, msg:'กรอกข้อมูลไม่ครบ' };
+  try {
+    const params = new URLSearchParams({ action:'login', u, p });
+    const res = await fetch(`${GS_URL}?${params}`, { mode:'cors', credentials:'omit' });
+    const d = await res.json();
+    if (d && d.ok) return { ok:true, role:d.role||'admin', name:d.name||u };
+    // GAS ตอบกลับแต่ไม่รู้จัก action=login (ยังไม่ deploy เวอร์ชันใหม่) → fallback
+    if (d && d.msg && /unknown|invalid action|ไม่รู้จัก/i.test(d.msg)) {
+      return pzLoginLocal(u, p, '(GAS ยังไม่รองรับ login — ใช้รหัสในตัวชั่วคราว)');
+    }
+    return { ok:false, msg:d?.msg || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' };
+  } catch (e) {
+    // เชื่อมต่อ GAS ไม่ได้ → fallback เพื่อไม่ให้ระบบถูกล็อคตาย
+    return pzLoginLocal(u, p, '(ออฟไลน์ — ใช้รหัสในตัวชั่วคราว)');
+  }
+}
+function pzLoginLocal(u, p, note){
+  if (u === 'admin' && p === 'admin123') {
+    console.warn('PZ login fallback:', note);
+    return { ok:true, role:'admin', name:'Admin '+(note||'') };
+  }
+  return { ok:false, msg:'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' };
+}
+function pzApplyLogin(lg){
+  adminLoggedIn = true;
+  adminRole = lg.role || 'admin';
+  adminName = lg.name || '';
+  const cu = document.getElementById('adm-cur-user');
+  if (cu) cu.innerHTML = `เข้าสู่ระบบ: <strong style="color:#4ade80;">${adminName}</strong> (${adminRole})`;
+  updateAdminBadge();
+}
+// ═══════════════ END LOGIN ═══════════════
+
 </script>
 </body>
 </html>
