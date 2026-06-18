@@ -6533,7 +6533,7 @@ function updateMultiCalSummary() {
     return `<span class="bm2-date-chip">📅 ${d} ${thMonths[m-1]}</span>`;
   }).join('');
   el.style.display = 'flex';
-  el.innerHTML = `<span style="font-size:10px;font-weight:700;color:#4A6580;letter-spacing:.4px;text-transform:uppercase;width:100%;">เลือกแล้ว ${sorted.length} วัน</span>${chips}`;
+  el.innerHTML = `<span style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.85);letter-spacing:.4px;text-transform:uppercase;width:100%;">เลือกแล้ว ${sorted.length} วัน</span>${chips}`;
 }
 
 // ── Range Cal (จอดยาว) ──
@@ -6617,16 +6617,16 @@ function updateRangeCalSummary() {
   }
   if (!rangeEnd) {
     el.style.display = 'flex';
-    el.innerHTML = `<span style="font-size:10px;font-weight:700;color:#4A6580;letter-spacing:.4px;text-transform:uppercase;width:100%;">วันเริ่มต้น</span>
+    el.innerHTML = `<span style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.85);letter-spacing:.4px;text-transform:uppercase;width:100%;">วันเริ่มต้น</span>
       <span class="bm2-date-chip range">📆 ${fmt(rangeStart)}</span>
-      <span style="font-size:11px;color:#9ca3af;">→ เลือกวันสิ้นสุด</span>`;
+      <span style="font-size:11px;color:rgba(255,255,255,0.6);">→ เลือกวันสิ้นสุด</span>`;
     return;
   }
   const days = Math.round((new Date(rangeEnd)-new Date(rangeStart))/86400000)+1;
   el.style.display = 'flex';
-  el.innerHTML = `<span style="font-size:10px;font-weight:700;color:#4A6580;letter-spacing:.4px;text-transform:uppercase;width:100%;">จอดยาว ${days} วัน</span>
+  el.innerHTML = `<span style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.85);letter-spacing:.4px;text-transform:uppercase;width:100%;">จอดยาว ${days} วัน</span>
     <span class="bm2-date-chip range">📆 ${fmt(rangeStart)}</span>
-    <span style="font-size:13px;color:#7C3AED;font-weight:700;">→</span>
+    <span style="font-size:13px;color:#C4B5FD;font-weight:700;">→</span>
     <span class="bm2-date-chip range">🏁 ${fmt(rangeEnd)}</span>`;
 }
 
