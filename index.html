@@ -369,13 +369,14 @@
     position: relative; z-index: 1;
   }
 
-  /* ── ปฏิทิน: ข้อความสีขาวใน booking view ── */
-  #view-booking .cal-day { color:rgba(255,255,255,0.75); }
-  #view-booking .cal-day:hover { background: rgba(255,255,255,0.1); }
-  #view-booking .cal-day.other-month { color:rgba(255,255,255,0.25); }
-  #view-booking .cal-day.today { background: #0ea5e9; color: #fff; font-weight: 700; box-shadow: 0 0 12px rgba(14,165,233,0.4); }
-  #view-booking .cal-day.selected { background: linear-gradient(135deg,#7C3AED,#5B3FD8) !important; color: #fff !important; }
-  #view-booking .cal-day-label { color:rgba(255,255,255,0.35); }
+  /* ── ปฏิทินการจองหน้าหลัก: โฉมใหม่ คอนทราสต์สูง ── */
+  #view-booking .cal-day { color:rgba(255,255,255,0.92); border-radius:50%; font-size:13px; }
+  #view-booking .cal-day:hover { background: rgba(255,255,255,0.12); }
+  #view-booking .cal-day.other-month { color:rgba(255,255,255,0.34); }
+  #view-booking .cal-day.today { background:transparent; color:#fff; font-weight:800; box-shadow: inset 0 0 0 1.6px rgba(124,160,255,0.85); }
+  #view-booking .cal-day.selected { background: linear-gradient(135deg,#7C3AED,#5B3FD8) !important; color:#fff !important; font-weight:800; box-shadow:0 3px 12px rgba(124,58,237,0.5); }
+  #view-booking .cal-day.today.selected { box-shadow:0 3px 12px rgba(124,58,237,0.5); }
+  #view-booking .cal-day-label { color:rgba(255,255,255,0.6); font-size:11px; font-weight:700; }
 
   /* ─── Per-view Background Images ─── */
   #view-all {
@@ -2840,6 +2841,38 @@
   .bm2-sl { font-size:10px; color:rgba(255,255,255,0.3); margin-top:2px; }
   .bm2-sdi { background:rgba(255,255,255,.1); }
 
+  /* ── ปฏิทินรายวันโฉมใหม่ (pzcal) — กระจกไล่เฉดน้ำเงินกรมท่า ── */
+  .pzcal { background:linear-gradient(155deg,#16233F 0%,#243A63 52%,#37598A 100%); border-radius:20px; padding:16px 16px 8px; box-shadow:0 10px 30px rgba(10,25,60,.28), inset 0 1px 0 rgba(255,255,255,.08); position:relative; overflow:hidden; }
+  .pzcal::before { content:''; position:absolute; right:-30px; top:-40px; width:150px; height:150px; border-radius:50%; background:radial-gradient(circle,rgba(124,160,255,.22),transparent 70%); pointer-events:none; }
+  .pzcal-head { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; position:relative; z-index:1; margin-bottom:14px; }
+  .pzcal-title { display:flex; flex-direction:column; line-height:1.05; }
+  .pzcal-mo { font-size:20px; font-weight:800; color:#fff; letter-spacing:-0.3px; }
+  .pzcal-mo-en { font-size:11px; font-weight:600; color:rgba(255,255,255,.5); text-transform:uppercase; letter-spacing:1.5px; margin-top:3px; }
+  .pzcal-ctrls { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+  .pzcal-nav { width:30px; height:30px; border-radius:50%; border:none; background:rgba(255,255,255,.12); color:#fff; font-size:16px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s; }
+  .pzcal-nav:hover { background:rgba(255,255,255,.26); }
+  .pzcal-today { height:30px; padding:0 14px; border-radius:99px; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.1); color:#fff; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; transition:background .15s; }
+  .pzcal-today:hover { background:rgba(255,255,255,.2); }
+  .pzcal-dow { display:grid; grid-template-columns:repeat(7,1fr); text-align:center; position:relative; z-index:1; margin-bottom:4px; }
+  .pzcal-dow span { font-size:11px; font-weight:700; color:rgba(255,255,255,.48); padding:4px 0; }
+  .pzcal-dow span.we { color:rgba(255,200,160,.62); }
+  .pzcal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; position:relative; z-index:1; }
+  .pzcal-day { aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:rgba(255,255,255,.92); border-radius:50%; cursor:pointer; transition:background .12s,color .12s; user-select:none; }
+  .pzcal-day:hover { background:rgba(255,255,255,.12); }
+  .pzcal-day.out { color:rgba(255,255,255,.34); cursor:default; }
+  .pzcal-day.out:hover { background:transparent; }
+  .pzcal-day.today { box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.65); color:#fff; font-weight:800; }
+  .pzcal-day.rng { background:rgba(255,255,255,.18); border-radius:9px; color:#fff; }
+  .pzcal-day.sel { background:#fff; color:#16233F; font-weight:800; box-shadow:0 2px 8px rgba(0,0,0,.25); }
+  .pzcal-day.sel.today { box-shadow:0 2px 8px rgba(0,0,0,.25); }
+  .pzcal .bm2-cal-hint { margin:12px 0 6px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); color:#fff; }
+  .pzcal .bm2-cal-hint .bm2-date-chip { background:rgba(255,255,255,.92); color:#16233F; }
+
+  /* ── Occupancy: ส่วนกลางจอดได้ไม่จำกัด ── */
+  .bm2-occ-unlim { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .bm2-occ-note { text-align:right; font-size:12px; font-weight:700; color:#80C4FF; line-height:1.5; }
+  .bm2-occ-note span { display:block; font-size:10px; font-weight:500; color:rgba(255,255,255,.42); margin-top:2px; }
+
   /* Type cards */
   .bm2-tcrow { display:flex; gap:6px; }
   .bm2-tc {
@@ -3346,7 +3379,7 @@ html[data-theme="light"] #view-booking .cal-day-label { color: #6b7280 !importan
                   <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M12 12v4M10 14h4"/></svg>
                   <div style="font-size:38px;font-weight:700;color:#a78bfa;font-family:'DM Mono',monospace;line-height:1;" id="daily-common-num">–</div>
                   <div style="font-size:13px;color:#a78bfa;font-weight:600;">ส่วนกลาง</div>
-                  <div style="font-size:11px;color:rgba(167,139,250,0.65);" id="daily-common-sub">จาก 18 ช่อง</div>
+                  <div style="font-size:11px;color:rgba(167,139,250,0.65);" id="daily-common-sub">รายการ · ไม่จำกัดช่อง</div>
                 </div>
                 <div class="bk-kpi-chip" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:14px 10px;">
                   <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -3375,14 +3408,18 @@ html[data-theme="light"] #view-booking .cal-day-label { color: #6b7280 !importan
 
             <!-- ปฏิทิน — สูงเท่า summary -->
             <div class="bk-gc" style="flex:1;min-width:0;display:flex;flex-direction:column;padding:20px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-shrink:0;">
-                <div style="font-size:18px;font-weight:700;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:8px;">
-                  <span style="width:8px;height:8px;border-radius:50%;background:#a78bfa;display:inline-block;"></span> ปฏิทินการจอง
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 12px;margin-bottom:14px;flex-shrink:0;">
+                <div style="font-size:17px;font-weight:700;color:rgba(255,255,255,0.85);display:flex;align-items:center;gap:8px;white-space:nowrap;flex-shrink:0;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#a78bfa;display:inline-block;flex-shrink:0;"></span> ปฏิทินการจอง
                 </div>
-                <div style="display:flex;align-items:center;gap:6px;">
-                  <button onclick="ariCalPrev()" class="icon-btn" style="width:32px;height:32px;font-size:16px;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);">‹</button>
-                  <div id="ari-cal-label" style="font-size:14px;font-weight:700;min-width:90px;text-align:center;color:#fff;"></div>
-                  <button onclick="ariCalNext()" class="icon-btn" style="width:32px;height:32px;font-size:16px;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);">›</button>
+                <div style="display:flex;align-items:center;gap:7px;flex-shrink:0;margin-left:auto;">
+                  <button onclick="ariCalToday()" style="height:32px;padding:0 12px;border-radius:99px;background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.25);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">วันนี้</button>
+                  <button onclick="ariCalPrev()" class="icon-btn" style="width:32px;height:32px;font-size:16px;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);flex-shrink:0;">‹</button>
+                  <div style="text-align:center;min-width:96px;line-height:1.1;">
+                    <div id="ari-cal-label" style="font-size:15px;font-weight:800;color:#fff;white-space:nowrap;"></div>
+                    <div id="ari-cal-label-en" style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-top:2px;white-space:nowrap;"></div>
+                  </div>
+                  <button onclick="ariCalNext()" class="icon-btn" style="width:32px;height:32px;font-size:16px;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);flex-shrink:0;">›</button>
                 </div>
               </div>
               <div id="ari-calendar" style="--cal-cell-size:42px;flex:1;"></div>
@@ -4423,58 +4460,58 @@ html[data-theme="light"] #view-booking .cal-day-label { color: #6b7280 !importan
           </div>
         </div>
 
-        <!-- ปฏิทินรายวัน -->
-        <div id="park-daily-cal" class="bm2-calcard">
-          <div class="bm2-caltop">
-            <button onclick="multiCalNav(-1)" class="bm2-cnb" aria-label="เดือนก่อน">‹</button>
-            <span id="multi-cal-label" class="bm2-calmo"></span>
-            <button onclick="multiCalNav(1)"  class="bm2-cnb" aria-label="เดือนถัดไป">›</button>
+        <!-- ปฏิทินรายวัน (โฉมใหม่ pzcal) -->
+        <div id="park-daily-cal" class="pzcal">
+          <div class="pzcal-head">
+            <div class="pzcal-title">
+              <span id="multi-cal-label" class="pzcal-mo"></span>
+              <span id="multi-cal-label-en" class="pzcal-mo-en"></span>
+            </div>
+            <div class="pzcal-ctrls">
+              <button onclick="multiCalNav(-1)" class="pzcal-nav" aria-label="เดือนก่อน">‹</button>
+              <button onclick="multiCalGoToday()" class="pzcal-today">วันนี้</button>
+              <button onclick="multiCalNav(1)" class="pzcal-nav" aria-label="เดือนถัดไป">›</button>
+            </div>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:10px;color:#A8C0D8;padding:7px 10px 4px;border-bottom:1px solid #EEF4FF">
-            <span>อา</span><span>จ</span><span>อ</span><span>พ</span><span>พฤ</span><span>ศ</span><span>ส</span>
+          <div class="pzcal-dow">
+            <span>จ</span><span>อ</span><span>พ</span><span>พฤ</span><span>ศ</span><span class="we">ส</span><span class="we">อา</span>
           </div>
-          <div id="multi-cal-grid" class="bm2-cg"></div>
+          <div id="multi-cal-grid" class="pzcal-grid"></div>
           <div id="multi-cal-selected" class="bm2-cal-hint"></div>
         </div>
 
-        <!-- ปฏิทินจอดยาว -->
-        <div id="park-long-cal" style="display:none;" class="bm2-calcard">
-          <div class="bm2-caltop">
-            <button onclick="rangeCalNav(-1)" class="bm2-cnb" aria-label="เดือนก่อน">‹</button>
-            <span id="range-cal-label" class="bm2-calmo"></span>
-            <button onclick="rangeCalNav(1)"  class="bm2-cnb" aria-label="เดือนถัดไป">›</button>
+        <!-- ปฏิทินจอดยาว (โฉมใหม่ pzcal) -->
+        <div id="park-long-cal" style="display:none;" class="pzcal">
+          <div class="pzcal-head">
+            <div class="pzcal-title">
+              <span id="range-cal-label" class="pzcal-mo"></span>
+              <span id="range-cal-label-en" class="pzcal-mo-en"></span>
+            </div>
+            <div class="pzcal-ctrls">
+              <button onclick="rangeCalNav(-1)" class="pzcal-nav" aria-label="เดือนก่อน">‹</button>
+              <button onclick="rangeCalGoToday()" class="pzcal-today">วันนี้</button>
+              <button onclick="rangeCalNav(1)" class="pzcal-nav" aria-label="เดือนถัดไป">›</button>
+            </div>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:10px;color:#A8C0D8;padding:7px 10px 4px;border-bottom:1px solid #EEF4FF">
-            <span>อา</span><span>จ</span><span>อ</span><span>พ</span><span>พฤ</span><span>ศ</span><span>ส</span>
+          <div class="pzcal-dow">
+            <span>จ</span><span>อ</span><span>พ</span><span>พฤ</span><span>ศ</span><span class="we">ส</span><span class="we">อา</span>
           </div>
-          <div id="range-cal-grid" class="bm2-cg"></div>
+          <div id="range-cal-grid" class="pzcal-grid"></div>
           <div id="range-cal-selected" class="bm2-cal-hint"></div>
         </div>
 
-        <!-- Occupancy card — dark navy -->
+        <!-- Occupancy card — ส่วนกลางจอดได้ไม่จำกัด -->
         <div id="bm-occ-card" class="bm2-occ">
           <div class="bm2-occh">
             <i class="ti ti-chart-donut" style="font-size:14px" aria-hidden="true"></i>
             🅿️ ส่วนกลาง ชั้น 5 ขวามือ
           </div>
-          <div class="bm2-occbar">
-            <div id="bm-occ-bar" class="bm2-occf" style="width:11%"></div>
-          </div>
-          <div class="bm2-sts">
+          <div class="bm2-occ-unlim">
             <div>
               <div id="bm-occ-booked" class="bm2-sv bk">–</div>
-              <div class="bm2-sl">🔴 จองแล้ว</div>
+              <div class="bm2-sl">🔵 จองแล้ววันนี้ (รายการ)</div>
             </div>
-            <div class="bm2-sdi"></div>
-            <div>
-              <div id="bm-occ-avail" class="bm2-sv av">–</div>
-              <div class="bm2-sl">🟢 ว่างอยู่</div>
-            </div>
-            <div class="bm2-sdi"></div>
-            <div>
-              <div class="bm2-sv tot">18</div>
-              <div class="bm2-sl">⬜ ทั้งหมด</div>
-            </div>
+            <div class="bm2-occ-note">♾️ จอดได้ไม่จำกัด<span>พื้นที่ส่วนกลาง ชั้น 5 ขวามือ</span></div>
           </div>
         </div>
 
@@ -5579,10 +5616,10 @@ const MODALS = {
   'book-common': {
     title: '📅 แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ',
     body: `
-      <div class="modal-field"><label>เลือกช่องจอด</label><select>${Array.from({length:18},(_,i)=>`<option>ช่อง ${66+i}</option>`).join('')}</select></div>
       <div class="modal-field"><label>วันที่จอง</label><input type="date"></div>
       <div class="modal-field"><label>เวลาเข้า</label><input type="time" value="08:00"></div>
       <div class="modal-field"><label>เวลาออก</label><input type="time" value="18:00"></div>
+      <div style="font-size:11px;color:#6b7280;margin-top:4px;">♾️ พื้นที่ส่วนกลางจอดได้ไม่จำกัด ไม่ต้องเลือกช่อง</div>
     `
   },
 };
@@ -5770,8 +5807,11 @@ function initBookMode() {
 function renderAriCalendar() {
   const label = document.getElementById('ari-cal-label');
   if (!label) return; // ยังไม่ได้เปิดหน้า booking
-  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const thMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const enMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   label.textContent = `${thMonths[ariCalMonth]} ${ariCalYear + 543}`;
+  const labelEn = document.getElementById('ari-cal-label-en');
+  if (labelEn) labelEn.textContent = `${enMonths[ariCalMonth]} ${ariCalYear}`;
 
   const container = document.getElementById('ari-calendar');
   const dayNames  = ['จ','อ','พ','พฤ','ศ','ส','อา'];
@@ -5856,6 +5896,12 @@ function ariCalPrev() {
   if (ariCalMonth < 0) { ariCalMonth = 11; ariCalYear--; }
   renderAriCalendar();
 }
+function ariCalToday() {
+  const now = new Date();
+  ariCalYear  = now.getFullYear();
+  ariCalMonth = now.getMonth();
+  renderAriCalendar();
+}
 function ariCalNext() {
   ariCalMonth++;
   if (ariCalMonth > 11) { ariCalMonth = 0; ariCalYear++; }
@@ -5889,11 +5935,9 @@ function renderBookingTable(dateStr) {
     return dateStr === today; // fallback ข้อมูล Sheet เก่า
   });
 
-  const emptySlots = 18 - bookedRows.length;
-
   const cTbody = document.getElementById('ari-common-tbody');
 
-  // แสดง booked rows ก่อน ตามด้วย empty rows ให้ครบ 18 ช่อง
+  // แสดงเฉพาะรายการจริง (ส่วนกลางจอดไม่จำกัด — ไม่มีช่องว่างให้เติม)
   const bookedHtml = bookedRows.map((r, i) => {
     // ประเภทการจอด tag
     let parkTypeTag = `<span style="color:#6b7280">–</span>`;
@@ -5953,7 +5997,7 @@ function renderBookingTable(dateStr) {
         const parkTypeTag = r.timeType === 'ค้างคืน'
           ? `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#FEF3C7;color:#B45309;white-space:nowrap;">🌙 ค้างคืน</span>`
           : `<span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:100px;background:#EFF6FF;color:#2563EB;white-space:nowrap;">🌅 ไม่ค้างคืน</span>`;
-        const floorBadge = `<span style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;background:rgba(124,58,237,0.12);color:#7C3AED;padding:2px 8px;border-radius:6px;">${r.floor}</span>`;
+        const floorBadge = `<span style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace;background:#EDE9FE;color:#6D28D9;padding:2px 8px;border-radius:6px;display:inline-block;line-height:1.5;">${r.floor}</span>`;
         return `<tr style="class='bk-tr-${i%2===0?"odd":"even"}'">
           <td class="tbl-td" style="text-align:center;font-weight:700;">${i+1}</td>
           <td class="tbl-td" style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
@@ -6001,7 +6045,7 @@ function renderBookingTable(dateStr) {
 
   // ── อัพเดต badge count ──
   const ccEl = document.getElementById('common-count');
-  if (ccEl) ccEl.textContent = `${bookedRows.length} จาก 18 ช่อง${bookedRows.length > 18 ? ' ⚠️ เกิน' : ''}`;
+  if (ccEl) ccEl.textContent = `${bookedRows.length} รายการ`;
   const scEl = document.getElementById('sub-count');
   if (scEl) scEl.textContent = subs.length + ' รายการ';
 
@@ -6177,14 +6221,8 @@ function updateBmOccupancy() {
     if (r.dates && r.dates.length > 0) return r.dates.includes(todayISO);
     return true;
   }).length;
-  const avail = 18 - booked;
-  const pct   = Math.round(booked / 18 * 100);
   const bEl = document.getElementById('bm-occ-booked');
-  const aEl = document.getElementById('bm-occ-avail');
-  const barEl = document.getElementById('bm-occ-bar');
-  if (bEl) bEl.textContent = booked;
-  if (aEl) aEl.textContent = avail;
-  if (barEl) barEl.style.width = Math.max(2, pct) + '%';
+  if (bEl) bEl.textContent = booked; // ส่วนกลางจอดไม่จำกัด — แสดงเฉพาะจำนวนที่จองวันนี้
 }
 
 function openBookingModal() {
@@ -6427,35 +6465,51 @@ function multiCalNav(dir) {
 }
 
 function renderMultiCal() {
-  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-  const thDays   = ['จ','อ','พ','พฤ','ศ','ส','อา'];
-  const lbl = document.getElementById('multi-cal-label');
-  if (lbl) lbl.textContent = `${thMonths[multiCalMonth]} ${multiCalYear+543}`;
+  const thMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const enMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const lbl   = document.getElementById('multi-cal-label');
+  const lblEn = document.getElementById('multi-cal-label-en');
+  if (lbl)   lbl.textContent   = `${thMonths[multiCalMonth]} ${multiCalYear+543}`;
+  if (lblEn) lblEn.textContent = `${enMonths[multiCalMonth]} ${multiCalYear}`;
 
   const grid = document.getElementById('multi-cal-grid');
   if (!grid) return;
   const today = new Date().toISOString().slice(0,10);
-  let html = thDays.map(d=>`<div style="text-align:center;font-weight:700;color:#aaa;padding:2px 0;font-size:10px;">${d}</div>`).join('');
+  let html = '';
 
-  const firstDow = new Date(multiCalYear, multiCalMonth, 1).getDay();
-  const startDow = firstDow === 0 ? 6 : firstDow - 1;
+  const firstDow    = new Date(multiCalYear, multiCalMonth, 1).getDay();
+  const startDow    = firstDow === 0 ? 6 : firstDow - 1; // เริ่มสัปดาห์วันจันทร์
   const daysInMonth = new Date(multiCalYear, multiCalMonth+1, 0).getDate();
   const prevDays    = new Date(multiCalYear, multiCalMonth, 0).getDate();
 
+  // วันท้ายเดือนก่อน (จาง, กดไม่ได้)
   for (let i = startDow-1; i >= 0; i--)
-    html += `<div style="text-align:center;color:#ccc;padding:3px 0;font-size:11px;">${prevDays-i}</div>`;
+    html += `<div class="pzcal-day out">${prevDays-i}</div>`;
 
+  // วันในเดือน
   for (let d = 1; d <= daysInMonth; d++) {
     const ds = `${multiCalYear}-${String(multiCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isToday = ds === today;
-    const isSel   = selectedDays.has(ds);
-    let bg='transparent', col='#4A6580', fw='400', border='none';
-    if (isSel)   { bg='#0F1C38'; col='#fff'; fw='700'; }
-    else if (isToday) { bg='#FF6B35'; col='#fff'; fw='700'; }
-    html += `<div onclick="toggleDay('${ds}')" style="text-align:center;font-size:11px;font-weight:${fw};padding:5px 2px;border-radius:6px;cursor:pointer;background:${bg};color:${col};transition:all 0.1s;">${d}</div>`;
+    let cls = 'pzcal-day';
+    if (ds === today)            cls += ' today';
+    if (selectedDays.has(ds))    cls += ' sel';
+    html += `<div class="${cls}" onclick="toggleDay('${ds}')">${d}</div>`;
   }
+
+  // เติมวันต้นเดือนถัดไปให้ครบสัปดาห์ (จาง)
+  const tail = (7 - ((startDow + daysInMonth) % 7)) % 7;
+  for (let i = 1; i <= tail; i++)
+    html += `<div class="pzcal-day out">${i}</div>`;
+
   grid.innerHTML = html;
   updateMultiCalSummary();
+}
+
+// ปุ่ม "วันนี้" — กระโดดกลับเดือนปัจจุบัน (ไม่แตะการเลือกวัน)
+function multiCalGoToday() {
+  const now = new Date();
+  multiCalYear  = now.getFullYear();
+  multiCalMonth = now.getMonth();
+  renderMultiCal();
 }
 
 function toggleDay(ds) {
@@ -6499,36 +6553,49 @@ function rangeCalNav(dir) {
 }
 
 function renderRangeCal() {
-  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-  const thDays   = ['จ','อ','พ','พฤ','ศ','ส','อา'];
-  document.getElementById('range-cal-label').textContent = `${thMonths[rangeCalMonth]} ${rangeCalYear+543}`;
+  const thMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const enMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const lbl   = document.getElementById('range-cal-label');
+  const lblEn = document.getElementById('range-cal-label-en');
+  if (lbl)   lbl.textContent   = `${thMonths[rangeCalMonth]} ${rangeCalYear+543}`;
+  if (lblEn) lblEn.textContent = `${enMonths[rangeCalMonth]} ${rangeCalYear}`;
 
   const grid = document.getElementById('range-cal-grid');
+  if (!grid) return;
   const today = new Date().toISOString().slice(0,10);
-  let html = thDays.map(d=>`<div style="text-align:center;font-weight:700;color:#aaa;padding:2px 0;font-size:10px;">${d}</div>`).join('');
+  let html = '';
 
-  const firstDow = new Date(rangeCalYear, rangeCalMonth, 1).getDay();
-  const startDow = firstDow === 0 ? 6 : firstDow - 1;
+  const firstDow    = new Date(rangeCalYear, rangeCalMonth, 1).getDay();
+  const startDow    = firstDow === 0 ? 6 : firstDow - 1;
   const daysInMonth = new Date(rangeCalYear, rangeCalMonth+1, 0).getDate();
   const prevDays    = new Date(rangeCalYear, rangeCalMonth, 0).getDate();
 
   for (let i = startDow-1; i >= 0; i--)
-    html += `<div style="text-align:center;color:#ccc;padding:3px 0;font-size:11px;">${prevDays-i}</div>`;
+    html += `<div class="pzcal-day out">${prevDays-i}</div>`;
 
   for (let d = 1; d <= daysInMonth; d++) {
     const ds = `${rangeCalYear}-${String(rangeCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isStart  = ds === rangeStart;
-    const isEnd    = ds === rangeEnd;
-    const inRange  = rangeStart && rangeEnd && ds > rangeStart && ds < rangeEnd;
-    const isToday  = ds === today;
-    let bg = 'transparent', col = '#333', fw = '400';
-    if (isStart || isEnd) { bg = '#7C3AED'; col = '#fff'; fw = '700'; }
-    else if (inRange) { bg = '#EDE9FE'; col = '#6D28D9'; }
-    else if (isToday) { bg = '#0ea5e9'; col = '#fff'; fw = '700'; }
-    html += `<div onclick="selectRangeDay('${ds}')" style="text-align:center;font-size:11px;font-weight:${fw};padding:5px 2px;border-radius:6px;cursor:pointer;background:${bg};color:${col};transition:all 0.1s;">${d}</div>`;
+    const isEdge  = ds === rangeStart || ds === rangeEnd;
+    const inRange = rangeStart && rangeEnd && ds > rangeStart && ds < rangeEnd;
+    let cls = 'pzcal-day';
+    if (ds === today) cls += ' today';
+    if (isEdge)       cls += ' sel';
+    else if (inRange) cls += ' rng';
+    html += `<div class="${cls}" onclick="selectRangeDay('${ds}')">${d}</div>`;
   }
+  const tail = (7 - ((startDow + daysInMonth) % 7)) % 7;
+  for (let i = 1; i <= tail; i++)
+    html += `<div class="pzcal-day out">${i}</div>`;
+
   grid.innerHTML = html;
   updateRangeCalSummary();
+}
+
+function rangeCalGoToday() {
+  const now = new Date();
+  rangeCalYear  = now.getFullYear();
+  rangeCalMonth = now.getMonth();
+  renderRangeCal();
 }
 
 function selectRangeDay(ds) {
@@ -6831,34 +6898,36 @@ async function submitBooking() {
   // ── อัพเดต local array — loop ทุก plate ──
   plates.forEach(pl => {
     if (type === 'common') {
-      const freeIdx = ARI_COMMON_BOOKINGS.findIndex(r => r.status === 'ว่าง');
       const entry = {
-        slot: freeIdx >= 0 ? ARI_COMMON_BOOKINGS[freeIdx].slot : 'ส่วนกลาง',
         name, plate: pl, carType: carLabel, dept: deptVal,
         parkType: currentParkMode,
         overnight: comOvernight,
         status: 'จอง', statusCls: 'tag-blue', note: noteVal,
         dates: bookedDates
       };
-      if (freeIdx >= 0) ARI_COMMON_BOOKINGS[freeIdx] = entry;
-      else ARI_COMMON_BOOKINGS.push(entry);
+      ARI_COMMON_BOOKINGS.push(entry); // จอดไม่จำกัด
+      pzRegisterPending('common', entry);
     } else if (type === 'sub') {
       const found = PLATE_DB[subOwner] || {};
-      ARI_SUB_BOOKINGS.push({
+      const subEntry = {
         slot: found.slot||'–', floor: subFloorLabel, name, plateReq: pl,
         carTypeReq: carLabel, plateOwner: subOwner, dept: deptVal,
         timeType: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
         status: 'รออนุมัติ', statusCls: 'tag-orange', note: noteVal,
         dates: bookedDates
-      });
+      };
+      ARI_SUB_BOOKINGS.push(subEntry);
+      pzRegisterPending('sub', subEntry);
     } else if (type === 'other') {
       const cleanCarLabel = carLabel.replace(/\s*\(จอดหน้าอาคาร\)/g,'').trim();
-      ARI_OTHER_BOOKINGS.push({
+      const otherEntry = {
         location: 'หน้าอาคาร', name, plate: pl, carType: cleanCarLabel, dept: deptVal,
         timeType: subOvernight ? 'ค้างคืน' : 'ไม่ค้างคืน',
         status: 'รออนุมัติ', statusCls: 'tag-orange', note: noteVal,
         dates: bookedDates
-      });
+      };
+      ARI_OTHER_BOOKINGS.push(otherEntry);
+      pzRegisterPending('other', otherEntry);
     }
   });
 
@@ -6915,13 +6984,8 @@ async function submitBooking() {
 // ─── ข้อมูลจาก Google Sheets (โหลดตอนเปิดแอป) ───
 // ไม่มี mock data — ข้อมูลทั้งหมดมาจาก Sheet ผ่าน gsRefreshFromSheet()
 // แต่ละ entry ใน COMMON/SUB/OTHER จะมี field `dates` เป็น array ของ 'YYYY-MM-DD' ที่จอง
-const ARI_COMMON_BOOKINGS = (function() {
-  const arr = [];
-  for (let i = 66; i <= 83; i++) {
-    arr.push({ slot:'ช่อง '+i, name:'–', plate:'–', carType:'–', parkType:'', overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–', dates:[] });
-  }
-  return arr;
-})();
+// v16.3+: ส่วนกลาง ชั้น 5 ขวามือ จอดได้ไม่จำกัด — เก็บเป็นลิสต์การจองจริง (ไม่มีช่องตายตัว 66–83)
+const ARI_COMMON_BOOKINGS = [];
 
 const ARI_SUB_BOOKINGS   = [];
 const ARI_OTHER_BOOKINGS = [];
@@ -7940,19 +8004,11 @@ function processGsData(data) {
         }
       });
       // ใส่ทุก entry ลงใน ARI_COMMON_BOOKINGS โดยไม่ cap
-      Object.values(grouped).forEach((entry, idx) => {
-        ARI_COMMON_BOOKINGS.push({
-          slot: 'ช่อง ' + (66 + (idx % 18)),  // วนช่องถ้ามากกว่า 18
-          ...entry
-        });
+      Object.values(grouped).forEach(entry => {
+        ARI_COMMON_BOOKINGS.push({ ...entry }); // จอดไม่จำกัด — ไม่ต้องผูกกับช่องตายตัว
       });
     }
-    // ถ้าไม่มีข้อมูลเลย → reset เป็น 18 ช่องว่าง
-    if (ARI_COMMON_BOOKINGS.length === 0) {
-      for (let i = 66; i <= 83; i++) {
-        ARI_COMMON_BOOKINGS.push({ slot:'ช่อง '+i, name:'–', plate:'–', carType:'–', parkType:'', overnight:false, status:'ว่าง', statusCls:'tag-gray', note:'–', dates:[] });
-      }
-    }
+    // ส่วนกลางจอดได้ไม่จำกัด — ถ้าไม่มีข้อมูลก็ปล่อยว่าง (ตารางจะแสดง "ไม่มีการแจ้งจอด")
 
     // ── แปลง SubPark ──
     // คอลัมน์: ลำดับ/ชื่อผู้ขอ/ทะเบียนผู้ขอ/ฝ่าย/ประเภทรถ/ทะเบียนสิทธิ์/วันที่จอด/ค้างคืน/ชั้น/หมายเหตุ/วันที่บันทึก
@@ -8020,6 +8076,9 @@ function processGsData(data) {
       Object.values(otherGrouped).forEach(entry => ARI_OTHER_BOOKINGS.push(entry));
     }
 
+    // ── เติมรายการที่เพิ่งบันทึกแต่ยังไม่ขึ้นใน Sheet กลับเข้าจอ (กันโผล่แล้วหาย) ──
+    pzReconcilePending();
+
     // ── re-render เฉพาะส่วนที่จำเป็น (ไม่ reset ปฏิทินฟอร์ม) ──
     const today = new Date().toISOString().slice(0,10);
     // อัพเดตตารางรายการแจ้งจอด
@@ -8059,6 +8118,50 @@ function processGsData(data) {
    ใช้แทนการยิง no-cors แล้วลืมของเดิมทั้งเพิ่ม/ลบ/ขยายวัน
    ═══════════════════════════════════════════════════════════ */
 const pzQ = { items: [], running: false, ok: 0, unv: 0, fail: 0 };
+
+/* ═══════════════════════════════════════════════════════════
+   PENDING GUARD (v16.3+) — กัน "บันทึกแล้วโผล่ → refresh แล้วหาย"
+   รายการที่เพิ่งบันทึกถูกเก็บไว้ใน pzPending ระดับรายวัน
+   ทุกครั้งที่ processGsData ล้าง+rebuild จาก Sheet เสร็จ จะเรียก
+   pzReconcilePending() เพื่อ "เติมเฉพาะวันที่ที่ยังไม่ขึ้นใน Sheet" กลับเข้าจอ
+   จนกว่าจะยืนยันว่าขึ้นครบ หรือครบเวลา TTL (กรณีเขียนพลาดจริง)
+   ═══════════════════════════════════════════════════════════ */
+const pzPending = [];
+const PZ_PENDING_TTL = 120000; // 120 วิ — เผื่อเวลาเขียน/propagate/retry
+function pzEntryKey(type, e, date){
+  const plate = e.plate || e.plateReq || '';
+  const owner = e.plateOwner || '';
+  return type + '|' + (e.name||'') + '|' + plate + '|' + owner + '|' + date;
+}
+function pzRegisterPending(type, entry){
+  if (!entry || !(entry.dates && entry.dates.length)) return;
+  pzPending.push({ type, entry: { ...entry, dates: [...entry.dates] }, ts: Date.now() });
+}
+function pzReconcilePending(){
+  if (!pzPending.length) return;
+  const now = Date.now();
+  // ① สร้างชุด key ของสิ่งที่ "มีจริงใน Sheet แล้ว" (จาก array ที่เพิ่ง rebuild)
+  const present = new Set();
+  const scan = (arr, type) => (arr||[]).forEach(e => (e.dates||[]).forEach(d => present.add(pzEntryKey(type, e, d))));
+  scan(ARI_COMMON_BOOKINGS, 'common');
+  scan(ARI_SUB_BOOKINGS,    'sub');
+  scan(ARI_OTHER_BOOKINGS,  'other');
+  // ② เดินรายการ pending: ตัดตัวที่ยืนยันครบ/หมดเวลา, เติมเฉพาะวันที่ยังขาด
+  for (let i = pzPending.length - 1; i >= 0; i--){
+    const p = pzPending[i];
+    const missing = (p.entry.dates||[]).filter(d => !present.has(pzEntryKey(p.type, p.entry, d)));
+    if (missing.length === 0){ pzPending.splice(i, 1); continue; }      // ขึ้นครบแล้ว
+    if (now - p.ts > PZ_PENDING_TTL){ pzPending.splice(i, 1); continue; } // หมดเวลา → ปล่อยตามจริง
+    const clone = { ...p.entry, dates: missing.slice(), _pending: true };
+    if (p.type === 'common'){
+      ARI_COMMON_BOOKINGS.push({ ...clone }); // จอดไม่จำกัด — เพิ่มเข้าลิสต์ได้เลย
+    } else if (p.type === 'sub'){
+      ARI_SUB_BOOKINGS.push(clone);
+    } else {
+      ARI_OTHER_BOOKINGS.push(clone);
+    }
+  }
+}
 function pzWaitMs(ms){ return new Promise(r => setTimeout(r, ms)); }
 function pzJsonp(url, ms = 12000){
   return new Promise((resolve, reject) => {
@@ -8129,7 +8232,7 @@ async function pzRunQueue(){
     pzAlert(`บันทึกแล้ว ${pzQ.ok + pzQ.unv} รายการ แต่ ${pzQ.unv} รายการยืนยันกับเซิร์ฟเวอร์ไม่ได้\nระบบจะรีเฟรชตรวจทานให้อัตโนมัติ — ถ้าหลังรีเฟรชแล้วรายการไม่ขึ้น กรุณาแจ้งซ้ำเฉพาะรายการนั้น`, 'warning', 'มีรายการที่ยืนยันไม่ได้');
   }
   pzQ.ok = 0; pzQ.unv = 0; pzQ.fail = 0;
-  setTimeout(gsRefreshFromSheet, 2200); // Sheets คือ source of truth — ตรวจทานหลังคิวเสร็จ
+  setTimeout(gsRefreshFromSheet, 3500); // Sheets คือ source of truth — เผื่อเวลา propagate ก่อนอ่านกลับ
 }
 function pzUpdateQueueBadge(){
   let el = document.getElementById('pz-queue-badge');
