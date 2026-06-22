@@ -2873,6 +2873,23 @@
   .bm2-occ-note { text-align:right; font-size:12px; font-weight:700; color:#80C4FF; line-height:1.5; }
   .bm2-occ-note span { display:block; font-size:10px; font-weight:500; color:rgba(255,255,255,.42); margin-top:2px; }
 
+  /* ── Download success popup (กลางจอ) ── */
+  .dlp-overlay { position:fixed; inset:0; z-index:1300; display:none; align-items:center; justify-content:center; padding:20px; background:rgba(8,12,24,0.55); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  .dlp-overlay.show { display:flex; animation:dlpFade .2s ease; }
+  .dlp-card { width:340px; max-width:92vw; background:#fff; border-radius:22px; padding:30px 26px 24px; text-align:center; box-shadow:0 24px 70px rgba(0,0,0,.45); animation:dlpPop .28s cubic-bezier(.2,.9,.3,1.3); }
+  @keyframes dlpFade { from{opacity:0} to{opacity:1} }
+  @keyframes dlpPop { from{opacity:0;transform:translateY(12px) scale(.94)} to{opacity:1;transform:none} }
+  .dlp-badge { width:64px; height:64px; margin:0 auto 16px; border-radius:50%; background:linear-gradient(135deg,#22C55E,#15803D); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(34,197,94,.4); }
+  .dlp-badge svg { width:32px; height:32px; }
+  .dlp-title { font-size:18px; font-weight:800; color:#0F1C38; margin-bottom:6px; }
+  .dlp-sub { font-size:12px; color:#6B7280; margin-bottom:16px; line-height:1.5; }
+  .dlp-file { display:flex; align-items:center; gap:10px; background:#F1F5F9; border:1px solid #E2E8F0; border-radius:12px; padding:10px 12px; margin-bottom:20px; text-align:left; }
+  .dlp-file-ic { width:34px; height:34px; border-radius:9px; background:#16A34A; color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0; letter-spacing:.5px; }
+  .dlp-file-name { font-size:12px; font-weight:600; color:#1A2233; word-break:break-word; line-height:1.4; }
+  .dlp-btn { width:100%; padding:13px; border:none; border-radius:14px; background:linear-gradient(135deg,#0F1C38,#1E3A6B); color:#fff; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 6px 18px rgba(15,28,56,.35); transition:filter .15s; }
+  .dlp-btn:hover { filter:brightness(1.12); }
+  @media (prefers-reduced-motion: reduce) { .dlp-overlay.show, .dlp-card { animation:none; } }
+
   /* Type cards */
   .bm2-tcrow { display:flex; gap:6px; }
   .bm2-tc {
@@ -6998,6 +7015,58 @@ const TAG_STYLES = {
   'tag-orange': 'background:#FEF3C7;color:#B45309',
 };
 
+// ── ป๊อปอัพแจ้งเตือนกลางจอ (ใช้ได้ทั้งดาวน์โหลด/พิมพ์) ──
+function pzNoticePopup(opts) {
+  opts = opts || {};
+  const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  let ov = document.getElementById('dlp-overlay');
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.id = 'dlp-overlay';
+    ov.className = 'dlp-overlay';
+    ov.addEventListener('click', e => { if (e.target === ov) pzCloseDownloadPopup(); });
+    document.body.appendChild(ov);
+  }
+  const badges = {
+    check: { bg:'linear-gradient(135deg,#22C55E,#15803D)', shadow:'rgba(34,197,94,.4)', svg:'<polyline points="20 6 9 17 4 12"/>' },
+    print: { bg:'linear-gradient(135deg,#3B82F6,#1E3A8A)', shadow:'rgba(59,130,246,.4)', svg:'<polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>' }
+  };
+  const b = badges[opts.badge] || badges.check;
+  const chip = opts.chip ? `
+      <div class="dlp-file">
+        <div class="dlp-file-ic" style="background:${opts.chipIcBg || '#16A34A'};">${esc(opts.chipIc || 'XLS')}</div>
+        <div class="dlp-file-name">${esc(opts.chip)}</div>
+      </div>` : '';
+  ov.innerHTML = `
+    <div class="dlp-card" role="dialog" aria-modal="true">
+      <div class="dlp-badge" style="background:${b.bg};box-shadow:0 8px 22px ${b.shadow};">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${b.svg}</svg>
+      </div>
+      <div class="dlp-title">${esc(opts.title)}</div>
+      <div class="dlp-sub">${esc(opts.sub)}</div>
+      ${chip}
+      <button class="dlp-btn" onclick="pzCloseDownloadPopup()">${esc(opts.btn || 'เสร็จสิ้น')}</button>
+    </div>`;
+  ov.classList.add('show');
+  clearTimeout(pzNoticePopup._t);
+  pzNoticePopup._t = setTimeout(pzCloseDownloadPopup, opts.timeout || 6000);
+}
+
+// ป๊อปอัพดาวน์โหลด (เรียกใช้ pzNoticePopup แบบ preset เขียว + ชื่อไฟล์)
+function pzDownloadPopup(filename, opts) {
+  opts = opts || {};
+  pzNoticePopup({
+    badge: 'check',
+    title: opts.title || 'ดาวน์โหลดไฟล์แล้ว',
+    sub:   opts.sub   || 'ไฟล์ถูกบันทึกไว้ในโฟลเดอร์ "ดาวน์โหลด" ของอุปกรณ์คุณแล้ว',
+    chip:  filename, chipIc: 'XLS', chipIcBg: '#16A34A'
+  });
+}
+function pzCloseDownloadPopup() {
+  const ov = document.getElementById('dlp-overlay');
+  if (ov) ov.classList.remove('show');
+}
+
 function renderAriReportDate() {
   const now    = new Date();
   const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
@@ -7097,6 +7166,13 @@ function printAriReport() {
   w.document.write(html);
   w.document.close();
   w.print();
+  pzNoticePopup({
+    badge: 'print',
+    title: 'เปิดหน้าต่างพิมพ์แล้ว',
+    sub: 'เลือกเครื่องพิมพ์ หรือบันทึกเป็น PDF ในหน้าต่างที่เปิดขึ้น เพื่อส่งให้ฝ่ายอาคาร',
+    chip: `รายงานการจอดรถ — Ari Hills · ${printDateThai}`, chipIc: 'DOC', chipIcBg: '#1E3A8A',
+    btn: 'รับทราบ'
+  });
 }
 
 function exportAriReportXlsx() {
@@ -7194,7 +7270,9 @@ function exportAriReportXlsx() {
 
     XLSX.utils.book_append_sheet(wb, ws1, 'รายงานจอดรถ');
 
-    XLSX.writeFile(wb, `รายงานการจอดรถ — Ari Hills ${pd}-${months[pm-1]}-${py+543}.xlsx`);
+    const fname = `รายงานการจอดรถ — Ari Hills ${pd}-${months[pm-1]}-${py+543}.xlsx`;
+    XLSX.writeFile(wb, fname);
+    pzDownloadPopup(fname);
   }
 
   // โหลด SheetJS ถ้ายังไม่มี
@@ -8117,7 +8195,7 @@ function processGsData(data) {
    → JSONP สำรอง → ท้ายสุด POST no-cors (unverified) แล้ว refresh ตรวจทาน
    ใช้แทนการยิง no-cors แล้วลืมของเดิมทั้งเพิ่ม/ลบ/ขยายวัน
    ═══════════════════════════════════════════════════════════ */
-const pzQ = { items: [], running: false, ok: 0, unv: 0, fail: 0 };
+const pzQ = { items: [], running: false, ok: 0, unv: 0, fail: 0, lastErr: '' };
 
 /* ═══════════════════════════════════════════════════════════
    PENDING GUARD (v16.3+) — กัน "บันทึกแล้วโผล่ → refresh แล้วหาย"
@@ -8219,19 +8297,20 @@ async function pzRunQueue(){
     const r = await pzSendVerified(it.payload);
     pzQ.items.shift();
     if (r.ok) { r.verified ? pzQ.ok++ : pzQ.unv++; }
-    else { pzQ.fail++; console.warn('[pzQ] ส่งไม่สำเร็จ:', it.label, r.msg || ''); }
+    else { pzQ.fail++; pzQ.lastErr = r.msg || pzQ.lastErr; console.warn('[pzQ] ส่งไม่สำเร็จ:', it.label, r.msg || ''); }
     it.resolve(r);
   }
   pzQ.running = false;
   pzUpdateQueueBadge();
   gsSetStatus(pzQ.fail ? 'err' : 'ok');
   if (pzQ.fail) {
-    pzAlert(`บันทึกสำเร็จ ${pzQ.ok + pzQ.unv} รายการ · ล้มเหลว ${pzQ.fail} รายการ\nกรุณาตรวจสอบแล้วทำซ้ำ`, 'error', 'ซิงค์ไม่สมบูรณ์');
+    const reason = pzQ.lastErr ? `\nสาเหตุจากเซิร์ฟเวอร์: ${pzQ.lastErr}` : '\n(เซิร์ฟเวอร์ไม่ตอบ — ตรวจการเชื่อมต่อ/สิทธิ์การเข้าถึง)';
+    pzAlert(`ทำรายการสำเร็จ ${pzQ.ok + pzQ.unv} · ล้มเหลว ${pzQ.fail}${reason}`, 'error', 'ซิงค์ไม่สมบูรณ์');
   } else if (pzQ.unv > 0) {
     // v16.3: no-cors ยืนยันผลไม่ได้ — เตือนให้ผู้ใช้ตรวจทานหลังซิงค์ แทนการนับว่าสำเร็จแบบเงียบ
     pzAlert(`บันทึกแล้ว ${pzQ.ok + pzQ.unv} รายการ แต่ ${pzQ.unv} รายการยืนยันกับเซิร์ฟเวอร์ไม่ได้\nระบบจะรีเฟรชตรวจทานให้อัตโนมัติ — ถ้าหลังรีเฟรชแล้วรายการไม่ขึ้น กรุณาแจ้งซ้ำเฉพาะรายการนั้น`, 'warning', 'มีรายการที่ยืนยันไม่ได้');
   }
-  pzQ.ok = 0; pzQ.unv = 0; pzQ.fail = 0;
+  pzQ.ok = 0; pzQ.unv = 0; pzQ.fail = 0; pzQ.lastErr = '';
   setTimeout(gsRefreshFromSheet, 3500); // Sheets คือ source of truth — เผื่อเวลา propagate ก่อนอ่านกลับ
 }
 function pzUpdateQueueBadge(){
@@ -10293,6 +10372,13 @@ function printAriReportCustom(){
   w.document.write(html);
   w.document.close();
   w.print();
+  pzNoticePopup({
+    badge: 'print',
+    title: 'เปิดหน้าต่างพิมพ์แล้ว',
+    sub: 'เลือกเครื่องพิมพ์ หรือบันทึกเป็น PDF ในหน้าต่างที่เปิดขึ้น เพื่อส่งให้ฝ่ายอาคาร',
+    chip: `รายงานการจอดรถ — Ari Hills · ${d.dateThai}`, chipIc: 'DOC', chipIcBg: '#1E3A8A',
+    btn: 'รับทราบ'
+  });
 }
 function exportAriReportXlsxCustom(){
   const groups = prValidate(); if(!groups) return;
@@ -10324,7 +10410,9 @@ function exportAriReportXlsxCustom(){
     ws['!cols'] = [{wch:6},{wch:22},{wch:16},{wch:16},{wch:16},{wch:18},{wch:16},{wch:14},{wch:24}];
     XLSX.utils.book_append_sheet(wb, ws, 'รายงานจอดรถ');
     const [py,pm,pd] = d.ds.split('-').map(Number);
-    XLSX.writeFile(wb, `รายงานการจอดรถ — Ari Hills ${pd}-${PR_MONTHS[pm-1]}-${py+543}.xlsx`);
+    const fname = `รายงานการจอดรถ — Ari Hills ${pd}-${PR_MONTHS[pm-1]}-${py+543}.xlsx`;
+    XLSX.writeFile(wb, fname);
+    pzDownloadPopup(fname);
   }
   if (window.XLSX) { build(window.XLSX); }
   else {
