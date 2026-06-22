@@ -6675,7 +6675,7 @@ function addPlates(rawArr) {
   if (dups.length > 0) {
     const warn = document.getElementById('plate-dup-warn');
     warn.style.display = '';
-    warn.innerHTML = `⚠️ ทะเบียนซ้ำ ถูกนำออกอัตโนมัติ: ${dups.map(d=>`<strong>${d}</strong>`).join(', ')}`;
+    warn.innerHTML = `⚠️ ทะเบียนนี้อยู่ในรายการของฟอร์มนี้แล้ว จึงไม่เพิ่มซ้ำ: ${dups.map(d=>`<strong>${d}</strong>`).join(', ')}`;
     setTimeout(() => { warn.style.display = 'none'; }, 4000);
   }
   // sync hidden input
@@ -6759,6 +6759,29 @@ function clearPlateChips() {
 }
 
 // ─── Submit ───
+// ── ตรวจทะเบียนที่มีการจอง "ในวันเดียวกัน" อยู่แล้วในระบบ (จองคนละวันได้ แต่วันเดียวกันเตือน) ──
+function findSameDayConflicts(type, plates, datesISO) {
+  const arr = type === 'common' ? ARI_COMMON_BOOKINGS
+            : type === 'sub'    ? ARI_SUB_BOOKINGS
+            : ARI_OTHER_BOOKINGS;
+  const norm = s => String(s == null ? '' : s).trim().replace(/\s+/g,' ').toUpperCase();
+  const wanted = new Set(plates.map(norm));
+  const out = [];
+  const seen = new Set();
+  (arr || []).forEach(r => {
+    if (r.status === 'ว่าง') return;
+    const rp = norm(r.plate || r.plateReq || '');
+    if (!rp || !wanted.has(rp)) return;
+    (r.dates || []).forEach(d => {
+      if (datesISO.includes(d)) {
+        const k = rp + '|' + d;
+        if (!seen.has(k)) { seen.add(k); out.push({ plate: rp, dateISO: d }); }
+      }
+    });
+  });
+  return out;
+}
+
 async function submitBooking() {
   const type  = document.getElementById('book-type').value;
   const plate = document.getElementById('book-plate').value.trim();
@@ -6898,6 +6921,19 @@ async function submitBooking() {
       ${noteVal!=='–'?`<div style="padding:7px 0;"><span style="font-size:11px;color:#6B7280;">📝 หมายเหตุ: </span><span style="font-size:11px;color:#1A2233;">${noteVal}</span></div>`:''}
     </div>
   </div>`;
+
+  // ── เตือนทะเบียนซ้ำ "ในวันเดียวกัน" (จองคนละวันได้ แต่วันเดียวกันต้องเตือน) ──
+  const sameDayDup = findSameDayConflicts(type, plates, bookedDates);
+  if (sameDayDup.length > 0) {
+    const lines = sameDayDup
+      .sort((a,b) => a.dateISO.localeCompare(b.dateISO))
+      .map(c => `• ${c.plate} — ${fmtFull(c.dateISO)}`).join('\n');
+    const proceedDup = await pzConfirm(
+      `ทะเบียนต่อไปนี้มีการจอง "ในวันเดียวกัน" อยู่แล้ว ${sameDayDup.length} รายการ:\n${lines}\n\nถ้าบันทึกต่อจะเกิดข้อมูลซ้ำในวันเดียวกัน ต้องการบันทึกต่อหรือไม่?`,
+      '⚠️ พบทะเบียนซ้ำในวันเดียวกัน'
+    );
+    if (!proceedDup) return;
+  }
 
   // ── แสดง confirm popup ก่อนบันทึก ──
   const confirmed = await pzBookingConfirm(summaryHtml);
