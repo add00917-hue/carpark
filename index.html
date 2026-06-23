@@ -9057,6 +9057,8 @@ async function pzRunSelfTest() {
     { k:'del',    label:'6. ลบแถวทดสอบทิ้ง',                     state:'',    msg:'' },
   ];
   let verdict = '';
+  let baseBookings = -1; // จำนวนแถว Bookings ก่อนเขียน (จาก diag) ใช้เทียบว่าแถวถูกเพิ่มจริงไหม
+  let baseSsId = '';     // id สเปรดชีตที่ "ฝั่งอ่าน" (diag) เห็น — ใช้เทียบกับฝั่งเขียน
   const set = (k, state, msg) => { const s = steps.find(x=>x.k===k); s.state=state; if(msg!=null) s.msg=msg; pzSelfTestShow(steps, true, verdict); };
   const done = v => { pzSelfTestShow(steps, false, v); };
   pzSelfTestShow(steps, true, '');
@@ -9093,7 +9095,9 @@ async function pzRunSelfTest() {
     const tabs = d.tabs || [];
     const c = d.counts || {};
     const hasBookings = tabs.includes('Bookings');
-    set('diag','ok', `สเปรดชีต: ${d.spreadsheetName || '?'}\nแท็บที่มี: ${tabs.join(', ') || '(ไม่มี)'}\nจำนวนแถว — Bookings:${c.Bookings} · SubPark:${c.SubPark} · OtherCars:${c.OtherCars}${hasBookings ? '' : '\n⚠️ ไม่พบแท็บชื่อ "Bookings"'}`);
+    baseBookings = (typeof c.Bookings === 'number') ? c.Bookings : -1;
+    baseSsId = d.spreadsheetId || '';
+    set('diag','ok', `สเปรดชีต: ${d.spreadsheetName || '?'}\nID (ฝั่งอ่าน): ${(d.spreadsheetId||'?').slice(0,24)}…\nแท็บที่มี: ${tabs.join(', ') || '(ไม่มี)'}\nจำนวนแถว — Bookings:${c.Bookings} · SubPark:${c.SubPark} · OtherCars:${c.OtherCars}${hasBookings ? '' : '\n⚠️ ไม่พบแท็บชื่อ "Bookings"'}`);
     if (!hasBookings) return done('❌ ไม่พบแท็บชื่อ "Bookings" ในสเปรดชีตนี้\nเปลี่ยนชื่อแท็บให้เป็น Bookings / SubPark / OtherCars (ตรงตัวพิมพ์) หรือรันฟังก์ชัน setup() ใน Apps Script');
   } catch(e) {
     set('diag','fail','เรียก diag ไม่ได้ — backend อาจยังเป็นโค้ดเก่า');
@@ -9110,28 +9114,46 @@ async function pzRunSelfTest() {
     set('read','ok', hasBookings ? 'อ่านข้อมูลสำเร็จ พบโครงสร้างชีตปกติ' : 'อ่านได้ แต่ไม่พบชีต Bookings (ตรวจชื่อแท็บ)');
   } catch(e) { set('read','fail','readAll ล้มเหลว'); return done('❌ อ่านข้อมูลไม่ได้ — ปัญหา deployment/สิทธิ์'); }
 
-  // STEP 3 — write test row
+  // STEP 4 — write test row + อ่านรายงานจากฝั่งเขียนว่าลงไฟล์/ชีต/แถวไหนจริง
   set('write','run','กำลังเขียนแถวทดสอบ…');
   const row = ['auto', name, plate, 'TEST', 'รถเก๋ง', dateThai, 'รายวัน', 'ไม่ค้างคืน', 'ชั้น 5 ส่วนกลางขวามือ', 'self-test (ลบอัตโนมัติ)', tsThai];
+  let physicallyAdded = null; // true/false/null
+  let writeSsId = '';
   try {
     const payload = JSON.stringify({ action:'addBooking', sheet:'Bookings', row });
     const d = await pzJsonp(`${GS_URL}?action=addBooking&data=${encodeURIComponent(payload)}&_t=${ts}`);
-    if (d && d.ok) set('write','ok','เซิร์ฟเวอร์ตอบว่าเขียนสำเร็จ');
-    else { set('write','fail', (d&&d.msg) || 'เขียนไม่สำเร็จ (ok:false)'); return done(`❌ เขียนลง Sheet ไม่ได้\nสาเหตุจากเซิร์ฟเวอร์: ${(d&&d.msg)||'ไม่ทราบ'}\n(มักเป็นชื่อแท็บไม่ตรง "Bookings" หรือหาสเปรดชีตไม่เจอ)`); }
+    if (!d || !d.ok) { set('write','fail', (d&&d.msg) || 'เขียนไม่สำเร็จ (ok:false)'); return done(`❌ เขียนลง Sheet ไม่ได้\nสาเหตุจากเซิร์ฟเวอร์: ${(d&&d.msg)||'ไม่ทราบ'}`); }
+    writeSsId = d.ssId || '';
+    if (typeof d.beforeRows === 'number' && typeof d.afterRows === 'number') {
+      const rowGrew = d.afterRows > d.beforeRows;
+      const verifiedInRun = d.verifyName && d.verifyName === name; // อ่านกลับในรันเดียว = หลักฐานแน่นสุด
+      physicallyAdded = rowGrew || verifiedInRun;
+      const sameFile = (!baseSsId || !writeSsId) ? null : (baseSsId === writeSsId);
+      let msg = `เขียนลงไฟล์: ${d.ssName||'?'} · ชีต: ${d.sheet||'?'}\nแถว: ${d.beforeRows} → ${d.afterRows} (เป้าหมายแถว ${d.targetRow||'?'})\nอ่านกลับในรันเดียว: ${d.verifyName ? `"${d.verifyName}" ${verifiedInRun?'✓ ตรง':''}` : '(ว่าง)'}`;
+      if (sameFile === false) msg += `\n🛑 ไฟล์ที่เขียน ≠ ไฟล์ที่อ่าน! (คนละสเปรดชีต)`;
+      set('write', physicallyAdded ? 'ok' : 'fail', msg);
+    } else {
+      set('write','ok','เซิร์ฟเวอร์ตอบว่าเขียนสำเร็จ (รุ่นเก่า ไม่รายงานจำนวนแถว)');
+    }
   } catch(e) { set('write','fail','คำขอเขียนไปไม่ถึงเซิร์ฟเวอร์'); return done('❌ คำขอเขียนไม่ถึง backend — ตรวจการเชื่อมต่อ/สิทธิ์'); }
 
-  // STEP 4 — verify present
-  set('verify','run','กำลังอ่านยืนยัน…');
-  await pzWaitMs(1500);
+  // STEP 5 — อ่านกลับมายืนยัน (ลองซ้ำหลายครั้ง เผื่อ propagate ช้า)
+  set('verify','run','กำลังอ่านยืนยัน… (เผื่อเวลา propagate)');
   let writePersisted = false;
-  try {
-    const d = await pzJsonp(`${GS_URL}?action=readAll&_t=${ts+1}`);
-    writePersisted = JSON.stringify(d || {}).includes(plate);
-    if (writePersisted) set('verify','ok','พบแถวทดสอบใน Sheet จริง ✓ การเขียนทำงานปกติ');
-    else set('verify','fail','เซิร์ฟเวอร์ตอบว่าเขียนสำเร็จ แต่อ่านกลับไม่พบแถว');
-  } catch(e) { set('verify','fail','อ่านยืนยันไม่ได้'); }
+  const waits = [1500, 2500, 4000, 6000];
+  for (let i = 0; i < waits.length && !writePersisted; i++) {
+    await pzWaitMs(waits[i]);
+    try {
+      const d = await pzJsonp(`${GS_URL}?action=readAll&_t=${ts+20+i}`);
+      writePersisted = JSON.stringify(d || {}).includes(plate);
+    } catch(e) {}
+    if (!writePersisted) set('verify','run',`ยังไม่พบ… ลองอ่านซ้ำ ${i+1}/${waits.length}`);
+  }
+  if (writePersisted) set('verify','ok','พบแถวทดสอบใน Sheet จริง ✓ การเขียน/อ่านทำงานได้');
+  else if (physicallyAdded) set('verify','fail','แถวถูกเพิ่มในชีตจริง แต่ readAll อ่านกลับไม่เจอ (ปัญหาฝั่งอ่าน/แปลงข้อมูล ไม่ใช่การเขียน)');
+  else set('verify','fail','อ่านซ้ำหลายครั้งใน ~14 วิ แล้วยังไม่พบแถวที่เพิ่งเขียน');
 
-  // STEP 5 — delete test row
+  // STEP 6 — delete test row
   set('del','run','กำลังลบแถวทดสอบ…');
   try {
     const payload = JSON.stringify({ action:'deleteBooking', sheet:'Bookings', name, plate, date:dateThai });
@@ -9141,12 +9163,20 @@ async function pzRunSelfTest() {
   } catch(e) { set('del','fail','คำขอลบไปไม่ถึง — กรุณาลบแถวทดสอบใน Sheet เอง'); }
 
   // verdict
-  if (writePersisted && steps.find(s=>s.k==='del').state==='ok')
-    verdict = '✅ ระบบบันทึกทำงานปกติทุกขั้นตอน — การเขียน/อ่าน/ลบ ใช้งานได้จริง';
+  const delOk = steps.find(s=>s.k==='del').state==='ok';
+  const fileMismatch = baseSsId && writeSsId && baseSsId !== writeSsId;
+  if (writePersisted && delOk)
+    verdict = '✅ ระบบบันทึกทำงานปกติทุกขั้นตอน — เขียน/อ่าน/ลบ ใช้งานได้จริง\nถ้าก่อนหน้านี้ข้อมูลเคยหาย น่าจะเป็นดีเลย์การอ่าน ซึ่งตอนนี้มี Pending Guard + รออ่าน 3.5 วิรองรับแล้ว';
   else if (writePersisted)
-    verdict = '⚠️ เขียน/อ่านได้ปกติ แต่ลบมีปัญหา — ดูเหตุผลขั้นที่ 5';
+    verdict = '⚠️ เขียน/อ่านได้ปกติ แต่ "ลบ" มีปัญหา — ดูเหตุผลขั้นที่ 6';
+  else if (fileMismatch)
+    verdict = '🛑 เจอต้นเหตุแล้ว: "ฝั่งเขียน" กับ "ฝั่งอ่าน" เป็นคนละสเปรดชีต!\nสคริปต์เขียนลงอีกไฟล์ (getActiveSpreadsheet ไม่นิ่ง)\n\n👉 วิธีแก้: ใส่ ID ของสเปรดชีตที่ถูกต้องลงใน CONFIG.SPREADSHEET_ID ใน Code.gs แล้ว Deploy ใหม่ (ID อยู่ใน URL ของชีต ส่วนระหว่าง /d/ กับ /edit)';
+  else if (physicallyAdded === true)
+    verdict = '⚠️ ฝั่งเขียนรายงานว่าแถวเพิ่มจริง แต่ readAll อ่านกลับไม่เจอ\n→ ปัญหาฝั่งอ่าน/แปลงข้อมูล บอกผมได้ เดี๋ยวเจาะ readAll_/sheetToObjects_ ต่อ';
+  else if (physicallyAdded === false)
+    verdict = '❌ เซิร์ฟเวอร์ตอบ ok แต่จำนวนแถวในไฟล์ที่เขียนไม่เพิ่ม = appendRow ไม่ทำงานจริง\nตรวจว่าชีตถูกล็อก/ป้องกัน (Protected range) อยู่หรือไม่ และสคริปต์มีสิทธิ์แก้ไข';
   else
-    verdict = '❌ เซิร์ฟเวอร์ตอบว่าเขียนสำเร็จ แต่ข้อมูลไม่ขึ้นใน Sheet จริง\nมักเกิดจากชื่อแท็บไม่ใช่ "Bookings" เป๊ะ, หาสเปรดชีตไม่เจอ, หรือ deploy โค้ดไม่ตรงเวอร์ชัน';
+    verdict = '❌ เซิร์ฟเวอร์ตอบว่าเขียนสำเร็จ แต่ยืนยันไม่ได้ว่าลงจริง — ลองรันซ้ำอีกครั้ง';
   done(verdict);
   setTimeout(gsRefreshFromSheet, 2500); // เผื่อแถวทดสอบค้าง ให้ซิงค์ความจริง
 }
