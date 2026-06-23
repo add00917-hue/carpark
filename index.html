@@ -3937,6 +3937,9 @@ html[data-theme="light"] #view-booking .cal-day-label { color: #6b7280 !importan
               <button class="adm-btn adm-btn-ghost" style="width:100%;" onclick="admTestAll()">
                 <i class="ti ti-plug" style="font-size:13px"></i> ทดสอบทั้งหมด
               </button>
+              <button class="adm-btn adm-btn-ghost" style="width:100%;margin-top:8px;" onclick="pzRunSelfTest()">
+                <i class="ti ti-database-cog" style="font-size:13px"></i> ทดสอบการบันทึก (เขียน/อ่าน/ลบ)
+              </button>
             </div>
 
           </div>
@@ -9010,6 +9013,144 @@ function admUpdateSchedSummary(){
     <span style="color:${s.enabled?'#4ade80':'#f87171'}">${s.enabled?'เปิด':'ปิด'}</span>
   </div>`).join('');
 }
+// ═══════════════ SELF-TEST: เขียน/อ่าน/ลบ จริง เพื่อหาเหตุ "บันทึกแล้วไม่ลง Sheet" ═══════════════
+function pzSelfTestShow(steps, busy, verdict) {
+  let ov = document.getElementById('pzst-overlay');
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.id = 'pzst-overlay';
+    ov.className = 'dlp-overlay';
+    ov.addEventListener('click', e => { if (e.target === ov && !ov.dataset.busy) pzCloseSelfTest(); });
+    document.body.appendChild(ov);
+  }
+  ov.dataset.busy = busy ? '1' : '';
+  const ic = s => s === 'ok' ? '✅' : s === 'fail' ? '❌' : s === 'run' ? '⏳' : '⚪';
+  const rows = steps.map(s => `
+    <div style="display:flex;gap:9px;align-items:flex-start;padding:8px 0;border-bottom:0.5px solid #eef1f5;text-align:left;">
+      <span style="font-size:15px;line-height:1.3;">${ic(s.state)}</span>
+      <div style="flex:1;">
+        <div style="font-size:12.5px;font-weight:700;color:#1A2233;">${s.label}</div>
+        ${s.msg ? `<div style="font-size:11px;color:${s.state==='fail'?'#DC2626':'#6B7280'};margin-top:2px;line-height:1.45;word-break:break-word;">${s.msg}</div>` : ''}
+      </div>
+    </div>`).join('');
+  const good = verdict && /✅/.test(verdict);
+  const verdictHtml = verdict ? `<div style="margin-top:14px;padding:11px 12px;border-radius:11px;background:${good?'#ECFDF5':'#FEF2F2'};border:1px solid ${good?'#A7F3D0':'#FECACA'};font-size:12px;font-weight:600;color:${good?'#15803D':'#B91C1C'};line-height:1.5;text-align:left;">${verdict}</div>` : '';
+  ov.innerHTML = `
+    <div class="dlp-card" style="width:400px;text-align:center;">
+      <div style="font-size:17px;font-weight:800;color:#0F1C38;margin-bottom:4px;">🔌 ทดสอบการบันทึกข้อมูล</div>
+      <div style="font-size:11px;color:#6B7280;margin-bottom:14px;">ping → อ่าน → เขียน → ยืนยัน → ลบ</div>
+      <div>${rows}</div>
+      ${verdictHtml}
+      <button class="dlp-btn" style="margin-top:18px;${busy?'opacity:.5;pointer-events:none;':''}" onclick="pzCloseSelfTest()">${busy?'กำลังทดสอบ…':'ปิด'}</button>
+    </div>`;
+  ov.classList.add('show');
+}
+function pzCloseSelfTest() { const ov = document.getElementById('pzst-overlay'); if (ov) ov.classList.remove('show'); }
+
+async function pzRunSelfTest() {
+  const steps = [
+    { k:'ping',   label:'1. เชื่อมต่อเซิร์ฟเวอร์ (ping)',       state:'run', msg:'กำลังติดต่อ…' },
+    { k:'diag',   label:'2. ตรวจสเปรดชีต/แท็บ + เวอร์ชัน (diag)', state:'',  msg:'' },
+    { k:'read',   label:'3. อ่านข้อมูลจาก Sheet (readAll)',     state:'',    msg:'' },
+    { k:'write',  label:'4. เขียนแถวทดสอบลงชีต Bookings',        state:'',    msg:'' },
+    { k:'verify', label:'5. อ่านกลับมายืนยันว่าแถวขึ้นจริง',     state:'',    msg:'' },
+    { k:'del',    label:'6. ลบแถวทดสอบทิ้ง',                     state:'',    msg:'' },
+  ];
+  let verdict = '';
+  const set = (k, state, msg) => { const s = steps.find(x=>x.k===k); s.state=state; if(msg!=null) s.msg=msg; pzSelfTestShow(steps, true, verdict); };
+  const done = v => { pzSelfTestShow(steps, false, v); };
+  pzSelfTestShow(steps, true, '');
+
+  const ts   = Date.now();
+  const plate = 'SELFTEST-' + ts;
+  const name  = 'ทดสอบระบบ (ลบอัตโนมัติ)';
+  const now = new Date();
+  const thM = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const dateThai = `${now.getDate()} ${thM[now.getMonth()]} ${now.getFullYear()+543}`;
+  const tsThai   = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()+543}`;
+
+  // STEP 1 — ping
+  try {
+    const d = await pzJsonp(`${GS_URL}?action=ping&_t=${ts}`);
+    if (d && d.ok) {
+      const vWarn = (d.version && d.version !== '6.2') ? ' — ⚠️ ไม่ใช่ 6.2 (อาจยังไม่ได้ deploy ใหม่)' : '';
+      set('ping','ok',`เซิร์ฟเวอร์ตอบกลับปกติ (เวอร์ชัน: ${d.version || '?'})${vWarn}`);
+    }
+    else { set('ping','fail','ตอบกลับแต่ไม่ใช่ ok — อาจไม่ใช่ ParkZone backend'); return done('❌ เซิร์ฟเวอร์ตอบผิดรูปแบบ — ตรวจ GS_URL ว่าชี้ deployment ที่ถูกต้อง'); }
+  } catch(e) {
+    set('ping','fail','ติดต่อไม่ได้เลย');
+    return done('❌ เชื่อมต่อ backend ไม่ได้\n• GS_URL อาจผิด/เป็น deployment เก่า\n• สิทธิ์ Web App ต้องเป็น Execute as: Me, Access: Anyone\n• แก้แล้วต้อง Deploy เวอร์ชันใหม่');
+  }
+
+  // STEP 2 — diag (ยืนยันเวอร์ชันที่ deploy + ดูแท็บจริง)
+  set('diag','run','กำลังตรวจ…');
+  try {
+    const d = await pzJsonp(`${GS_URL}?action=diag&_t=${ts}`);
+    if (!d || d.ok === false || /unknown/i.test((d && d.msg) || '')) {
+      set('diag','fail','backend ไม่รู้จักคำสั่ง diag → เป็นโค้ดเก่า ยังไม่ได้ deploy v6.2');
+      return done('❌ Backend ที่ deploy อยู่ยังเป็น "โค้ดเก่า" (ไม่มีคำสั่ง diag)\nนี่คือต้นเหตุที่เซิร์ฟเวอร์ตอบ ok แต่ข้อมูลไม่ลง Sheet จริง\n\n👉 วิธีแก้: วาง Code.gs v6.2 ลงไป → Deploy → Manage deployments → ✏️ → Version: New version → Deploy (คง URL เดิม)');
+    }
+    const tabs = d.tabs || [];
+    const c = d.counts || {};
+    const hasBookings = tabs.includes('Bookings');
+    set('diag','ok', `สเปรดชีต: ${d.spreadsheetName || '?'}\nแท็บที่มี: ${tabs.join(', ') || '(ไม่มี)'}\nจำนวนแถว — Bookings:${c.Bookings} · SubPark:${c.SubPark} · OtherCars:${c.OtherCars}${hasBookings ? '' : '\n⚠️ ไม่พบแท็บชื่อ "Bookings"'}`);
+    if (!hasBookings) return done('❌ ไม่พบแท็บชื่อ "Bookings" ในสเปรดชีตนี้\nเปลี่ยนชื่อแท็บให้เป็น Bookings / SubPark / OtherCars (ตรงตัวพิมพ์) หรือรันฟังก์ชัน setup() ใน Apps Script');
+  } catch(e) {
+    set('diag','fail','เรียก diag ไม่ได้ — backend อาจยังเป็นโค้ดเก่า');
+    return done('❌ เรียก diag ไม่ได้ — backend อาจยังเป็นโค้ดเก่า ต้อง Deploy Code.gs v6.2 ใหม่');
+  }
+
+  // STEP 3 — readAll
+  set('read','run','กำลังอ่าน…');
+  try {
+    const d = await pzJsonp(`${GS_URL}?action=readAll&_t=${ts}`);
+    const txt = JSON.stringify(d || {});
+    if (!d || d.ok === false) { set('read','fail', (d&&d.msg) || 'readAll ตอบ ok:false'); return done('❌ อ่านข้อมูลไม่ได้ — ' + ((d&&d.msg)||'ตรวจ deployment/สิทธิ์')); }
+    const hasBookings = /Bookings|common|ชื่อผู้ขอ/.test(txt);
+    set('read','ok', hasBookings ? 'อ่านข้อมูลสำเร็จ พบโครงสร้างชีตปกติ' : 'อ่านได้ แต่ไม่พบชีต Bookings (ตรวจชื่อแท็บ)');
+  } catch(e) { set('read','fail','readAll ล้มเหลว'); return done('❌ อ่านข้อมูลไม่ได้ — ปัญหา deployment/สิทธิ์'); }
+
+  // STEP 3 — write test row
+  set('write','run','กำลังเขียนแถวทดสอบ…');
+  const row = ['auto', name, plate, 'TEST', 'รถเก๋ง', dateThai, 'รายวัน', 'ไม่ค้างคืน', 'ชั้น 5 ส่วนกลางขวามือ', 'self-test (ลบอัตโนมัติ)', tsThai];
+  try {
+    const payload = JSON.stringify({ action:'addBooking', sheet:'Bookings', row });
+    const d = await pzJsonp(`${GS_URL}?action=addBooking&data=${encodeURIComponent(payload)}&_t=${ts}`);
+    if (d && d.ok) set('write','ok','เซิร์ฟเวอร์ตอบว่าเขียนสำเร็จ');
+    else { set('write','fail', (d&&d.msg) || 'เขียนไม่สำเร็จ (ok:false)'); return done(`❌ เขียนลง Sheet ไม่ได้\nสาเหตุจากเซิร์ฟเวอร์: ${(d&&d.msg)||'ไม่ทราบ'}\n(มักเป็นชื่อแท็บไม่ตรง "Bookings" หรือหาสเปรดชีตไม่เจอ)`); }
+  } catch(e) { set('write','fail','คำขอเขียนไปไม่ถึงเซิร์ฟเวอร์'); return done('❌ คำขอเขียนไม่ถึง backend — ตรวจการเชื่อมต่อ/สิทธิ์'); }
+
+  // STEP 4 — verify present
+  set('verify','run','กำลังอ่านยืนยัน…');
+  await pzWaitMs(1500);
+  let writePersisted = false;
+  try {
+    const d = await pzJsonp(`${GS_URL}?action=readAll&_t=${ts+1}`);
+    writePersisted = JSON.stringify(d || {}).includes(plate);
+    if (writePersisted) set('verify','ok','พบแถวทดสอบใน Sheet จริง ✓ การเขียนทำงานปกติ');
+    else set('verify','fail','เซิร์ฟเวอร์ตอบว่าเขียนสำเร็จ แต่อ่านกลับไม่พบแถว');
+  } catch(e) { set('verify','fail','อ่านยืนยันไม่ได้'); }
+
+  // STEP 5 — delete test row
+  set('del','run','กำลังลบแถวทดสอบ…');
+  try {
+    const payload = JSON.stringify({ action:'deleteBooking', sheet:'Bookings', name, plate, date:dateThai });
+    const d = await pzJsonp(`${GS_URL}?action=deleteBooking&data=${encodeURIComponent(payload)}&sheet=Bookings&name=${encodeURIComponent(name)}&plate=${encodeURIComponent(plate)}&date=${encodeURIComponent(dateThai)}&_t=${ts}`);
+    if (d && d.ok) set('del','ok',`ลบแถวทดสอบสำเร็จ (${d.deleted||1} แถว)`);
+    else set('del','fail', (d&&d.msg) || 'ลบไม่สำเร็จ — กรุณาลบแถว "ทดสอบระบบ (ลบอัตโนมัติ)" ใน Sheet เอง');
+  } catch(e) { set('del','fail','คำขอลบไปไม่ถึง — กรุณาลบแถวทดสอบใน Sheet เอง'); }
+
+  // verdict
+  if (writePersisted && steps.find(s=>s.k==='del').state==='ok')
+    verdict = '✅ ระบบบันทึกทำงานปกติทุกขั้นตอน — การเขียน/อ่าน/ลบ ใช้งานได้จริง';
+  else if (writePersisted)
+    verdict = '⚠️ เขียน/อ่านได้ปกติ แต่ลบมีปัญหา — ดูเหตุผลขั้นที่ 5';
+  else
+    verdict = '❌ เซิร์ฟเวอร์ตอบว่าเขียนสำเร็จ แต่ข้อมูลไม่ขึ้นใน Sheet จริง\nมักเกิดจากชื่อแท็บไม่ใช่ "Bookings" เป๊ะ, หาสเปรดชีตไม่เจอ, หรือ deploy โค้ดไม่ตรงเวอร์ชัน';
+  done(verdict);
+  setTimeout(gsRefreshFromSheet, 2500); // เผื่อแถวทดสอบค้าง ให้ซิงค์ความจริง
+}
+
 async function admTestAll(){
   const gsConn=document.getElementById('adm-gs-conn');
   const lineConn=document.getElementById('adm-line-conn');
