@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ระบบจัดการลานจอด — Parking Management System v16.3 (Data Integrity Fixes)</title>
+<title>ระบบจัดการลานจอด — Parking Management System v16.6 (Email Reports + Scheduler)</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.8.0/dist/tabler-icons.min.css">
 <style>
@@ -1677,6 +1677,8 @@
   #apane-line .nv2-send-btn { width:100%; margin-top:5px; padding:7px; border-radius:7px; border:none; background:#185FA5; color:#fff; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; }
   #apane-line .nv2-send-btn:disabled { opacity:.4; cursor:not-allowed; }
   #apane-line .nv2-test-btn { width:100%; padding:6px; border:0.5px solid rgba(29,158,117,.4); border-radius:7px; background:rgba(29,158,117,.1); color:#5DCAA5; font-size:11px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; }
+  #apane-line .nv2-mode-chip { flex:1; padding:6px 4px; border:0.5px solid rgba(255,255,255,.14); border-radius:7px; background:transparent; color:rgba(255,255,255,0.55); font-size:10px; cursor:pointer; }
+  #apane-line .nv2-mode-chip.on { background:#185FA5; border-color:#185FA5; color:#fff; font-weight:600; }
   #apane-line .nv2-main { display:flex; flex-direction:column; overflow:hidden; background:#fff; }
   html[data-theme="dark"] #apane-line .nv2-main { background:rgba(10,12,22,.95); }
   #apane-line .nv2-mh { padding:11px 14px; border-bottom:0.5px solid rgba(0,0,0,.08); display:flex; align-items:center; gap:7px; flex-shrink:0; }
@@ -3058,6 +3060,24 @@
 #apane-email .pr-chip{ font-size:11px; padding:5px 12px; border-radius:6px; border:0.5px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06); cursor:pointer; color:rgba(255,255,255,0.6); transition:all .15s; user-select:none; }
 #apane-email .pr-chip.on{ background:#2563EB; color:#fff; border-color:#2563EB; }
 @media (max-width:768px){ #apane-email > div > div[style*="grid-template-columns:300px"]{ grid-template-columns:1fr !important; } }
+@media (max-width:860px){ #apane-email > div > div[style*="grid-template-columns:1fr 1fr"]{ grid-template-columns:1fr !important; } }
+#apane-email .em-fl{ display:block; font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:4px; }
+#apane-email select.pr-fi{ appearance:none; cursor:pointer; background-color:#16233F; }
+#apane-email select.pr-fi option{ background:#16233F; color:#fff; }
+#apane-email .em-row{ display:flex; align-items:center; gap:8px; padding:7px 10px; background:rgba(255,255,255,.04); border:0.5px solid rgba(255,255,255,.09); border-radius:8px; }
+#apane-email .em-row .em-main{ flex:1; min-width:0; }
+#apane-email .em-row .em-em{ font-size:12px; color:#fff; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+#apane-email .em-row .em-sub{ font-size:10px; color:rgba(255,255,255,0.4); }
+#apane-email .em-tg{ width:34px; height:19px; border-radius:999px; background:#1D9E75; border:none; position:relative; cursor:pointer; flex-shrink:0; transition:background .2s; }
+#apane-email .em-tg.off{ background:rgba(255,255,255,.18); }
+#apane-email .em-tg::after{ content:''; position:absolute; top:2px; left:2px; width:15px; height:15px; border-radius:50%; background:#fff; transition:transform .2s; }
+#apane-email .em-tg.off::after{ transform:translateX(0); }
+#apane-email .em-tg:not(.off)::after{ transform:translateX(15px); }
+#apane-email .em-del{ background:transparent; border:none; color:rgba(248,113,113,0.8); cursor:pointer; font-size:14px; flex-shrink:0; padding:2px 4px; }
+#apane-email .em-del:hover{ color:#f87171; }
+#apane-email .em-day{ font-size:10px; padding:4px 9px; border-radius:6px; border:0.5px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06); cursor:pointer; color:rgba(255,255,255,0.55); user-select:none; }
+#apane-email .em-day.on{ background:#2563EB; color:#fff; border-color:#2563EB; }
+#apane-email .pr-chip.on#em-sched-master, #apane-email #em-sched-master.on{ background:#1D9E75; border-color:#1D9E75; color:#fff; }
 @media (max-width:768px){ #apane-print > div > div[style*="grid-template-columns:280px"]{ grid-template-columns:1fr !important; } }
 </style>
 
@@ -3980,8 +4000,12 @@ html[data-theme="light"] #view-booking .cal-day-label { color: #6b7280 !importan
             <div>
               <div class="nv2-sec-lbl">LINE Messaging API</div>
               <div class="nv2-block">
-                <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:7px;display:flex;align-items:center;gap:5px;"><div class="nv2-sb-dot"></div>ใช้ Token/Group จาก Apps Script</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:7px;display:flex;align-items:center;gap:5px;"><div class="nv2-sb-dot" id="nv-token-dot"></div><span id="nv-token-state">ตรวจสอบสถานะ Token…</span></div>
+                <input type="password" id="nv-token-input" placeholder="วาง Channel access token ที่นี่"
+                  style="width:100%;padding:7px 9px;border-radius:6px;border:0.5px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:#fff;font-size:11px;color-scheme:dark;margin-bottom:6px;">
+                <button class="nv2-test-btn" style="margin-bottom:6px;border-color:rgba(37,99,235,.5);background:rgba(37,99,235,.15);color:#9DBEFF;" onclick="nvSaveToken()"><i class="ti ti-device-floppy" style="font-size:12px"></i>บันทึก Token</button>
                 <button class="nv2-test-btn" onclick="nvTest()"><i class="ti ti-plug" style="font-size:12px"></i>ทดสอบการเชื่อมต่อ</button>
+                <div style="font-size:9px;color:rgba(255,255,255,0.3);margin-top:6px;line-height:1.5;">Token เก็บถาวรในเซิร์ฟเวอร์ (Script Properties) — อัปเดตโค้ดแล้วไม่หาย</div>
               </div>
             </div>
 
@@ -3999,6 +4023,13 @@ html[data-theme="light"] #view-booking .cal-day-label { color: #6b7280 !importan
                 <div class="nv2-date-btns">
                   <button class="nv2-dbtn" onclick="nvSetDate(0)">วันนี้</button>
                   <button class="nv2-dbtn" onclick="nvSetDate(1)">พรุ่งนี้</button>
+                </div>
+                <div style="margin-top:9px;">
+                  <div class="nv2-sec-lbl" style="margin-bottom:5px;">ชนิดข้อความที่จะส่ง</div>
+                  <div style="display:flex;gap:5px;">
+                    <button class="nv2-mode-chip on" id="nv-mode-bookings" onclick="nvSetMsgMode('bookings')">📋 รายการแจ้งจอด</button>
+                    <button class="nv2-mode-chip" id="nv-mode-mail" onclick="nvSetMsgMode('mailConfirm')">📧 ยืนยันส่งเมล</button>
+                  </div>
                 </div>
                 <button class="nv2-send-btn" id="nv-send-btn" onclick="nvSendNow()" disabled>
                   <i class="ti ti-brand-line" style="font-size:13px"></i>ส่ง LINE ตอนนี้เลย
@@ -4353,72 +4384,106 @@ html[data-theme="light"] #view-booking .cal-day-label { color: #6b7280 !importan
 
         <!-- TAB: อีเมล (hidden) -->
         <div id="apane-email" style="display:none;">
-          <div style="max-width:1040px;">
-            <div style="margin-bottom:14px;">
-              <div style="font-size:18px;font-weight:700;color:#fff;">📧 ส่งรายงานทางอีเมลให้ฝ่ายอาคาร</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:2px;">ตั้งค่าอีเมลปลายทาง ข้อความ และไฟล์แนบ แล้วกดส่ง — ระบบส่งผ่านเซิร์ฟเวอร์และยืนยันผลให้</div>
+          <div style="max-width:1060px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;">
+              <div style="flex:1;min-width:240px;">
+                <div style="font-size:18px;font-weight:700;color:#fff;">📧 ส่งรายงานทางอีเมลให้ฝ่ายอาคาร</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:2px;">ค่าทั้งหมดเก็บบนชีต — ใช้ร่วมกันทุกเครื่องทุกคน · สร้างไฟล์และส่งจากเซิร์ฟเวอร์</div>
+              </div>
+              <span id="em-load-state" style="font-size:11px;color:rgba(255,255,255,0.45);"></span>
+              <button class="pr-dbtn" style="flex:none;padding:8px 14px;" onclick="emLoadConfig(true)">🔄 โหลดใหม่</button>
+              <button class="pr-act-btn pr-act-mail" style="width:auto;padding:9px 18px;margin:0;" onclick="emSaveConfig()">💾 บันทึกการตั้งค่า</button>
             </div>
 
-            <div style="display:grid;grid-template-columns:300px 1fr;gap:14px;align-items:start;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;">
 
-              <!-- ซ้าย: วันที่ + ไฟล์แนบ + ปุ่มส่ง -->
+              <!-- คอลัมน์ซ้าย -->
               <div style="display:flex;flex-direction:column;gap:12px;">
+
+                <!-- อีเมลปลายทาง -->
                 <div class="pr-block">
-                  <div class="pr-sec-lbl">📅 วันที่ของข้อมูล</div>
-                  <input type="date" id="em-date" class="pr-fi" onchange="emSave()">
+                  <div class="pr-sec-lbl">📨 อีเมลปลายทาง (ฝ่ายอาคาร)</div>
+                  <div id="em-rcp-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px;"></div>
+                  <div style="display:flex;gap:6px;">
+                    <input type="text" id="em-rcp-email" class="pr-fi" placeholder="email@example.com" style="flex:2;">
+                    <input type="text" id="em-rcp-name" class="pr-fi" placeholder="ชื่อ/หน่วยงาน (ไม่บังคับ)" style="flex:1.4;">
+                    <button class="pr-dbtn" style="flex:none;padding:0 14px;" onclick="emAddRecipient()">+ เพิ่ม</button>
+                  </div>
+                  <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:6px;">ปิด/เปิดรายใดได้ที่สวิตช์ · กดถังขยะเพื่อลบ · ส่งให้เฉพาะรายที่เปิดอยู่</div>
+                </div>
+
+                <!-- CC + ผู้ส่ง + ชื่อไฟล์ -->
+                <div class="pr-block">
+                  <div class="pr-sec-lbl">⚙️ ผู้ส่ง / ไฟล์ / สำเนา</div>
+                  <label class="em-fl">ชื่อผู้ส่ง (แสดงในอีเมล)</label>
+                  <input type="text" id="em-from" class="pr-fi" placeholder="ParkZone — ระบบจัดการลานจอด">
+                  <label class="em-fl" style="margin-top:8px;">ชื่อไฟล์แนบ (ใช้ {date} ได้)</label>
+                  <input type="text" id="em-fname" class="pr-fi" placeholder="ParkZone_AriHills_{date}">
+                  <label class="em-fl" style="margin-top:8px;">สำเนาถึง (CC) — ไม่บังคับ</label>
+                  <input type="text" id="em-cc" class="pr-fi" placeholder="cc@example.com">
+                </div>
+
+                <!-- ไฟล์แนบ + รูปแบบ -->
+                <div class="pr-block">
+                  <div class="pr-sec-lbl">📎 ไฟล์ที่จะแนบ</div>
+                  <div class="pr-chips">
+                    <div class="pr-chip on" id="em-fmt-pdf"  onclick="this.classList.toggle('on')">📄 PDF</div>
+                    <div class="pr-chip on" id="em-fmt-xlsx" onclick="this.classList.toggle('on')">📊 Excel</div>
+                    <div class="pr-chip on" id="em-inc-table" onclick="this.classList.toggle('on')">📋 แนบรายการในเนื้อเมลด้วย</div>
+                    <div class="pr-chip on" id="em-line-notify" onclick="this.classList.toggle('on')">📢 แจ้งเข้า LINE กลุ่มเมื่อส่งสำเร็จ</div>
+                  </div>
+                  <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:8px;line-height:1.6;">ปิด “แนบรายการในเนื้อเมล” ถ้าต้องการส่งเฉพาะไฟล์แนบ · Excel สร้างจากเซิร์ฟเวอร์ (ต้องอนุญาตสิทธิ์ Drive ครั้งแรก)</div>
+                </div>
+              </div>
+
+              <!-- คอลัมน์ขวา -->
+              <div style="display:flex;flex-direction:column;gap:12px;">
+
+                <!-- หัวข้อ + ข้อความ -->
+                <div class="pr-block">
+                  <div class="pr-sec-lbl">✏️ หัวข้อ & ข้อความ</div>
+                  <label class="em-fl">หัวข้ออีเมล (ใช้ {date} ได้)</label>
+                  <input type="text" id="em-subject" class="pr-fi" placeholder="รายงานการจอดรถ Ari Hills — {date}">
+                  <label class="em-fl" style="margin-top:8px;">ข้อความในอีเมล (ใช้ {date} ได้)</label>
+                  <textarea id="em-body" class="pr-fi" rows="6" style="resize:vertical;line-height:1.6;"></textarea>
+                </div>
+
+                <!-- ส่งทันที -->
+                <div class="pr-block">
+                  <div class="pr-sec-lbl">🚀 ส่งทันที</div>
+                  <input type="date" id="em-date" class="pr-fi">
                   <div style="display:flex;gap:5px;margin-top:7px;">
                     <button class="pr-dbtn" onclick="emSetDate(0)">วันนี้</button>
                     <button class="pr-dbtn" onclick="emSetDate(1)">พรุ่งนี้</button>
                   </div>
-                </div>
-
-                <div class="pr-block">
-                  <div class="pr-sec-lbl">📎 ไฟล์ที่จะแนบ</div>
-                  <div class="pr-chips">
-                    <div class="pr-chip on" id="em-fmt-pdf"  onclick="this.classList.toggle('on');emSave();">📄 PDF</div>
-                    <div class="pr-chip on" id="em-fmt-xlsx" onclick="this.classList.toggle('on');emSave();">📊 Excel</div>
-                  </div>
-                  <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:8px;line-height:1.6;">เลือกได้ทั้งสองอย่าง · ถ้าไม่เลือกเลย จะส่งเฉพาะเนื้อความ (มีตารางสรุปในเมล)</div>
-                </div>
-
-                <div class="pr-block">
-                  <div class="pr-sec-lbl">⚡ สั่งงาน</div>
-                  <button class="pr-act-btn pr-act-mail" onclick="pzEmailReport('admin')">📧 ส่งอีเมลตอนนี้</button>
+                  <button class="pr-act-btn pr-act-mail" style="margin-top:10px;" onclick="pzEmailReport('admin')">📧 ส่งอีเมลตอนนี้</button>
                   <button class="pr-dbtn" style="width:100%;margin-top:8px;padding:9px 0;" onclick="emPreview()">👁️ ดูตัวอย่างก่อนส่ง</button>
                   <div id="em-quota" style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:8px;line-height:1.6;"></div>
                 </div>
-              </div>
 
-              <!-- ขวา: อีเมลปลายทาง + หัวข้อ + ข้อความ -->
-              <div style="display:flex;flex-direction:column;gap:12px;">
+                <!-- ตั้งเวลาส่งอัตโนมัติ -->
                 <div class="pr-block">
-                  <div class="pr-sec-lbl">📨 อีเมลปลายทาง (จำเป็น)</div>
-                  <textarea id="em-to" class="pr-fi" rows="2" placeholder="building@example.com, manager@example.com" oninput="emSave()" style="resize:vertical;"></textarea>
-                  <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:6px;">ใส่ได้หลายอีเมล คั่นด้วยเครื่องหมายจุลภาค ( , )</div>
-                </div>
-
-                <div class="pr-block">
-                  <div class="pr-sec-lbl">📋 สำเนาถึง (CC) — ไม่บังคับ</div>
-                  <input type="text" id="em-cc" class="pr-fi" placeholder="cc@example.com" oninput="emSave()">
-                </div>
-
-                <div class="pr-block">
-                  <div class="pr-sec-lbl">✏️ หัวข้ออีเมล</div>
-                  <input type="text" id="em-subject" class="pr-fi" placeholder="รายงานการจอดรถ Ari Hills — {date}" oninput="emSave()">
-                  <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:6px;">ใช้ <b style="color:rgba(255,255,255,0.6)">{date}</b> แทนวันที่รายงานได้</div>
-                </div>
-
-                <div class="pr-block">
-                  <div class="pr-sec-lbl">💬 ข้อความในอีเมล</div>
-                  <textarea id="em-body" class="pr-fi" rows="5" oninput="emSave()" style="resize:vertical;line-height:1.6;" placeholder="เรียน ฝ่ายอาคาร&#10;&#10;แนบรายงานการจอดรถประจำวันที่ {date} มาด้วยแล้ว&#10;จึงเรียนมาเพื่อโปรดทราบ"></textarea>
-                  <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:6px;">ตารางสรุปรายการจะถูกแนบต่อท้ายข้อความโดยอัตโนมัติ · ใช้ <b style="color:rgba(255,255,255,0.6)">{date}</b> แทนวันที่ได้</div>
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                    <div class="pr-sec-lbl" style="margin:0;flex:1;">⏰ ตั้งเวลาส่งอัตโนมัติ</div>
+                    <span id="em-sched-master" class="pr-chip" onclick="emToggleScheduler()">ปิดอยู่</span>
+                  </div>
+                  <div id="em-sched-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px;"></div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+                    <input type="time" id="em-sched-time" class="pr-fi" style="flex:none;width:104px;" value="08:00">
+                    <select id="em-sched-offset" class="pr-fi" style="flex:1;min-width:120px;">
+                      <option value="0">ข้อมูลวันนี้</option>
+                      <option value="1">ข้อมูลพรุ่งนี้</option>
+                      <option value="2">ข้อมูลอีก 2 วัน</option>
+                    </select>
+                    <button class="pr-dbtn" style="flex:none;padding:0 14px;" onclick="emAddSchedule()">+ เพิ่มรอบ</button>
+                  </div>
+                  <div id="em-sched-days" style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;"></div>
+                  <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:8px;line-height:1.6;">เลือกวันในสัปดาห์ที่ให้ส่ง (ไม่เลือก = ทุกวัน) · ระบบตรวจทุก 15 นาที จึงอาจส่งช้ากว่าเวลาที่ตั้งได้สูงสุด ~15 นาที</div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
-
         <!-- TAB: สิทธิ์ผู้ใช้ (hidden) -->
         <div id="apane-users" style="display:none;">
           <div class="adm-card" style="grid-column:1/-1;">
@@ -8381,6 +8446,20 @@ function pzJsonp(url, ms = 12000){
     setTimeout(() => { if(!done){ cleanup(); reject(new Error('jsonp timeout')); } }, ms);
   });
 }
+// อ่าน JSON ผ่าน GET: ลอง CORS fetch ก่อน (รองรับ response ใหญ่ได้ดีกว่า) แล้วค่อย fallback เป็น JSONP
+async function pzGetJson(url, ms = 20000){
+  try{
+    const ctl = new AbortController();
+    const tm = setTimeout(() => ctl.abort(), ms);
+    const res = await fetch(url, { mode:'cors', credentials:'omit', signal: ctl.signal });
+    clearTimeout(tm);
+    const j = await res.json();
+    if (j && typeof j === 'object') return j;
+    throw new Error('bad json');
+  }catch(e){
+    return await pzJsonp(url, ms);   // โยน error ต่อถ้า JSONP ก็ไม่ผ่าน
+  }
+}
 async function pzSendVerified(payload){
   const body = JSON.stringify(payload);
   // deleteBooking: GAS v6.0 ฝั่ง GET อ่าน name/plate/date จากพารามิเตอร์ตรงๆ — แนบแบบแบนไปด้วยคู่กับ data
@@ -9152,6 +9231,7 @@ function switchAdminTab(tab) {
   });
   if(tab==='print') prInit();
   if(tab==='email') emInit();
+  if(tab==='line' && typeof nvLineStatus==='function') nvLineStatus();
   if(tab==='line'){
     admUpdateSchedSummary();
     // init calendar if not done
@@ -9236,7 +9316,7 @@ async function pzRunSelfTest() {
   try {
     const d = await pzJsonp(`${GS_URL}?action=ping&_t=${ts}`);
     if (d && d.ok) {
-      const vWarn = (d.version && d.version !== '6.3') ? ' — ⚠️ ไม่ใช่ 6.3 (อาจยังไม่ได้ deploy ใหม่)' : '';
+      const vWarn = (d.version && d.version !== '6.6') ? ' — ⚠️ ไม่ใช่ 6.6 (อาจยังไม่ได้ deploy ใหม่)' : '';
       set('ping','ok',`เซิร์ฟเวอร์ตอบกลับปกติ (เวอร์ชัน: ${d.version || '?'})${vWarn}`);
     }
     else { set('ping','fail','ตอบกลับแต่ไม่ใช่ ok — อาจไม่ใช่ ParkZone backend'); return done('❌ เซิร์ฟเวอร์ตอบผิดรูปแบบ — ตรวจ GS_URL ว่าชี้ deployment ที่ถูกต้อง'); }
@@ -9375,6 +9455,13 @@ function desktopAdminNav() {
 // ══ END ADMIN ══
 let _nvScheds=[{id:1,time:'16:30',name:'บ่ายสี่โมงครึ่ง',type:'tomorrow',enabled:true}];
 let _nvData={common:[],sub:[],other:[],date:''};
+let _nvMsgMode='bookings';   // 'bookings' = รายการแจ้งจอด · 'mailConfirm' = ยืนยันส่งเมล
+function nvSetMsgMode(mode){
+  _nvMsgMode=mode;
+  document.getElementById('nv-mode-bookings')?.classList.toggle('on', mode==='bookings');
+  document.getElementById('nv-mode-mail')?.classList.toggle('on', mode==='mailConfirm');
+  if(typeof nvPreview==='function' && _nvData.date) nvPreview();
+}
 let _nvLogs=[];
 let _nvFired='';
 const _NV_MON={'ม.ค.':1,'ก.พ.':2,'มี.ค.':3,'เม.ย.':4,'พ.ค.':5,'มิ.ย.':6,'ก.ค.':7,'ส.ค.':8,'ก.ย.':9,'ต.ค.':10,'พ.ย.':11,'ธ.ค.':12};
@@ -9557,6 +9644,17 @@ function nvTables(){
 function nvBuildMsg(){
   const iso=_nvData.date;const n=new Date();const h=String(n.getHours()).padStart(2,'0');const m=String(n.getMinutes()).padStart(2,'0');
   const M=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const ft=document.getElementById('nv-footer')?.value||'';
+  // โหมด: ยืนยันการส่งเมลฝ่ายอาคาร
+  if(_nvMsgMode==='mailConfirm'){
+    const total=_nvData.common.length+_nvData.sub.length+_nvData.other.length;
+    let msg=`\n📧 ยืนยันการส่งรายงานทางอีเมล\nวัน${iso?nvFmtDate(iso):'ไม่ระบุ'}\n──────────────────\n`;
+    msg+=`✅ ส่งรายงานการจอดรถให้ฝ่ายอาคารทางอีเมลเรียบร้อยแล้ว\n`;
+    msg+=`รวม ${total} รายการ\n`;
+    msg+=`──────────────────\n📤 ส่งเมื่อ ${h}:${m} น. ${n.getDate()} ${M[n.getMonth()]} ${n.getFullYear()+543}\n`;
+    if(ft)msg+=ft;
+    return msg;
+  }
   const sc=document.getElementById('nv-op-c')?.checked!==false;
   const ss=document.getElementById('nv-op-s')?.checked!==false;
   const so=document.getElementById('nv-op-o')?.checked!==false;
@@ -9564,7 +9662,6 @@ function nvBuildMsg(){
   const colsC=nvGetCols('nv-chips-c');
   const colsS=nvGetCols('nv-chips-s');
   const colsO=nvGetCols('nv-chips-o');
-  const ft=document.getElementById('nv-footer')?.value||'';
   let msg=`\n🅿️ รายการแจ้งจอดรถ\nวัน${iso?nvFmtDate(iso):'ไม่ระบุ'}\n──────────────────\n`;
   function fmtRow(r,cols){
     const parts=[];
@@ -9589,7 +9686,7 @@ function nvBuildMsg(){
 }
 function nvPreview(){
   const msg=nvBuildMsg();const lines=msg.trim().split('\n');let html='';
-  lines.forEach(l=>{if(l.startsWith('🅿️'))html+=`<div class="nv-bubble-hdr">${l}</div>`;else if(l.startsWith('──'))html+=`<hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:4px 0;">`;else if(l.match(/^[📦🔄🚌]/))html+=`<div class="nv-bubble-sec"><div class="nv-bubble-sec-t">${l}</div>`;else if(l.startsWith('📤'))html+=`</div><div class="nv-bubble-foot">${l}</div>`;else if(l.trim())html+=`<div class="nv-bubble-row">${l}</div>`;});
+  lines.forEach(l=>{if(l.startsWith('🅿️')||l.startsWith('📧'))html+=`<div class="nv-bubble-hdr">${l}</div>`;else if(l.startsWith('──'))html+=`<hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:4px 0;">`;else if(l.match(/^[📦🔄🚌]/))html+=`<div class="nv-bubble-sec"><div class="nv-bubble-sec-t">${l}</div>`;else if(l.startsWith('📤'))html+=`</div><div class="nv-bubble-foot">${l}</div>`;else if(l.trim())html+=`<div class="nv-bubble-row">${l}</div>`;});
   const bc=document.getElementById('nv-bc');if(bc)bc.innerHTML=html||'(ว่าง)';
   const bw=document.getElementById('nv-bw');if(bw)bw.style.display='';
   const ce=document.getElementById('nv-ce');if(ce)ce.style.display='none';
@@ -9615,6 +9712,36 @@ async function nvTest(){
   }catch(e){nvStat('offline','Error');nvLog('err','ทดสอบล้มเหลว: '+e.message);}
 }
 async function nvGetGroupId(){const gs=document.getElementById('nv-gs')?.value.trim();if(!gs){nvLog('err','ต้องใส่ GS URL ก่อน');return;}nvLog('info','กำลังดึง Group ID จาก Webhook…');try{const res=await fetch(`${gs}?action=getGroupId`,{mode:'cors',credentials:'omit'});const d=await res.json();if(d.ok&&d.sourceId){const t=document.getElementById('nv-target');if(t)t.value=d.sourceId;nvLog('ok',`ดึง Group ID สำเร็จ: ${d.sourceId} (${d.type})`);nvSave();}else nvLog('warn',d.msg||'ยังไม่มีข้อมูล Webhook');}catch(e){nvLog('err','ดึง Group ID ไม่ได้: '+e.message);}}
+async function nvSaveToken(){
+  const gs=document.getElementById('nv-gs')?.value.trim()||GS_URL;
+  const token=document.getElementById('nv-token-input')?.value.trim();
+  const target=document.getElementById('nv-target')?.value.trim();
+  if(!token && !target){ nvLog('warn','ใส่ Channel access token ก่อน'); return; }
+  nvLog('info','กำลังบันทึก Token ลงเซิร์ฟเวอร์…');
+  try{ await fetch(gs,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'saveLineToken',token,target})}); }
+  catch(e){ nvLog('err','บันทึกไม่ได้: '+e.message); return; }
+  await pzWaitMs(1000);
+  const ok=await nvLineStatus();
+  if(ok){ nvLog('ok','✅ บันทึก Token แล้ว — กดทดสอบการเชื่อมต่อได้เลย'); const ti=document.getElementById('nv-token-input'); if(ti) ti.value=''; }
+  else nvLog('warn','บันทึกแล้วแต่ยืนยันไม่ได้ — ตรวจว่า deploy Code.gs v6.5 แล้ว');
+}
+async function nvLineStatus(){
+  const gs=document.getElementById('nv-gs')?.value.trim()||GS_URL;
+  try{
+    const d=await pzGetJson(`${gs}?action=lineStatus&_t=${Date.now()}`,12000);
+    const dot=document.getElementById('nv-token-dot'), st=document.getElementById('nv-token-state');
+    if(d && d.ok){
+      const okToken=!!d.hasToken, okTarget=!!d.hasTarget;
+      if(dot) dot.style.background=(okToken&&okTarget)?'#1D9E75':(okToken?'#fbbf24':'#f87171');
+      if(st) st.textContent=okToken?(okTarget?'พร้อมใช้งาน ✓':'มี Token แล้ว · ยังไม่มีเป้าหมาย (ดึง Group ID)'):'ยังไม่ได้ตั้ง Token';
+      return okToken;
+    }
+  }catch(e){
+    const st=document.getElementById('nv-token-state'); if(st) st.textContent='เช็กสถานะไม่ได้ (ยังไม่ deploy v6.5?)';
+    const dot=document.getElementById('nv-token-dot'); if(dot) dot.style.background='#f87171';
+  }
+  return false;
+}
 function nvSetDate(offsetDays){
   const d=new Date(); d.setDate(d.getDate()+offsetDays);
   const iso=d.toISOString().slice(0,10);
@@ -10141,7 +10268,6 @@ initDashSlideshow();
       style="width:100%;padding:10px;margin-top:8px;border-radius:12px;border:0.5px solid rgba(255,255,255,0.12);background:transparent;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;">
       ยกเลิก
     </button>
-    <div style="text-align:center;margin-top:14px;font-size:10px;color:rgba(255,255,255,0.25);">admin / admin123</div>
     <div style="text-align:center;margin-top:14px;padding-top:12px;border-top:0.5px solid rgba(255,255,255,0.08);font-size:10px;letter-spacing:0.3px;color:rgba(255,255,255,0.28);">Parking Management • OPS BSCS_GNR3 • © 2026</div>
   </div>
 </div>
@@ -10791,288 +10917,328 @@ function exportAriReportXlsxCustom(){
 }
 // ═══════════════ END PRINT/EXCEL CUSTOM ═══════════════
 
-// ═══════════════ EMAIL REPORT (ส่งอีเมลฝ่ายอาคาร) ═══════════════
-const EM_DEFAULTS = {
-  subject: 'รายงานการจอดรถ Ari Hills — {date}',
-  body: 'เรียน ฝ่ายอาคาร\n\nแนบรายงานการจอดรถประจำวันที่ {date} มาด้วยแล้ว\nจึงเรียนมาเพื่อโปรดทราบ\n\nระบบจัดการลานจอด ParkZone'
-};
-let _emInited = false;
+// ═══════════════ EMAIL REPORT (ส่งอีเมลฝ่ายอาคาร) — เก็บค่าบนชีต + ส่งฝั่งเซิร์ฟเวอร์ ═══════════════
+const EM_DOW = ['อา','จ','อ','พ','พฤ','ศ','ส'];   // 0=อาทิตย์ .. 6=เสาร์ (ตรงกับฝั่งเซิร์ฟเวอร์)
+let _emCfg = null;          // { config, recipients, schedules, schedulerOn }
+let _emLoaded = false;
+let _emNewDays = [];        // วันในสัปดาห์ที่เลือกไว้สำหรับ "รอบใหม่"
 
 function emInit(){
   const dp = document.getElementById('em-date');
   if (dp && !dp.value) dp.value = (typeof ariSelectedDate!=='undefined' && ariSelectedDate) ? ariSelectedDate : new Date().toISOString().slice(0,10);
-  if (!_emInited){
-    _emInited = true;
-    emRestore();
-  }
-  // เติมค่าเริ่มต้นให้ช่องที่ยังว่าง
-  const subj = document.getElementById('em-subject');
-  const body = document.getElementById('em-body');
-  if (subj && !subj.value) subj.value = EM_DEFAULTS.subject;
-  if (body && !body.value) body.value = EM_DEFAULTS.body;
-  const q = document.getElementById('em-quota');
-  if (q && !q.textContent) q.textContent = 'โควตาส่งเมล: Gmail ฟรี ~100 ฉบับ/วัน · Workspace ~1,500 ฉบับ/วัน';
+  emRenderNewDays();
+  if (!_emLoaded) emLoadConfig();
 }
 function emSetDate(off){
   const d = new Date(); d.setDate(d.getDate()+off);
   const dp = document.getElementById('em-date');
   if (dp) dp.value = d.toISOString().slice(0,10);
-  emSave();
 }
-function emSave(){
+function emState(t){ const el=document.getElementById('em-load-state'); if(el) el.textContent=t||''; }
+
+// ── โหลดค่าจากเซิร์ฟเวอร์ ──
+async function emLoadConfig(force){
+  emState('⏳ กำลังโหลด…');
   try{
-    const s = {
-      to:      document.getElementById('em-to')?.value || '',
-      cc:      document.getElementById('em-cc')?.value || '',
-      subject: document.getElementById('em-subject')?.value || '',
-      body:    document.getElementById('em-body')?.value || '',
-      date:    document.getElementById('em-date')?.value || '',
-      fmtPdf:  document.getElementById('em-fmt-pdf')?.classList.contains('on') ?? true,
-      fmtXlsx: document.getElementById('em-fmt-xlsx')?.classList.contains('on') ?? true,
-    };
-    localStorage.setItem('pz-email', JSON.stringify(s));
-  }catch(e){}
+    const d = await pzGetJson(`${GS_URL}?action=getMailConfig&_t=${Date.now()}`, 12000);
+    if (d && d.ok){
+      _emCfg = { config:d.config||{}, recipients:d.recipients||[], schedules:d.schedules||[], schedulerOn:!!d.schedulerOn };
+      _emLoaded = true;
+      emRender();
+      emState('✓ โหลดค่าแล้ว');
+      setTimeout(()=>emState(''), 2500);
+    } else {
+      emState('❌ โหลดไม่ได้');
+      if (force) pzAlert((d&&d.msg)||'โหลดค่าจากเซิร์ฟเวอร์ไม่ได้ (ตรวจว่า deploy Code.gs v6.4 แล้ว)','error','โหลดไม่สำเร็จ');
+    }
+  }catch(e){
+    emState('❌ ติดต่อเซิร์ฟเวอร์ไม่ได้');
+    if (force) pzAlert('ติดต่อเซิร์ฟเวอร์ไม่ได้ — ตรวจการเชื่อมต่อ','error','โหลดไม่สำเร็จ');
+  }
 }
-function emRestore(){
-  try{
-    const raw = localStorage.getItem('pz-email'); if(!raw) return;
-    const s = JSON.parse(raw);
-    const set = (id,v)=>{ const el=document.getElementById(id); if(el && v!=null) el.value=v; };
-    set('em-to', s.to); set('em-cc', s.cc); set('em-subject', s.subject); set('em-body', s.body);
-    if (s.date) set('em-date', s.date);
-    document.getElementById('em-fmt-pdf')?.classList.toggle('on', s.fmtPdf !== false);
-    document.getElementById('em-fmt-xlsx')?.classList.toggle('on', s.fmtXlsx !== false);
-  }catch(e){}
+
+// ── วาดค่า config ลง UI ──
+function emRender(){
+  if (!_emCfg) return;
+  const c = _emCfg.config || {};
+  const set = (id,v)=>{ const el=document.getElementById(id); if(el && v!=null) el.value=v; };
+  set('em-from', c.fromName); set('em-fname', c.fileName); set('em-cc', c.cc);
+  set('em-subject', c.subject); set('em-body', c.body);
+  document.getElementById('em-fmt-pdf')?.classList.toggle('on', c.fmtPdf !== false);
+  document.getElementById('em-fmt-xlsx')?.classList.toggle('on', c.fmtXlsx !== false);
+  document.getElementById('em-inc-table')?.classList.toggle('on', c.includeTable !== false);
+  document.getElementById('em-line-notify')?.classList.toggle('on', c.lineNotify !== false);
+  emRenderRecipients();
+  emRenderSchedules();
+  emRenderMaster();
 }
-// อ่านค่าตั้งค่าอีเมล (จาก localStorage — emSave บันทึกทุกครั้งที่พิมพ์ จึงเป็นค่าล่าสุดเสมอ)
-function emGetSettings(){
-  let s = {};
-  try{ s = JSON.parse(localStorage.getItem('pz-email')||'{}'); }catch(e){}
+function emRenderMaster(){
+  const el = document.getElementById('em-sched-master');
+  if (!el) return;
+  const on = !!(_emCfg && _emCfg.schedulerOn);
+  el.classList.toggle('on', on);
+  el.textContent = on ? '🟢 เปิดอยู่' : 'ปิดอยู่';
+}
+function emRenderRecipients(){
+  const box = document.getElementById('em-rcp-list');
+  if (!box || !_emCfg) return;
+  const list = _emCfg.recipients || [];
+  if (!list.length){ box.innerHTML = '<div style="font-size:11px;color:rgba(255,255,255,0.35);padding:4px 2px;">ยังไม่มีอีเมลปลายทาง — เพิ่มด้านล่าง</div>'; return; }
+  box.innerHTML = list.map((r,i)=>{
+    const on = String(r.status||'active').toLowerCase()==='active';
+    return `<div class="em-row">
+      <div class="em-main"><div class="em-em">${(r.email||'').replace(/</g,'&lt;')}</div>${r.name?`<div class="em-sub">${(r.name||'').replace(/</g,'&lt;')}</div>`:''}</div>
+      <button class="em-tg ${on?'':'off'}" title="เปิด/ปิดการส่งให้รายนี้" onclick="emToggleRecipient(${i})"></button>
+      <button class="em-del" title="ลบ" onclick="emDelRecipient(${i})">🗑️</button>
+    </div>`;
+  }).join('');
+}
+function emAddRecipient(){
+  const e = document.getElementById('em-rcp-email');
+  const n = document.getElementById('em-rcp-name');
+  const email = (e?.value||'').trim();
+  if (!email || email.indexOf('@')<1){ pzAlert('กรุณากรอกอีเมลให้ถูกต้อง','warning','อีเมลไม่ถูกต้อง'); return; }
+  if (!_emCfg) _emCfg = { config:{}, recipients:[], schedules:[], schedulerOn:false };
+  if ((_emCfg.recipients||[]).some(r => (r.email||'').toLowerCase()===email.toLowerCase())){ pzAlert('อีเมลนี้มีอยู่แล้ว','info','ซ้ำ'); return; }
+  _emCfg.recipients.push({ email, name:(n?.value||'').trim(), status:'active' });
+  if(e) e.value=''; if(n) n.value='';
+  emRenderRecipients();
+}
+function emToggleRecipient(i){
+  const r = _emCfg.recipients[i]; if(!r) return;
+  r.status = (String(r.status||'active').toLowerCase()==='active') ? 'paused' : 'active';
+  emRenderRecipients();
+}
+function emDelRecipient(i){ _emCfg.recipients.splice(i,1); emRenderRecipients(); }
+
+// ── รอบส่งอัตโนมัติ ──
+function emRenderNewDays(){
+  const box = document.getElementById('em-sched-days');
+  if (!box) return;
+  box.innerHTML = EM_DOW.map((d,i)=>`<span class="em-day ${_emNewDays.includes(i)?'on':''}" onclick="emToggleNewDay(${i})">${d}</span>`).join('');
+}
+function emToggleNewDay(i){
+  const k = _emNewDays.indexOf(i);
+  if (k<0) _emNewDays.push(i); else _emNewDays.splice(k,1);
+  emRenderNewDays();
+}
+function emRenderSchedules(){
+  const box = document.getElementById('em-sched-list');
+  if (!box || !_emCfg) return;
+  const list = _emCfg.schedules || [];
+  if (!list.length){ box.innerHTML = '<div style="font-size:11px;color:rgba(255,255,255,0.35);padding:4px 2px;">ยังไม่มีรอบส่ง</div>'; return; }
+  const offTxt = o => ({0:'ข้อมูลวันนี้',1:'ข้อมูลพรุ่งนี้'}[o] || `ข้อมูลอีก ${o} วัน`);
+  box.innerHTML = list.map((s,i)=>{
+    const days = (s.weekdays&&s.weekdays.length) ? s.weekdays.map(d=>EM_DOW[d]).join(' ') : 'ทุกวัน';
+    return `<div class="em-row">
+      <div class="em-main"><div class="em-em">🕘 ${s.time} · ${offTxt(s.dayOffset||0)}</div><div class="em-sub">${days}</div></div>
+      <button class="em-tg ${s.enabled===false?'off':''}" onclick="emToggleSchedule(${i})"></button>
+      <button class="em-del" onclick="emDelSchedule(${i})">🗑️</button>
+    </div>`;
+  }).join('');
+}
+function emAddSchedule(){
+  const t = document.getElementById('em-sched-time')?.value || '';
+  if (!/^\d{2}:\d{2}$/.test(t)){ pzAlert('กรุณาเลือกเวลา','warning','เวลาไม่ถูกต้อง'); return; }
+  const off = parseInt(document.getElementById('em-sched-offset')?.value || '0', 10);
+  if (!_emCfg) _emCfg = { config:{}, recipients:[], schedules:[], schedulerOn:false };
+  _emCfg.schedules.push({ id:'s'+Date.now(), time:t, dayOffset:off, weekdays:_emNewDays.slice().sort(), enabled:true, lastRun:'' });
+  _emNewDays = []; emRenderNewDays(); emRenderSchedules();
+}
+function emToggleSchedule(i){ const s=_emCfg.schedules[i]; if(s){ s.enabled = s.enabled===false; emRenderSchedules(); } }
+function emDelSchedule(i){ _emCfg.schedules.splice(i,1); emRenderSchedules(); }
+function emToggleScheduler(){
+  if (!_emCfg) return;
+  _emCfg.schedulerOn = !_emCfg.schedulerOn;
+  emRenderMaster();
+}
+
+// ── เก็บค่าจาก UI → object ──
+function emCollect(){
+  const on = id => document.getElementById(id)?.classList.contains('on');
   return {
-    to:      (s.to||'').trim(),
-    cc:      (s.cc||'').trim(),
-    subject: (s.subject||EM_DEFAULTS.subject),
-    body:    (s.body||EM_DEFAULTS.body),
-    fmtPdf:  s.fmtPdf !== false,
-    fmtXlsx: s.fmtXlsx !== false,
+    config: {
+      subject:  document.getElementById('em-subject')?.value || '',
+      body:     document.getElementById('em-body')?.value || '',
+      fromName: document.getElementById('em-from')?.value || '',
+      fileName: document.getElementById('em-fname')?.value || '',
+      cc:       document.getElementById('em-cc')?.value || '',
+      fmtPdf:   !!on('em-fmt-pdf'),
+      fmtXlsx:  !!on('em-fmt-xlsx'),
+      includeTable: !!on('em-inc-table'),
+      lineNotify:   !!on('em-line-notify'),
+    },
+    recipients: (_emCfg?.recipients) || [],
+    schedules:  (_emCfg?.schedules) || [],
+    schedulerOn: !!(_emCfg && _emCfg.schedulerOn),
   };
 }
-// โหลด SheetJS ครั้งเดียว (ใช้ร่วมกับฟังก์ชัน export)
-function pzLoadXLSX(){
-  return new Promise((resolve,reject)=>{
-    if (window.XLSX) return resolve(window.XLSX);
-    const sc = document.createElement('script');
-    sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-    sc.onload = () => resolve(window.XLSX);
-    sc.onerror = () => reject(new Error('โหลด SheetJS ไม่ได้'));
-    document.head.appendChild(sc);
-  });
-}
-// spec ของรายงาน: custom = ตามที่เลือกในแท็บพิมพ์ · อื่นๆ = ทุกประเภท ทุกคอลัมน์
-function emReportSpec(mode){
-  if (mode === 'custom'){
-    return ['c','s','o'].filter(prSecOn).map(g => ({ g, cols: prSelectedCols(g) }));
+// ── บันทึกไปเซิร์ฟเวอร์ (POST) ──
+async function emSaveConfig(){
+  const body = JSON.stringify({ action:'saveMailConfig', ...emCollect() });
+  pzSyncShow('sending','กำลังบันทึก…','บันทึกการตั้งค่าอีเมลลงชีต');
+  // บันทึกผ่าน GET พร้อม data → เซิร์ฟเวอร์ตอบ "ค่าที่บันทึกแล้ว" กลับมาในครั้งเดียว (ยืนยันได้ทันที)
+  const qs = `${GS_URL}?action=saveMailConfig&data=${encodeURIComponent(body)}&_t=${Date.now()}`;
+  let d = null;
+  // 1) ลองอ่านตรงด้วย CORS fetch ก่อน
+  try{
+    const ctl = new AbortController(); const tm = setTimeout(()=>ctl.abort(), 20000);
+    const res = await fetch(qs, { mode:'cors', credentials:'omit', signal: ctl.signal });
+    clearTimeout(tm);
+    d = await res.json();
+  }catch(e){
+    // 2) สำรองด้วย JSONP
+    try{ d = await pzJsonp(qs, 20000); }catch(e2){}
   }
-  return ['c','s','o'].map(g => ({ g, cols: PR_COLS[g] }));
+
+  if (d && d.ok){
+    _emCfg = { config:d.config||{}, recipients:d.recipients||[], schedules:d.schedules||[], schedulerOn:!!d.schedulerOn };
+    _emLoaded = true; emRender();
+    pzSyncShow('success','บันทึกแล้ว','การตั้งค่าอีเมลถูกบันทึกลงชีตเรียบร้อย');
+    return true;
+  }
+  if (d && d.ok === false){
+    const unknown = /unknown action/i.test(d.msg || '');
+    pzSyncShow('error','บันทึกไม่สำเร็จ',
+      unknown
+        ? 'เซิร์ฟเวอร์ยังไม่รู้จักคำสั่งนี้ — ยังไม่ได้อัปเดตเป็น Code.gs v6.4\nให้ Deploy แบบ “New version” บน deployment เดิม แล้ว Run setup() 1 ครั้ง'
+        : (d.msg || 'เซิร์ฟเวอร์ปฏิเสธการบันทึก'));
+    return false;
+  }
+  // อ่านยืนยันไม่ได้จริงๆ — สำรองด้วย POST no-cors แล้วให้กดโหลดใหม่
+  try{ await fetch(GS_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body }); }catch(e){}
+  pzSyncShow('warning','ส่งคำขอแล้ว','บันทึกคำขอไปแล้วแต่ยืนยันผลไม่ได้ — กด “โหลดใหม่” เพื่อตรวจสอบ');
+  return false;
 }
-function emFilterData(ds){
+
+function emActiveCount(){ return ((_emCfg?.recipients)||[]).filter(r=>String(r.status||'active').toLowerCase()==='active').length; }
+
+// ── ส่งอีเมลตอนนี้ ──
+async function pzEmailReport(mode){
+  mode = mode || 'admin';
+  // วันที่ของข้อมูล
+  let ds;
+  if (mode==='custom') ds = (typeof prGetDate==='function') ? prGetDate() : new Date().toISOString().slice(0,10);
+  else if (mode==='admin') ds = document.getElementById('em-date')?.value || new Date().toISOString().slice(0,10);
+  else ds = (typeof ariSelectedDate!=='undefined' && ariSelectedDate) ? ariSelectedDate : new Date().toISOString().slice(0,10);
+
+  // โหลด/บันทึกค่าก่อนส่ง
+  if (mode==='admin'){
+    const saved = await emSaveConfig();      // persist การแก้ไขล่าสุดก่อนส่ง
+    if (!saved && emActiveCount()===0){ return; }
+  } else if (!_emLoaded){
+    await emLoadConfig();
+  }
+  if (emActiveCount()===0){
+    pzAlert('ยังไม่มีอีเมลปลายทางที่เปิดใช้งาน\nไปที่ Admin → แท็บ “📧 อีเมล” เพื่อเพิ่มและกดบันทึก','warning','ยังไม่มีอีเมลปลายทาง');
+    return;
+  }
+
+  pzSyncShow('sending','กำลังส่งอีเมล…','เซิร์ฟเวอร์กำลังสร้างไฟล์และส่งให้ฝ่ายอาคาร');
+  let res = null;
+  try{
+    const data = encodeURIComponent(JSON.stringify({ action:'sendReport', date: ds }));
+    res = await pzGetJson(`${GS_URL}?action=sendReport&data=${data}&_t=${Date.now()}`, 60000);
+  }catch(e){
+    pzSyncShow('warning','ยืนยันผลไม่ได้','ส่งคำขอแล้วแต่ไม่ได้ผลตอบกลับ — โปรดตรวจกล่องเมลฝ่ายอาคาร');
+    return;
+  }
+  if (res && res.ok){
+    const fmt = res.attachments ? `${res.attachments} ไฟล์แนบ` : 'เฉพาะเนื้อความ';
+    let extra = '';
+    if (res.lineNotified) extra += '\n📢 แจ้งเข้า LINE กลุ่มแล้ว';
+    else if (res.lineMsg) extra += `\n⚠️ LINE: ${res.lineMsg}`;
+    if (res.warn) extra += `\n⚠️ ${res.warn}`;
+    if (typeof res.remainingQuota==='number' && res.remainingQuota>=0){
+      extra += `\nโควตาเมลคงเหลือวันนี้: ${res.remainingQuota} ฉบับ`;
+      const q=document.getElementById('em-quota'); if(q) q.textContent=`โควตาเมลคงเหลือวันนี้: ${res.remainingQuota} ฉบับ`;
+    }
+    pzSyncShow(res.warn?'warning':'success', res.warn?'ส่งแล้ว (มีบางไฟล์พลาด)':'ส่งอีเมลสำเร็จ!',
+      `รายงานวันที่ ${res.dateThai} (${res.total} รายการ · ${fmt})\nถึง: ${res.sent}${extra}`);
+  } else if (res && !res.ok){
+    pzSyncShow('error','ส่งอีเมลไม่สำเร็จ', res.msg || 'เซิร์ฟเวอร์ปฏิเสธการส่ง');
+  } else {
+    pzSyncShow('warning','ยืนยันผลไม่ได้','ส่งคำขอแล้วแต่ไม่ได้ผลตอบกลับใน 60 วิ — โปรดตรวจกล่องเมลฝ่ายอาคาร');
+  }
+}
+
+// ── ดูตัวอย่างก่อนส่ง (dryRun ที่เซิร์ฟเวอร์) ──
+// ดูตัวอย่างก่อนส่ง — สร้างจากข้อมูลในเครื่อง (ไม่ต้องพึ่งเซิร์ฟเวอร์) สะท้อนค่าที่กำลังแก้อยู่ทันที
+function emPreview(){
+  const ds = document.getElementById('em-date')?.value || new Date().toISOString().slice(0,10);
+  const [py,pm,pd] = ds.split('-').map(Number);
+  const dateThai = `${pd} ${PR_MONTHS[pm-1]} ${py+543}`;
   const today = new Date().toISOString().slice(0,10);
-  return {
+
+  const data = {
     c: prFilterByDate(ARI_COMMON_BOOKINGS, ds, today, true),
     s: prFilterByDate(ARI_SUB_BOOKINGS,    ds, today, false),
     o: prFilterByDate(ARI_OTHER_BOOKINGS,  ds, today, false),
   };
-}
-const EM_SEC_TITLE = {
-  c: 'แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ',
-  s: 'แจ้งจอดแทน',
-  o: 'แจ้งจอดรถอื่นๆ (รถตู้ / รถส่งของ / รถ Vendor / รถบัส / รถพยาบาล)',
-};
-// สร้างตารางรายงาน — inline=true ใส่สไตล์ในแท็ก (สำหรับเนื้อเมล), false ใช้ <style> (สำหรับ PDF)
-function emTablesHtml(spec, data, inline){
-  const thS = inline ? ' style="background:#f5f5f2;padding:7px 10px;text-align:left;font-weight:600;border-bottom:2px solid #ddd;font-size:12px;"' : '';
-  const tdS = inline ? ' style="padding:7px 10px;border-bottom:1px solid #eee;font-size:12px;"' : '';
-  const tblS= inline ? ' style="width:100%;border-collapse:collapse;margin-bottom:14px;"' : '';
-  const h2S = inline ? ' style="font-size:13px;font-weight:700;margin:18px 0 8px;border-left:4px solid #2563EB;padding-left:8px;color:#111;"' : '';
-  return spec.map(({g,cols}) => {
-    const rows = data[g] || [];
-    if (!cols.length) return '';
-    const head = `<th${inline?thS:''}>ลำดับ</th>` + cols.map(c => `<th${inline?thS:''}>${c[1]}</th>`).join('');
-    const bodyRows = rows.length
-      ? rows.map((r,i) => `<tr><td${tdS}>${i+1}</td>` + cols.map(c => `<td${tdS}>${c[2](r)}</td>`).join('') + '</tr>').join('')
-      : `<tr><td colspan="${cols.length+1}"${inline?' style="text-align:center;color:#aaa;padding:12px;font-size:12px;"':' style="text-align:center;color:#aaa;padding:12px;"'}>ไม่มีรายการ</td></tr>`;
-    return `<h2${h2S}>${EM_SEC_TITLE[g]} <span style="font-weight:400;color:#888;">(${rows.length} รายการ)</span></h2>
-      <table${tblS}><thead><tr>${head}</tr></thead><tbody>${bodyRows}</tbody></table>`;
-  }).join('');
-}
-// เอกสาร HTML เต็ม (ใช้แปลงเป็น PDF ฝั่งเซิร์ฟเวอร์)
-function emReportDoc(spec, data, dateThai, nowStr){
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
-  <style>
-    body{font-family:sans-serif;font-size:13px;color:#111;margin:24px;}
-    h1{font-size:16px;margin-bottom:2px;} .sub{font-size:12px;color:#666;margin-bottom:20px;}
-    h2{font-size:13px;font-weight:700;margin:20px 0 8px;border-left:4px solid #2563EB;padding-left:8px;}
-    table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px;}
-    th{background:#f5f5f2;padding:7px 10px;text-align:left;font-weight:600;border-bottom:2px solid #ddd;}
-    td{padding:7px 10px;border-bottom:1px solid #eee;}
-    .footer{margin-top:28px;font-size:11px;color:#aaa;border-top:1px solid #eee;padding-top:10px;}
-  </style></head><body>
-  <h1>รายงานการจอดรถ — Ari Hills &nbsp;<span style="font-weight:400;color:#555;">วันที่ ${dateThai}</span></h1>
-  <div class="sub">ส่งเมื่อ: ${nowStr} &nbsp;|&nbsp; จัดทำโดย: ระบบจัดการลานจอด ParkZone</div>
-  ${emTablesHtml(spec, data, false)}
-  <div class="footer">เอกสารนี้ออกจากระบบจัดการลานจอดโดยอัตโนมัติ — ไม่ต้องลงนาม &nbsp;|&nbsp; รายงานเฉพาะวันที่ ${dateThai}</div>
-</body></html>`;
-}
-function emXlsxAoa(spec, data, dateThai, nowStr){
-  const aoa = [
-    [`รายงานการจอดรถ — Ari Hills  วันที่ ${dateThai}`],
-    [`ส่งเมื่อ: ${nowStr}`],
-    [],
-  ];
-  spec.forEach(({g,cols}) => {
-    if (!cols.length) return;
-    const rows = data[g] || [];
-    aoa.push([`${EM_SEC_TITLE[g]} (${rows.length} รายการ)`]);
-    aoa.push(['ลำดับ', ...cols.map(c => c[1])]);
-    if (rows.length) rows.forEach((r,i) => aoa.push([i+1, ...cols.map(c => c[2](r))]));
-    else aoa.push(['', 'ไม่มีรายการ']);
-    aoa.push([]);
-  });
-  return aoa;
-}
-function emResolveDate(mode){
-  if (mode === 'custom') return prGetDate();
-  if (mode === 'admin')  return document.getElementById('em-date')?.value || new Date().toISOString().slice(0,10);
-  return (typeof ariSelectedDate!=='undefined' && ariSelectedDate) ? ariSelectedDate : new Date().toISOString().slice(0,10);
-}
-function emDateThai(ds){
-  const [py,pm,pd] = ds.split('-').map(Number);
-  return `${pd} ${PR_MONTHS[pm-1]} ${py+543}`;
-}
-// รวมข้อมูลทั้งหมดที่ต้องใช้ส่งเมล
-function emBuildPackage(mode){
-  const ds = emResolveDate(mode);
-  const dateThai = emDateThai(ds);
-  const spec = emReportSpec(mode).filter(s => s.cols.length);
-  if (!spec.length) return { error: 'ยังไม่ได้เลือกข้อมูลที่จะแสดง (ตรวจการตั้งค่าในแท็บ พิมพ์/Excel)' };
-  const data = emFilterData(ds);
-  const total = spec.reduce((n,s) => n + (data[s.g]||[]).length, 0);
-  const now = new Date();
-  const nowStr = `${now.getDate()} ${PR_MONTHS[now.getMonth()]} ${now.getFullYear()+543} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} น.`;
-  return { ds, dateThai, spec, data, total, nowStr };
-}
-function emFillTpl(s, dateThai){ return String(s||'').replace(/\{date\}/g, dateThai); }
-
-async function pzEmailReport(mode){
-  mode = mode || 'admin';
-  const cfg = emGetSettings();
-
-  // ── ตรวจอีเมลปลายทาง ──
-  if (!cfg.to){
-    pzAlert('ยังไม่ได้ตั้งค่าอีเมลปลายทางฝ่ายอาคาร\nไปที่ Admin → แท็บ “📧 อีเมล” เพื่อตั้งค่าก่อน','warning','ยังไม่มีอีเมลปลายทาง');
-    return;
-  }
-  // ── ตรวจการเลือกข้อมูล (เฉพาะโหมด custom ที่ผู้ใช้เลือกเอง) ──
-  if (mode === 'custom' && !prValidate()) return;
-
-  const pkg = emBuildPackage(mode);
-  if (pkg.error){ pzAlert(pkg.error,'warning','ส่งอีเมลไม่ได้'); return; }
-
-  const subject = emFillTpl(cfg.subject, pkg.dateThai) || `รายงานการจอดรถ — ${pkg.dateThai}`;
-  const bodyText = emFillTpl(cfg.body, pkg.dateThai);
-  const bodyHtml =
-    `<div style="font-family:'Segoe UI',Tahoma,sans-serif;font-size:14px;color:#111;line-height:1.6;">
-      <p style="white-space:pre-line;margin:0 0 16px;">${bodyText.replace(/</g,'&lt;')}</p>
-      ${emTablesHtml(pkg.spec, pkg.data, true)}
-      <p style="font-size:11px;color:#999;border-top:1px solid #eee;padding-top:8px;margin-top:20px;">เอกสารนี้ออกจากระบบ ParkZone อัตโนมัติ — รายงานเฉพาะวันที่ ${pkg.dateThai}</p>
-    </div>`;
-
-  pzSyncShow('sending','กำลังส่งอีเมล…','กำลังเตรียมไฟล์และส่งให้ฝ่ายอาคาร');
-
-  // ── เตรียมไฟล์แนบ ──
-  const fileName = `ParkZone_AriHills_${pkg.ds}`;
-  const payload = {
-    action: 'sendReport',
-    token: 'M' + Date.now() + Math.floor(Math.random()*99999),
-    to: cfg.to, cc: cfg.cc, subject, bodyText, bodyHtml,
-    pdf: !!cfg.fmtPdf, fileName,
+  const total = data.c.length + data.s.length + data.o.length;
+  const titles = {
+    c:'แจ้งจอดรถ พื้นที่ส่วนกลาง ชั้น 5 ขวามือ',
+    s:'แจ้งจอดแทน',
+    o:'แจ้งจอดรถอื่นๆ (รถตู้ / รถส่งของ / รถ Vendor / รถบัส / รถพยาบาล)',
   };
-  if (cfg.fmtPdf) payload.reportHtml = emReportDoc(pkg.spec, pkg.data, pkg.dateThai, pkg.nowStr);
-  if (cfg.fmtXlsx){
-    try{
-      const XLSX = await pzLoadXLSX();
-      const wb = XLSX.utils.book_new();
-      const ws = XLSX.utils.aoa_to_sheet(emXlsxAoa(pkg.spec, pkg.data, pkg.dateThai, pkg.nowStr));
-      ws['!cols'] = [{wch:6},{wch:22},{wch:16},{wch:16},{wch:16},{wch:18},{wch:16},{wch:14},{wch:24}];
-      XLSX.utils.book_append_sheet(wb, ws, 'รายงานจอดรถ');
-      payload.xlsxBase64 = XLSX.write(wb, { type:'base64', bookType:'xlsx' });
-    }catch(e){
-      pzSyncShow('warning','เตรียมไฟล์ Excel ไม่ได้', 'จะส่งเฉพาะ PDF/เนื้อความแทน\n('+(e.message||e)+')');
-      await pzWaitMs(1500);
-    }
-  }
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const tables = ['c','s','o'].map(g => {
+    const rows = data[g]||[], cols = PR_COLS[g];
+    const head = '<th>ลำดับ</th>' + cols.map(c=>`<th>${c[1]}</th>`).join('');
+    const body = rows.length
+      ? rows.map((r,i)=>`<tr><td>${i+1}</td>`+cols.map(c=>`<td>${esc(c[2](r))}</td>`).join('')+'</tr>').join('')
+      : `<tr><td colspan="${cols.length+1}" style="text-align:center;color:#aaa;padding:12px;">ไม่มีรายการ</td></tr>`;
+    return `<h2>${titles[g]} <span style="font-weight:400;color:#888;">(${rows.length} รายการ)</span></h2>
+      <table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+  }).join('');
 
-  // ── ส่งผ่าน POST (no-cors) เพราะ payload ใหญ่ แล้ว poll ผลด้วย token ──
-  try{
-    await fetch(GS_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) });
-  }catch(e){
-    pzSyncShow('error','ส่งคำขอไม่สำเร็จ', 'ติดต่อเซิร์ฟเวอร์ไม่ได้ — ตรวจการเชื่อมต่อ แล้วลองใหม่');
-    return;
-  }
+  // ค่าจากช่องกรอก (ล่าสุดที่กำลังแก้อยู่)
+  const v = id => document.getElementById(id)?.value || '';
+  const on = id => document.getElementById(id)?.classList.contains('on');
+  const fill = s => String(s).replace(/\{date\}/g, dateThai);
+  const subject = fill(v('em-subject') || 'รายงานการจอดรถ Ari Hills — {date}');
+  const bodyText = fill(v('em-body'));
+  const cc = v('em-cc');
+  const includeTable = on('em-inc-table');
+  const fmt = [on('em-fmt-pdf')?'PDF':null, on('em-fmt-xlsx')?'Excel':null].filter(Boolean).join(' + ') || '— (เฉพาะเนื้อความ)';
+  const to = (((_emCfg && _emCfg.recipients) || [])
+              .filter(r => String(r.status||'active').toLowerCase()==='active')
+              .map(r => r.email).join(', ')) || '(ยังไม่มี/ยังไม่โหลด — กด “โหลดใหม่”)';
+  const fname = fill(v('em-fname') || 'ParkZone_AriHills_{date}').replace(new RegExp(dateThai,'g'), ds);
 
-  // ── ยืนยันผลด้วย mailResult (JSONP) ──
-  let res = null;
-  for (let i = 0; i < 12; i++){
-    await pzWaitMs(1600);
-    try{
-      const d = await pzJsonp(`${GS_URL}?action=mailResult&token=${encodeURIComponent(payload.token)}&_t=${Date.now()}`, 10000);
-      if (d && d.ok && d.found){ res = d.result; break; }
-    }catch(e){}
-  }
-
-  const fmtNote = [cfg.fmtPdf?'PDF':null, cfg.fmtXlsx?'Excel':null].filter(Boolean).join(' + ') || 'เนื้อความ';
-  if (res && res.ok){
-    let quota = '';
-    if (typeof res.remainingQuota === 'number' && res.remainingQuota >= 0){
-      quota = `\nโควตาเมลคงเหลือวันนี้: ${res.remainingQuota} ฉบับ`;
-      const q = document.getElementById('em-quota');
-      if (q) q.textContent = `โควตาเมลคงเหลือวันนี้: ${res.remainingQuota} ฉบับ`;
-    }
-    pzSyncShow('success','ส่งอีเมลสำเร็จ!', `ส่งรายงานวันที่ ${pkg.dateThai} (${pkg.total} รายการ · ${fmtNote})\nถึง: ${res.sent || cfg.to}${quota}`);
-  } else if (res && !res.ok){
-    pzSyncShow('error','ส่งอีเมลไม่สำเร็จ', res.msg || 'เซิร์ฟเวอร์ปฏิเสธการส่ง');
-  } else {
-    pzSyncShow('warning','ยืนยันผลไม่ได้', `ส่งคำขอแล้วแต่ยังไม่ได้ผลตอบกลับใน 20 วิ\nโปรดตรวจกล่องเมลฝ่ายอาคาร (${cfg.to}) ว่าได้รับหรือไม่`);
-  }
-}
-
-// ดูตัวอย่างเนื้อเมล + ไฟล์แนบ ก่อนส่งจริง
-function emPreview(){
-  const cfg = emGetSettings();
-  const pkg = emBuildPackage('admin');
-  if (pkg.error){ pzAlert(pkg.error,'warning','แสดงตัวอย่างไม่ได้'); return; }
-  const subject = emFillTpl(cfg.subject, pkg.dateThai);
-  const bodyText = emFillTpl(cfg.body, pkg.dateThai);
-  const fmt = [cfg.fmtPdf?'PDF':null, cfg.fmtXlsx?'Excel':null].filter(Boolean).join(' + ') || '— (เฉพาะเนื้อความ)';
-  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>ตัวอย่างอีเมล</title>
-    <style>body{font-family:'Segoe UI',Tahoma,sans-serif;margin:0;background:#f0f2f5;color:#111;}
-    .wrap{max-width:760px;margin:24px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);}
-    .hd{background:#2563EB;color:#fff;padding:16px 22px;}
-    .hd .s{font-size:12px;opacity:.85;}
-    .meta{padding:12px 22px;border-bottom:1px solid #eee;font-size:13px;color:#444;}
-    .meta b{color:#111;} .bd{padding:20px 22px;}</style></head><body>
-    <div class="wrap">
-      <div class="hd"><div class="s">หัวข้อ</div><div style="font-size:16px;font-weight:700;">${subject||'(ไม่มีหัวข้อ)'}</div></div>
-      <div class="meta"><div><b>ถึง:</b> ${cfg.to||'(ยังไม่ตั้งค่า)'}</div>
-        ${cfg.cc?`<div><b>CC:</b> ${cfg.cc}</div>`:''}
-        <div><b>ไฟล์แนบ:</b> ${fmt}</div></div>
-      <div class="bd">
-        <p style="white-space:pre-line;">${bodyText.replace(/</g,'&lt;')}</p>
-        ${emTablesHtml(pkg.spec, pkg.data, true)}
-      </div>
-    </div></body></html>`;
   const w = window.open('','_blank');
-  w.document.write(html); w.document.close();
+  if (!w){ pzAlert('เบราว์เซอร์บล็อกการเปิดหน้าต่าง — อนุญาต pop-up สำหรับเว็บนี้ก่อน','warning','เปิดตัวอย่างไม่ได้'); return; }
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>ตัวอย่างอีเมล — ${dateThai}</title>
+    <style>
+      body{font-family:'Segoe UI',Tahoma,sans-serif;margin:0;background:#f0f2f5;color:#111;}
+      .wrap{max-width:780px;margin:24px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);}
+      .hd{background:#2563EB;color:#fff;padding:16px 22px;}
+      .hd .s{font-size:12px;opacity:.85;}
+      .meta{padding:12px 22px;border-bottom:1px solid #eee;font-size:13px;color:#444;line-height:1.8;}
+      .meta b{color:#111;}
+      .bd{padding:20px 22px;}
+      h2{font-size:13px;font-weight:700;margin:18px 0 8px;border-left:4px solid #2563EB;padding-left:8px;}
+      table{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:12px;}
+      th{background:#f5f5f2;padding:7px 10px;text-align:left;font-weight:600;border-bottom:2px solid #ddd;}
+      td{padding:7px 10px;border-bottom:1px solid #eee;}
+      .note{font-size:11px;color:#999;border-top:1px solid #eee;padding-top:8px;margin-top:20px;}
+      .tag{display:inline-block;background:#eef3ff;color:#2563EB;border-radius:5px;padding:1px 7px;font-size:11px;}
+    </style></head><body>
+    <div class="wrap">
+      <div class="hd"><div class="s">ตัวอย่างอีเมล (ยังไม่ส่งจริง)</div><div style="font-size:16px;font-weight:700;">${esc(subject)||'(ไม่มีหัวข้อ)'}</div></div>
+      <div class="meta">
+        <div><b>ถึง:</b> ${esc(to)}</div>
+        ${cc?`<div><b>CC:</b> ${esc(cc)}</div>`:''}
+        <div><b>ไฟล์แนบ:</b> <span class="tag">${fmt}</span> &nbsp; ${(on('em-fmt-pdf')||on('em-fmt-xlsx'))?`<span style="color:#888;font-size:12px;">ชื่อไฟล์: ${esc(fname)}</span>`:''}</div>
+        <div><b>รวม:</b> ${total} รายการ · วันที่ ${dateThai}</div>
+      </div>
+      <div class="bd">
+        <p style="white-space:pre-line;">${esc(bodyText)}</p>
+        ${includeTable ? tables : '<p style="color:#666;">รายละเอียดอยู่ในไฟล์แนบ (ปิดการแนบรายการในเนื้อเมล)</p>'}
+        <p class="note">เอกสารนี้ออกจากระบบ ParkZone — ตัวอย่างนี้สร้างจากข้อมูลในเครื่อง ฉบับจริงเซิร์ฟเวอร์จะสร้างให้ตอนกดส่ง</p>
+      </div>
+    </div></body></html>`);
+  w.document.close();
 }
 // ═══════════════ END EMAIL REPORT ═══════════════
 
